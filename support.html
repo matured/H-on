@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support · 本 (hon)</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<main>
+
+  <section style="padding-bottom: 20px; padding-top: clamp(64px, 9vw, 108px);">
+    <div class="wrap">
+      <p class="eyebrow">SUPPORT THE ARCHIVE</p>
+      <h1 style="font-size: clamp(36px, 6vw, 68px); margin-top:16px; max-width: 20ch;">
+        Free to read. Never free to run.
+      </h1>
+      <p class="serif-lede" style="max-width: 56ch; margin-top:22px;">
+        本 doesn't sell ads and never will paywall a title. Sourcing,
+        digitizing, and hosting real print media costs money. Like a
+        public library, we ask the people who can give to help fund the ones
+        who can't.
+      </p>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- DONATION TIERS (mock) -->
+  <section>
+    <div class="wrap">
+      <p class="eyebrow" style="margin-bottom:30px;">MAKE A CONTRIBUTION</p>
+      <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:2px; background:var(--line-strong); border:2px solid var(--ink); margin-bottom:20px;">
+        <button class="support-tier" data-amount="5">
+          <span class="mono-tag">$5</span>
+          <span class="tier-label">Reader</span>
+        </button>
+        <button class="support-tier" data-amount="15">
+          <span class="mono-tag">$15</span>
+          <span class="tier-label">Supporter</span>
+        </button>
+        <button class="support-tier" data-amount="40">
+          <span class="mono-tag">$40</span>
+          <span class="tier-label">Patron</span>
+        </button>
+        <button class="support-tier" data-amount="custom">
+          <span class="mono-tag">ANY</span>
+          <span class="tier-label">Custom</span>
+        </button>
+      </div>
+      <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
+        <button id="donate-btn" class="btn btn-solid" disabled>Select an amount</button>
+        <span id="donate-confirm" class="mono-tag" style="display:none; color:#1c6b3f;">✓ Thank you. This is a demo confirmation only, no payment is processed on this page.</span>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- WHAT DONATING UNLOCKS -->
+  <section>
+    <div class="wrap">
+      <p class="eyebrow" style="margin-bottom:30px;">WHAT SUPPORTING CHANGES, AND WHAT IT DOESN'T</p>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0; border-top:2px solid var(--ink);">
+        <div style="padding:28px 28px 28px 0; border-right:1px solid var(--line);">
+          <h3 style="font-size:19px; text-transform:none; margin:0 0 14px; color:var(--red);">Changes</h3>
+          <ul style="margin:0; padding-left:18px; font-size:14.5px; color:#2c2b28; display:flex; flex-direction:column; gap:8px;">
+            <li>A <strong>Supporter</strong> tag next to your username</li>
+            <li>Faster download speeds for scanned pages</li>
+            <li>The option to skip ahead in a queue on titles you're waiting for</li>
+          </ul>
+        </div>
+        <div style="padding:28px 0 28px 28px;">
+          <h3 style="font-size:19px; text-transform:none; margin:0 0 14px;">Never changes</h3>
+          <ul style="margin:0; padding-left:18px; font-size:14.5px; color:#2c2b28; display:flex; flex-direction:column; gap:8px;">
+            <li>Reading any title is always free</li>
+            <li>Everyone still checks items out one at a time</li>
+            <li>No title is ever exclusive to supporters</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <p style="font-family: var(--display); font-weight:900; font-size:26px; margin:0 0 10px;">本</p>
+        <p style="font-size:14px; color:#2c2b28; max-width:32ch; margin:0;">A circulating archive of Japanese print media, 1998 to 2025. Invite-only. No ads, no feed, no paywall.</p>
+      </div>
+      <div>
+        <h4>Site</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="catalog.html">The Archive</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Join</h4>
+        <ul>
+          <li><a href="membership.html">Membership</a></li>
+          <li><a href="membership.html#cards">Library Cards</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <ul>
+          <li><a href="support.html">Become a Supporter</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>本 ARCHIVE · A FICTIONAL COMPANY, COMMUNICATIONS SEMINAR FINAL PROJECT</span>
+      <span>EST. THIS YEAR</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .support-tier {
+    background: var(--paper);
+    border: none;
+    padding: 26px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    cursor: pointer;
+    font-family: var(--display);
+    align-items: flex-start;
+  }
+  .support-tier .mono-tag { color: var(--grey); font-size:13px; }
+  .support-tier .tier-label {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 20px;
+    text-transform: uppercase;
+  }
+  .support-tier.active { background: var(--ink); color: var(--paper); }
+  .support-tier.active .mono-tag { color: var(--red); }
+</style>
+
+<script src="js/main.js"></script>
+<script>
+  let selected = null;
+  document.querySelectorAll('.support-tier').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.support-tier').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selected = btn.dataset.amount;
+      const donateBtn = document.getElementById('donate-btn');
+      donateBtn.disabled = false;
+      donateBtn.textContent = selected === 'custom' ? 'Donate a Custom Amount →' : `Donate $${selected} →`;
+    });
+  });
+  document.getElementById('donate-btn').addEventListener('click', () => {
+    document.getElementById('donate-confirm').style.display = 'inline';
+  });
+</script>
+</body>
+</html>

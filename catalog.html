@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Archive · 本 (hon)</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<main>
+
+  <section style="padding-top: clamp(64px, 9vw, 108px); padding-bottom: 0;">
+    <div class="wrap">
+      <div id="filter-bar" class="filter-bar"></div>
+    </div>
+    <div id="shelf" class="shelf" style="padding: 0 var(--gutter);"></div>
+  </section>
+
+  <hr class="rule">
+
+  <section>
+    <div class="wrap" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;">
+      <div style="max-width: 46ch;">
+        <p class="eyebrow">A NOTE ON THIS DEMO</p>
+        <p style="margin:10px 0 0; font-size:14.5px; color:#2c2b28;">
+          This page is a working proof-of-concept of the circulation system:
+          checkout, queueing, and returns are fully functional and saved to
+          this browser. In the live product, checkouts are tied to a real
+          member account and a real due-date system, and only one reader can
+          hold a copy at a time across all devices, not just this one.
+        </p>
+      </div>
+      <a href="how-it-works.html" class="btn">See How It Works &rarr;</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <p style="font-family: var(--display); font-weight:900; font-size:26px; margin:0 0 10px;">本</p>
+        <p style="font-size:14px; color:#2c2b28; max-width:32ch; margin:0;">A circulating archive of Japanese print media, 1998 to 2025. Invite-only. No ads, no feed, no paywall.</p>
+      </div>
+      <div>
+        <h4>Site</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="catalog.html">The Archive</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Join</h4>
+        <ul>
+          <li><a href="membership.html">Membership</a></li>
+          <li><a href="membership.html#cards">Library Cards</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <ul>
+          <li><a href="support.html">Become a Supporter</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>本 ARCHIVE · A FICTIONAL COMPANY, COMMUNICATIONS SEMINAR FINAL PROJECT</span>
+      <span>EST. THIS YEAR</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/catalog-data.js"></script>
+<script src="js/circulation.js"></script>
+<script src="js/browse.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

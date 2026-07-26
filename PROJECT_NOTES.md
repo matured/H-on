@@ -1,0 +1,158 @@
+# 本 (hon) — Project Notes
+
+Mock company site for a Communications Industry Mock Company final project.
+本 ("book") is a fictional invite-only digital library that circulates real
+Japanese print media from 1990–2005, one reader at a time — the anti-feed,
+anti-algorithm answer to how media discovery works today.
+
+Last updated: this session (V6).
+
+---
+
+## Site map & entry point
+
+**Open `index.html` to start** — it's the splash screen, not the homepage.
+
+```
+index.html          Splash: flickering 本 grid, click any tile to enter
+  → catalog.html     (splash leads here — the Archive is the front door)
+
+home.html            The actual marketing homepage (hero, mission, pillars)
+about.html           Founder story, mission statement, team roles
+catalog.html         The Archive — scattered floating shelf of 15 titles
+item.html            Item detail page (?id=<item-id>), reached by clicking a cover
+how-it-works.html    Circulation cycle, queue mechanic, CDL legal framing
+membership.html      Invite-only system, 5-library-card mechanic, waitlist form
+support.html         Donation tiers, Supporter perks (mock, non-functional payment)
+```
+
+The site-wide nav (black circle top-left → fullscreen overlay menu) is
+injected by `js/main.js` on every page except `index.html` (the splash has no
+site chrome — it's meant to be the very first thing someone sees).
+
+---
+
+## File structure
+
+```
+hon-site/
+├── index.html            splash / entry point
+├── home.html              marketing homepage
+├── about.html
+├── catalog.html           the Archive (shelf)
+├── item.html              item detail template
+├── how-it-works.html
+├── membership.html
+├── support.html
+├── css/
+│   └── style.css          single shared stylesheet, all design tokens
+└── js/
+    ├── main.js            injects black-circle nav + overlay on every page
+    ├── catalog-data.js    the 15 fictional catalog entries (source of truth)
+    ├── circulation.js     shared state logic: checkout/return/queue, localStorage
+    ├── browse.js          Archive page: scattered shelf layout + filters
+    └── item.js            Item page: layout, background pattern, cover/detail toggle
+```
+
+No build step, no dependencies beyond Google Fonts (Archivo, Newsreader, IBM
+Plex Mono, Noto Sans JP) loaded via `@import` in `style.css`. Open any HTML
+file directly, or serve the folder with `python3 -m http.server` / VS Code
+Live Server for more reliable `localStorage` behavior.
+
+---
+
+## Key architectural decisions
+
+- **Checkout state lives in `localStorage`**, keyed `hon_circulation_state_v1`,
+  shared between the Archive grid and item pages via `js/circulation.js`. This
+  is explicitly a single-browser demo of the mechanic, not a real backend —
+  every page that touches checkout state says so.
+- **Catalog data is centralized** in `js/catalog-data.js` as a single array.
+  Adding a 16th title only requires adding one object there — both the shelf
+  layout (`browse.js`) and item pages (`item.js`) read from it automatically.
+- **Covers are typographic, not photographic** — colored rectangles with
+  title/era/issue set in type. This was a deliberate choice, not a
+  placeholder: it sidesteps any copyright question around reproducing real
+  magazine covers, and reads as intentional rather than a stand-in.
+- **Nav markup is injected by JS, not duplicated per page.** `main.js` builds
+  the black-circle button and overlay menu once and prepends it to every
+  page's `<body>`. If the nav list ever needs to change, it's a one-file edit.
+- **Design language is split by page function**, both deliberately CDG-derived
+  but from different CDG references:
+  - Marketing pages (Home, About, How It Works, Membership, Support): bold
+    black/cream/red editorial voice (CDG ad/literature direction).
+  - Archive + item pages: the cdgcdgcdg.com shop reference — scattered
+    floating objects, hover-to-pop interaction, minimal white space, and now
+    (item page) a repeating logotype wallpaper behind the product layout.
+- **Splash (`index.html`) is intentionally separate from `home.html`.** This
+  was a deliberate swap partway through the project: the splash needs to be
+  whatever loads by default, so it had to become `index.html`, which pushed
+  the original homepage content to `home.html`.
+
+---
+
+## Completed this session
+
+- Rebuilt from a single-page CDG-editorial concept into the current
+  multi-page structure (Home, About, Archive, How It Works, Membership,
+  Support, item detail).
+- Built the working circulation demo: checkout / return / join queue / leave
+  queue, persisted via `localStorage`, shared across the shelf and item pages.
+- Replaced the sticky top nav with the black-circle + fullscreen overlay menu
+  pattern (matching the cdgcdgcdg.com reference) — injected via JS site-wide.
+- Rebuilt the Archive from a bordered grid into a scattered, vertically
+  scrolling shelf with seeded-random layout, hover-to-pop (now scale 1.16x +
+  7° diagonal twist + lift), and click-through to individual item pages.
+- Built the splash screen: a flickering grid of 本, continuous random flicker
+  (no ramp-down, no single "winner" tile — every tile is clickable), spaced
+  tiles with a dark gutter between them.
+- Rebuilt the item detail page around the CDG product-page reference: fixed
+  repeating-kanji wallpaper background, stacked title block, spec list with
+  square markers, large bold CTA, and a two-dot cover/detail toggle.
+- Full copy pass to remove every em dash / en dash across all pages and the
+  catalog descriptions, replacing with natural sentence structure or the
+  middot (·) already used elsewhere for label separators.
+- Trimmed the homepage copy significantly for a more minimal, type-led feel.
+- Verified: all JS files pass `node --check`, all HTML tags balance, no dead
+  internal links.
+
+---
+
+## Known limitations (by design, worth saying out loud in the presentation)
+
+- No real backend — checkout state is per-browser via `localStorage`, not
+  shared across devices or users. The site says this explicitly wherever
+  relevant, per the assignment's honesty expectations.
+- Membership/support forms (waitlist, donation) are non-functional mockups
+  with a fake confirmation message — clearly labeled as demo-only in the copy.
+- Covers are typographic placeholders, not real scans — intentional, not a
+  gap to fill.
+
+---
+
+## Suggested next steps (not yet done)
+
+- [ ] No logo yet beyond the 本 kanji as logotype — fine as-is per your
+      original direction ("logo will come later"), but worth deciding before
+      final submission whether that's the permanent mark.
+- [ ] Mobile pass: the Archive's scattered shelf falls back to a simple
+      stacked column under 760px and the item page hasn't been specifically
+      tested at narrow widths with the new wallpaper background — worth a
+      quick check.
+- [ ] Team member names/roles on the About page are still generic placeholder
+      titles (Founder, Archivist, Community, Systems) — swap in your actual
+      teammates before submission if the rubric expects real names.
+- [ ] Decide if you want real teammate photos/bios or keep it role-based.
+- [ ] No accessibility pass yet (keyboard nav through the overlay menu, focus
+      states, alt text equivalents for the typographic covers).
+- [ ] The presentation deck (PowerPoint) is a separate deliverable your
+      teammates are handling — this site doesn't cover that.
+
+---
+
+## Version history (zips shared this session)
+
+V2 → V6, each adding: trimmed homepage copy → splash screen → splash routing
+fix (→ home.html, then → catalog.html) → dropped red-winner mechanic, added
+gaps and continuous flicker → dropped em dashes, Archive opens straight on
+shelf → item page CDG product-layout rebuild → shelf hover twist increase.

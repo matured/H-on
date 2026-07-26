@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>本 (hon)</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@900&family=IBM+Plex+Mono:wght@500&display=swap');
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background: #0a0a0a;
+  overflow: hidden;
+}
+
+#splash-grid {
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  gap: clamp(3px, 0.7vw, 10px);
+  padding: clamp(3px, 0.7vw, 10px);
+  background: #0a0a0a;
+}
+
+.tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  background: #faf9f4;
+  cursor: pointer;
+}
+.tile span {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 900;
+  font-size: 11vw;
+  line-height: 1;
+  color: #0a0a0a;
+  transition: color 0.06s linear, transform 0.2s ease;
+  user-select: none;
+}
+
+.tile.tile-dim span { color: #d8d4c8; }
+.tile:hover span { transform: scale(1.1); }
+
+#hon-caption {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #a8a397;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+#hon-caption.show { opacity: 1; }
+
+#hon-skip {
+  position: fixed;
+  bottom: 26px;
+  right: 26px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6e6a61;
+  text-decoration: none;
+  z-index: 20;
+}
+#hon-skip:hover { color: #faf9f4; }
+
+body.hon-leaving #splash-grid {
+  transition: opacity 0.5s ease;
+  opacity: 0;
+}
+</style>
+</head>
+<body>
+
+<div id="splash-grid"></div>
+<p id="hon-caption">Click any 本 to enter</p>
+<a id="hon-skip" href="catalog.html">Skip &rarr;</a>
+
+<script>
+(function () {
+  const grid = document.getElementById('splash-grid');
+  const caption = document.getElementById('hon-caption');
+
+  const cellTarget = 200; // approx px per tile, used to size the grid
+  const cols = Math.max(4, Math.round(window.innerWidth / cellTarget));
+  const rows = Math.max(5, Math.round(window.innerHeight / cellTarget));
+  const total = cols * rows;
+
+  grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+  grid.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+
+  const tiles = [];
+  for (let i = 0; i < total; i++) {
+    const tile = document.createElement('div');
+    tile.className = 'tile';
+    const glyph = document.createElement('span');
+    glyph.textContent = '本';
+    tile.appendChild(glyph);
+    tile.addEventListener('click', enterSite);
+    grid.appendChild(tile);
+    tiles.push(tile);
+  }
+
+  // Continuous random flicker — no ramp, no single winner.
+  // Each cycle dims a handful of random tiles briefly, then schedules
+  // the next cycle at a slightly randomized interval for an organic feel.
+  function flicker() {
+    const burst = 2 + Math.floor(Math.random() * 4); // 2–5 tiles per cycle
+    for (let i = 0; i < burst; i++) {
+      const idx = Math.floor(Math.random() * total);
+      const tile = tiles[idx];
+      tile.classList.add('tile-dim');
+      setTimeout(() => tile.classList.remove('tile-dim'), 90 + Math.random() * 160);
+    }
+    const nextIn = 90 + Math.random() * 220;
+    setTimeout(flicker, nextIn);
+  }
+
+  function enterSite() {
+    document.body.classList.add('hon-leaving');
+    setTimeout(() => { window.location.href = 'catalog.html'; }, 480);
+  }
+
+  flicker();
+  setTimeout(() => caption.classList.add('show'), 900);
+})();
+</script>
+
+</body>
+</html>
