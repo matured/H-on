@@ -395,6 +395,16 @@ section { padding: clamp(48px, 8vw, 96px) 0; }
   padding: 0;
   border: 2px solid;
   background: var(--paper);
+  background-image: linear-gradient(110deg, var(--paper) 30%, var(--line) 50%, var(--paper) 70%);
+  background-size: 200% 100%;
+  animation: hon-skeleton-shimmer 1.8s ease-in-out infinite;
+}
+@keyframes hon-skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .shelf-cover-photo { animation: none; background-image: none; }
 }
 .shelf-cover-photo img {
   width: 100%;
