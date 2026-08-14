@@ -442,6 +442,13 @@ body.item-page { position: relative; }
   .item-hero { grid-template-columns: 1fr; }
 }
 
+/* ---------- Shared multi-column content grids ---------- */
+.grid-cols-3 { display: grid; grid-template-columns: repeat(3, 1fr); }
+.grid-cols-4 { display: grid; grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 640px) {
+  .grid-cols-3, .grid-cols-4 { grid-template-columns: 1fr; }
+}
+
 .item-media { position: relative; }
 .item-cover-large {
   aspect-ratio: 3 / 4;
