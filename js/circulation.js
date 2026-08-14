@@ -67,6 +67,17 @@ async function honSignInWithEmail(email) {
   if (error) throw error;
 }
 
+// Deletes the signed-in user's account via the delete_my_account RPC (see
+// supabase/migrations/20260814230000_account_deletion.sql), then signs out
+// locally — the server-side row is already gone, so there's no session left
+// to keep. The RPC itself raises a descriptive error for the two cases it
+// blocks (admin account, active loan); this just lets those surface as-is.
+async function honDeleteMyAccount() {
+  const { error } = await honSupabase.rpc('delete_my_account');
+  if (error) throw error;
+  await honSupabase.auth.signOut();
+}
+
 // ---- library cards ----
 
 // Cards this signed-in user has to give out (issued_by = them), whether
@@ -444,6 +455,7 @@ function honStatusInfo(item) {
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     honFetchCatalog, honFormatDate, honGetCurrentUser, honSignInWithEmail,
+    honDeleteMyAccount,
     honFetchMyCards, honValidateCardCode, honRedeemCard,
     honStashPendingCardCode, honTakePendingCardCode,
     honFetchMyProfile, honAdminListProfiles, honAdminListLoans,

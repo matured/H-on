@@ -106,6 +106,37 @@
 
   <hr class="rule">
 
+  <!-- ACCOUNT (signed-in members only) -->
+  <section id="account" style="display:none;">
+    <div class="wrap" style="max-width: 56ch;">
+      <p class="eyebrow">YOUR ACCOUNT</p>
+      <h2 style="font-size: clamp(22px, 2.8vw, 28px); margin-top:14px;">Signed in as <span id="account-email"></span>.</h2>
+      <button type="button" class="btn" id="signout-btn" style="margin-top:16px;">Sign Out</button>
+
+      <div style="margin-top:40px; border-top:1px solid var(--line); padding-top:26px;">
+        <p class="mono-tag" style="color:var(--red);">DANGER ZONE</p>
+        <p style="margin-top:10px; font-size:14px; color:#2c2b28;">
+          Deleting your account permanently removes your profile, library
+          cards, queue entries, and notifications. This can't be undone, and
+          you'll need to return any active loan first.
+        </p>
+        <button type="button" class="btn btn-red" id="delete-account-btn" style="margin-top:14px;">Delete My Account&hellip;</button>
+
+        <div id="delete-confirm-box" style="display:none; margin-top:18px; border:2px solid var(--red); padding:18px;">
+          <p style="font-size:14px; margin:0 0 12px;">Type <strong>DELETE</strong> below to permanently delete your account.</p>
+          <input type="text" id="delete-confirm-input" placeholder="DELETE" autocomplete="off" style="width:100%; font-family:var(--mono); font-size:14px; padding:12px 14px; border:1px solid var(--ink); background:var(--paper);">
+          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+            <button type="button" class="btn btn-red" id="delete-confirm-btn" disabled style="opacity:0.4;">Permanently Delete</button>
+            <button type="button" class="btn" id="delete-cancel-btn">Cancel</button>
+          </div>
+          <p id="delete-status" style="margin-top:12px; font-size:14px;"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
   <!-- GROWTH PHASE -->
   <section>
     <div class="wrap">
@@ -292,8 +323,19 @@ function honRenderCardsDashboard(cards) {
   caption.textContent = 'An unused card shows the code to hand someone — they redeem it above.';
 }
 
+function honRenderAccountSection(user) {
+  const section = document.getElementById('account');
+  if (!user) {
+    section.style.display = 'none';
+    return;
+  }
+  section.style.display = '';
+  document.getElementById('account-email').textContent = user.email;
+}
+
 async function honRefreshMembershipView() {
   const user = await honGetCurrentUser();
+  honRenderAccountSection(user);
   const pendingCode = honTakePendingCardCode();
   const redeemStatusEl = document.getElementById('redeem-status');
 
@@ -319,6 +361,51 @@ async function honRefreshMembershipView() {
     document.getElementById('cards-list').innerHTML = `<p style="font-size:14px; color:var(--red);">Couldn't load your cards: ${err.message || err}</p>`;
   }
 }
+
+document.getElementById('signout-btn').addEventListener('click', async () => {
+  await honSupabase.auth.signOut();
+  honRefreshMembershipView();
+});
+
+document.getElementById('delete-account-btn').addEventListener('click', () => {
+  document.getElementById('delete-confirm-box').style.display = '';
+  document.getElementById('delete-account-btn').style.display = 'none';
+});
+
+document.getElementById('delete-cancel-btn').addEventListener('click', () => {
+  document.getElementById('delete-confirm-box').style.display = 'none';
+  document.getElementById('delete-account-btn').style.display = '';
+  document.getElementById('delete-confirm-input').value = '';
+  document.getElementById('delete-confirm-btn').disabled = true;
+  document.getElementById('delete-confirm-btn').style.opacity = '0.4';
+  document.getElementById('delete-status').textContent = '';
+});
+
+document.getElementById('delete-confirm-input').addEventListener('input', (e) => {
+  const match = e.target.value.trim() === 'DELETE';
+  document.getElementById('delete-confirm-btn').disabled = !match;
+  document.getElementById('delete-confirm-btn').style.opacity = match ? '1' : '0.4';
+});
+
+document.getElementById('delete-confirm-btn').addEventListener('click', async () => {
+  const btn = document.getElementById('delete-confirm-btn');
+  const statusEl = document.getElementById('delete-status');
+  btn.disabled = true;
+  btn.textContent = 'Deleting…';
+  statusEl.textContent = '';
+  try {
+    await honDeleteMyAccount();
+    statusEl.style.color = 'var(--ink)';
+    statusEl.textContent = 'Your account has been deleted.';
+    document.getElementById('delete-confirm-box').style.display = 'none';
+    await honRefreshMembershipView();
+  } catch (err) {
+    statusEl.style.color = 'var(--red)';
+    statusEl.textContent = err.message || String(err);
+    btn.disabled = false;
+    btn.textContent = 'Permanently Delete';
+  }
+});
 
 document.addEventListener('DOMContentLoaded', async () => {
   await honRefreshMembershipView();
