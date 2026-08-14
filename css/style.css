@@ -145,6 +145,7 @@ h1, h2, h3, h4 {
 }
 .overlay-links a {
   display: block;
+  padding: 14px 0;
   font-family: var(--mono);
   font-size: 13.5px;
   letter-spacing: 0.16em;
@@ -271,7 +272,7 @@ section { padding: clamp(48px, 8vw, 96px) 0; }
 }
 .footer-grid ul { list-style: none; padding: 0; margin: 0; }
 .footer-grid li { margin-bottom: 8px; }
-.footer-grid a { text-decoration: none; font-size: 14.5px; }
+.footer-grid a { display: inline-block; padding: 4px 0; text-decoration: none; font-size: 14.5px; }
 .footer-grid a:hover { color: var(--red); }
 .footer-bottom {
   display: flex;
@@ -608,8 +609,8 @@ body.item-page { position: relative; }
   text-transform: uppercase;
   background: none;
   border: none;
-  padding: 0;
-  margin-top: 30px;
+  padding: 8px 0;
+  margin-top: 22px;
   cursor: pointer;
   color: var(--ink);
   display: inline-flex;
