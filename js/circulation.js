@@ -35,6 +35,51 @@ async function honSignInWithEmail(email) {
   if (error) throw error;
 }
 
+// ---- library cards ----
+
+// Cards this signed-in user has to give out (issued_by = them), whether
+// still unused or already claimed by someone. RLS already restricts this
+// query to the caller's own rows.
+async function honFetchMyCards() {
+  const user = await honGetCurrentUser();
+  if (!user) return null;
+  const { data, error } = await honSupabase
+    .from('library_cards')
+    .select('id, code, issued_at, claimed_at')
+    .eq('issued_by', user.id)
+    .order('issued_at', { ascending: true });
+  if (error) throw error;
+  return data || [];
+}
+
+async function honValidateCardCode(code) {
+  const { data, error } = await honSupabase.rpc('validate_card_code', { p_code: code });
+  if (error) throw error;
+  return !!data;
+}
+
+async function honRedeemCard(code) {
+  const { error } = await honSupabase.rpc('redeem_card', { p_code: code });
+  if (error) throw error;
+}
+
+// A card code has to survive the magic-link round trip: the user enters it,
+// we send the email, the browser navigates away and comes back signed in
+// (possibly as a fresh page load), and only then can redeem_card actually
+// run (it requires auth.uid()). localStorage is just carrying that one
+// value across the redirect — it is not standing in for circulation state.
+const HON_PENDING_CARD_KEY = 'hon_pending_card_code';
+
+function honStashPendingCardCode(code) {
+  localStorage.setItem(HON_PENDING_CARD_KEY, code);
+}
+
+function honTakePendingCardCode() {
+  const code = localStorage.getItem(HON_PENDING_CARD_KEY);
+  localStorage.removeItem(HON_PENDING_CARD_KEY);
+  return code;
+}
+
 // ---- status fetching ----
 
 // Fetches one item's status: public aggregate counts (from the

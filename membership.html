@@ -47,6 +47,32 @@
 
   <hr class="rule">
 
+  <!-- REDEEM (new members joining via a card) -->
+  <section id="redeem">
+    <div class="wrap" style="max-width: 48ch;">
+      <p class="eyebrow">HAVE A CARD?</p>
+      <h2 style="font-size: clamp(22px, 2.8vw, 28px); margin-top:14px;">Redeem it.</h2>
+      <p style="margin-top:12px; font-size:15px; color:#2c2b28;">
+        Enter the code someone gave you and the email you want your account under.
+        We'll check the code, then send a one-time link — click it to finish joining.
+      </p>
+      <form id="redeem-form" style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;">
+        <div style="flex:1; min-width:180px;">
+          <label for="redeem-code" style="display:block; font-family:var(--mono); font-size:11px; letter-spacing:0.1em; font-weight:600; text-transform:uppercase; color:var(--grey); margin-bottom:6px;">Card Code</label>
+          <input id="redeem-code" type="text" placeholder="32-character code" required style="width:100%; font-family:var(--mono); font-size:14px; padding:12px 14px; border:1px solid var(--ink); background:var(--paper);">
+        </div>
+        <div style="flex:1; min-width:220px;">
+          <label for="redeem-email" style="display:block; font-family:var(--mono); font-size:11px; letter-spacing:0.1em; font-weight:600; text-transform:uppercase; color:var(--grey); margin-bottom:6px;">Email</label>
+          <input id="redeem-email" type="email" placeholder="you@example.com" required style="width:100%; font-family:var(--mono); font-size:14px; padding:12px 14px; border:1px solid var(--ink); background:var(--paper);">
+        </div>
+        <button type="submit" class="btn btn-solid" id="redeem-submit">Redeem &rarr;</button>
+      </form>
+      <p id="redeem-status" style="margin-top:12px; font-size:14px;"></p>
+    </div>
+  </section>
+
+  <hr class="rule">
+
   <!-- LIBRARY CARDS MECHANIC -->
   <section id="cards">
     <div class="wrap" style="display:grid; grid-template-columns: 1fr 1fr; gap:56px;">
@@ -69,42 +95,11 @@
       </div>
 
       <div>
-        <div class="mono-tag" style="color:var(--grey); margin-bottom:14px;">YOUR CARDS · 2 OF 5 ISSUED</div>
-        <div style="display:grid; grid-template-columns: repeat(1, 1fr); gap:10px;">
-
-          <div style="border:2px solid var(--ink); padding:16px 18px; display:flex; justify-content:space-between; align-items:center; background:var(--ink); color:var(--paper);">
-            <div>
-              <div class="mono-tag" style="letter-spacing:0.1em;">CARD 01 · ISSUED</div>
-              <div style="font-family:var(--serif); font-style:italic; font-size:15px; margin-top:4px;">Accepted by a member, 4 days ago</div>
-            </div>
-            <span class="mono-tag" style="color:#c8102e;">*</span>
-          </div>
-
-          <div style="border:2px solid var(--ink); padding:16px 18px; display:flex; justify-content:space-between; align-items:center; background:var(--ink); color:var(--paper);">
-            <div>
-              <div class="mono-tag" style="letter-spacing:0.1em;">CARD 02 · ISSUED</div>
-              <div style="font-family:var(--serif); font-style:italic; font-size:15px; margin-top:4px;">Accepted by a member, 11 days ago</div>
-            </div>
-            <span class="mono-tag" style="color:#c8102e;">*</span>
-          </div>
-
-          <div style="border:2px dashed var(--line-strong); padding:16px 18px; display:flex; justify-content:space-between; align-items:center;">
-            <div class="mono-tag" style="letter-spacing:0.1em; color:var(--grey);">CARD 03 · UNUSED</div>
-            <span class="mono-tag" style="color:var(--grey);">Available to give</span>
-          </div>
-
-          <div style="border:2px dashed var(--line-strong); padding:16px 18px; display:flex; justify-content:space-between; align-items:center;">
-            <div class="mono-tag" style="letter-spacing:0.1em; color:var(--grey);">CARD 04 · UNUSED</div>
-            <span class="mono-tag" style="color:var(--grey);">Available to give</span>
-          </div>
-
-          <div style="border:2px dashed var(--line-strong); padding:16px 18px; display:flex; justify-content:space-between; align-items:center;">
-            <div class="mono-tag" style="letter-spacing:0.1em; color:var(--grey);">CARD 05 · UNUSED</div>
-            <span class="mono-tag" style="color:var(--grey);">Available to give</span>
-          </div>
-
+        <div class="mono-tag" id="cards-tag" style="color:var(--grey); margin-bottom:14px;">YOUR CARDS</div>
+        <div id="cards-list" style="display:grid; grid-template-columns: repeat(1, 1fr); gap:10px;">
+          <p style="font-size:14px; color:var(--grey);">Loading&hellip;</p>
         </div>
-        <p style="font-size:12.5px; color:var(--grey); margin-top:12px;">Mockup of a member's card dashboard, illustrative only.</p>
+        <p id="cards-caption" style="font-size:12.5px; color:var(--grey); margin-top:12px;"></p>
       </div>
     </div>
   </section>
@@ -222,6 +217,115 @@ document.getElementById('signin-form').addEventListener('submit', async (e) => {
     btn.disabled = false;
     btn.textContent = 'Send Link →';
   }
+});
+
+document.getElementById('redeem-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const code = document.getElementById('redeem-code').value.trim();
+  const email = document.getElementById('redeem-email').value.trim();
+  const statusEl = document.getElementById('redeem-status');
+  const btn = document.getElementById('redeem-submit');
+  btn.disabled = true;
+  btn.textContent = 'Checking…';
+  statusEl.textContent = '';
+  try {
+    const valid = await honValidateCardCode(code);
+    if (!valid) {
+      statusEl.textContent = "That code isn't valid, or it's already been used.";
+      statusEl.style.color = 'var(--red)';
+      return;
+    }
+    btn.textContent = 'Sending…';
+    honStashPendingCardCode(code);
+    await honSignInWithEmail(email);
+    statusEl.textContent = `Check ${email} for a link — clicking it finishes your redemption.`;
+    statusEl.style.color = 'var(--ink)';
+  } catch (err) {
+    statusEl.textContent = `Something went wrong: ${err.message || err}`;
+    statusEl.style.color = 'var(--red)';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Redeem →';
+  }
+});
+
+function honRelativeTime(iso) {
+  const days = Math.max(0, Math.floor((Date.now() - new Date(iso).getTime()) / 86400000));
+  if (days === 0) return 'today';
+  if (days === 1) return '1 day ago';
+  return `${days} days ago`;
+}
+
+function honCardRowHTML(card, index) {
+  const num = String(index + 1).padStart(2, '0');
+  if (card.claimed_at) {
+    return `
+      <div style="border:2px solid var(--ink); padding:16px 18px; display:flex; justify-content:space-between; align-items:center; background:var(--ink); color:var(--paper);">
+        <div>
+          <div class="mono-tag" style="letter-spacing:0.1em;">CARD ${num} · ISSUED</div>
+          <div style="font-family:var(--serif); font-style:italic; font-size:15px; margin-top:4px;">Accepted by a member, ${honRelativeTime(card.claimed_at)}</div>
+        </div>
+        <span class="mono-tag" style="color:#c8102e;">*</span>
+      </div>
+    `;
+  }
+  return `
+    <div style="border:2px dashed var(--line-strong); padding:16px 18px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+      <div class="mono-tag" style="letter-spacing:0.1em; color:var(--grey);">CARD ${num} · UNUSED</div>
+      <span class="mono-tag" style="color:var(--ink); font-size:11px; user-select:all;">${card.code}</span>
+    </div>
+  `;
+}
+
+function honRenderCardsDashboard(cards) {
+  const tag = document.getElementById('cards-tag');
+  const list = document.getElementById('cards-list');
+  const caption = document.getElementById('cards-caption');
+  if (cards === null) {
+    tag.textContent = 'YOUR CARDS';
+    list.innerHTML = `<p style="font-size:14px; color:#2c2b28;">Sign in above to see your library cards.</p>`;
+    caption.textContent = '';
+    return;
+  }
+  const issuedCount = cards.filter(c => c.claimed_at).length;
+  tag.textContent = `YOUR CARDS · ${issuedCount} OF ${cards.length} ISSUED`;
+  list.innerHTML = cards.map((c, i) => honCardRowHTML(c, i)).join('');
+  caption.textContent = 'An unused card shows the code to hand someone — they redeem it above.';
+}
+
+async function honRefreshMembershipView() {
+  const user = await honGetCurrentUser();
+  const pendingCode = honTakePendingCardCode();
+  const redeemStatusEl = document.getElementById('redeem-status');
+
+  if (user && pendingCode) {
+    try {
+      await honRedeemCard(pendingCode);
+      redeemStatusEl.textContent = "Welcome — you're in. Your five cards are ready below.";
+      redeemStatusEl.style.color = 'var(--ink)';
+    } catch (err) {
+      redeemStatusEl.textContent = `Couldn't redeem that code: ${err.message || err}`;
+      redeemStatusEl.style.color = 'var(--red)';
+    }
+  } else if (pendingCode) {
+    // Session not established yet (e.g. this fired before the magic-link
+    // redirect finished processing) — put the code back for the next check.
+    honStashPendingCardCode(pendingCode);
+  }
+
+  try {
+    const cards = await honFetchMyCards();
+    honRenderCardsDashboard(cards);
+  } catch (err) {
+    document.getElementById('cards-list').innerHTML = `<p style="font-size:14px; color:var(--red);">Couldn't load your cards: ${err.message || err}</p>`;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await honRefreshMembershipView();
+  honSupabase.auth.onAuthStateChange((event) => {
+    if (event === 'SIGNED_IN') honRefreshMembershipView();
+  });
 });
 </script>
 </body>

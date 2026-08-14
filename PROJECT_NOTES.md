@@ -140,11 +140,14 @@ at all" no longer fully holds once this lands.
 - ~~No real backend~~ — **outdated as of 2026-08-14.** Checkout/return/queue
   now run against a real shared Supabase backend with real accounts (RLS
   own-rows-only). See `/plan-eng-review` T1-T5.
-- Membership page now has a real sign-in form (email magic link) as of T5.
-  The waitlist form and the support/donation form are still non-functional
-  mockups with a fake confirmation message — clearly labeled as demo-only
-  in the copy. Joining via a real card code (redeem_card) isn't wired up
-  yet either — that's T9.
+- Membership page now has a real sign-in form (email magic link, T5) and a
+  real card-redemption flow (T9): enter a code + email, the code is
+  validated against the DB before any email is sent, and redeem_card claims
+  it (minting 5 new cards) once the user comes back signed in from the
+  magic link. The card dashboard now shows real issued/unused cards for the
+  signed-in user instead of a hardcoded mockup. The waitlist form and the
+  support/donation form are still non-functional mockups with a fake
+  confirmation message — clearly labeled as demo-only in the copy.
 - Covers are real photographed scans of actual magazines, not typographic
   placeholders — a deliberate, risk-aware choice (see above), not a gap.
 
