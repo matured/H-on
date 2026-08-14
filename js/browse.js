@@ -36,7 +36,7 @@ function honLayoutShelf(visibleItems) {
   const isMobile = window.innerWidth <= 760;
   shelf.innerHTML = '';
 
-  let cumulativeTop = 20;
+  const sideTop = [20, 20];
 
   visibleItems.forEach((item) => {
     const globalIndex = HON_CATALOG.findIndex(x => x.id === item.id);
@@ -54,7 +54,7 @@ function honLayoutShelf(visibleItems) {
     el.style.transform = `rotate(${rotate.toFixed(1)}deg)`;
 
     if (!isMobile) {
-      el.style.top = cumulativeTop + 'px';
+      el.style.top = sideTop[side] + 'px';
       el.style.left = leftPct + '%';
     }
 
@@ -72,10 +72,10 @@ function honLayoutShelf(visibleItems) {
 
     const approxWidthPx = (widthPct / 100) * shelf.clientWidth;
     const approxHeight = approxWidthPx * 1.33 + 60;
-    cumulativeTop += approxHeight + 70 + honSeeded(globalIndex * 5 + 3) * 60;
+    sideTop[side] += approxHeight + 70 + honSeeded(globalIndex * 5 + 3) * 60;
   });
 
-  shelf.style.height = isMobile ? 'auto' : cumulativeTop + 'px';
+  shelf.style.height = isMobile ? 'auto' : Math.max(sideTop[0], sideTop[1]) + 'px';
 }
 
 function honBuildFilters() {
