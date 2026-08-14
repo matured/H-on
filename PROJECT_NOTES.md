@@ -5,7 +5,7 @@ Mock company site for a Communications Industry Mock Company final project.
 Japanese print media from 1990–2005, one reader at a time — the anti-feed,
 anti-algorithm answer to how media discovery works today.
 
-Last updated: this session (V6).
+Last updated: this session (V6 + the T1-T16 backend build, 2026-08-14).
 
 ---
 
@@ -117,6 +117,36 @@ at all" no longer fully holds once this lands.
   was a deliberate swap partway through the project: the splash needs to be
   whatever loads by default, so it had to become `index.html`, which pushed
   the original homepage content to `home.html`.
+
+---
+
+## Backend build (T1-T16, complete as of 2026-08-14)
+
+The `/plan-eng-review` 16-task plan is fully implemented and pushed:
+
+- **Circulation**: real Supabase-backed checkout/return/queue, row-locked
+  against overselling (T2), batched status fetch (T7), overdue soft
+  enforcement (T8), in-app queue notifications on return (T13).
+- **Accounts**: magic-link sign-in (T5), 5-card invite system with a real
+  redeem flow (T9), RLS own-rows-only privacy (T3).
+- **Catalog**: metadata migrated from a static JS file into Supabase,
+  admin-editable (T12) — also the migration that surfaced `items` had
+  been empty since T1, meaning no real checkout had ever succeeded
+  before that point.
+- **Admin**: `admin.html` (T11) — issue cards, force-return loans, ban
+  members, add/edit catalog titles. Gated server-side by
+  `profiles.is_admin`, not by the page being unlinked.
+- **Hardening**: per-user rate limiting on every member-facing write RPC
+  (T14).
+- **Tests**: 55 Vitest unit tests for `circulation.js` (T15, `bun run
+  test`); SQL-based E2E scripts under `tests/e2e/` for the checkout race
+  condition and RLS enforcement (T16), run manually via the Supabase SQL
+  Editor since real two-account browser automation would have needed
+  either a test-email service or the Supabase service role key.
+
+See `supabase/migrations/` for the full schema/RPC history and
+`~/.gstack/projects/matured-H-on/brandon-main-eng-review-20260814-013000.md`
+for the original design doc.
 
 ---
 
