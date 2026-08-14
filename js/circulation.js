@@ -95,20 +95,81 @@ async function honFetchStatus(itemId) {
   return honState[itemId];
 }
 
-// Naive per-item fetch for the whole catalog — N+1, intentionally. T7
-// replaces this with a single batched query; this version exists so the
-// site is functionally correct in the meantime. Failures are caught
-// per-item so one bad request doesn't take down the whole shelf.
+// Batched fetch for the whole catalog: 3 queries total (availability, own
+// loans, own queue entries) instead of the old per-item N+1. Any item with
+// no matching availability row still gets a safe default so a partial
+// result doesn't break rendering.
 async function honFetchAllStatuses(items) {
-  await Promise.all(items.map(item =>
-    honFetchStatus(item.id).catch(err => {
-      console.error(`Failed to fetch status for ${item.id}:`, err);
+  const ids = items.map(i => i.id);
+
+  try {
+    const { data: availRows, error: availErr } = await honSupabase
+      .from('item_availability')
+      .select('item_id, copies_total, active_loans, queue_length')
+      .in('item_id', ids);
+    if (availErr) throw availErr;
+    const availByItem = Object.fromEntries((availRows || []).map(r => [r.item_id, r]));
+
+    const user = await honGetCurrentUser();
+
+    let loansByItem = {};
+    let queueByItem = {};
+    if (user) {
+      const [{ data: loanRows, error: loanErr }, { data: queueRows, error: queueErr }] = await Promise.all([
+        honSupabase
+          .from('loans')
+          .select('id, item_id, due_at')
+          .in('item_id', ids)
+          .eq('user_id', user.id)
+          .is('returned_at', null),
+        honSupabase
+          .from('queue_entries')
+          .select('id, item_id')
+          .in('item_id', ids)
+          .eq('user_id', user.id),
+      ]);
+      if (loanErr) throw loanErr;
+      if (queueErr) throw queueErr;
+      loansByItem = Object.fromEntries((loanRows || []).map(r => [r.item_id, r]));
+      queueByItem = Object.fromEntries((queueRows || []).map(r => [r.item_id, r]));
+    }
+
+    items.forEach(item => {
+      const avail = availByItem[item.id];
+      const myLoan = loansByItem[item.id] || null;
+      const myQueueEntry = queueByItem[item.id] || null;
+      const copiesTotal = avail?.copies_total ?? 1;
+      const activeLoans = avail?.active_loans ?? 0;
+
+      let status;
+      if (myLoan) {
+        status = 'checked_out_you';
+      } else if (activeLoans >= copiesTotal) {
+        status = 'checked_out_other';
+      } else {
+        status = 'available';
+      }
+
       honState[item.id] = {
-        status: 'available', dueDate: null, loanId: null,
-        queueLen: 0, youInQueue: false, copiesTotal: 1,
+        status,
+        dueDate: myLoan ? myLoan.due_at : null,
+        loanId: myLoan ? myLoan.id : null,
+        queueLen: avail?.queue_length ?? 0,
+        youInQueue: !!myQueueEntry,
+        copiesTotal,
       };
-    })
-  ));
+    });
+  } catch (err) {
+    console.error('Failed to fetch catalog statuses:', err);
+    items.forEach(item => {
+      if (!honState[item.id]) {
+        honState[item.id] = {
+          status: 'available', dueDate: null, loanId: null,
+          queueLen: 0, youInQueue: false, copiesTotal: 1,
+        };
+      }
+    });
+  }
 }
 
 // ---- mutations ----
