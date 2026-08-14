@@ -113,9 +113,15 @@ function honRenderShelf(filter) {
 
 document.addEventListener('DOMContentLoaded', async () => {
   if (document.getElementById('shelf')) {
-    honBuildFilters();
     const shelf = document.getElementById('shelf');
     shelf.innerHTML = '<p class="eyebrow" style="padding: 40px 0;">LOADING THE SHELF…</p>';
+    try {
+      await honFetchCatalog();
+    } catch (err) {
+      shelf.innerHTML = `<p class="eyebrow" style="padding: 40px 0; color:var(--red);">Couldn't load the catalog: ${err.message || err}</p>`;
+      return;
+    }
+    honBuildFilters();
     // honFetchAllStatuses catches failures per-item (a bad item still gets
     // a safe default so one broken request doesn't take down the whole
     // shelf) — this call itself never rejects.

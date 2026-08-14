@@ -19,7 +19,7 @@ index.html          Splash: flickering 本 grid, click any tile to enter
 
 home.html            The actual marketing homepage (hero, mission, pillars)
 about.html           Founder story, mission statement, team roles
-catalog.html         The Archive — scattered floating shelf of 15 titles
+catalog.html         The Archive — scattered floating shelf of 17 titles
 item.html            Item detail page (?id=<item-id>), reached by clicking a cover
 how-it-works.html    Circulation cycle, queue mechanic, CDL legal framing
 membership.html      Invite-only system, 5-library-card mechanic, waitlist form
@@ -52,8 +52,9 @@ hon-site/
 │   └── style.css          single shared stylesheet, all design tokens
 └── js/
     ├── main.js            injects black-circle nav + overlay on every page
-    ├── catalog-data.js    the 15 fictional catalog entries (source of truth)
-    ├── circulation.js     shared state logic: checkout/return/queue, localStorage
+    ├── supabase-config.js Supabase client init (URL + publishable anon key)
+    ├── circulation.js     shared state: checkout/return/queue + catalog fetch,
+    │                      all against Supabase — no static data files left
     ├── browse.js          Archive page: scattered shelf layout + filters
     └── item.js            Item page: layout, background pattern, cover/detail toggle
 ```
@@ -82,9 +83,16 @@ at all" no longer fully holds once this lands.
   underneath changed. `localStorage` is no longer used for circulation state.
   See `supabase/migrations/` for schema and `~/.gstack/projects/matured-H-on/
   brandon-main-eng-review-20260814-013000.md` for the full design.
-- **Catalog data is centralized** in `js/catalog-data.js` as a single array.
-  Adding a 16th title only requires adding one object there — both the shelf
-  layout (`browse.js`) and item pages (`item.js`) read from it automatically.
+- **Catalog metadata lives in Supabase too**, as of 2026-08-14 (T12) —
+  `js/catalog-data.js` is gone; `public.items` now holds title/cover/
+  description columns alongside the copies_total column it already had.
+  `honFetchCatalog()` in `circulation.js` populates the `HON_CATALOG`
+  global once per page load (every page reading it now awaits that first).
+  Adding a title is done through `admin.html`'s Catalog section, not by
+  editing a file. Also closed a real gap this uncovered: `items` had been
+  completely empty since T1 — nobody had ever actually checked out a real
+  title before this; every "1 copy in the collection" display had been
+  running on a client-side fallback default, not a real database row.
 - **Covers are real photographed scans** of actual magazines (BURST, FRUITS,
   Lightning, etc.), stored in `images/covers/`. An earlier version of this
   document said covers were typographic placeholders specifically to avoid

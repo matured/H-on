@@ -222,6 +222,18 @@ function bindItemDots(item) {
 
 document.addEventListener('DOMContentLoaded', async () => {
   honBuildBackgroundPattern();
+  try {
+    await honFetchCatalog();
+  } catch (err) {
+    document.getElementById('item-root').innerHTML = `
+      <p class="eyebrow">SOMETHING WENT WRONG</p>
+      <h1 style="font-size: clamp(26px,4vw,40px); margin-top:14px;">Couldn't load the catalog.</h1>
+      <p class="serif-lede" style="margin-top:14px;">${err.message || err}</p>
+      <a href="catalog.html" class="btn" style="margin-top:22px; display:inline-flex;">Back to the Shelf &rarr;</a>
+    `;
+    document.title = 'Error · 本 (hon)';
+    return;
+  }
   await honRenderItem();
   let resizeTimer;
   window.addEventListener('resize', () => {

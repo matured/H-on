@@ -9,6 +9,38 @@
 
 let honState = {};
 
+// Catalog metadata used to be the static array in js/catalog-data.js;
+// as of T12 it's real rows in public.items (title/cover/description
+// columns added alongside the copies_total column that was already
+// there). honFetchCatalog() populates this global once per page load —
+// every page that reads HON_CATALOG must await it first.
+let HON_CATALOG = [];
+
+async function honFetchCatalog() {
+  const { data, error } = await honSupabase
+    .from('items')
+    .select('item_id, title, subtitle, issue, era, genre, call_number, copies_total, cover_bg, cover_fg, cover_accent, cover_image, back_image, description')
+    .order('item_id', { ascending: true });
+  if (error) throw error;
+  HON_CATALOG = (data || []).map(row => ({
+    id: row.item_id,
+    title: row.title,
+    subtitle: row.subtitle || undefined,
+    issue: row.issue,
+    era: row.era,
+    genre: row.genre,
+    call: row.call_number,
+    copiesTotal: row.copies_total,
+    coverBg: row.cover_bg,
+    coverFg: row.cover_fg,
+    coverAccent: row.cover_accent,
+    coverImage: row.cover_image || undefined,
+    backImage: row.back_image || undefined,
+    desc: row.description,
+  }));
+  return HON_CATALOG;
+}
+
 function honFormatDate(iso) {
   if (!iso) return '';
   const d = new Date(iso);
@@ -123,6 +155,31 @@ async function honAdminIssueCard() {
 async function honAdminSetBanned(userId, banned) {
   const { error } = await honSupabase.rpc('admin_set_banned', { p_user_id: userId, p_banned: banned });
   if (error) throw error;
+}
+
+// item: same shape as a HON_CATALOG entry (id, title, subtitle, issue,
+// era, genre, call, copiesTotal, coverBg, coverFg, coverAccent,
+// coverImage, backImage, desc) — admin.html's form reads/writes that
+// shape directly, this just renames to the RPC's column names.
+async function honAdminUpsertItem(item) {
+  const { data, error } = await honSupabase.rpc('admin_upsert_item', {
+    p_item_id: item.id,
+    p_title: item.title,
+    p_subtitle: item.subtitle || null,
+    p_issue: item.issue,
+    p_era: item.era,
+    p_genre: item.genre,
+    p_call_number: item.call,
+    p_copies_total: item.copiesTotal,
+    p_cover_bg: item.coverBg,
+    p_cover_fg: item.coverFg,
+    p_cover_accent: item.coverAccent,
+    p_cover_image: item.coverImage || null,
+    p_back_image: item.backImage || null,
+    p_description: item.desc,
+  });
+  if (error) throw error;
+  return data;
 }
 
 // ---- status fetching ----
@@ -320,8 +377,7 @@ function honIsOverdue(s) {
 }
 
 // Returns { stampClass, stampLabel, metaText } for a given item's current
-// state. Reads copiesTotal from honState (the live DB value, Finding 13),
-// never from the static catalog-data.js copies field.
+// state. Reads copiesTotal from honState (the live DB value, Finding 13).
 function honStatusInfo(item) {
   const s = honState[item.id];
   if (!s) {

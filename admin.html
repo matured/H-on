@@ -40,6 +40,8 @@
 const HON_LABEL_STYLE = 'display:block; font-family:var(--mono); font-size:11px; letter-spacing:0.1em; font-weight:600; text-transform:uppercase; color:var(--grey); margin-bottom:6px;';
 const HON_TH_STYLE = 'text-align:left; font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--grey); padding:8px 10px; border-bottom:1px solid var(--line-strong);';
 const HON_TD_STYLE = 'padding:10px; border-bottom:1px solid var(--line); font-size:13.5px; vertical-align:middle;';
+const HON_INPUT_STYLE = 'width:100%; font-family:var(--mono); font-size:13px; padding:10px 12px; border:1px solid var(--ink); background:var(--paper);';
+const HON_CATALOG_FIELD_IDS = ['cf-id', 'cf-title', 'cf-subtitle', 'cf-issue', 'cf-era', 'cf-genre', 'cf-call', 'cf-coverbg', 'cf-coverfg', 'cf-coveraccent', 'cf-coverimage', 'cf-backimage', 'cf-desc'];
 
 function honEscape(s) {
   const div = document.createElement('div');
@@ -92,9 +94,37 @@ async function honRenderAdmin() {
       <div id="loans-table-wrap" style="margin-top:16px; overflow-x:auto;">Loading&hellip;</div>
     </div>
 
-    <div>
+    <div style="margin-bottom:48px;">
       <p class="eyebrow">MEMBERS</p>
       <div id="members-table-wrap" style="margin-top:16px; overflow-x:auto;">Loading&hellip;</div>
+    </div>
+
+    <div>
+      <p class="eyebrow">CATALOG</p>
+      <h2 style="font-size: clamp(20px, 2.6vw, 24px); margin-top:12px;">Add or edit a title.</h2>
+      <p style="margin-top:10px; font-size:14.5px; color:#2c2b28;">Click Edit on a row below to load it here, or fill this in fresh to add a new title.</p>
+      <div id="catalog-form" style="margin-top:16px; display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:14px; max-width:900px;">
+        <div><label style="${HON_LABEL_STYLE}">Item ID (slug)</label><input id="cf-id" style="${HON_INPUT_STYLE}"></div>
+        <div><label style="${HON_LABEL_STYLE}">Title</label><input id="cf-title" style="${HON_INPUT_STYLE}"></div>
+        <div><label style="${HON_LABEL_STYLE}">Subtitle</label><input id="cf-subtitle" style="${HON_INPUT_STYLE}"></div>
+        <div><label style="${HON_LABEL_STYLE}">Issue</label><input id="cf-issue" style="${HON_INPUT_STYLE}"></div>
+        <div><label style="${HON_LABEL_STYLE}">Era (year)</label><input id="cf-era" style="${HON_INPUT_STYLE}"></div>
+        <div><label style="${HON_LABEL_STYLE}">Genre</label><input id="cf-genre" style="${HON_INPUT_STYLE}"></div>
+        <div><label style="${HON_LABEL_STYLE}">Call Number</label><input id="cf-call" style="${HON_INPUT_STYLE}"></div>
+        <div><label style="${HON_LABEL_STYLE}">Copies</label><input id="cf-copies" type="number" min="1" value="1" style="${HON_INPUT_STYLE}"></div>
+        <div><label style="${HON_LABEL_STYLE}">Cover BG (hex)</label><input id="cf-coverbg" style="${HON_INPUT_STYLE}"></div>
+        <div><label style="${HON_LABEL_STYLE}">Cover FG (hex)</label><input id="cf-coverfg" style="${HON_INPUT_STYLE}"></div>
+        <div><label style="${HON_LABEL_STYLE}">Cover Accent (hex)</label><input id="cf-coveraccent" style="${HON_INPUT_STYLE}"></div>
+        <div><label style="${HON_LABEL_STYLE}">Cover Image URL</label><input id="cf-coverimage" style="${HON_INPUT_STYLE}"></div>
+        <div><label style="${HON_LABEL_STYLE}">Back Image URL</label><input id="cf-backimage" style="${HON_INPUT_STYLE}"></div>
+        <div style="grid-column: 1 / -1;"><label style="${HON_LABEL_STYLE}">Description</label><textarea id="cf-desc" rows="3" style="width:100%; font-family:var(--serif); font-size:14px; padding:10px 12px; border:1px solid var(--ink); background:var(--paper); resize:vertical;"></textarea></div>
+      </div>
+      <div style="margin-top:14px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+        <button class="btn btn-solid" id="catalog-save-btn">Save Title &rarr;</button>
+        <button class="btn" id="catalog-clear-btn" type="button">New / Clear</button>
+        <p id="catalog-form-status" style="font-size:14px; margin:0;"></p>
+      </div>
+      <div id="catalog-table-wrap" style="margin-top:28px; overflow-x:auto;">Loading&hellip;</div>
     </div>
   `;
 
@@ -118,6 +148,130 @@ async function honRenderAdmin() {
 
   await honRenderLoansTable();
   await honRenderMembersTable();
+  await honRenderCatalogSection();
+}
+
+function honCatalogFormToItem() {
+  return {
+    id: document.getElementById('cf-id').value.trim(),
+    title: document.getElementById('cf-title').value.trim(),
+    subtitle: document.getElementById('cf-subtitle').value.trim() || undefined,
+    issue: document.getElementById('cf-issue').value.trim(),
+    era: document.getElementById('cf-era').value.trim(),
+    genre: document.getElementById('cf-genre').value.trim(),
+    call: document.getElementById('cf-call').value.trim(),
+    copiesTotal: parseInt(document.getElementById('cf-copies').value, 10),
+    coverBg: document.getElementById('cf-coverbg').value.trim(),
+    coverFg: document.getElementById('cf-coverfg').value.trim(),
+    coverAccent: document.getElementById('cf-coveraccent').value.trim(),
+    coverImage: document.getElementById('cf-coverimage').value.trim() || undefined,
+    backImage: document.getElementById('cf-backimage').value.trim() || undefined,
+    desc: document.getElementById('cf-desc').value.trim(),
+  };
+}
+
+function honFillCatalogForm(item) {
+  document.getElementById('cf-id').value = item.id;
+  document.getElementById('cf-id').disabled = true; // item_id is the primary key — don't let an edit silently become a new row
+  document.getElementById('cf-title').value = item.title;
+  document.getElementById('cf-subtitle').value = item.subtitle || '';
+  document.getElementById('cf-issue').value = item.issue;
+  document.getElementById('cf-era').value = item.era;
+  document.getElementById('cf-genre').value = item.genre;
+  document.getElementById('cf-call').value = item.call;
+  document.getElementById('cf-copies').value = item.copiesTotal;
+  document.getElementById('cf-coverbg').value = item.coverBg;
+  document.getElementById('cf-coverfg').value = item.coverFg;
+  document.getElementById('cf-coveraccent').value = item.coverAccent;
+  document.getElementById('cf-coverimage').value = item.coverImage || '';
+  document.getElementById('cf-backimage').value = item.backImage || '';
+  document.getElementById('cf-desc').value = item.desc;
+  document.getElementById('catalog-form-status').textContent = '';
+}
+
+function honClearCatalogForm() {
+  HON_CATALOG_FIELD_IDS.forEach(id => { document.getElementById(id).value = ''; });
+  document.getElementById('cf-id').disabled = false;
+  document.getElementById('cf-copies').value = '1';
+  document.getElementById('catalog-form-status').textContent = '';
+}
+
+function honRenderCatalogTable() {
+  const wrap = document.getElementById('catalog-table-wrap');
+  if (!HON_CATALOG.length) {
+    wrap.innerHTML = `<p style="font-size:14px; color:var(--grey);">No titles yet.</p>`;
+    return;
+  }
+  wrap.innerHTML = `
+    <table style="width:100%; border-collapse:collapse; min-width:560px;">
+      <thead><tr>
+        <th style="${HON_TH_STYLE}">ID</th>
+        <th style="${HON_TH_STYLE}">Title</th>
+        <th style="${HON_TH_STYLE}">Issue</th>
+        <th style="${HON_TH_STYLE}">Genre</th>
+        <th style="${HON_TH_STYLE}">Copies</th>
+        <th style="${HON_TH_STYLE}"></th>
+      </tr></thead>
+      <tbody>
+        ${HON_CATALOG.map(item => `
+          <tr>
+            <td style="${HON_TD_STYLE} font-family:var(--mono);">${honEscape(item.id)}</td>
+            <td style="${HON_TD_STYLE}">${honEscape(item.title)}</td>
+            <td style="${HON_TD_STYLE}">${honEscape(item.issue)}</td>
+            <td style="${HON_TD_STYLE}">${honEscape(item.genre)}</td>
+            <td style="${HON_TD_STYLE}">${item.copiesTotal}</td>
+            <td style="${HON_TD_STYLE}"><button class="btn" data-edit-id="${honEscape(item.id)}" style="font-size:12px; padding:8px 12px;">Edit</button></td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+  wrap.querySelectorAll('button[data-edit-id]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = HON_CATALOG.find(i => i.id === btn.dataset.editId);
+      if (item) honFillCatalogForm(item);
+      document.getElementById('catalog-form').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  });
+}
+
+async function honRenderCatalogSection() {
+  try {
+    await honFetchCatalog();
+  } catch (err) {
+    document.getElementById('catalog-table-wrap').innerHTML = `<p style="color:var(--red); font-size:14px;">Couldn't load the catalog: ${honEscape(err.message || err)}</p>`;
+    return;
+  }
+  honRenderCatalogTable();
+
+  document.getElementById('catalog-clear-btn').addEventListener('click', honClearCatalogForm);
+
+  document.getElementById('catalog-save-btn').addEventListener('click', async () => {
+    const btn = document.getElementById('catalog-save-btn');
+    const statusEl = document.getElementById('catalog-form-status');
+    const item = honCatalogFormToItem();
+    const required = ['id', 'title', 'issue', 'era', 'genre', 'call', 'coverBg', 'coverFg', 'coverAccent', 'desc'];
+    if (required.some(k => !item[k]) || !item.copiesTotal || item.copiesTotal < 1) {
+      statusEl.textContent = 'Fill in all fields except subtitle and the two image URLs.';
+      statusEl.style.color = 'var(--red)';
+      return;
+    }
+    btn.disabled = true;
+    btn.textContent = 'Saving…';
+    try {
+      await honAdminUpsertItem(item);
+      await honFetchCatalog();
+      honRenderCatalogTable();
+      statusEl.textContent = `Saved "${item.title}".`;
+      statusEl.style.color = 'var(--ink)';
+    } catch (err) {
+      statusEl.textContent = `Couldn't save: ${err.message || err}`;
+      statusEl.style.color = 'var(--red)';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Save Title →';
+    }
+  });
 }
 
 async function honRenderLoansTable() {
