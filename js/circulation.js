@@ -2,116 +2,181 @@
    本 (HON) — CIRCULATION STATE (shared)
    Checkout / return / queue logic used by both
    the Archive browse page and individual item pages.
-   State persists to this browser via localStorage.
+   State lives in Supabase now — see supabase/migrations/.
+   honState is an in-memory cache, populated by fetching
+   from the server, not the source of truth itself.
    ============================================ */
 
-const HON_STORAGE_KEY = 'hon_circulation_state_v2';
-
-const HON_SEEDED_CHECKED_OUT = {
-  'burst-vol17': { queueLen: 2 },
-  'lightning-vol367': { queueLen: 1 },
-  'fruits-no92': { queueLen: 3 },
-  'lightning-vol378': { queueLen: 0 },
-};
-
-function honAddDays(date, days) {
-  const d = new Date(date);
-  d.setDate(d.getDate() + days);
-  return d.toISOString();
-}
+let honState = {};
 
 function honFormatDate(iso) {
+  if (!iso) return '';
   const d = new Date(iso);
   return d.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }).toUpperCase();
 }
 
-function honDefaultEntry(id) {
-  if (HON_SEEDED_CHECKED_OUT[id]) {
-    return {
-      status: 'checked_out_other',
-      dueDate: honAddDays(new Date(), 6 + Math.floor(Math.random() * 5)),
-      queueLen: HON_SEEDED_CHECKED_OUT[id].queueLen,
-      youInQueue: false,
-    };
+// ---- auth ----
+
+async function honGetCurrentUser() {
+  // getSession() reads the locally cached session — no network call, so no
+  // noise when nobody's logged in (the common case on every page load).
+  // The RPC functions themselves still validate the JWT server-side, so
+  // this doesn't weaken anything — it just avoids an unnecessary round
+  // trip (and the 400 it produces) purely to decide whether to attempt one.
+  const { data: { session } } = await honSupabase.auth.getSession();
+  return session?.user ?? null;
+}
+
+async function honSignInWithEmail(email) {
+  const { error } = await honSupabase.auth.signInWithOtp({
+    email,
+    options: { emailRedirectTo: window.location.origin + '/membership.html' },
+  });
+  if (error) throw error;
+}
+
+// ---- status fetching ----
+
+// Fetches one item's status: public aggregate counts (from the
+// item_availability view) plus, if signed in, whether THIS user holds it
+// or is queued for it (from loans/queue_entries, which RLS already
+// restricts to the caller's own rows).
+async function honFetchStatus(itemId) {
+  const { data: avail, error: availErr } = await honSupabase
+    .from('item_availability')
+    .select('copies_total, active_loans, queue_length')
+    .eq('item_id', itemId)
+    .maybeSingle();
+  if (availErr) throw availErr;
+
+  const user = await honGetCurrentUser();
+
+  let myLoan = null;
+  let myQueueEntry = null;
+  if (user) {
+    const { data: loanRow } = await honSupabase
+      .from('loans')
+      .select('id, due_at')
+      .eq('item_id', itemId)
+      .eq('user_id', user.id)
+      .is('returned_at', null)
+      .maybeSingle();
+    myLoan = loanRow || null;
+
+    const { data: queueRow } = await honSupabase
+      .from('queue_entries')
+      .select('id')
+      .eq('item_id', itemId)
+      .eq('user_id', user.id)
+      .maybeSingle();
+    myQueueEntry = queueRow || null;
   }
-  return { status: 'available', dueDate: null, queueLen: 0, youInQueue: false };
-}
 
-function honLoadState() {
-  let raw;
-  try { raw = JSON.parse(localStorage.getItem(HON_STORAGE_KEY)); } catch (e) { raw = null; }
+  const copiesTotal = avail?.copies_total ?? 1;
+  const activeLoans = avail?.active_loans ?? 0;
 
-  const state = raw || {};
-  let changed = !raw;
+  let status;
+  if (myLoan) {
+    status = 'checked_out_you';
+  } else if (activeLoans >= copiesTotal) {
+    status = 'checked_out_other';
+  } else {
+    status = 'available';
+  }
 
-  // Self-heal: if the catalog has changed (items added, removed, or this
-  // is a fresh browser), make sure every current catalog item has a state
-  // entry so lookups never fail, and drop entries for items no longer in
-  // the catalog.
-  HON_CATALOG.forEach(item => {
-    if (!state[item.id]) {
-      state[item.id] = honDefaultEntry(item.id);
-      changed = true;
-    }
-  });
-  const validIds = new Set(HON_CATALOG.map(i => i.id));
-  Object.keys(state).forEach(id => {
-    if (!validIds.has(id)) {
-      delete state[id];
-      changed = true;
-    }
-  });
-
-  if (changed) honSaveState(state);
-  return state;
-}
-
-function honSaveState(state) {
-  localStorage.setItem(HON_STORAGE_KEY, JSON.stringify(state));
-}
-
-let honState = honLoadState();
-
-function honCheckOut(id, onChange) {
-  honState[id] = {
-    status: 'checked_out_you',
-    dueDate: honAddDays(new Date(), 14),
-    queueLen: 0,
-    youInQueue: false,
+  honState[itemId] = {
+    status,
+    dueDate: myLoan ? myLoan.due_at : null,
+    loanId: myLoan ? myLoan.id : null,
+    queueLen: avail?.queue_length ?? 0,
+    youInQueue: !!myQueueEntry,
+    copiesTotal,
   };
-  honSaveState(honState);
-  if (onChange) onChange();
+  return honState[itemId];
 }
 
-function honReturnItem(id, onChange) {
-  honState[id] = { status: 'available', dueDate: null, queueLen: 0, youInQueue: false };
-  honSaveState(honState);
-  if (onChange) onChange();
+// Naive per-item fetch for the whole catalog — N+1, intentionally. T7
+// replaces this with a single batched query; this version exists so the
+// site is functionally correct in the meantime. Failures are caught
+// per-item so one bad request doesn't take down the whole shelf.
+async function honFetchAllStatuses(items) {
+  await Promise.all(items.map(item =>
+    honFetchStatus(item.id).catch(err => {
+      console.error(`Failed to fetch status for ${item.id}:`, err);
+      honState[item.id] = {
+        status: 'available', dueDate: null, loanId: null,
+        queueLen: 0, youInQueue: false, copiesTotal: 1,
+      };
+    })
+  ));
 }
 
-function honJoinQueue(id, onChange) {
-  honState[id].youInQueue = true;
-  honState[id].queueLen += 1;
-  honSaveState(honState);
-  if (onChange) onChange();
+// ---- mutations ----
+// Same (id, onChange) signature as the old localStorage version, so
+// item.js's call sites barely change. onChange now receives an optional
+// error argument (undefined on success) so callers that want to can
+// distinguish success from failure; callers that ignore it still work.
+
+async function honCheckOut(id, onChange) {
+  try {
+    const { error } = await honSupabase.rpc('check_out', { p_item_id: id });
+    if (error) throw error;
+    await honFetchStatus(id);
+    if (onChange) onChange();
+  } catch (err) {
+    if (onChange) onChange(err);
+  }
 }
 
-function honLeaveQueue(id, onChange) {
-  honState[id].youInQueue = false;
-  honState[id].queueLen = Math.max(0, honState[id].queueLen - 1);
-  honSaveState(honState);
-  if (onChange) onChange();
+async function honReturnItem(id, onChange) {
+  try {
+    const loanId = honState[id]?.loanId;
+    if (!loanId) throw new Error('no active loan to return');
+    const { error } = await honSupabase.rpc('return_item', { p_loan_id: loanId });
+    if (error) throw error;
+    await honFetchStatus(id);
+    if (onChange) onChange();
+  } catch (err) {
+    if (onChange) onChange(err);
+  }
 }
 
-// Returns { stampClass, stampLabel, metaText } for a given item's current state
+async function honJoinQueue(id, onChange) {
+  try {
+    const { error } = await honSupabase.rpc('join_queue', { p_item_id: id });
+    if (error) throw error;
+    await honFetchStatus(id);
+    if (onChange) onChange();
+  } catch (err) {
+    if (onChange) onChange(err);
+  }
+}
+
+async function honLeaveQueue(id, onChange) {
+  try {
+    const { error } = await honSupabase.rpc('leave_queue', { p_item_id: id });
+    if (error) throw error;
+    await honFetchStatus(id);
+    if (onChange) onChange();
+  } catch (err) {
+    if (onChange) onChange(err);
+  }
+}
+
+// Returns { stampClass, stampLabel, metaText } for a given item's current
+// state. Reads copiesTotal from honState (the live DB value, Finding 13),
+// never from the static catalog-data.js copies field.
 function honStatusInfo(item) {
   const s = honState[item.id];
+  if (!s) {
+    return { stampClass: 'stamp-checked', stampLabel: 'LOADING…', metaText: '' };
+  }
   if (s.status === 'available') {
-    return { stampClass: 'stamp-available', stampLabel: 'ON THE SHELF', metaText: `${item.copies} ${item.copies > 1 ? 'copies' : 'copy'} in the collection` };
+    return { stampClass: 'stamp-available', stampLabel: 'ON THE SHELF', metaText: `${s.copiesTotal} ${s.copiesTotal > 1 ? 'copies' : 'copy'} in the collection` };
   }
   if (s.status === 'checked_out_you') {
     return { stampClass: 'stamp-yours', stampLabel: 'CHECKED OUT · YOU', metaText: `Due back ${honFormatDate(s.dueDate)}` };
   }
   const posText = s.youInQueue ? `You're #${s.queueLen} in line` : (s.queueLen > 0 ? `${s.queueLen} reader${s.queueLen > 1 ? 's' : ''} waiting` : 'No queue yet');
-  return { stampClass: 'stamp-checked', stampLabel: 'CHECKED OUT', metaText: `Back ${honFormatDate(s.dueDate)} · ${posText}` };
+  return { stampClass: 'stamp-checked', stampLabel: 'CHECKED OUT', metaText: `${posText}` };
 }

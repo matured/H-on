@@ -43,7 +43,7 @@ function honSpecRows(item) {
   return `
     <div class="item-spec-row"><span class="item-spec-swatch filled"></span> Genre: ${item.genre}</div>
     <div class="item-spec-row"><span class="item-spec-swatch filled"></span> Era: ${item.era}</div>
-    <div class="item-spec-row"><span class="item-spec-swatch filled"></span> Copies in collection: ${item.copies}</div>
+    <div class="item-spec-row"><span class="item-spec-swatch filled"></span> Copies in collection: ${s.copiesTotal}</div>
     <div class="item-spec-row"><span class="item-spec-swatch ${stampColor}"></span> Status: ${statusText}</div>
   `;
 }
@@ -58,13 +58,14 @@ function honCoverInnerHTML(item, view) {
     `;
   }
   if (view === 'detail') {
+    const copiesTotal = honState[item.id]?.copiesTotal ?? 1;
     return `
       <span class="mono-tag" style="color:${item.coverAccent}; letter-spacing:0.12em;">${item.call}</span>
       <div style="text-align:center;">
         <div class="item-cover-title" style="font-size: clamp(38px, 6vw, 60px);">${item.era}</div>
         <div class="item-cover-sub">${item.genre}</div>
       </div>
-      <span class="mono-tag" style="color:${item.coverAccent}; letter-spacing:0.1em;">${item.copies} ${item.copies > 1 ? 'copies' : 'copy'} held</span>
+      <span class="mono-tag" style="color:${item.coverAccent}; letter-spacing:0.1em;">${copiesTotal} ${copiesTotal > 1 ? 'copies' : 'copy'} held</span>
     `;
   }
   return `
@@ -77,7 +78,7 @@ function honCoverInnerHTML(item, view) {
   `;
 }
 
-function honRenderItem() {
+async function honRenderItem() {
   const item = honGetItemFromURL();
   const root = document.getElementById('item-root');
 
@@ -88,6 +89,20 @@ function honRenderItem() {
       <a href="catalog.html" class="btn" style="margin-top:22px; display:inline-flex;">Back to the Shelf &rarr;</a>
     `;
     document.title = 'Not Found · 本 (hon)';
+    return;
+  }
+
+  root.innerHTML = `<p class="eyebrow">LOADING…</p>`;
+  try {
+    await honFetchStatus(item.id);
+  } catch (err) {
+    root.innerHTML = `
+      <p class="eyebrow">SOMETHING WENT WRONG</p>
+      <h1 style="font-size: clamp(26px,4vw,40px); margin-top:14px;">Couldn't load this item.</h1>
+      <p class="serif-lede" style="margin-top:14px;">${err.message || err}</p>
+      <a href="catalog.html" class="btn" style="margin-top:22px; display:inline-flex;">Back to the Shelf &rarr;</a>
+    `;
+    document.title = 'Error · 本 (hon)';
     return;
   }
 
@@ -125,8 +140,8 @@ function honRenderItem() {
         <details class="item-disclosure">
           <summary>About This Demo</summary>
           <p class="item-disclosure-body">
-            Checkout, queueing, and returns here are fully functional and saved to this browser only.
-            This is a proof of concept of the mechanic, not a live multi-user system.
+            Checkout, queueing, and returns here are real — backed by a shared database, not
+            saved to your browser alone. Sign in from the Membership page to check something out.
           </p>
         </details>
       </div>
@@ -141,7 +156,22 @@ function bindItemActions(item) {
   const btn = document.getElementById('item-cta-btn');
   btn.addEventListener('click', () => {
     const action = btn.dataset.action;
-    const rerender = () => {
+    const originalLabel = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '…';
+
+    const rerender = (err) => {
+      btn.disabled = false;
+      if (err) {
+        // Minimal error surface for now — T6 replaces this with specific,
+        // inline per-error messaging (e.g. "someone just took the last
+        // copy" vs. a network failure). This just makes sure a failure is
+        // never silent and the button is always usable again afterward.
+        alert(honFriendlyError(err));
+        btn.innerHTML = originalLabel;
+        bindItemActions(item);
+        return;
+      }
       const cta = honCtaLabel(item);
       const status = honStatusInfo(item);
       btn.dataset.action = cta.action;
@@ -155,6 +185,15 @@ function bindItemActions(item) {
     if (action === 'join') honJoinQueue(item.id, rerender);
     if (action === 'leave') honLeaveQueue(item.id, rerender);
   }, { once: true });
+}
+
+function honFriendlyError(err) {
+  const msg = err?.message || String(err);
+  if (msg.includes('must be authenticated')) return "You'll need to sign in first — head to the Membership page.";
+  if (msg.includes('no copies available')) return 'Someone just took the last copy. Try joining the queue instead.';
+  if (msg.includes('overdue')) return "You have an overdue item — return it before checking out another.";
+  if (msg.includes('already in queue')) return "You're already in the queue for this one.";
+  return `Something went wrong: ${msg}`;
 }
 
 function bindItemDots(item) {
@@ -172,9 +211,9 @@ function bindItemDots(item) {
   });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   honBuildBackgroundPattern();
-  honRenderItem();
+  await honRenderItem();
   let resizeTimer;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);

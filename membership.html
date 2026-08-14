@@ -26,6 +26,25 @@
 
   <hr class="rule">
 
+  <!-- SIGN IN (returning members) -->
+  <section id="signin">
+    <div class="wrap" style="max-width: 48ch;">
+      <p class="eyebrow">ALREADY A MEMBER?</p>
+      <h2 style="font-size: clamp(22px, 2.8vw, 28px); margin-top:14px;">Sign in.</h2>
+      <p style="margin-top:12px; font-size:15px; color:#2c2b28;">
+        Enter the email your account is under — we'll send a one-time link, no password needed.
+      </p>
+      <form id="signin-form" style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
+        <label for="signin-email" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0);">Email</label>
+        <input id="signin-email" type="email" placeholder="you@example.com" required style="flex:1; min-width:220px; font-family:var(--mono); font-size:14px; padding:12px 14px; border:1px solid var(--ink); background:var(--paper);">
+        <button type="submit" class="btn btn-solid" id="signin-submit">Send Link &rarr;</button>
+      </form>
+      <p id="signin-status" style="margin-top:12px; font-size:14px;"></p>
+    </div>
+  </section>
+
+  <hr class="rule">
+
   <!-- LIBRARY CARDS MECHANIC -->
   <section id="cards">
     <div class="wrap" style="display:grid; grid-template-columns: 1fr 1fr; gap:56px;">
@@ -176,6 +195,32 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/catalog-data.js"></script>
+<script src="js/circulation.js"></script>
 <script src="js/main.js"></script>
+<script>
+document.getElementById('signin-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('signin-email').value.trim();
+  const statusEl = document.getElementById('signin-status');
+  const btn = document.getElementById('signin-submit');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+  statusEl.textContent = '';
+  try {
+    await honSignInWithEmail(email);
+    statusEl.textContent = `Check ${email} for a sign-in link.`;
+    statusEl.style.color = 'var(--ink)';
+  } catch (err) {
+    statusEl.textContent = `Couldn't send that: ${err.message || err}`;
+    statusEl.style.color = 'var(--red)';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Send Link →';
+  }
+});
+</script>
 </body>
 </html>

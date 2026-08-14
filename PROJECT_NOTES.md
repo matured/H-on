@@ -71,10 +71,13 @@ at all" no longer fully holds once this lands.
 
 ## Key architectural decisions
 
-- **Checkout state lives in `localStorage`**, keyed `hon_circulation_state_v1`,
-  shared between the Archive grid and item pages via `js/circulation.js`. This
-  is explicitly a single-browser demo of the mechanic, not a real backend —
-  every page that touches checkout state says so.
+- **Checkout state lives in Supabase (Postgres)**, as of 2026-08-14
+  (`/plan-eng-review` T1-T5) — real shared state, real accounts, RLS-enforced
+  privacy. `js/circulation.js` still centralizes checkout/return/queue logic
+  for the Archive grid and item pages, same as before; only the backend
+  underneath changed. `localStorage` is no longer used for circulation state.
+  See `supabase/migrations/` for schema and `~/.gstack/projects/matured-H-on/
+  brandon-main-eng-review-20260814-013000.md` for the full design.
 - **Catalog data is centralized** in `js/catalog-data.js` as a single array.
   Adding a 16th title only requires adding one object there — both the shelf
   layout (`browse.js`) and item pages (`item.js`) read from it automatically.
@@ -134,11 +137,14 @@ at all" no longer fully holds once this lands.
 
 ## Known limitations (by design, worth saying out loud in the presentation)
 
-- No real backend — checkout state is per-browser via `localStorage`, not
-  shared across devices or users. The site says this explicitly wherever
-  relevant, per the assignment's honesty expectations.
-- Membership/support forms (waitlist, donation) are non-functional mockups
-  with a fake confirmation message — clearly labeled as demo-only in the copy.
+- ~~No real backend~~ — **outdated as of 2026-08-14.** Checkout/return/queue
+  now run against a real shared Supabase backend with real accounts (RLS
+  own-rows-only). See `/plan-eng-review` T1-T5.
+- Membership page now has a real sign-in form (email magic link) as of T5.
+  The waitlist form and the support/donation form are still non-functional
+  mockups with a fake confirmation message — clearly labeled as demo-only
+  in the copy. Joining via a real card code (redeem_card) isn't wired up
+  yet either — that's T9.
 - Covers are real photographed scans of actual magazines, not typographic
   placeholders — a deliberate, risk-aware choice (see above), not a gap.
 
