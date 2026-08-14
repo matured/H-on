@@ -1,0 +1,507 @@
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { createMockSupabase } from './helpers/mockSupabase.js';
+import circ from '../js/circulation.js';
+
+const {
+  honFetchCatalog, honFormatDate, honGetCurrentUser, honSignInWithEmail,
+  honFetchMyCards, honValidateCardCode, honRedeemCard,
+  honStashPendingCardCode, honTakePendingCardCode,
+  honFetchMyProfile, honAdminListProfiles, honAdminListLoans,
+  honAdminForceReturn, honAdminIssueCard, honAdminSetBanned, honAdminUpsertItem,
+  honFetchMyNotifications, honMarkNotificationRead,
+  honFetchStatus, honFetchAllStatuses,
+  honCheckOut, honReturnItem, honJoinQueue, honLeaveQueue,
+  honIsOverdue, honStatusInfo,
+  getHonState, setHonState, getHonCatalog, setHonCatalog,
+} = circ;
+
+const USER = { id: 'user-1', email: 'reader@example.com' };
+
+beforeEach(() => {
+  setHonState({});
+  setHonCatalog([]);
+  localStorage.clear();
+  delete global.honSupabase;
+});
+
+describe('honFormatDate', () => {
+  it('formats as an uppercase MON DD, YYYY string', () => {
+    const formatted = honFormatDate('2026-03-05T12:00:00Z');
+    expect(formatted).toBe(formatted.toUpperCase());
+    expect(formatted).toMatch(/^[A-Z]{3} \d{2}, 2026$/);
+  });
+  it('returns empty string for falsy input', () => {
+    expect(honFormatDate(null)).toBe('');
+    expect(honFormatDate(undefined)).toBe('');
+    expect(honFormatDate('')).toBe('');
+  });
+});
+
+describe('honIsOverdue', () => {
+  it('is true for checked_out_you with a past due date', () => {
+    const past = new Date(Date.now() - 86400000).toISOString();
+    expect(honIsOverdue({ status: 'checked_out_you', dueDate: past })).toBe(true);
+  });
+  it('is false for checked_out_you with a future due date', () => {
+    const future = new Date(Date.now() + 86400000).toISOString();
+    expect(honIsOverdue({ status: 'checked_out_you', dueDate: future })).toBe(false);
+  });
+  it('is false for any other status, even with a past date', () => {
+    const past = new Date(Date.now() - 86400000).toISOString();
+    expect(honIsOverdue({ status: 'checked_out_other', dueDate: past })).toBe(false);
+    expect(honIsOverdue({ status: 'available', dueDate: null })).toBe(false);
+  });
+  it('is false with no dueDate at all', () => {
+    expect(honIsOverdue({ status: 'checked_out_you', dueDate: null })).toBe(false);
+  });
+});
+
+describe('honStatusInfo', () => {
+  const item = { id: 'burst-vol15' };
+
+  it('shows a loading state when nothing is cached yet', () => {
+    expect(honStatusInfo(item).stampLabel).toBe('LOADING…');
+  });
+
+  it('shows available with plural copy count', () => {
+    setHonState({ 'burst-vol15': { status: 'available', copiesTotal: 3, queueLen: 0, youInQueue: false } });
+    const info = honStatusInfo(item);
+    expect(info.stampClass).toBe('stamp-available');
+    expect(info.metaText).toBe('3 copies in the collection');
+  });
+
+  it('uses singular "copy" for exactly 1', () => {
+    setHonState({ 'burst-vol15': { status: 'available', copiesTotal: 1, queueLen: 0, youInQueue: false } });
+    expect(honStatusInfo(item).metaText).toBe('1 copy in the collection');
+  });
+
+  it('shows checked-out-you with a due date when not overdue', () => {
+    const future = new Date(Date.now() + 5 * 86400000).toISOString();
+    setHonState({ 'burst-vol15': { status: 'checked_out_you', dueDate: future, copiesTotal: 1 } });
+    const info = honStatusInfo(item);
+    expect(info.stampClass).toBe('stamp-yours');
+    expect(info.stampLabel).toBe('CHECKED OUT · YOU');
+    expect(info.metaText).toContain('Due back');
+  });
+
+  it('shows overdue instead of checked-out-you once past due', () => {
+    const past = new Date(Date.now() - 5 * 86400000).toISOString();
+    setHonState({ 'burst-vol15': { status: 'checked_out_you', dueDate: past, copiesTotal: 1 } });
+    const info = honStatusInfo(item);
+    expect(info.stampClass).toBe('stamp-overdue');
+    expect(info.stampLabel).toBe('OVERDUE');
+    expect(info.metaText).toContain('please return it');
+  });
+
+  it('shows queue position when the caller is in the queue', () => {
+    setHonState({ 'burst-vol15': { status: 'checked_out_other', youInQueue: true, queueLen: 3, copiesTotal: 1 } });
+    expect(honStatusInfo(item).metaText).toBe("You're #3 in line");
+  });
+
+  it('shows plural reader count when others wait and caller is not queued', () => {
+    setHonState({ 'burst-vol15': { status: 'checked_out_other', youInQueue: false, queueLen: 2, copiesTotal: 1 } });
+    expect(honStatusInfo(item).metaText).toBe('2 readers waiting');
+  });
+
+  it('shows singular reader count for exactly one waiter', () => {
+    setHonState({ 'burst-vol15': { status: 'checked_out_other', youInQueue: false, queueLen: 1, copiesTotal: 1 } });
+    expect(honStatusInfo(item).metaText).toBe('1 reader waiting');
+  });
+
+  it('shows "no queue yet" when checked out with nobody waiting', () => {
+    setHonState({ 'burst-vol15': { status: 'checked_out_other', youInQueue: false, queueLen: 0, copiesTotal: 1 } });
+    expect(honStatusInfo(item).metaText).toBe('No queue yet');
+  });
+});
+
+describe('honGetCurrentUser', () => {
+  it('returns null when there is no session', async () => {
+    global.honSupabase = createMockSupabase({ session: null });
+    expect(await honGetCurrentUser()).toBeNull();
+  });
+  it('returns the session user when signed in', async () => {
+    global.honSupabase = createMockSupabase({ session: { user: USER } });
+    expect(await honGetCurrentUser()).toEqual(USER);
+  });
+});
+
+describe('honSignInWithEmail', () => {
+  it('throws when the auth call errors', async () => {
+    global.honSupabase = { auth: { signInWithOtp: vi.fn(() => Promise.resolve({ error: new Error('boom') })) } };
+    await expect(honSignInWithEmail('x@example.com')).rejects.toThrow('boom');
+  });
+  it('resolves without throwing on success', async () => {
+    global.honSupabase = { auth: { signInWithOtp: vi.fn(() => Promise.resolve({ error: null })) } };
+    await expect(honSignInWithEmail('x@example.com')).resolves.toBeUndefined();
+  });
+});
+
+describe('honFetchStatus', () => {
+  it('is available when signed out with no active loans', async () => {
+    global.honSupabase = createMockSupabase({
+      session: null,
+      responses: { item_availability: { data: { copies_total: 1, active_loans: 0, queue_length: 0 }, error: null } },
+    });
+    const status = await honFetchStatus('burst-vol15');
+    expect(status.status).toBe('available');
+    expect(status.copiesTotal).toBe(1);
+  });
+
+  it('is checked_out_other when signed out and copies are exhausted', async () => {
+    global.honSupabase = createMockSupabase({
+      session: null,
+      responses: { item_availability: { data: { copies_total: 1, active_loans: 1, queue_length: 2 }, error: null } },
+    });
+    const status = await honFetchStatus('burst-vol15');
+    expect(status.status).toBe('checked_out_other');
+    expect(status.queueLen).toBe(2);
+  });
+
+  it('is checked_out_you when the caller holds an active loan, even if capacity looks free', async () => {
+    global.honSupabase = createMockSupabase({
+      session: { user: USER },
+      responses: {
+        item_availability: { data: { copies_total: 1, active_loans: 1, queue_length: 0 }, error: null },
+        loans: { data: { id: 'loan-1', due_at: '2026-04-01T00:00:00Z' }, error: null },
+        queue_entries: { data: null, error: null },
+      },
+    });
+    const status = await honFetchStatus('burst-vol15');
+    expect(status.status).toBe('checked_out_you');
+    expect(status.loanId).toBe('loan-1');
+    expect(status.dueDate).toBe('2026-04-01T00:00:00Z');
+  });
+
+  it('reflects youInQueue when the caller has a queue entry but no loan', async () => {
+    global.honSupabase = createMockSupabase({
+      session: { user: USER },
+      responses: {
+        item_availability: { data: { copies_total: 1, active_loans: 1, queue_length: 1 }, error: null },
+        loans: { data: null, error: null },
+        queue_entries: { data: { id: 'q-1' }, error: null },
+      },
+    });
+    const status = await honFetchStatus('burst-vol15');
+    expect(status.status).toBe('checked_out_other');
+    expect(status.youInQueue).toBe(true);
+  });
+
+  it('defaults to 1 copy / available when the item has no availability row', async () => {
+    global.honSupabase = createMockSupabase({
+      session: null,
+      responses: { item_availability: { data: null, error: null } },
+    });
+    const status = await honFetchStatus('unknown-item');
+    expect(status).toEqual({
+      status: 'available', dueDate: null, loanId: null, queueLen: 0, youInQueue: false, copiesTotal: 1,
+    });
+  });
+
+  it('throws on an availability query error and does not cache anything', async () => {
+    global.honSupabase = createMockSupabase({
+      session: null,
+      responses: { item_availability: { data: null, error: new Error('db down') } },
+    });
+    await expect(honFetchStatus('burst-vol15')).rejects.toThrow('db down');
+    expect(getHonState()['burst-vol15']).toBeUndefined();
+  });
+
+  it('caches the result in honState under the item id', async () => {
+    global.honSupabase = createMockSupabase({
+      session: null,
+      responses: { item_availability: { data: { copies_total: 2, active_loans: 0, queue_length: 0 }, error: null } },
+    });
+    await honFetchStatus('burst-vol15');
+    expect(getHonState()['burst-vol15'].copiesTotal).toBe(2);
+  });
+});
+
+describe('honFetchAllStatuses', () => {
+  const items = [{ id: 'a' }, { id: 'b' }];
+
+  it('batches availability for every item in one query when signed out', async () => {
+    global.honSupabase = createMockSupabase({
+      session: null,
+      responses: {
+        item_availability: {
+          data: [
+            { item_id: 'a', copies_total: 1, active_loans: 0, queue_length: 0 },
+            { item_id: 'b', copies_total: 1, active_loans: 1, queue_length: 0 },
+          ],
+          error: null,
+        },
+      },
+    });
+    await honFetchAllStatuses(items);
+    expect(global.honSupabase.from).toHaveBeenCalledWith('item_availability');
+    // Signed out: loans/queue_entries should never be queried at all.
+    expect(global.honSupabase.from).not.toHaveBeenCalledWith('loans');
+    expect(global.honSupabase.from).not.toHaveBeenCalledWith('queue_entries');
+    expect(getHonState().a.status).toBe('available');
+    expect(getHonState().b.status).toBe('checked_out_other');
+  });
+
+  it('marks the caller\'s own held item as checked_out_you when signed in', async () => {
+    global.honSupabase = createMockSupabase({
+      session: { user: USER },
+      responses: {
+        item_availability: {
+          data: [{ item_id: 'a', copies_total: 1, active_loans: 1, queue_length: 0 }],
+          error: null,
+        },
+        loans: { data: [{ id: 'loan-1', item_id: 'a', due_at: '2026-04-01T00:00:00Z' }], error: null },
+        queue_entries: { data: [], error: null },
+      },
+    });
+    await honFetchAllStatuses([{ id: 'a' }]);
+    expect(getHonState().a.status).toBe('checked_out_you');
+    expect(getHonState().a.loanId).toBe('loan-1');
+  });
+
+  it('falls back to a safe default for items with no prior state on a query error', async () => {
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    global.honSupabase = createMockSupabase({
+      session: null,
+      responses: { item_availability: { data: null, error: new Error('db down') } },
+    });
+    await honFetchAllStatuses(items);
+    expect(getHonState().a).toEqual({ status: 'available', dueDate: null, loanId: null, queueLen: 0, youInQueue: false, copiesTotal: 1 });
+    expect(getHonState().b).toEqual(getHonState().a);
+    consoleSpy.mockRestore();
+  });
+
+  it('preserves existing cached state for an item on error instead of overwriting it', async () => {
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    setHonState({ a: { status: 'checked_out_you', dueDate: '2026-04-01T00:00:00Z', loanId: 'loan-1', queueLen: 0, youInQueue: false, copiesTotal: 1 } });
+    global.honSupabase = createMockSupabase({
+      session: null,
+      responses: { item_availability: { data: null, error: new Error('db down') } },
+    });
+    await honFetchAllStatuses(items);
+    expect(getHonState().a.status).toBe('checked_out_you'); // untouched
+    expect(getHonState().b.status).toBe('available'); // got the fallback default
+    consoleSpy.mockRestore();
+  });
+});
+
+describe('honCheckOut / honReturnItem / honJoinQueue / honLeaveQueue', () => {
+  const freshStatusMock = () => createMockSupabase({
+    session: null,
+    responses: { item_availability: { data: { copies_total: 1, active_loans: 1, queue_length: 0 }, error: null } },
+  });
+
+  it('honCheckOut calls onChange with no error and refreshes status on success', async () => {
+    const mock = freshStatusMock();
+    mock.rpc = vi.fn(() => Promise.resolve({ error: null }));
+    global.honSupabase = mock;
+    const onChange = vi.fn();
+    await honCheckOut('burst-vol15', onChange);
+    expect(mock.rpc).toHaveBeenCalledWith('check_out', { p_item_id: 'burst-vol15' });
+    expect(onChange).toHaveBeenCalledWith();
+    expect(getHonState()['burst-vol15']).toBeDefined();
+  });
+
+  it('honCheckOut calls onChange with the error on failure, without touching honState', async () => {
+    global.honSupabase = { rpc: vi.fn(() => Promise.resolve({ error: new Error('no copies available') })) };
+    const onChange = vi.fn();
+    await honCheckOut('burst-vol15', onChange);
+    expect(onChange).toHaveBeenCalledWith(expect.objectContaining({ message: 'no copies available' }));
+    expect(getHonState()['burst-vol15']).toBeUndefined();
+  });
+
+  it('honCheckOut works with no onChange callback at all', async () => {
+    global.honSupabase = { rpc: vi.fn(() => Promise.resolve({ error: new Error('boom') })) };
+    await expect(honCheckOut('burst-vol15')).resolves.toBeUndefined();
+  });
+
+  it('honReturnItem refuses to call the RPC when there is no cached loan id', async () => {
+    global.honSupabase = { rpc: vi.fn() };
+    const onChange = vi.fn();
+    await honReturnItem('burst-vol15', onChange);
+    expect(global.honSupabase.rpc).not.toHaveBeenCalled();
+    expect(onChange).toHaveBeenCalledWith(expect.objectContaining({ message: 'no active loan to return' }));
+  });
+
+  it('honReturnItem calls return_item with the cached loan id and refreshes on success', async () => {
+    setHonState({ 'burst-vol15': { status: 'checked_out_you', loanId: 'loan-1', dueDate: null, queueLen: 0, youInQueue: false, copiesTotal: 1 } });
+    const mock = freshStatusMock();
+    mock.rpc = vi.fn(() => Promise.resolve({ error: null }));
+    global.honSupabase = mock;
+    const onChange = vi.fn();
+    await honReturnItem('burst-vol15', onChange);
+    expect(mock.rpc).toHaveBeenCalledWith('return_item', { p_loan_id: 'loan-1' });
+    expect(onChange).toHaveBeenCalledWith();
+  });
+
+  it('honJoinQueue calls join_queue and reports errors via onChange', async () => {
+    global.honSupabase = { rpc: vi.fn(() => Promise.resolve({ error: new Error('already in queue for this item') })) };
+    const onChange = vi.fn();
+    await honJoinQueue('burst-vol15', onChange);
+    expect(global.honSupabase.rpc).toHaveBeenCalledWith('join_queue', { p_item_id: 'burst-vol15' });
+    expect(onChange).toHaveBeenCalledWith(expect.objectContaining({ message: 'already in queue for this item' }));
+  });
+
+  it('honLeaveQueue calls leave_queue and refreshes status on success', async () => {
+    const mock = freshStatusMock();
+    mock.rpc = vi.fn(() => Promise.resolve({ error: null }));
+    global.honSupabase = mock;
+    const onChange = vi.fn();
+    await honLeaveQueue('burst-vol15', onChange);
+    expect(mock.rpc).toHaveBeenCalledWith('leave_queue', { p_item_id: 'burst-vol15' });
+    expect(onChange).toHaveBeenCalledWith();
+  });
+});
+
+describe('honFetchCatalog', () => {
+  it('maps DB rows to the HON_CATALOG shape, dropping nullish optional fields to undefined', async () => {
+    global.honSupabase = createMockSupabase({
+      responses: {
+        items: {
+          data: [{
+            item_id: 'burst-vol15', title: 'BURST', subtitle: null, issue: 'Vol.15',
+            era: '1998', genre: 'Tattoo & Subculture', call_number: '本 · TS · 98-015',
+            copies_total: 1, cover_bg: '#000', cover_fg: '#fff', cover_accent: '#f00',
+            cover_image: null, back_image: null, description: 'desc',
+          }],
+          error: null,
+        },
+      },
+    });
+    const catalog = await honFetchCatalog();
+    expect(catalog).toEqual([{
+      id: 'burst-vol15', title: 'BURST', subtitle: undefined, issue: 'Vol.15',
+      era: '1998', genre: 'Tattoo & Subculture', call: '本 · TS · 98-015',
+      copiesTotal: 1, coverBg: '#000', coverFg: '#fff', coverAccent: '#f00',
+      coverImage: undefined, backImage: undefined, desc: 'desc',
+    }]);
+    expect(getHonCatalog()).toEqual(catalog);
+  });
+
+  it('throws on a query error', async () => {
+    global.honSupabase = createMockSupabase({ responses: { items: { data: null, error: new Error('db down') } } });
+    await expect(honFetchCatalog()).rejects.toThrow('db down');
+  });
+});
+
+describe('honFetchMyCards / honFetchMyProfile / honFetchMyNotifications (signed-out gate)', () => {
+  it('honFetchMyCards returns null when signed out, without querying', async () => {
+    global.honSupabase = createMockSupabase({ session: null });
+    expect(await honFetchMyCards()).toBeNull();
+    expect(global.honSupabase.from).not.toHaveBeenCalled();
+  });
+  it('honFetchMyCards returns the caller\'s cards when signed in', async () => {
+    const cards = [{ id: 'c1', code: 'abc', issued_at: '2026-01-01', claimed_at: null }];
+    global.honSupabase = createMockSupabase({ session: { user: USER }, responses: { library_cards: { data: cards, error: null } } });
+    expect(await honFetchMyCards()).toEqual(cards);
+  });
+
+  it('honFetchMyProfile returns null when signed out, without querying', async () => {
+    global.honSupabase = createMockSupabase({ session: null });
+    expect(await honFetchMyProfile()).toBeNull();
+    expect(global.honSupabase.from).not.toHaveBeenCalled();
+  });
+  it('honFetchMyProfile returns the caller\'s profile when signed in', async () => {
+    const profile = { user_id: USER.id, is_admin: true, banned: false };
+    global.honSupabase = createMockSupabase({ session: { user: USER }, responses: { profiles: { data: profile, error: null } } });
+    expect(await honFetchMyProfile()).toEqual(profile);
+  });
+
+  it('honFetchMyNotifications returns [] when signed out, without querying', async () => {
+    global.honSupabase = createMockSupabase({ session: null });
+    expect(await honFetchMyNotifications()).toEqual([]);
+    expect(global.honSupabase.from).not.toHaveBeenCalled();
+  });
+  it('honFetchMyNotifications returns unread notifications when signed in', async () => {
+    const notifs = [{ id: 'n1', item_id: 'burst-vol15', created_at: '2026-01-01' }];
+    global.honSupabase = createMockSupabase({ session: { user: USER }, responses: { notifications: { data: notifs, error: null } } });
+    expect(await honFetchMyNotifications()).toEqual(notifs);
+  });
+});
+
+describe('honValidateCardCode / honRedeemCard / honMarkNotificationRead', () => {
+  it('honValidateCardCode returns true/false from the RPC result', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { validate_card_code: { data: true, error: null } } });
+    expect(await honValidateCardCode('code')).toBe(true);
+    global.honSupabase = createMockSupabase({ rpcResponses: { validate_card_code: { data: false, error: null } } });
+    expect(await honValidateCardCode('code')).toBe(false);
+  });
+  it('honValidateCardCode throws on RPC error', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { validate_card_code: { data: null, error: new Error('nope') } } });
+    await expect(honValidateCardCode('code')).rejects.toThrow('nope');
+  });
+
+  it('honRedeemCard resolves on success and throws on failure', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { redeem_card: { error: null } } });
+    await expect(honRedeemCard('code')).resolves.toBeUndefined();
+    global.honSupabase = createMockSupabase({ rpcResponses: { redeem_card: { error: new Error('card code invalid or already claimed') } } });
+    await expect(honRedeemCard('code')).rejects.toThrow('card code invalid or already claimed');
+  });
+
+  it('honMarkNotificationRead calls the RPC with the notification id and throws on error', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { mark_notification_read: { error: null } } });
+    await honMarkNotificationRead('n1');
+    expect(global.honSupabase.rpc).toHaveBeenCalledWith('mark_notification_read', { p_id: 'n1' });
+    global.honSupabase = createMockSupabase({ rpcResponses: { mark_notification_read: { error: new Error('not yours') } } });
+    await expect(honMarkNotificationRead('n1')).rejects.toThrow('not yours');
+  });
+});
+
+describe('pending card code (localStorage round trip)', () => {
+  it('stashes and takes a code, clearing it after take', () => {
+    honStashPendingCardCode('abc123');
+    expect(honTakePendingCardCode()).toBe('abc123');
+    expect(honTakePendingCardCode()).toBeNull();
+  });
+});
+
+describe('admin wrappers', () => {
+  it('honAdminForceReturn calls admin_force_return with the loan id', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_force_return: { error: null } } });
+    await honAdminForceReturn('loan-1');
+    expect(global.honSupabase.rpc).toHaveBeenCalledWith('admin_force_return', { p_loan_id: 'loan-1' });
+  });
+
+  it('honAdminSetBanned calls admin_set_banned with the user id and flag', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_set_banned: { error: null } } });
+    await honAdminSetBanned('user-2', true);
+    expect(global.honSupabase.rpc).toHaveBeenCalledWith('admin_set_banned', { p_user_id: 'user-2', p_banned: true });
+  });
+
+  it('honAdminUpsertItem maps the HON_CATALOG item shape to the RPC\'s p_* param names', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_upsert_item: { data: { item_id: 'x' }, error: null } } });
+    await honAdminUpsertItem({
+      id: 'x', title: 'T', subtitle: undefined, issue: 'No.1', era: '2026', genre: 'G',
+      call: 'CALL', copiesTotal: 2, coverBg: '#000', coverFg: '#fff', coverAccent: '#f00',
+      coverImage: undefined, backImage: undefined, desc: 'D',
+    });
+    expect(global.honSupabase.rpc).toHaveBeenCalledWith('admin_upsert_item', {
+      p_item_id: 'x', p_title: 'T', p_subtitle: null, p_issue: 'No.1', p_era: '2026', p_genre: 'G',
+      p_call_number: 'CALL', p_copies_total: 2, p_cover_bg: '#000', p_cover_fg: '#fff', p_cover_accent: '#f00',
+      p_cover_image: null, p_back_image: null, p_description: 'D',
+    });
+  });
+
+  it('honAdminIssueCard / honAdminListProfiles / honAdminListLoans propagate RPC errors', async () => {
+    global.honSupabase = createMockSupabase({
+      rpcResponses: {
+        admin_issue_card: { data: null, error: new Error('admin only') },
+        admin_list_profiles: { data: null, error: new Error('admin only') },
+        admin_list_loans: { data: null, error: new Error('admin only') },
+      },
+    });
+    await expect(honAdminIssueCard()).rejects.toThrow('admin only');
+    await expect(honAdminListProfiles()).rejects.toThrow('admin only');
+    await expect(honAdminListLoans()).rejects.toThrow('admin only');
+  });
+
+  it('honAdminListProfiles / honAdminListLoans default to [] instead of null', async () => {
+    global.honSupabase = createMockSupabase({
+      rpcResponses: {
+        admin_list_profiles: { data: null, error: null },
+        admin_list_loans: { data: null, error: null },
+      },
+    });
+    expect(await honAdminListProfiles()).toEqual([]);
+    expect(await honAdminListLoans()).toEqual([]);
+  });
+});

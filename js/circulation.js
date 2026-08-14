@@ -418,3 +418,29 @@ function honStatusInfo(item) {
   const posText = s.youInQueue ? `You're #${s.queueLen} in line` : (s.queueLen > 0 ? `${s.queueLen} reader${s.queueLen > 1 ? 's' : ''} waiting` : 'No queue yet');
   return { stampClass: 'stamp-checked', stampLabel: 'CHECKED OUT', metaText: `${posText}` };
 }
+
+// Node/Vitest only (T15) — this branch never runs in a browser, where
+// `module` is always undefined for a plain <script> tag. Lets the test
+// suite `require()` these functions directly instead of needing to eval
+// this file into a simulated global scope. honState/HON_CATALOG need
+// getter/setter pairs rather than direct export because they're
+// reassigned (not just mutated) inside this file — a plain exported
+// reference would go stale the moment honFetchStatus or honFetchCatalog
+// replaces it.
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    honFetchCatalog, honFormatDate, honGetCurrentUser, honSignInWithEmail,
+    honFetchMyCards, honValidateCardCode, honRedeemCard,
+    honStashPendingCardCode, honTakePendingCardCode,
+    honFetchMyProfile, honAdminListProfiles, honAdminListLoans,
+    honAdminForceReturn, honAdminIssueCard, honAdminSetBanned, honAdminUpsertItem,
+    honFetchMyNotifications, honMarkNotificationRead,
+    honFetchStatus, honFetchAllStatuses,
+    honCheckOut, honReturnItem, honJoinQueue, honLeaveQueue,
+    honIsOverdue, honStatusInfo,
+    getHonState: () => honState,
+    setHonState: (s) => { honState = s; },
+    getHonCatalog: () => HON_CATALOG,
+    setHonCatalog: (c) => { HON_CATALOG = c; },
+  };
+}

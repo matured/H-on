@@ -1,0 +1,14 @@
+{
+  "name": "hon",
+  "private": true,
+  "description": "Dev-only test tooling for 本 (hon). The site itself ships with no build step and no dependencies — this package.json exists solely so Vitest can run js/circulation.js's unit tests; it is never loaded by any HTML page.",
+  "type": "commonjs",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.0",
+    "jsdom": "^25.0.0"
+  }
+}
