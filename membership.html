@@ -120,9 +120,18 @@
         submission ourselves.
       </p>
       <form onsubmit="event.preventDefault(); document.getElementById('form-confirm').style.display='block'; this.style.opacity='0.5'; this.querySelectorAll('input,button,textarea').forEach(el=>el.disabled=true);" style="margin-top:26px; display:flex; flex-direction:column; gap:14px;">
-        <input type="text" placeholder="Name" required style="font-family:var(--mono); font-size:14px; padding:12px 14px; border:1px solid var(--ink); background:var(--paper);">
-        <input type="email" placeholder="Email" required style="font-family:var(--mono); font-size:14px; padding:12px 14px; border:1px solid var(--ink); background:var(--paper);">
-        <textarea placeholder="What draws you to this specific era of print media?" rows="3" style="font-family:var(--serif); font-size:15px; padding:12px 14px; border:1px solid var(--ink); background:var(--paper); resize:vertical;"></textarea>
+        <div>
+          <label for="waitlist-name" style="display:block; font-family:var(--mono); font-size:11px; letter-spacing:0.1em; font-weight:600; text-transform:uppercase; color:var(--grey); margin-bottom:6px;">Name</label>
+          <input id="waitlist-name" type="text" placeholder="Name" required style="width:100%; font-family:var(--mono); font-size:14px; padding:12px 14px; border:1px solid var(--ink); background:var(--paper);">
+        </div>
+        <div>
+          <label for="waitlist-email" style="display:block; font-family:var(--mono); font-size:11px; letter-spacing:0.1em; font-weight:600; text-transform:uppercase; color:var(--grey); margin-bottom:6px;">Email</label>
+          <input id="waitlist-email" type="email" placeholder="Email" required style="width:100%; font-family:var(--mono); font-size:14px; padding:12px 14px; border:1px solid var(--ink); background:var(--paper);">
+        </div>
+        <div>
+          <label for="waitlist-note" style="display:block; font-family:var(--mono); font-size:11px; letter-spacing:0.1em; font-weight:600; text-transform:uppercase; color:var(--grey); margin-bottom:6px;">What draws you to this specific era of print media?</label>
+          <textarea id="waitlist-note" placeholder="What draws you to this specific era of print media?" rows="3" style="width:100%; font-family:var(--serif); font-size:15px; padding:12px 14px; border:1px solid var(--ink); background:var(--paper); resize:vertical;"></textarea>
+        </div>
         <button type="submit" class="btn btn-solid" style="align-self:flex-start;">Join the Waitlist &rarr;</button>
       </form>
       <p id="form-confirm" style="display:none; margin-top:16px; font-family:var(--mono); font-size:13px; color:#1c6b3f;">✓ Request received. This is a demo form for presentation purposes.</p>
