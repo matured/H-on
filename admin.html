@@ -107,29 +107,46 @@ async function honRenderAdmin() {
       <p class="eyebrow">CATALOG</p>
       <h2 style="font-size: clamp(20px, 2.6vw, 24px); margin-top:12px;">Add or edit a title.</h2>
       <p style="margin-top:10px; font-size:14.5px; color:#2c2b28;">Click Edit on a row below to load it here, or fill this in fresh to add a new title.</p>
-      <div id="catalog-form" style="margin-top:16px; display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:14px; max-width:900px;">
-        <div><label style="${HON_LABEL_STYLE}">Item ID (slug)</label><input id="cf-id" style="${HON_INPUT_STYLE}"></div>
-        <div><label style="${HON_LABEL_STYLE}">Title</label><input id="cf-title" style="${HON_INPUT_STYLE}"></div>
-        <div><label style="${HON_LABEL_STYLE}">Subtitle</label><input id="cf-subtitle" style="${HON_INPUT_STYLE}"></div>
-        <div><label style="${HON_LABEL_STYLE}">Issue</label><input id="cf-issue" style="${HON_INPUT_STYLE}"></div>
-        <div><label style="${HON_LABEL_STYLE}">Era (year)</label><input id="cf-era" style="${HON_INPUT_STYLE}"></div>
-        <div><label style="${HON_LABEL_STYLE}">Genre</label><input id="cf-genre" style="${HON_INPUT_STYLE}"></div>
-        <div><label style="${HON_LABEL_STYLE}">Call Number</label><input id="cf-call" style="${HON_INPUT_STYLE}"></div>
-        <div><label style="${HON_LABEL_STYLE}">Copies</label><input id="cf-copies" type="number" min="1" value="1" style="${HON_INPUT_STYLE}"></div>
-        <div><label style="${HON_LABEL_STYLE}">Cover BG (hex)</label><input id="cf-coverbg" style="${HON_INPUT_STYLE}"></div>
-        <div><label style="${HON_LABEL_STYLE}">Cover FG (hex)</label><input id="cf-coverfg" style="${HON_INPUT_STYLE}"></div>
-        <div><label style="${HON_LABEL_STYLE}">Cover Accent (hex)</label><input id="cf-coveraccent" style="${HON_INPUT_STYLE}"></div>
-        <div>
-          <label style="${HON_LABEL_STYLE}">Cover Image (front)</label>
-          <input type="file" accept="image/*" id="cf-coverimage-file" style="${HON_INPUT_STYLE}">
-          <div id="cf-coverimage-preview" style="margin-top:8px; font-size:12px; color:var(--grey);">No image</div>
+      <div id="catalog-form" style="margin-top:20px; max-width:900px;">
+        <div class="hon-form-group">
+          <div class="hon-form-group-label">Details</div>
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:14px;">
+            <div><label style="${HON_LABEL_STYLE}">Item ID (slug)</label><input id="cf-id" style="${HON_INPUT_STYLE}"></div>
+            <div><label style="${HON_LABEL_STYLE}">Title</label><input id="cf-title" style="${HON_INPUT_STYLE}"></div>
+            <div><label style="${HON_LABEL_STYLE}">Subtitle</label><input id="cf-subtitle" style="${HON_INPUT_STYLE}"></div>
+            <div><label style="${HON_LABEL_STYLE}">Issue</label><input id="cf-issue" style="${HON_INPUT_STYLE}"></div>
+            <div><label style="${HON_LABEL_STYLE}">Era (year)</label><input id="cf-era" style="${HON_INPUT_STYLE}"></div>
+            <div><label style="${HON_LABEL_STYLE}">Genre</label><input id="cf-genre" style="${HON_INPUT_STYLE}"></div>
+            <div><label style="${HON_LABEL_STYLE}">Call Number</label><input id="cf-call" style="${HON_INPUT_STYLE}"></div>
+            <div><label style="${HON_LABEL_STYLE}">Copies</label><input id="cf-copies" type="number" min="1" value="1" style="${HON_INPUT_STYLE}"></div>
+          </div>
+          <div style="margin-top:14px;"><label style="${HON_LABEL_STYLE}">Description</label><textarea id="cf-desc" rows="3" style="width:100%; font-family:var(--serif); font-size:14px; padding:10px 12px; border:1px solid var(--ink); background:var(--paper); resize:vertical;"></textarea></div>
         </div>
-        <div>
-          <label style="${HON_LABEL_STYLE}">Back Image</label>
-          <input type="file" accept="image/*" id="cf-backimage-file" style="${HON_INPUT_STYLE}">
-          <div id="cf-backimage-preview" style="margin-top:8px; font-size:12px; color:var(--grey);">No image</div>
+
+        <div class="hon-form-group">
+          <div class="hon-form-group-label">Cover Style</div>
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap:14px;">
+            <div><label style="${HON_LABEL_STYLE}">Cover BG (hex)</label><div class="hon-swatch-field"><div class="hon-swatch" id="cf-coverbg-swatch"></div><input id="cf-coverbg" style="${HON_INPUT_STYLE}"></div></div>
+            <div><label style="${HON_LABEL_STYLE}">Cover FG (hex)</label><div class="hon-swatch-field"><div class="hon-swatch" id="cf-coverfg-swatch"></div><input id="cf-coverfg" style="${HON_INPUT_STYLE}"></div></div>
+            <div><label style="${HON_LABEL_STYLE}">Cover Accent (hex)</label><div class="hon-swatch-field"><div class="hon-swatch" id="cf-coveraccent-swatch"></div><input id="cf-coveraccent" style="${HON_INPUT_STYLE}"></div></div>
+          </div>
         </div>
-        <div style="grid-column: 1 / -1;"><label style="${HON_LABEL_STYLE}">Description</label><textarea id="cf-desc" rows="3" style="width:100%; font-family:var(--serif); font-size:14px; padding:10px 12px; border:1px solid var(--ink); background:var(--paper); resize:vertical;"></textarea></div>
+
+        <div class="hon-form-group">
+          <div class="hon-form-group-label">Images</div>
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:14px;">
+            <div>
+              <label style="${HON_LABEL_STYLE}">Cover Image (front)</label>
+              <input type="file" accept="image/*" id="cf-coverimage-file" class="hon-file-input">
+              <div id="cf-coverimage-preview" class="hon-image-frame">No Image</div>
+            </div>
+            <div>
+              <label style="${HON_LABEL_STYLE}">Back Image</label>
+              <input type="file" accept="image/*" id="cf-backimage-file" class="hon-file-input">
+              <div id="cf-backimage-preview" class="hon-image-frame">No Image</div>
+            </div>
+          </div>
+        </div>
       </div>
       <div style="margin-top:14px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
         <button class="btn btn-solid" id="catalog-save-btn">Save Title &rarr;</button>
@@ -184,9 +201,20 @@ function honCatalogFormToItem() {
 
 function honRenderImagePreview(previewId, url) {
   const el = document.getElementById(previewId);
-  el.innerHTML = url
-    ? `<img src="${url}" alt="" style="max-width:100px; max-height:100px; display:block; border:1px solid var(--ink);">`
-    : 'No image';
+  el.innerHTML = url ? `<img src="${url}" alt="">` : 'No Image';
+}
+
+// Hex swatch fields (Cover BG/FG/Accent) — the swatch is decorative feedback
+// only, so an invalid/incomplete hex just leaves the last valid color
+// showing rather than needing its own validation path.
+const HON_SWATCH_FIELDS = [['cf-coverbg', 'cf-coverbg-swatch'], ['cf-coverfg', 'cf-coverfg-swatch'], ['cf-coveraccent', 'cf-coveraccent-swatch']];
+
+function honUpdateSwatch(inputId, swatchId) {
+  document.getElementById(swatchId).style.background = document.getElementById(inputId).value.trim();
+}
+
+function honUpdateAllSwatches() {
+  HON_SWATCH_FIELDS.forEach(([inputId, swatchId]) => honUpdateSwatch(inputId, swatchId));
 }
 
 function honFillCatalogForm(item) {
@@ -206,6 +234,7 @@ function honFillCatalogForm(item) {
   honCatalogImageState = { coverImage: item.coverImage, backImage: item.backImage };
   honRenderImagePreview('cf-coverimage-preview', item.coverImage);
   honRenderImagePreview('cf-backimage-preview', item.backImage);
+  honUpdateAllSwatches();
   document.getElementById('catalog-form-status').textContent = '';
 }
 
@@ -218,6 +247,7 @@ function honClearCatalogForm() {
   honCatalogImageState = { coverImage: undefined, backImage: undefined };
   honRenderImagePreview('cf-coverimage-preview', undefined);
   honRenderImagePreview('cf-backimage-preview', undefined);
+  HON_SWATCH_FIELDS.forEach(([, swatchId]) => { document.getElementById(swatchId).style.background = ''; });
   document.getElementById('catalog-form-status').textContent = '';
 }
 
@@ -293,6 +323,9 @@ async function honRenderCatalogSection() {
     honHandleCoverFileChange('front', 'coverImage', 'cf-coverimage-file', 'cf-coverimage-preview'));
   document.getElementById('cf-backimage-file').addEventListener('change', () =>
     honHandleCoverFileChange('back', 'backImage', 'cf-backimage-file', 'cf-backimage-preview'));
+
+  HON_SWATCH_FIELDS.forEach(([inputId, swatchId]) =>
+    document.getElementById(inputId).addEventListener('input', () => honUpdateSwatch(inputId, swatchId)));
 
   document.getElementById('catalog-clear-btn').addEventListener('click', honClearCatalogForm);
 

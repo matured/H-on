@@ -681,6 +681,80 @@ body.item-page { position: relative; }
 }
 .back-link:hover { color: var(--red); }
 
+/* ---------- Admin catalog form ---------- */
+.hon-file-input {
+  width: 100%;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--grey);
+}
+.hon-file-input::file-selector-button {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 10px 14px;
+  margin-right: 12px;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.hon-file-input::file-selector-button:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+.hon-image-frame {
+  margin-top: 10px;
+  width: 88px;
+  height: 88px;
+  border: 2px dashed var(--line-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--grey-light);
+  overflow: hidden;
+}
+.hon-image-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.hon-swatch-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hon-swatch {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--ink);
+  flex-shrink: 0;
+  background: var(--paper-dim);
+}
+.hon-form-group + .hon-form-group {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+.hon-form-group-label {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin-bottom: 12px;
+}
+
 /* ---------- Utility ---------- */
 .tac { text-align: center; }
 .mono { font-family: var(--mono); }
