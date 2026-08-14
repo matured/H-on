@@ -140,7 +140,7 @@ async function honRenderItem() {
         <div class="mono-tag" id="item-meta" style="color:var(--grey); margin-top:14px;">${status.metaText}</div>
 
         <details class="item-disclosure">
-          <summary>About This Demo</summary>
+          <summary>How Checkout Works</summary>
           <p class="item-disclosure-body">
             Checkout, queueing, and returns here are real — backed by a shared database, not
             saved to your browser alone. Sign in from the Membership page to check something out.
