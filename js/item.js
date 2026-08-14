@@ -223,6 +223,7 @@ function bindItemDots(item) {
 
 document.addEventListener('DOMContentLoaded', async () => {
   honBuildBackgroundPattern();
+  document.getElementById('item-root').innerHTML = `<p class="eyebrow">LOADING…</p>`;
   try {
     await honFetchCatalog();
   } catch (err) {
