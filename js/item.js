@@ -38,8 +38,9 @@ function honCtaLabel(item) {
 
 function honSpecRows(item) {
   const s = honState[item.id];
-  const stampColor = s.status === 'available' ? 'filled' : (s.status === 'checked_out_you' ? 'filled' : 'filled-red');
-  const statusText = s.status === 'available' ? 'On the shelf' : (s.status === 'checked_out_you' ? 'Checked out — you' : 'Checked out');
+  const overdue = honIsOverdue(s);
+  const stampColor = s.status === 'available' ? 'filled' : (s.status === 'checked_out_you' && !overdue ? 'filled' : 'filled-red');
+  const statusText = s.status === 'available' ? 'On the shelf' : (s.status === 'checked_out_you' ? (overdue ? 'Checked out — you (overdue)' : 'Checked out — you') : 'Checked out');
   return `
     <div class="item-spec-row"><span class="item-spec-swatch filled"></span> Genre: ${item.genre}</div>
     <div class="item-spec-row"><span class="item-spec-swatch filled"></span> Era: ${item.era}</div>

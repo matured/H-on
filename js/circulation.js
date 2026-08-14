@@ -224,6 +224,11 @@ async function honLeaveQueue(id, onChange) {
   }
 }
 
+// True if the caller's own loan on this item is past its due date.
+function honIsOverdue(s) {
+  return s.status === 'checked_out_you' && !!s.dueDate && new Date(s.dueDate) < new Date();
+}
+
 // Returns { stampClass, stampLabel, metaText } for a given item's current
 // state. Reads copiesTotal from honState (the live DB value, Finding 13),
 // never from the static catalog-data.js copies field.
@@ -236,6 +241,9 @@ function honStatusInfo(item) {
     return { stampClass: 'stamp-available', stampLabel: 'ON THE SHELF', metaText: `${s.copiesTotal} ${s.copiesTotal > 1 ? 'copies' : 'copy'} in the collection` };
   }
   if (s.status === 'checked_out_you') {
+    if (honIsOverdue(s)) {
+      return { stampClass: 'stamp-overdue', stampLabel: 'OVERDUE', metaText: `Was due back ${honFormatDate(s.dueDate)} — please return it` };
+    }
     return { stampClass: 'stamp-yours', stampLabel: 'CHECKED OUT · YOU', metaText: `Due back ${honFormatDate(s.dueDate)}` };
   }
   const posText = s.youInQueue ? `You're #${s.queueLen} in line` : (s.queueLen > 0 ? `${s.queueLen} reader${s.queueLen > 1 ? 's' : ''} waiting` : 'No queue yet');
