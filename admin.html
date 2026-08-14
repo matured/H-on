@@ -42,7 +42,10 @@ const HON_LABEL_STYLE = 'display:block; font-family:var(--mono); font-size:11px;
 const HON_TH_STYLE = 'text-align:left; font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--grey); padding:8px 10px; border-bottom:1px solid var(--line-strong);';
 const HON_TD_STYLE = 'padding:10px; border-bottom:1px solid var(--line); font-size:13.5px; vertical-align:middle;';
 const HON_INPUT_STYLE = 'width:100%; font-family:var(--mono); font-size:13px; padding:10px 12px; border:1px solid var(--ink); background:var(--paper);';
-const HON_CATALOG_FIELD_IDS = ['cf-id', 'cf-title', 'cf-subtitle', 'cf-issue', 'cf-era', 'cf-genre', 'cf-call', 'cf-coverbg', 'cf-coverfg', 'cf-coveraccent', 'cf-coverimage', 'cf-backimage', 'cf-desc'];
+const HON_CATALOG_FIELD_IDS = ['cf-id', 'cf-title', 'cf-subtitle', 'cf-issue', 'cf-era', 'cf-genre', 'cf-call', 'cf-coverbg', 'cf-coverfg', 'cf-coveraccent', 'cf-desc'];
+// Uploaded image URLs live here, not in a text input — set by the file
+// upload handlers or by honFillCatalogForm when editing an existing title.
+let honCatalogImageState = { coverImage: undefined, backImage: undefined };
 
 function honEscape(s) {
   const div = document.createElement('div');
@@ -116,8 +119,16 @@ async function honRenderAdmin() {
         <div><label style="${HON_LABEL_STYLE}">Cover BG (hex)</label><input id="cf-coverbg" style="${HON_INPUT_STYLE}"></div>
         <div><label style="${HON_LABEL_STYLE}">Cover FG (hex)</label><input id="cf-coverfg" style="${HON_INPUT_STYLE}"></div>
         <div><label style="${HON_LABEL_STYLE}">Cover Accent (hex)</label><input id="cf-coveraccent" style="${HON_INPUT_STYLE}"></div>
-        <div><label style="${HON_LABEL_STYLE}">Cover Image URL</label><input id="cf-coverimage" style="${HON_INPUT_STYLE}"></div>
-        <div><label style="${HON_LABEL_STYLE}">Back Image URL</label><input id="cf-backimage" style="${HON_INPUT_STYLE}"></div>
+        <div>
+          <label style="${HON_LABEL_STYLE}">Cover Image (front)</label>
+          <input type="file" accept="image/*" id="cf-coverimage-file" style="${HON_INPUT_STYLE}">
+          <div id="cf-coverimage-preview" style="margin-top:8px; font-size:12px; color:var(--grey);">No image</div>
+        </div>
+        <div>
+          <label style="${HON_LABEL_STYLE}">Back Image</label>
+          <input type="file" accept="image/*" id="cf-backimage-file" style="${HON_INPUT_STYLE}">
+          <div id="cf-backimage-preview" style="margin-top:8px; font-size:12px; color:var(--grey);">No image</div>
+        </div>
         <div style="grid-column: 1 / -1;"><label style="${HON_LABEL_STYLE}">Description</label><textarea id="cf-desc" rows="3" style="width:100%; font-family:var(--serif); font-size:14px; padding:10px 12px; border:1px solid var(--ink); background:var(--paper); resize:vertical;"></textarea></div>
       </div>
       <div style="margin-top:14px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
@@ -165,10 +176,17 @@ function honCatalogFormToItem() {
     coverBg: document.getElementById('cf-coverbg').value.trim(),
     coverFg: document.getElementById('cf-coverfg').value.trim(),
     coverAccent: document.getElementById('cf-coveraccent').value.trim(),
-    coverImage: document.getElementById('cf-coverimage').value.trim() || undefined,
-    backImage: document.getElementById('cf-backimage').value.trim() || undefined,
+    coverImage: honCatalogImageState.coverImage,
+    backImage: honCatalogImageState.backImage,
     desc: document.getElementById('cf-desc').value.trim(),
   };
+}
+
+function honRenderImagePreview(previewId, url) {
+  const el = document.getElementById(previewId);
+  el.innerHTML = url
+    ? `<img src="${url}" alt="" style="max-width:100px; max-height:100px; display:block; border:1px solid var(--ink);">`
+    : 'No image';
 }
 
 function honFillCatalogForm(item) {
@@ -184,9 +202,10 @@ function honFillCatalogForm(item) {
   document.getElementById('cf-coverbg').value = item.coverBg;
   document.getElementById('cf-coverfg').value = item.coverFg;
   document.getElementById('cf-coveraccent').value = item.coverAccent;
-  document.getElementById('cf-coverimage').value = item.coverImage || '';
-  document.getElementById('cf-backimage').value = item.backImage || '';
   document.getElementById('cf-desc').value = item.desc;
+  honCatalogImageState = { coverImage: item.coverImage, backImage: item.backImage };
+  honRenderImagePreview('cf-coverimage-preview', item.coverImage);
+  honRenderImagePreview('cf-backimage-preview', item.backImage);
   document.getElementById('catalog-form-status').textContent = '';
 }
 
@@ -194,7 +213,32 @@ function honClearCatalogForm() {
   HON_CATALOG_FIELD_IDS.forEach(id => { document.getElementById(id).value = ''; });
   document.getElementById('cf-id').disabled = false;
   document.getElementById('cf-copies').value = '1';
+  document.getElementById('cf-coverimage-file').value = '';
+  document.getElementById('cf-backimage-file').value = '';
+  honCatalogImageState = { coverImage: undefined, backImage: undefined };
+  honRenderImagePreview('cf-coverimage-preview', undefined);
+  honRenderImagePreview('cf-backimage-preview', undefined);
   document.getElementById('catalog-form-status').textContent = '';
+}
+
+async function honHandleCoverFileChange(side, storageSlot, fileInputId, previewId) {
+  const fileInput = document.getElementById(fileInputId);
+  const file = fileInput.files[0];
+  if (!file) return;
+  const itemId = document.getElementById('cf-id').value.trim();
+  if (!itemId) {
+    alert('Enter the Item ID first, then choose an image.');
+    fileInput.value = '';
+    return;
+  }
+  document.getElementById(previewId).textContent = 'Uploading…';
+  try {
+    const url = await honUploadCoverImage(itemId, side, file);
+    honCatalogImageState[storageSlot] = url;
+    honRenderImagePreview(previewId, url);
+  } catch (err) {
+    document.getElementById(previewId).textContent = `Upload failed: ${err.message || err}`;
+  }
 }
 
 function honRenderCatalogTable() {
@@ -245,6 +289,11 @@ async function honRenderCatalogSection() {
   }
   honRenderCatalogTable();
 
+  document.getElementById('cf-coverimage-file').addEventListener('change', () =>
+    honHandleCoverFileChange('front', 'coverImage', 'cf-coverimage-file', 'cf-coverimage-preview'));
+  document.getElementById('cf-backimage-file').addEventListener('change', () =>
+    honHandleCoverFileChange('back', 'backImage', 'cf-backimage-file', 'cf-backimage-preview'));
+
   document.getElementById('catalog-clear-btn').addEventListener('click', honClearCatalogForm);
 
   document.getElementById('catalog-save-btn').addEventListener('click', async () => {
@@ -253,7 +302,7 @@ async function honRenderCatalogSection() {
     const item = honCatalogFormToItem();
     const required = ['id', 'title', 'issue', 'era', 'genre', 'call', 'coverBg', 'coverFg', 'coverAccent', 'desc'];
     if (required.some(k => !item[k]) || !item.copiesTotal || item.copiesTotal < 1) {
-      statusEl.textContent = 'Fill in all fields except subtitle and the two image URLs.';
+      statusEl.textContent = 'Fill in all fields except subtitle and the two images.';
       statusEl.style.color = 'var(--red)';
       return;
     }

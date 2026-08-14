@@ -182,6 +182,20 @@ async function honAdminUpsertItem(item) {
   return data;
 }
 
+// Uploads a cover/back image to the 'covers' Storage bucket at a
+// deterministic path ({item_id}/{side}.{ext}) — re-uploading for the same
+// item and side just replaces the file (upsert: true) instead of
+// accumulating orphaned files. Returns the public URL to feed into
+// honAdminUpsertItem's p_cover_image/p_back_image.
+async function honUploadCoverImage(itemId, side, file) {
+  const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
+  const path = `${itemId}/${side}.${ext}`;
+  const { error } = await honSupabase.storage.from('covers').upload(path, file, { upsert: true, contentType: file.type });
+  if (error) throw error;
+  const { data } = honSupabase.storage.from('covers').getPublicUrl(path);
+  return data.publicUrl;
+}
+
 // ---- notifications ----
 // A nudge, not a reservation: return_item/admin_force_return insert one
 // of these for whoever's been waiting longest on an item, but it doesn't
@@ -434,6 +448,7 @@ if (typeof module !== 'undefined' && module.exports) {
     honStashPendingCardCode, honTakePendingCardCode,
     honFetchMyProfile, honAdminListProfiles, honAdminListLoans,
     honAdminForceReturn, honAdminIssueCard, honAdminSetBanned, honAdminUpsertItem,
+    honUploadCoverImage,
     honFetchMyNotifications, honMarkNotificationRead,
     honFetchStatus, honFetchAllStatuses,
     honCheckOut, honReturnItem, honJoinQueue, honLeaveQueue,
