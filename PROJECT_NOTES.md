@@ -24,6 +24,9 @@ item.html            Item detail page (?id=<item-id>), reached by clicking a cov
 how-it-works.html    Circulation cycle, queue mechanic, CDL legal framing
 membership.html      Invite-only system, 5-library-card mechanic, waitlist form
 support.html         Donation tiers, Supporter perks (mock, non-functional payment)
+admin.html           Founder/admin only: issue cards, force-return loans, ban
+                     members. Not linked from the public nav — gated server-side
+                     by the is_admin flag, not by obscurity. Added 2026-08-14 (T11).
 ```
 
 The site-wide nav (black circle top-left → fullscreen overlay menu) is
@@ -44,6 +47,7 @@ hon-site/
 ├── how-it-works.html
 ├── membership.html
 ├── support.html
+├── admin.html             founder/admin tool: issue cards, force-return, ban
 ├── css/
 │   └── style.css          single shared stylesheet, all design tokens
 └── js/
