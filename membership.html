@@ -34,9 +34,11 @@
       <p style="margin-top:12px; font-size:15px; color:#2c2b28;">
         Enter the email your account is under — we'll send a one-time link, no password needed.
       </p>
-      <form id="signin-form" style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
-        <label for="signin-email" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0);">Email</label>
-        <input id="signin-email" type="email" placeholder="you@example.com" required style="flex:1; min-width:220px; font-family:var(--mono); font-size:14px; padding:12px 14px; border:1px solid var(--ink); background:var(--paper);">
+      <form id="signin-form" style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;">
+        <div style="flex:1; min-width:220px;">
+          <label for="signin-email" style="display:block; font-family:var(--mono); font-size:11px; letter-spacing:0.1em; font-weight:600; text-transform:uppercase; color:var(--grey); margin-bottom:6px;">Email</label>
+          <input id="signin-email" type="email" placeholder="you@example.com" required style="width:100%; font-family:var(--mono); font-size:14px; padding:12px 14px; border:1px solid var(--ink); background:var(--paper);">
+        </div>
         <button type="submit" class="btn btn-solid" id="signin-submit">Send Link &rarr;</button>
       </form>
       <p id="signin-status" style="margin-top:12px; font-size:14px;"></p>
