@@ -59,6 +59,14 @@ Plex Mono, Noto Sans JP) loaded via `@import` in `style.css`. Open any HTML
 file directly, or serve the folder with `python3 -m http.server` / VS Code
 Live Server for more reliable `localStorage` behavior.
 
+**Update 2026-08-14:** a real backend (Supabase) is planned to replace the
+`localStorage`-only circulation state (see the `/plan-eng-review` output for
+that date). This still avoids a build step — the Supabase JS client loads via
+a plain `<script>` tag from their CDN, no bundler required. A test toolchain
+(Vitest, via `bun`) is also being added, but as a dev-only dependency that
+never ships to the deployed page. "No build step" survives; "no dependencies
+at all" no longer fully holds once this lands.
+
 ---
 
 ## Key architectural decisions
@@ -70,10 +78,16 @@ Live Server for more reliable `localStorage` behavior.
 - **Catalog data is centralized** in `js/catalog-data.js` as a single array.
   Adding a 16th title only requires adding one object there — both the shelf
   layout (`browse.js`) and item pages (`item.js`) read from it automatically.
-- **Covers are typographic, not photographic** — colored rectangles with
-  title/era/issue set in type. This was a deliberate choice, not a
-  placeholder: it sidesteps any copyright question around reproducing real
-  magazine covers, and reads as intentional rather than a stand-in.
+- **Covers are real photographed scans** of actual magazines (BURST, FRUITS,
+  Lightning, etc.), stored in `images/covers/`. An earlier version of this
+  document said covers were typographic placeholders specifically to avoid
+  copyright exposure — that's no longer accurate and was corrected on
+  2026-08-14. Real scans are used, with the copyright/legal exposure this
+  creates consciously acknowledged and accepted (see the /office-hours
+  design doc at `~/.gstack/projects/matured-H-on/brandon-main-design-
+  20260814-011834.md`, Approach C). Items without a real scan on file fall
+  back to a typographic placeholder card automatically — that fallback
+  still exists in code, it's just no longer the primary/intended state.
 - **Nav markup is injected by JS, not duplicated per page.** `main.js` builds
   the black-circle button and overlay menu once and prepends it to every
   page's `<body>`. If the nav list ever needs to change, it's a one-file edit.
@@ -125,8 +139,8 @@ Live Server for more reliable `localStorage` behavior.
   relevant, per the assignment's honesty expectations.
 - Membership/support forms (waitlist, donation) are non-functional mockups
   with a fake confirmation message — clearly labeled as demo-only in the copy.
-- Covers are typographic placeholders, not real scans — intentional, not a
-  gap to fill.
+- Covers are real photographed scans of actual magazines, not typographic
+  placeholders — a deliberate, risk-aware choice (see above), not a gap.
 
 ---
 
