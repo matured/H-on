@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin · 本 (hon)</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<main>
+
+  <section style="padding-bottom: 20px; padding-top: clamp(64px, 9vw, 108px);">
+    <div class="wrap">
+      <p class="eyebrow">ADMIN</p>
+      <h1 style="font-size: clamp(32px, 5vw, 54px); margin-top:16px;">Library administration.</h1>
+      <p class="serif-lede" style="max-width: 56ch; margin-top:18px;">
+        Issue cards, close out loans, and suspend accounts. Not linked from
+        the public nav — access is gated server-side by the is_admin flag
+        on your account, not by this page being hard to find.
+      </p>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section>
+    <div class="wrap" id="admin-root">
+      <p class="eyebrow">CHECKING ACCESS&hellip;</p>
+    </div>
+  </section>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/circulation.js"></script>
+<script src="js/main.js"></script>
+<script>
+const HON_LABEL_STYLE = 'display:block; font-family:var(--mono); font-size:11px; letter-spacing:0.1em; font-weight:600; text-transform:uppercase; color:var(--grey); margin-bottom:6px;';
+const HON_TH_STYLE = 'text-align:left; font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--grey); padding:8px 10px; border-bottom:1px solid var(--line-strong);';
+const HON_TD_STYLE = 'padding:10px; border-bottom:1px solid var(--line); font-size:13.5px; vertical-align:middle;';
+
+function honEscape(s) {
+  const div = document.createElement('div');
+  div.textContent = s ?? '';
+  return div.innerHTML;
+}
+
+async function honRenderAdmin() {
+  const root = document.getElementById('admin-root');
+  const user = await honGetCurrentUser();
+
+  if (!user) {
+    root.innerHTML = `
+      <p class="eyebrow">SIGNED OUT</p>
+      <h2 style="font-size: clamp(22px, 2.8vw, 28px); margin-top:14px;">Sign in first.</h2>
+      <p style="margin-top:12px; font-size:15px; color:#2c2b28;">This page needs an admin session.</p>
+      <a href="membership.html" class="btn" style="margin-top:20px; display:inline-flex;">Go to Sign In &rarr;</a>
+    `;
+    return;
+  }
+
+  let profile;
+  try {
+    profile = await honFetchMyProfile();
+  } catch (err) {
+    root.innerHTML = `<p class="eyebrow">ERROR</p><p style="margin-top:12px;">Couldn't check admin status: ${honEscape(err.message || err)}</p>`;
+    return;
+  }
+
+  if (!profile || !profile.is_admin) {
+    root.innerHTML = `
+      <p class="eyebrow">NOT AUTHORIZED</p>
+      <h2 style="font-size: clamp(22px, 2.8vw, 28px); margin-top:14px;">This account isn't an admin.</h2>
+      <a href="catalog.html" class="btn" style="margin-top:20px; display:inline-flex;">Back to the Archive &rarr;</a>
+    `;
+    return;
+  }
+
+  root.innerHTML = `
+    <div style="margin-bottom:48px;">
+      <p class="eyebrow">ISSUE A CARD</p>
+      <h2 style="font-size: clamp(20px, 2.6vw, 24px); margin-top:12px;">Mint an extra invite.</h2>
+      <p style="margin-top:10px; font-size:14.5px; color:#2c2b28;">Attributed to your own account — it'll also show up on your card dashboard on the Membership page.</p>
+      <button class="btn btn-solid" id="issue-card-btn" style="margin-top:16px;">Issue Card &rarr;</button>
+      <p id="issue-card-status" style="margin-top:10px; font-size:14px;"></p>
+    </div>
+
+    <div style="margin-bottom:48px;">
+      <p class="eyebrow">ACTIVE LOANS</p>
+      <div id="loans-table-wrap" style="margin-top:16px; overflow-x:auto;">Loading&hellip;</div>
+    </div>
+
+    <div>
+      <p class="eyebrow">MEMBERS</p>
+      <div id="members-table-wrap" style="margin-top:16px; overflow-x:auto;">Loading&hellip;</div>
+    </div>
+  `;
+
+  document.getElementById('issue-card-btn').addEventListener('click', async () => {
+    const btn = document.getElementById('issue-card-btn');
+    const statusEl = document.getElementById('issue-card-status');
+    btn.disabled = true;
+    btn.textContent = 'Issuing…';
+    try {
+      const card = await honAdminIssueCard();
+      statusEl.textContent = `New code: ${card.code}`;
+      statusEl.style.color = 'var(--ink)';
+    } catch (err) {
+      statusEl.textContent = `Couldn't issue a card: ${err.message || err}`;
+      statusEl.style.color = 'var(--red)';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Issue Card →';
+    }
+  });
+
+  await honRenderLoansTable();
+  await honRenderMembersTable();
+}
+
+async function honRenderLoansTable() {
+  const wrap = document.getElementById('loans-table-wrap');
+  let loans;
+  try {
+    loans = await honAdminListLoans();
+  } catch (err) {
+    wrap.innerHTML = `<p style="color:var(--red); font-size:14px;">Couldn't load loans: ${honEscape(err.message || err)}</p>`;
+    return;
+  }
+  if (!loans.length) {
+    wrap.innerHTML = `<p style="font-size:14px; color:var(--grey);">No active loans.</p>`;
+    return;
+  }
+  const now = Date.now();
+  wrap.innerHTML = `
+    <table style="width:100%; border-collapse:collapse; min-width:640px;">
+      <thead><tr>
+        <th style="${HON_TH_STYLE}">Item</th>
+        <th style="${HON_TH_STYLE}">Member</th>
+        <th style="${HON_TH_STYLE}">Checked Out</th>
+        <th style="${HON_TH_STYLE}">Due</th>
+        <th style="${HON_TH_STYLE}"></th>
+      </tr></thead>
+      <tbody>
+        ${loans.map(l => {
+          const overdue = new Date(l.due_at).getTime() < now;
+          return `
+            <tr>
+              <td style="${HON_TD_STYLE} font-family:var(--mono);">${honEscape(l.item_id)}</td>
+              <td style="${HON_TD_STYLE}">${honEscape(l.user_email)}</td>
+              <td style="${HON_TD_STYLE}">${honFormatDate(l.checked_out_at)}</td>
+              <td style="${HON_TD_STYLE} ${overdue ? 'color:var(--red); font-weight:600;' : ''}">${honFormatDate(l.due_at)}${overdue ? ' · OVERDUE' : ''}</td>
+              <td style="${HON_TD_STYLE}"><button class="btn" data-loan-id="${l.loan_id}" style="font-size:12px; padding:8px 12px;">Force Return</button></td>
+            </tr>
+          `;
+        }).join('')}
+      </tbody>
+    </table>
+  `;
+  wrap.querySelectorAll('button[data-loan-id]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;
+      btn.textContent = 'Returning…';
+      try {
+        await honAdminForceReturn(btn.dataset.loanId);
+        await honRenderLoansTable();
+      } catch (err) {
+        alert(`Couldn't force-return: ${err.message || err}`);
+        btn.disabled = false;
+        btn.textContent = 'Force Return';
+      }
+    });
+  });
+}
+
+async function honRenderMembersTable() {
+  const wrap = document.getElementById('members-table-wrap');
+  let profiles;
+  try {
+    profiles = await honAdminListProfiles();
+  } catch (err) {
+    wrap.innerHTML = `<p style="color:var(--red); font-size:14px;">Couldn't load members: ${honEscape(err.message || err)}</p>`;
+    return;
+  }
+  wrap.innerHTML = `
+    <table style="width:100%; border-collapse:collapse; min-width:600px;">
+      <thead><tr>
+        <th style="${HON_TH_STYLE}">Email</th>
+        <th style="${HON_TH_STYLE}">Joined</th>
+        <th style="${HON_TH_STYLE}">Role</th>
+        <th style="${HON_TH_STYLE}">Status</th>
+        <th style="${HON_TH_STYLE}"></th>
+      </tr></thead>
+      <tbody>
+        ${profiles.map(p => `
+          <tr>
+            <td style="${HON_TD_STYLE}">${honEscape(p.email)}</td>
+            <td style="${HON_TD_STYLE}">${honFormatDate(p.created_at)}</td>
+            <td style="${HON_TD_STYLE}">${p.is_admin ? 'Admin' : 'Member'}</td>
+            <td style="${HON_TD_STYLE} ${p.banned ? 'color:var(--red);' : ''}">${p.banned ? 'Banned' : 'Active'}</td>
+            <td style="${HON_TD_STYLE}"><button class="btn" data-user-id="${p.user_id}" data-banned="${p.banned}" style="font-size:12px; padding:8px 12px;">${p.banned ? 'Unban' : 'Ban'}</button></td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+  wrap.querySelectorAll('button[data-user-id]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const nextBanned = btn.dataset.banned !== 'true';
+      btn.disabled = true;
+      btn.textContent = nextBanned ? 'Banning…' : 'Unbanning…';
+      try {
+        await honAdminSetBanned(btn.dataset.userId, nextBanned);
+        await honRenderMembersTable();
+      } catch (err) {
+        alert(`Couldn't update that member: ${err.message || err}`);
+        btn.disabled = false;
+        btn.textContent = nextBanned ? 'Ban' : 'Unban';
+      }
+    });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', honRenderAdmin);
+</script>
+</body>
+</html>

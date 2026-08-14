@@ -80,6 +80,51 @@ function honTakePendingCardCode() {
   return code;
 }
 
+// ---- admin ----
+// All admin_* RPCs gate on is_admin() server-side — these wrappers add no
+// client-side authorization of their own, they just surface what the RPC
+// returns (or the "admin only" error it raises for a non-admin caller).
+
+async function honFetchMyProfile() {
+  const user = await honGetCurrentUser();
+  if (!user) return null;
+  const { data, error } = await honSupabase
+    .from('profiles')
+    .select('user_id, is_admin, banned')
+    .eq('user_id', user.id)
+    .maybeSingle();
+  if (error) throw error;
+  return data;
+}
+
+async function honAdminListProfiles() {
+  const { data, error } = await honSupabase.rpc('admin_list_profiles');
+  if (error) throw error;
+  return data || [];
+}
+
+async function honAdminListLoans() {
+  const { data, error } = await honSupabase.rpc('admin_list_loans');
+  if (error) throw error;
+  return data || [];
+}
+
+async function honAdminForceReturn(loanId) {
+  const { error } = await honSupabase.rpc('admin_force_return', { p_loan_id: loanId });
+  if (error) throw error;
+}
+
+async function honAdminIssueCard() {
+  const { data, error } = await honSupabase.rpc('admin_issue_card');
+  if (error) throw error;
+  return data;
+}
+
+async function honAdminSetBanned(userId, banned) {
+  const { error } = await honSupabase.rpc('admin_set_banned', { p_user_id: userId, p_banned: banned });
+  if (error) throw error;
+}
+
 // ---- status fetching ----
 
 // Fetches one item's status: public aggregate counts (from the
