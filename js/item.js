@@ -135,6 +135,7 @@ async function honRenderItem() {
         <div class="item-spec-list" id="item-spec-list">${honSpecRows(item)}</div>
 
         <button class="item-cta" id="item-cta-btn" data-action="${cta.action}">${cta.label} &rarr;</button>
+        <div class="mono-tag" id="item-action-error" style="color:var(--red); margin-top:10px; display:none;"></div>
         <div class="mono-tag" id="item-meta" style="color:var(--grey); margin-top:14px;">${status.metaText}</div>
 
         <details class="item-disclosure">
@@ -152,23 +153,30 @@ async function honRenderItem() {
   bindItemDots(item);
 }
 
+const HON_ACTION_LOADING_LABEL = {
+  checkout: 'Checking out…',
+  return: 'Returning…',
+  join: 'Joining queue…',
+  leave: 'Leaving queue…',
+};
+
 function bindItemActions(item) {
   const btn = document.getElementById('item-cta-btn');
+  const errorEl = document.getElementById('item-action-error');
+
   btn.addEventListener('click', () => {
     const action = btn.dataset.action;
-    const originalLabel = btn.innerHTML;
     btn.disabled = true;
-    btn.innerHTML = '…';
+    btn.innerHTML = HON_ACTION_LOADING_LABEL[action] || '…';
+    errorEl.style.display = 'none';
+    errorEl.textContent = '';
 
     const rerender = (err) => {
       btn.disabled = false;
       if (err) {
-        // Minimal error surface for now — T6 replaces this with specific,
-        // inline per-error messaging (e.g. "someone just took the last
-        // copy" vs. a network failure). This just makes sure a failure is
-        // never silent and the button is always usable again afterward.
-        alert(honFriendlyError(err));
-        btn.innerHTML = originalLabel;
+        errorEl.textContent = honFriendlyError(err);
+        errorEl.style.display = 'block';
+        btn.innerHTML = `${honCtaLabel(item).label} &rarr;`;
         bindItemActions(item);
         return;
       }
