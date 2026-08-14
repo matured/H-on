@@ -202,6 +202,7 @@ function honFriendlyError(err) {
   if (msg.includes('no copies available')) return 'Someone just took the last copy. Try joining the queue instead.';
   if (msg.includes('overdue')) return "You have an overdue item — return it before checking out another.";
   if (msg.includes('already in queue')) return "You're already in the queue for this one.";
+  if (msg.includes('rate limit exceeded')) return "You're doing that a bit fast — give it a minute and try again.";
   return `Something went wrong: ${msg}`;
 }
 
