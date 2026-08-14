@@ -52,4 +52,48 @@ function honInjectNav() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', honInjectNav);
+// Queue notifications (T13). Silently skipped on pages that don't load
+// the Supabase client at all (home/about/how-it-works/support — none of
+// them need it otherwise) rather than adding that client to four pages
+// just for this banner.
+async function honShowNotifications() {
+  if (typeof honSupabase === 'undefined') return;
+  let user;
+  try {
+    user = await honGetCurrentUser();
+  } catch {
+    return;
+  }
+  if (!user) return;
+
+  let notifications;
+  try {
+    notifications = await honFetchMyNotifications();
+  } catch (err) {
+    console.error('Failed to fetch notifications:', err);
+    return;
+  }
+  if (!notifications.length) return;
+
+  const banner = document.createElement('div');
+  banner.className = 'hon-notify-banner';
+  banner.innerHTML = `
+    <span>${notifications.length === 1 ? "An item you're waiting for is available." : `${notifications.length} items you're waiting for are available.`} <a href="catalog.html">Check the Archive &rarr;</a></span>
+    <button class="hon-notify-dismiss" aria-label="Dismiss">&times;</button>
+  `;
+  document.body.prepend(banner);
+
+  banner.querySelector('.hon-notify-dismiss').addEventListener('click', async () => {
+    banner.remove();
+    try {
+      await Promise.all(notifications.map(n => honMarkNotificationRead(n.id)));
+    } catch (err) {
+      console.error('Failed to mark notifications read:', err);
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  honInjectNav();
+  honShowNotifications();
+});

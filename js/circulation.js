@@ -182,6 +182,29 @@ async function honAdminUpsertItem(item) {
   return data;
 }
 
+// ---- notifications ----
+// A nudge, not a reservation: return_item/admin_force_return insert one
+// of these for whoever's been waiting longest on an item, but it doesn't
+// hold the item or block anyone else from checking it out first.
+
+async function honFetchMyNotifications() {
+  const user = await honGetCurrentUser();
+  if (!user) return [];
+  const { data, error } = await honSupabase
+    .from('notifications')
+    .select('id, item_id, created_at')
+    .eq('user_id', user.id)
+    .is('read_at', null)
+    .order('created_at', { ascending: true });
+  if (error) throw error;
+  return data || [];
+}
+
+async function honMarkNotificationRead(id) {
+  const { error } = await honSupabase.rpc('mark_notification_read', { p_id: id });
+  if (error) throw error;
+}
+
 // ---- status fetching ----
 
 // Fetches one item's status: public aggregate counts (from the
