@@ -32,7 +32,7 @@
       <p class="eyebrow">ALREADY A MEMBER?</p>
       <h2 style="font-size: clamp(22px, 2.8vw, 28px); margin-top:14px;">Sign in.</h2>
       <p style="margin-top:12px; font-size:15px; color:#2c2b28;">
-        Enter the email your account is under — we'll send a one-time link, no password needed.
+        Enter the email your account is under. We'll send a one-time link, no password needed.
       </p>
       <form id="signin-form" style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;">
         <div style="flex:1; min-width:220px;">
@@ -54,7 +54,7 @@
       <h2 style="font-size: clamp(22px, 2.8vw, 28px); margin-top:14px;">Redeem it.</h2>
       <p style="margin-top:12px; font-size:15px; color:#2c2b28;">
         Enter the code someone gave you and the email you want your account under.
-        We'll check the code, then send a one-time link — click it to finish joining.
+        We'll check the code, then send a one-time link. Click it to finish joining.
       </p>
       <form id="redeem-form" style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;">
         <div style="flex:1; min-width:180px;">
@@ -268,7 +268,7 @@ document.getElementById('redeem-form').addEventListener('submit', async (e) => {
     btn.textContent = 'Sending…';
     honStashPendingCardCode(code);
     await honSignInWithEmail(email);
-    statusEl.textContent = `Check ${email} for a link — clicking it finishes your redemption.`;
+    statusEl.textContent = `Check ${email} for a link. Clicking it finishes your redemption.`;
     statusEl.style.color = 'var(--ink)';
   } catch (err) {
     statusEl.textContent = `Something went wrong: ${err.message || err}`;
@@ -320,7 +320,7 @@ function honRenderCardsDashboard(cards) {
   const issuedCount = cards.filter(c => c.claimed_at).length;
   tag.textContent = `YOUR CARDS · ${issuedCount} OF ${cards.length} ISSUED`;
   list.innerHTML = cards.map((c, i) => honCardRowHTML(c, i)).join('');
-  caption.textContent = 'An unused card shows the code to hand someone — they redeem it above.';
+  caption.textContent = 'An unused card shows the code to hand someone. They redeem it above.';
 }
 
 function honRenderAccountSection(user) {
@@ -342,7 +342,7 @@ async function honRefreshMembershipView() {
   if (user && pendingCode) {
     try {
       await honRedeemCard(pendingCode);
-      redeemStatusEl.textContent = "Welcome — you're in. Your five cards are ready below.";
+      redeemStatusEl.textContent = "Welcome. You're in. Your five cards are ready below.";
       redeemStatusEl.style.color = 'var(--ink)';
     } catch (err) {
       redeemStatusEl.textContent = `Couldn't redeem that code: ${err.message || err}`;

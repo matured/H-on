@@ -40,7 +40,7 @@ function honSpecRows(item) {
   const s = honState[item.id];
   const overdue = honIsOverdue(s);
   const stampColor = s.status === 'available' ? 'filled' : (s.status === 'checked_out_you' && !overdue ? 'filled' : 'filled-red');
-  const statusText = s.status === 'available' ? 'On the shelf' : (s.status === 'checked_out_you' ? (overdue ? 'Checked out — you (overdue)' : 'Checked out — you') : 'Checked out');
+  const statusText = s.status === 'available' ? 'On the shelf' : (s.status === 'checked_out_you' ? (overdue ? 'Checked out, you (overdue)' : 'Checked out, you') : 'Checked out');
   return `
     <div class="item-spec-row"><span class="item-spec-swatch filled"></span> Genre: ${item.genre}</div>
     <div class="item-spec-row"><span class="item-spec-swatch filled"></span> Era: ${item.era}</div>
@@ -54,7 +54,7 @@ function honCoverInnerHTML(item, view) {
     const src = view === 'detail' ? (item.backImage || item.coverImage) : item.coverImage;
     const label = view === 'detail' ? 'Back cover' : `${item.title} ${item.issue}`;
     return `
-      <img src="${src}" alt="${item.title} ${item.issue} — ${view === 'detail' ? 'back cover' : 'front cover'}" loading="lazy">
+      <img src="${src}" alt="${view === 'detail' ? 'Back cover of' : 'Front cover of'} ${item.title} ${item.issue}" loading="lazy">
       <span class="mono-tag item-cover-photo-tag" style="background:${item.coverAccent}; color:${item.coverFg};">${label}</span>
     `;
   }
@@ -142,7 +142,7 @@ async function honRenderItem() {
         <details class="item-disclosure">
           <summary>How Checkout Works</summary>
           <p class="item-disclosure-body">
-            Checkout, queueing, and returns here are real — backed by a shared database, not
+            Checkout, queueing, and returns here are real, backed by a shared database, not
             saved to your browser alone. Sign in from the Membership page to check something out.
           </p>
         </details>
@@ -198,11 +198,11 @@ function bindItemActions(item) {
 
 function honFriendlyError(err) {
   const msg = err?.message || String(err);
-  if (msg.includes('must be authenticated')) return "You'll need to sign in first — head to the Membership page.";
+  if (msg.includes('must be authenticated')) return "You'll need to sign in first. Head to the Membership page.";
   if (msg.includes('no copies available')) return 'Someone just took the last copy. Try joining the queue instead.';
-  if (msg.includes('overdue')) return "You have an overdue item — return it before checking out another.";
+  if (msg.includes('overdue')) return "You have an overdue item. Return it before checking out another.";
   if (msg.includes('already in queue')) return "You're already in the queue for this one.";
-  if (msg.includes('rate limit exceeded')) return "You're doing that a bit fast — give it a minute and try again.";
+  if (msg.includes('rate limit exceeded')) return "You're doing that a bit fast. Give it a minute and try again.";
   return `Something went wrong: ${msg}`;
 }
 
