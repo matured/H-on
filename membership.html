@@ -361,7 +361,7 @@ async function honRefreshMembershipView() {
     const cards = await honFetchMyCards();
     honRenderCardsDashboard(cards);
   } catch (err) {
-    document.getElementById('cards-list').innerHTML = `<p style="font-size:14px; color:var(--red);">Couldn't load your cards: ${err.message || err}</p>`;
+    document.getElementById('cards-list').innerHTML = `<p style="font-size:14px; color:var(--red);">Couldn't load your cards: ${honEscape(err.message || err)}</p>`;
   }
 }
 

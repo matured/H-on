@@ -43,15 +43,13 @@ const HON_TH_STYLE = 'text-align:left; font-family:var(--mono); font-size:11px; 
 const HON_TD_STYLE = 'padding:10px; border-bottom:1px solid var(--line); font-size:13.5px; vertical-align:middle;';
 const HON_INPUT_STYLE = 'width:100%; font-family:var(--mono); font-size:13px; padding:10px 12px; border:1px solid var(--ink); background:var(--paper);';
 const HON_CATALOG_FIELD_IDS = ['cf-id', 'cf-title', 'cf-subtitle', 'cf-issue', 'cf-era', 'cf-genre', 'cf-call', 'cf-coverbg', 'cf-coverfg', 'cf-coveraccent', 'cf-desc'];
+// item_id doubles as a Storage path segment ({item_id}/{side}.{ext} in
+// honUploadCoverImage) — lowercase-slug-only keeps it a safe, predictable
+// object key instead of free text that could contain "/" or "..".
+const HON_ITEM_ID_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 // Uploaded image URLs live here, not in a text input — set by the file
 // upload handlers or by honFillCatalogForm when editing an existing title.
 let honCatalogImageState = { coverImage: undefined, backImage: undefined };
-
-function honEscape(s) {
-  const div = document.createElement('div');
-  div.textContent = s ?? '';
-  return div.innerHTML;
-}
 
 async function honRenderAdmin() {
   const root = document.getElementById('admin-root');
@@ -261,6 +259,11 @@ async function honHandleCoverFileChange(side, storageSlot, fileInputId, previewI
     fileInput.value = '';
     return;
   }
+  if (!HON_ITEM_ID_PATTERN.test(itemId)) {
+    alert('Item ID can only use lowercase letters, numbers, and hyphens (e.g. burst-vol15).');
+    fileInput.value = '';
+    return;
+  }
   document.getElementById(previewId).textContent = 'Uploading…';
   try {
     const url = await honUploadCoverImage(itemId, side, file);
@@ -336,6 +339,11 @@ async function honRenderCatalogSection() {
     const required = ['id', 'title', 'issue', 'era', 'genre', 'call', 'coverBg', 'coverFg', 'coverAccent', 'desc'];
     if (required.some(k => !item[k]) || !item.copiesTotal || item.copiesTotal < 1) {
       statusEl.textContent = 'Fill in all fields except subtitle and the two images.';
+      statusEl.style.color = 'var(--red)';
+      return;
+    }
+    if (!HON_ITEM_ID_PATTERN.test(item.id)) {
+      statusEl.textContent = 'Item ID can only use lowercase letters, numbers, and hyphens (e.g. burst-vol15).';
       statusEl.style.color = 'var(--red)';
       return;
     }

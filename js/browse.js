@@ -11,20 +11,22 @@ function honSeeded(seed) {
 }
 
 function honCoverHTML(item) {
+  const bg = honEscape(item.coverBg), fg = honEscape(item.coverFg), accent = honEscape(item.coverAccent);
+  const title = honEscape(item.title), issue = honEscape(item.issue), era = honEscape(item.era);
   if (item.coverImage) {
     return `
-      <div class="shelf-cover shelf-cover-photo" style="border-color:${item.coverAccent};">
-        <img src="${item.coverImage}" alt="${item.title} ${item.issue} cover" loading="lazy">
-        <span class="shelf-cover-photo-tag mono-tag" style="background:${item.coverAccent}; color:${item.coverFg};">${item.era}</span>
+      <div class="shelf-cover shelf-cover-photo" style="border-color:${accent};">
+        <img src="${honEscape(item.coverImage)}" alt="${title} ${issue} cover" loading="lazy">
+        <span class="shelf-cover-photo-tag mono-tag" style="background:${accent}; color:${fg};">${era}</span>
       </div>
     `;
   }
   return `
-    <div class="shelf-cover" style="background:${item.coverBg}; color:${item.coverFg};">
-      <span class="shelf-cover-era mono-tag" style="color:${item.coverAccent}">${item.era}</span>
-      <span class="shelf-cover-title">${item.title}</span>
-      ${item.subtitle ? `<span class="shelf-cover-sub">${item.subtitle}</span>` : ''}
-      <span class="shelf-cover-issue mono-tag" style="color:${item.coverAccent}">${item.issue}</span>
+    <div class="shelf-cover" style="background:${bg}; color:${fg};">
+      <span class="shelf-cover-era mono-tag" style="color:${accent}">${era}</span>
+      <span class="shelf-cover-title">${title}</span>
+      ${item.subtitle ? `<span class="shelf-cover-sub">${honEscape(item.subtitle)}</span>` : ''}
+      <span class="shelf-cover-issue mono-tag" style="color:${accent}">${issue}</span>
     </div>
   `;
 }
@@ -63,8 +65,8 @@ function honLayoutShelf(visibleItems) {
     el.innerHTML = `
       ${honCoverHTML(item)}
       <div class="shelf-caption">
-        <div class="shelf-caption-title mono-tag">${item.call}</div>
-        <div class="shelf-caption-status" style="color:${statusColor}">${status.stampLabel}</div>
+        <div class="shelf-caption-title mono-tag">${honEscape(item.call)}</div>
+        <div class="shelf-caption-status" style="color:${statusColor}">${honEscape(status.stampLabel)}</div>
       </div>
     `;
 
@@ -83,7 +85,7 @@ function honBuildFilters() {
   if (!bar) return;
   const genres = ['all', ...new Set(HON_CATALOG.map(i => i.genre))];
   bar.innerHTML = genres.map(g =>
-    `<button class="filter-chip ${g === 'all' ? 'active' : ''}" data-genre="${g}">${g === 'all' ? 'All Titles' : g}</button>`
+    `<button class="filter-chip ${g === 'all' ? 'active' : ''}" data-genre="${honEscape(g)}">${g === 'all' ? 'All Titles' : honEscape(g)}</button>`
   ).join('');
   bar.querySelectorAll('.filter-chip').forEach(chip => {
     chip.addEventListener('click', () => {
@@ -118,7 +120,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
       await honFetchCatalog();
     } catch (err) {
-      shelf.innerHTML = `<p class="eyebrow" style="padding: 40px 0; color:var(--red);">Couldn't load the catalog: ${err.message || err}</p>`;
+      shelf.innerHTML = `<p class="eyebrow" style="padding: 40px 0; color:var(--red);">Couldn't load the catalog: ${honEscape(err.message || err)}</p>`;
       return;
     }
     honBuildFilters();

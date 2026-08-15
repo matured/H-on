@@ -41,6 +41,23 @@ async function honFetchCatalog() {
   return HON_CATALOG;
 }
 
+// Every field interpolated into innerHTML below is admin-writable (catalog
+// titles/descriptions, cover hex colors) or comes straight from a thrown
+// error message — never assume either is script-free just because only
+// admins can currently write it. Escaping here is the actual security
+// boundary, not the RPC's is_admin() check, which only decides who can
+// write, not what gets rendered.
+function honEscape(s) {
+  const div = document.createElement('div');
+  div.textContent = s ?? '';
+  // The textContent/innerHTML round trip only escapes &, <, > — those are
+  // the only characters special in element CONTENT. This helper is also
+  // used inside attribute values (style="...", alt="...") throughout the
+  // codebase, where an unescaped " or ' breaks out of the attribute, so
+  // both get escaped explicitly here too.
+  return div.innerHTML.replaceAll('"', '&quot;').replaceAll("'", '&#39;');
+}
+
 function honFormatDate(iso) {
   if (!iso) return '';
   const d = new Date(iso);
@@ -454,7 +471,7 @@ function honStatusInfo(item) {
 // replaces it.
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
-    honFetchCatalog, honFormatDate, honGetCurrentUser, honSignInWithEmail,
+    honFetchCatalog, honFormatDate, honEscape, honGetCurrentUser, honSignInWithEmail,
     honDeleteMyAccount,
     honFetchMyCards, honValidateCardCode, honRedeemCard,
     honStashPendingCardCode, honTakePendingCardCode,

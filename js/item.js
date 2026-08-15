@@ -42,40 +42,42 @@ function honSpecRows(item) {
   const stampColor = s.status === 'available' ? 'filled' : (s.status === 'checked_out_you' && !overdue ? 'filled' : 'filled-red');
   const statusText = s.status === 'available' ? 'On the shelf' : (s.status === 'checked_out_you' ? (overdue ? 'Checked out, you (overdue)' : 'Checked out, you') : 'Checked out');
   return `
-    <div class="item-spec-row"><span class="item-spec-swatch filled"></span> Genre: ${item.genre}</div>
-    <div class="item-spec-row"><span class="item-spec-swatch filled"></span> Era: ${item.era}</div>
+    <div class="item-spec-row"><span class="item-spec-swatch filled"></span> Genre: ${honEscape(item.genre)}</div>
+    <div class="item-spec-row"><span class="item-spec-swatch filled"></span> Era: ${honEscape(item.era)}</div>
     <div class="item-spec-row"><span class="item-spec-swatch filled"></span> Copies in collection: ${s.copiesTotal}</div>
-    <div class="item-spec-row"><span class="item-spec-swatch ${stampColor}"></span> Status: ${statusText}</div>
+    <div class="item-spec-row"><span class="item-spec-swatch ${stampColor}"></span> Status: ${honEscape(statusText)}</div>
   `;
 }
 
 function honCoverInnerHTML(item, view) {
+  const accent = honEscape(item.coverAccent), fg = honEscape(item.coverFg);
+  const title = honEscape(item.title), issue = honEscape(item.issue), era = honEscape(item.era);
   if (item.coverImage) {
     const src = view === 'detail' ? (item.backImage || item.coverImage) : item.coverImage;
-    const label = view === 'detail' ? 'Back cover' : `${item.title} ${item.issue}`;
+    const label = view === 'detail' ? 'Back cover' : `${title} ${issue}`;
     return `
-      <img src="${src}" alt="${view === 'detail' ? 'Back cover of' : 'Front cover of'} ${item.title} ${item.issue}" loading="lazy">
-      <span class="mono-tag item-cover-photo-tag" style="background:${item.coverAccent}; color:${item.coverFg};">${label}</span>
+      <img src="${honEscape(src)}" alt="${view === 'detail' ? 'Back cover of' : 'Front cover of'} ${title} ${issue}" loading="lazy">
+      <span class="mono-tag item-cover-photo-tag" style="background:${accent}; color:${fg};">${label}</span>
     `;
   }
   if (view === 'detail') {
     const copiesTotal = honState[item.id]?.copiesTotal ?? 1;
     return `
-      <span class="mono-tag" style="color:${item.coverAccent}; letter-spacing:0.12em;">${item.call}</span>
+      <span class="mono-tag" style="color:${accent}; letter-spacing:0.12em;">${honEscape(item.call)}</span>
       <div style="text-align:center;">
-        <div class="item-cover-title" style="font-size: clamp(38px, 6vw, 60px);">${item.era}</div>
-        <div class="item-cover-sub">${item.genre}</div>
+        <div class="item-cover-title" style="font-size: clamp(38px, 6vw, 60px);">${era}</div>
+        <div class="item-cover-sub">${honEscape(item.genre)}</div>
       </div>
-      <span class="mono-tag" style="color:${item.coverAccent}; letter-spacing:0.1em;">${copiesTotal} ${copiesTotal > 1 ? 'copies' : 'copy'} held</span>
+      <span class="mono-tag" style="color:${accent}; letter-spacing:0.1em;">${copiesTotal} ${copiesTotal > 1 ? 'copies' : 'copy'} held</span>
     `;
   }
   return `
-    <span class="mono-tag" style="color:${item.coverAccent}; letter-spacing:0.12em;">${item.era}</span>
+    <span class="mono-tag" style="color:${accent}; letter-spacing:0.12em;">${era}</span>
     <div>
-      <div class="item-cover-title">${item.title}</div>
-      ${item.subtitle ? `<div class="item-cover-sub">${item.subtitle}</div>` : ''}
+      <div class="item-cover-title">${title}</div>
+      ${item.subtitle ? `<div class="item-cover-sub">${honEscape(item.subtitle)}</div>` : ''}
     </div>
-    <span class="mono-tag" style="color:${item.coverAccent}; letter-spacing:0.1em;">${item.issue}</span>
+    <span class="mono-tag" style="color:${accent}; letter-spacing:0.1em;">${issue}</span>
   `;
 }
 
@@ -100,7 +102,7 @@ async function honRenderItem() {
     root.innerHTML = `
       <p class="eyebrow">SOMETHING WENT WRONG</p>
       <h1 style="font-size: clamp(26px,4vw,40px); margin-top:14px;">Couldn't load this item.</h1>
-      <p class="serif-lede" style="margin-top:14px;">${err.message || err}</p>
+      <p class="serif-lede" style="margin-top:14px;">${honEscape(err.message || err)}</p>
       <a href="catalog.html" class="btn" style="margin-top:22px; display:inline-flex;">Back to the Shelf &rarr;</a>
     `;
     document.title = 'Error · 本 (hon)';
@@ -116,7 +118,7 @@ async function honRenderItem() {
 
     <div class="item-hero" style="margin-top: 28px;">
       <div class="item-media">
-        <div class="item-cover-large${item.coverImage ? ' item-cover-large-photo' : ''}" id="item-cover" style="${item.coverImage ? `border-color:${item.coverAccent};` : `background:${item.coverBg}; color:${item.coverFg};`}">
+        <div class="item-cover-large${item.coverImage ? ' item-cover-large-photo' : ''}" id="item-cover" style="${item.coverImage ? `border-color:${honEscape(item.coverAccent)};` : `background:${honEscape(item.coverBg)}; color:${honEscape(item.coverFg)};`}">
           ${honCoverInnerHTML(item, 'cover')}
         </div>
         <div class="item-dots">
@@ -127,11 +129,11 @@ async function honRenderItem() {
 
       <div class="item-info">
         <div class="item-title-block">
-          ${item.title}<span class="div-slash">/</span>${item.issue}<span class="div-slash">/</span>${item.genre}
+          ${honEscape(item.title)}<span class="div-slash">/</span>${honEscape(item.issue)}<span class="div-slash">/</span>${honEscape(item.genre)}
         </div>
-        <p class="item-subline">${item.call}</p>
+        <p class="item-subline">${honEscape(item.call)}</p>
 
-        <p class="serif-lede" style="margin-top:22px; font-size:16px;">${item.desc}</p>
+        <p class="serif-lede" style="margin-top:22px; font-size:16px;">${honEscape(item.desc)}</p>
 
         <div class="item-spec-list" id="item-spec-list">${honSpecRows(item)}</div>
 
@@ -230,7 +232,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('item-root').innerHTML = `
       <p class="eyebrow">SOMETHING WENT WRONG</p>
       <h1 style="font-size: clamp(26px,4vw,40px); margin-top:14px;">Couldn't load the catalog.</h1>
-      <p class="serif-lede" style="margin-top:14px;">${err.message || err}</p>
+      <p class="serif-lede" style="margin-top:14px;">${honEscape(err.message || err)}</p>
       <a href="catalog.html" class="btn" style="margin-top:22px; display:inline-flex;">Back to the Shelf &rarr;</a>
     `;
     document.title = 'Error · 本 (hon)';
