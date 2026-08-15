@@ -15,6 +15,30 @@ function honCurrentPage() {
   return path;
 }
 
+// Lets keyboard users jump straight past the nav to the page content
+// instead of tabbing through every overlay link first. Targets whatever
+// <main> the page already has rather than requiring every page to add
+// an id itself, since the nav injection is already the one shared place
+// every page runs through.
+function honInjectSkipLink() {
+  const main = document.querySelector('main');
+  if (!main) return;
+  if (!main.id) main.id = 'main-content';
+  main.tabIndex = -1;
+
+  const skip = document.createElement('a');
+  skip.className = 'skip-link';
+  skip.href = `#${main.id}`;
+  skip.textContent = 'Skip to content';
+  skip.addEventListener('click', () => {
+    // The href jump alone doesn't reliably move focus in every browser;
+    // force it so the next Tab press continues from the content, not
+    // wherever focus happened to be before the click.
+    setTimeout(() => main.focus(), 0);
+  });
+  document.body.prepend(skip);
+}
+
 function honInjectNav() {
   const current = honCurrentPage();
 
@@ -95,5 +119,6 @@ async function honShowNotifications() {
 
 document.addEventListener('DOMContentLoaded', () => {
   honInjectNav();
+  honInjectSkipLink();
   honShowNotifications();
 });

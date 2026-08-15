@@ -302,7 +302,10 @@ function honCardRowHTML(card, index) {
   return `
     <div style="border:2px dashed var(--line-strong); padding:16px 18px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
       <div class="mono-tag" style="letter-spacing:0.1em; color:var(--grey);">CARD ${num} · UNUSED</div>
-      <span class="mono-tag" style="color:var(--ink); font-size:11px; user-select:all;">${card.code}</span>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span class="mono-tag" style="color:var(--ink); font-size:11px; user-select:all;">${card.code}</span>
+        <button type="button" class="btn hon-copy-code-btn" data-code="${card.code}" style="font-size:11px; padding:6px 10px;">Copy</button>
+      </div>
     </div>
   `;
 }
@@ -361,6 +364,20 @@ async function honRefreshMembershipView() {
     document.getElementById('cards-list').innerHTML = `<p style="font-size:14px; color:var(--red);">Couldn't load your cards: ${err.message || err}</p>`;
   }
 }
+
+document.getElementById('cards-list').addEventListener('click', async (e) => {
+  const btn = e.target.closest('.hon-copy-code-btn');
+  if (!btn) return;
+  try {
+    await navigator.clipboard.writeText(btn.dataset.code);
+    btn.textContent = 'Copied';
+  } catch {
+    btn.textContent = "Couldn't copy";
+  } finally {
+    btn.disabled = true;
+    setTimeout(() => { btn.textContent = 'Copy'; btn.disabled = false; }, 1500);
+  }
+});
 
 document.getElementById('signout-btn').addEventListener('click', async () => {
   await honSupabase.auth.signOut();
