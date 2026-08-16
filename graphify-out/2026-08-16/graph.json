@@ -60,10 +60,10 @@
       "source_location": "L113",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_hondeletemyaccount",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "hondeletemyaccount()",
-      "id": "js_circulation_hondeletemyaccount"
+      "norm_label": "hondeletemyaccount()"
     },
     {
       "label": "honSignInWithEmail()",
@@ -72,10 +72,10 @@
       "source_location": "L100",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honsigninwithemail",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "honsigninwithemail()",
-      "id": "js_circulation_honsigninwithemail"
+      "norm_label": "honsigninwithemail()"
     },
     {
       "label": "honValidateCardCode()",
@@ -84,10 +84,10 @@
       "source_location": "L136",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honvalidatecardcode",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "honvalidatecardcode()",
-      "id": "js_circulation_honvalidatecardcode"
+      "norm_label": "honvalidatecardcode()"
     },
     {
       "label": "honAdminForceReturn()",
@@ -96,10 +96,10 @@
       "source_location": "L193",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honadminforcereturn",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honadminforcereturn()",
-      "id": "js_circulation_honadminforcereturn"
+      "norm_label": "honadminforcereturn()"
     },
     {
       "label": "honAdminIssueCard()",
@@ -108,10 +108,10 @@
       "source_location": "L198",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honadminissuecard",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honadminissuecard()",
-      "id": "js_circulation_honadminissuecard"
+      "norm_label": "honadminissuecard()"
     },
     {
       "label": "honAdminListLoans()",
@@ -120,10 +120,10 @@
       "source_location": "L187",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honadminlistloans",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honadminlistloans()",
-      "id": "js_circulation_honadminlistloans"
+      "norm_label": "honadminlistloans()"
     },
     {
       "label": "honAdminListProfiles()",
@@ -132,10 +132,10 @@
       "source_location": "L181",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honadminlistprofiles",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honadminlistprofiles()",
-      "id": "js_circulation_honadminlistprofiles"
+      "norm_label": "honadminlistprofiles()"
     },
     {
       "label": "honAdminSetBanned()",
@@ -144,10 +144,10 @@
       "source_location": "L204",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honadminsetbanned",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honadminsetbanned()",
-      "id": "js_circulation_honadminsetbanned"
+      "norm_label": "honadminsetbanned()"
     },
     {
       "label": "honCheckOut()",
@@ -156,10 +156,10 @@
       "source_location": "L428",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honcheckout",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honcheckout()",
-      "id": "js_circulation_honcheckout"
+      "norm_label": "honcheckout()"
     },
     {
       "label": "honFetchAllStatuses()",
@@ -168,10 +168,10 @@
       "source_location": "L349",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honfetchallstatuses",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honfetchallstatuses()",
-      "id": "js_circulation_honfetchallstatuses"
+      "norm_label": "honfetchallstatuses()"
     },
     {
       "label": "honFetchCatalog()",
@@ -180,10 +180,10 @@
       "source_location": "L40",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honfetchcatalog",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honfetchcatalog()",
-      "id": "js_circulation_honfetchcatalog"
+      "norm_label": "honfetchcatalog()"
     },
     {
       "label": "honFetchMyCards()",
@@ -192,10 +192,10 @@
       "source_location": "L124",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honfetchmycards",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honfetchmycards()",
-      "id": "js_circulation_honfetchmycards"
+      "norm_label": "honfetchmycards()"
     },
     {
       "label": "honFetchMyNotifications()",
@@ -204,10 +204,10 @@
       "source_location": "L267",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honfetchmynotifications",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honfetchmynotifications()",
-      "id": "js_circulation_honfetchmynotifications"
+      "norm_label": "honfetchmynotifications()"
     },
     {
       "label": "honFetchMyProfile()",
@@ -216,10 +216,10 @@
       "source_location": "L169",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honfetchmyprofile",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honfetchmyprofile()",
-      "id": "js_circulation_honfetchmyprofile"
+      "norm_label": "honfetchmyprofile()"
     },
     {
       "label": "honFetchOneItem()",
@@ -228,10 +228,10 @@
       "source_location": "L55",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honfetchoneitem",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honfetchoneitem()",
-      "id": "js_circulation_honfetchoneitem"
+      "norm_label": "honfetchoneitem()"
     },
     {
       "label": "honFetchStatus()",
@@ -240,10 +240,10 @@
       "source_location": "L291",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honfetchstatus",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honfetchstatus()",
-      "id": "js_circulation_honfetchstatus"
+      "norm_label": "honfetchstatus()"
     },
     {
       "label": "honFormatDate()",
@@ -252,10 +252,10 @@
       "source_location": "L82",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honformatdate",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honformatdate()",
-      "id": "js_circulation_honformatdate"
+      "norm_label": "honformatdate()"
     },
     {
       "label": "honGetCurrentUser()",
@@ -264,10 +264,10 @@
       "source_location": "L90",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_hongetcurrentuser",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "hongetcurrentuser()",
-      "id": "js_circulation_hongetcurrentuser"
+      "norm_label": "hongetcurrentuser()"
     },
     {
       "label": "honIsOverdue()",
@@ -276,10 +276,10 @@
       "source_location": "L475",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honisoverdue",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honisoverdue()",
-      "id": "js_circulation_honisoverdue"
+      "norm_label": "honisoverdue()"
     },
     {
       "label": "honJoinQueue()",
@@ -288,10 +288,10 @@
       "source_location": "L452",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honjoinqueue",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honjoinqueue()",
-      "id": "js_circulation_honjoinqueue"
+      "norm_label": "honjoinqueue()"
     },
     {
       "label": "honLeaveQueue()",
@@ -300,10 +300,10 @@
       "source_location": "L463",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honleavequeue",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honleavequeue()",
-      "id": "js_circulation_honleavequeue"
+      "norm_label": "honleavequeue()"
     },
     {
       "label": "honMapItemRow()",
@@ -312,10 +312,10 @@
       "source_location": "L21",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honmapitemrow",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honmapitemrow()",
-      "id": "js_circulation_honmapitemrow"
+      "norm_label": "honmapitemrow()"
     },
     {
       "label": "honMarkNotificationRead()",
@@ -324,10 +324,10 @@
       "source_location": "L280",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honmarknotificationread",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honmarknotificationread()",
-      "id": "js_circulation_honmarknotificationread"
+      "norm_label": "honmarknotificationread()"
     },
     {
       "label": "honRedeemCard()",
@@ -336,10 +336,10 @@
       "source_location": "L142",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honredeemcard",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honredeemcard()",
-      "id": "js_circulation_honredeemcard"
+      "norm_label": "honredeemcard()"
     },
     {
       "label": "honReturnItem()",
@@ -348,10 +348,10 @@
       "source_location": "L439",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honreturnitem",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honreturnitem()",
-      "id": "js_circulation_honreturnitem"
+      "norm_label": "honreturnitem()"
     },
     {
       "label": "honStashPendingCardCode()",
@@ -360,10 +360,10 @@
       "source_location": "L154",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honstashpendingcardcode",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honstashpendingcardcode()",
-      "id": "js_circulation_honstashpendingcardcode"
+      "norm_label": "honstashpendingcardcode()"
     },
     {
       "label": "honStatusInfo()",
@@ -372,10 +372,10 @@
       "source_location": "L481",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honstatusinfo",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honstatusinfo()",
-      "id": "js_circulation_honstatusinfo"
+      "norm_label": "honstatusinfo()"
     },
     {
       "label": "honTakePendingCardCode()",
@@ -384,10 +384,10 @@
       "source_location": "L158",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_hontakependingcardcode",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "hontakependingcardcode()",
-      "id": "js_circulation_hontakependingcardcode"
+      "norm_label": "hontakependingcardcode()"
     },
     {
       "label": "chainable()",
@@ -396,10 +396,10 @@
       "source_location": "L8",
       "_callable": true,
       "_origin": "ast",
+      "id": "tests_helpers_mocksupabase_chainable",
       "community": 14,
       "community_name": "Circulation Unit Tests",
-      "norm_label": "chainable()",
-      "id": "tests_helpers_mocksupabase_chainable"
+      "norm_label": "chainable()"
     },
     {
       "label": "createMockSupabase()",
@@ -408,10 +408,10 @@
       "source_location": "L24",
       "_callable": true,
       "_origin": "ast",
+      "id": "tests_helpers_mocksupabase_createmocksupabase",
       "community": 14,
       "community_name": "Circulation Unit Tests",
-      "norm_label": "createmocksupabase()",
-      "id": "tests_helpers_mocksupabase_createmocksupabase"
+      "norm_label": "createmocksupabase()"
     },
     {
       "label": "honAdminUpsertItem()",
@@ -420,10 +420,10 @@
       "source_location": "L213",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honadminupsertitem",
       "community": 3,
       "community_name": "Catalog Form & CRUD",
-      "norm_label": "honadminupsertitem()",
-      "id": "js_circulation_honadminupsertitem"
+      "norm_label": "honadminupsertitem()"
     },
     {
       "label": "honEscape()",
@@ -432,10 +432,10 @@
       "source_location": "L71",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honescape",
       "community": 3,
       "community_name": "Catalog Form & CRUD",
-      "norm_label": "honescape()",
-      "id": "js_circulation_honescape"
+      "norm_label": "honescape()"
     },
     {
       "label": "honUploadCoverImage()",
@@ -444,10 +444,10 @@
       "source_location": "L247",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honuploadcoverimage",
       "community": 3,
       "community_name": "Catalog Form & CRUD",
-      "norm_label": "honuploadcoverimage()",
-      "id": "js_circulation_honuploadcoverimage"
+      "norm_label": "honuploadcoverimage()"
     },
     {
       "label": "bindItemActions()",
@@ -597,7 +597,7 @@
       "label": "honRenderShelf()",
       "file_type": "code",
       "source_file": "js/browse.js",
-      "source_location": "L113",
+      "source_location": "L109",
       "_callable": true,
       "_origin": "ast",
       "id": "js_browse_honrendershelf",
@@ -621,7 +621,7 @@
       "label": "honUpdateStats()",
       "file_type": "code",
       "source_file": "js/browse.js",
-      "source_location": "L103",
+      "source_location": "L99",
       "_callable": true,
       "_origin": "ast",
       "id": "js_browse_honupdatestats",
@@ -636,10 +636,10 @@
       "source_location": "L13",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_main_honcurrentpage",
       "community": 9,
       "community_name": "Shared Nav Injection",
-      "norm_label": "honcurrentpage()",
-      "id": "js_main_honcurrentpage"
+      "norm_label": "honcurrentpage()"
     },
     {
       "label": "honInjectNav()",
@@ -648,10 +648,10 @@
       "source_location": "L42",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_main_honinjectnav",
       "community": 9,
       "community_name": "Shared Nav Injection",
-      "norm_label": "honinjectnav()",
-      "id": "js_main_honinjectnav"
+      "norm_label": "honinjectnav()"
     },
     {
       "label": "toggle()",
@@ -660,10 +660,10 @@
       "source_location": "L64",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_main_honinjectnav_toggle",
       "community": 9,
       "community_name": "Shared Nav Injection",
-      "norm_label": "toggle()",
-      "id": "js_main_honinjectnav_toggle"
+      "norm_label": "toggle()"
     },
     {
       "label": "honInjectSkipLink()",
@@ -672,10 +672,10 @@
       "source_location": "L23",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_main_honinjectskiplink",
       "community": 9,
       "community_name": "Shared Nav Injection",
-      "norm_label": "honinjectskiplink()",
-      "id": "js_main_honinjectskiplink"
+      "norm_label": "honinjectskiplink()"
     },
     {
       "label": "honShowNotifications()",
@@ -684,10 +684,10 @@
       "source_location": "L83",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_main_honshownotifications",
       "community": 9,
       "community_name": "Shared Nav Injection",
-      "norm_label": "honshownotifications()",
-      "id": "js_main_honshownotifications"
+      "norm_label": "honshownotifications()"
     },
     {
       "label": "supabase-config.js",
@@ -695,10 +695,10 @@
       "source_file": "js/supabase-config.js",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "js_supabase_config",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "supabase-config.js",
-      "id": "js_supabase_config"
+      "norm_label": "supabase-config.js"
     },
     {
       "label": "honSupabase",
@@ -706,10 +706,10 @@
       "source_file": "js/supabase-config.js",
       "source_location": "L12",
       "_origin": "ast",
+      "id": "js_supabase_config_honsupabase",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "honsupabase",
-      "id": "js_supabase_config_honsupabase"
+      "norm_label": "honsupabase"
     },
     {
       "label": "circulation.js",
@@ -717,10 +717,10 @@
       "source_file": "js/circulation.js",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "js_circulation",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "circulation.js",
-      "id": "js_circulation"
+      "norm_label": "circulation.js"
     },
     {
       "label": "HON_COVER_EXTENSIONS",
@@ -728,10 +728,10 @@
       "source_file": "js/circulation.js",
       "source_location": "L236",
       "_origin": "ast",
+      "id": "js_circulation_hon_cover_extensions",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "hon_cover_extensions",
-      "id": "js_circulation_hon_cover_extensions"
+      "norm_label": "hon_cover_extensions"
     },
     {
       "label": "honState",
@@ -739,10 +739,10 @@
       "source_file": "js/circulation.js",
       "source_location": "L10",
       "_origin": "ast",
+      "id": "js_circulation_honstate",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honstate",
-      "id": "js_circulation_honstate"
+      "norm_label": "honstate"
     },
     {
       "label": "20260814200000_notifications.sql",
@@ -750,10 +750,10 @@
       "source_file": "supabase/migrations/20260814200000_notifications.sql",
       "source_location": null,
       "_origin": "ast",
+      "id": "supabase_migrations_20260814200000_notifications",
       "community": 10,
       "community_name": "Notifications (SQL)",
-      "norm_label": "20260814200000_notifications.sql",
-      "id": "supabase_migrations_20260814200000_notifications"
+      "norm_label": "20260814200000_notifications.sql"
     },
     {
       "label": "public.admin_force_return()",
@@ -761,10 +761,10 @@
       "source_file": "supabase/migrations/20260814200000_notifications.sql",
       "source_location": "L103",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814200000_notifications_public_admin_force_return",
       "community": 10,
       "community_name": "Notifications (SQL)",
-      "norm_label": "public.admin_force_return()",
-      "id": "supabase_migrations_20260814200000_notifications_public_admin_force_return"
+      "norm_label": "public.admin_force_return()"
     },
     {
       "label": "public.mark_notification_read()",
@@ -772,10 +772,10 @@
       "source_file": "supabase/migrations/20260814200000_notifications.sql",
       "source_location": "L36",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814200000_notifications_public_mark_notification_read",
       "community": 10,
       "community_name": "Notifications (SQL)",
-      "norm_label": "public.mark_notification_read()",
-      "id": "supabase_migrations_20260814200000_notifications_public_mark_notification_read"
+      "norm_label": "public.mark_notification_read()"
     },
     {
       "label": "public.notifications",
@@ -783,10 +783,10 @@
       "source_file": "supabase/migrations/20260814200000_notifications.sql",
       "source_location": "L14",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814200000_notifications_public_notifications",
       "community": 10,
       "community_name": "Notifications (SQL)",
-      "norm_label": "public.notifications",
-      "id": "supabase_migrations_20260814200000_notifications_public_notifications"
+      "norm_label": "public.notifications"
     },
     {
       "label": "public.return_item()",
@@ -794,10 +794,10 @@
       "source_file": "supabase/migrations/20260814200000_notifications.sql",
       "source_location": "L66",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814200000_notifications_public_return_item",
       "community": 10,
       "community_name": "Notifications (SQL)",
-      "norm_label": "public.return_item()",
-      "id": "supabase_migrations_20260814200000_notifications_public_return_item"
+      "norm_label": "public.return_item()"
     },
     {
       "label": "auth.users",
@@ -805,10 +805,10 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814200000_notifications_sql_auth_users",
       "community": 10,
       "community_name": "Notifications (SQL)",
-      "norm_label": "auth.users",
-      "id": "supabase_migrations_20260814200000_notifications_sql_auth_users"
+      "norm_label": "auth.users"
     },
     {
       "label": "public.items",
@@ -816,10 +816,10 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814200000_notifications_sql_public_items",
       "community": 10,
       "community_name": "Notifications (SQL)",
-      "norm_label": "public.items",
-      "id": "supabase_migrations_20260814200000_notifications_sql_public_items"
+      "norm_label": "public.items"
     },
     {
       "label": "public.handle_new_user",
@@ -827,10 +827,10 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
+      "id": "public_handle_new_user",
       "community": 11,
       "community_name": "New User Profile Trigger",
-      "norm_label": "public.handle_new_user",
-      "id": "public_handle_new_user"
+      "norm_label": "public.handle_new_user"
     },
     {
       "label": "20260814172710_profiles_and_admin.sql",
@@ -838,10 +838,10 @@
       "source_file": "supabase/migrations/20260814172710_profiles_and_admin.sql",
       "source_location": null,
       "_origin": "ast",
+      "id": "supabase_migrations_20260814172710_profiles_and_admin",
       "community": 11,
       "community_name": "New User Profile Trigger",
-      "norm_label": "20260814172710_profiles_and_admin.sql",
-      "id": "supabase_migrations_20260814172710_profiles_and_admin"
+      "norm_label": "20260814172710_profiles_and_admin.sql"
     },
     {
       "label": "on_auth_user_created",
@@ -849,10 +849,10 @@
       "source_file": "supabase/migrations/20260814172710_profiles_and_admin.sql",
       "source_location": "L43",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814172710_profiles_and_admin_on_auth_user_created",
       "community": 11,
       "community_name": "New User Profile Trigger",
-      "norm_label": "on_auth_user_created",
-      "id": "supabase_migrations_20260814172710_profiles_and_admin_on_auth_user_created"
+      "norm_label": "on_auth_user_created"
     },
     {
       "label": "public.handle_new_user()",
@@ -860,10 +860,10 @@
       "source_file": "supabase/migrations/20260814172710_profiles_and_admin.sql",
       "source_location": "L31",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814172710_profiles_and_admin_public_handle_new_user",
       "community": 11,
       "community_name": "New User Profile Trigger",
-      "norm_label": "public.handle_new_user()",
-      "id": "supabase_migrations_20260814172710_profiles_and_admin_public_handle_new_user"
+      "norm_label": "public.handle_new_user()"
     },
     {
       "label": "public.profiles",
@@ -871,10 +871,10 @@
       "source_file": "supabase/migrations/20260814172710_profiles_and_admin.sql",
       "source_location": "L14",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814172710_profiles_and_admin_public_profiles",
       "community": 11,
       "community_name": "New User Profile Trigger",
-      "norm_label": "public.profiles",
-      "id": "supabase_migrations_20260814172710_profiles_and_admin_public_profiles"
+      "norm_label": "public.profiles"
     },
     {
       "label": "auth.users",
@@ -882,10 +882,10 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814172710_profiles_and_admin_sql_auth_users",
       "community": 11,
       "community_name": "New User Profile Trigger",
-      "norm_label": "auth.users",
-      "id": "supabase_migrations_20260814172710_profiles_and_admin_sql_auth_users"
+      "norm_label": "auth.users"
     },
     {
       "label": "20260814073301_circulation_schema.sql",
@@ -893,10 +893,10 @@
       "source_file": "supabase/migrations/20260814073301_circulation_schema.sql",
       "source_location": null,
       "_origin": "ast",
+      "id": "supabase_migrations_20260814073301_circulation_schema",
       "community": 12,
       "community_name": "Core Circulation Schema",
-      "norm_label": "20260814073301_circulation_schema.sql",
-      "id": "supabase_migrations_20260814073301_circulation_schema"
+      "norm_label": "20260814073301_circulation_schema.sql"
     },
     {
       "label": "public.items",
@@ -904,10 +904,10 @@
       "source_file": "supabase/migrations/20260814073301_circulation_schema.sql",
       "source_location": "L13",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814073301_circulation_schema_public_items",
       "community": 12,
       "community_name": "Core Circulation Schema",
-      "norm_label": "public.items",
-      "id": "supabase_migrations_20260814073301_circulation_schema_public_items"
+      "norm_label": "public.items"
     },
     {
       "label": "public.library_cards",
@@ -915,10 +915,10 @@
       "source_file": "supabase/migrations/20260814073301_circulation_schema.sql",
       "source_location": "L43",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814073301_circulation_schema_public_library_cards",
       "community": 12,
       "community_name": "Core Circulation Schema",
-      "norm_label": "public.library_cards",
-      "id": "supabase_migrations_20260814073301_circulation_schema_public_library_cards"
+      "norm_label": "public.library_cards"
     },
     {
       "label": "public.loans",
@@ -926,10 +926,10 @@
       "source_file": "supabase/migrations/20260814073301_circulation_schema.sql",
       "source_location": "L19",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814073301_circulation_schema_public_loans",
       "community": 12,
       "community_name": "Core Circulation Schema",
-      "norm_label": "public.loans",
-      "id": "supabase_migrations_20260814073301_circulation_schema_public_loans"
+      "norm_label": "public.loans"
     },
     {
       "label": "public.queue_entries",
@@ -937,10 +937,10 @@
       "source_file": "supabase/migrations/20260814073301_circulation_schema.sql",
       "source_location": "L33",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814073301_circulation_schema_public_queue_entries",
       "community": 12,
       "community_name": "Core Circulation Schema",
-      "norm_label": "public.queue_entries",
-      "id": "supabase_migrations_20260814073301_circulation_schema_public_queue_entries"
+      "norm_label": "public.queue_entries"
     },
     {
       "label": "auth.users",
@@ -948,10 +948,10 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814073301_circulation_schema_sql_auth_users",
       "community": 12,
       "community_name": "Core Circulation Schema",
-      "norm_label": "auth.users",
-      "id": "supabase_migrations_20260814073301_circulation_schema_sql_auth_users"
+      "norm_label": "auth.users"
     },
     {
       "label": "public.loans",
@@ -959,10 +959,10 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
+      "id": "public_loans",
       "community": 13,
       "community_name": "Row-Level Security Policies",
-      "norm_label": "public.loans",
-      "id": "public_loans"
+      "norm_label": "public.loans"
     },
     {
       "label": "public.queue_entries",
@@ -970,10 +970,10 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
+      "id": "public_queue_entries",
       "community": 13,
       "community_name": "Row-Level Security Policies",
-      "norm_label": "public.queue_entries",
-      "id": "public_queue_entries"
+      "norm_label": "public.queue_entries"
     },
     {
       "label": "20260814172157_circulation_rls.sql",
@@ -981,10 +981,10 @@
       "source_file": "supabase/migrations/20260814172157_circulation_rls.sql",
       "source_location": null,
       "_origin": "ast",
+      "id": "supabase_migrations_20260814172157_circulation_rls",
       "community": 13,
       "community_name": "Row-Level Security Policies",
-      "norm_label": "20260814172157_circulation_rls.sql",
-      "id": "supabase_migrations_20260814172157_circulation_rls"
+      "norm_label": "20260814172157_circulation_rls.sql"
     },
     {
       "label": "public.item_availability",
@@ -992,10 +992,10 @@
       "source_file": "supabase/migrations/20260814172157_circulation_rls.sql",
       "source_location": "L39",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814172157_circulation_rls_public_item_availability",
       "community": 13,
       "community_name": "Row-Level Security Policies",
-      "norm_label": "public.item_availability",
-      "id": "supabase_migrations_20260814172157_circulation_rls_public_item_availability"
+      "norm_label": "public.item_availability"
     },
     {
       "label": "public.items",
@@ -1003,10 +1003,10 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814172157_circulation_rls_sql_public_items",
       "community": 13,
       "community_name": "Row-Level Security Policies",
-      "norm_label": "public.items",
-      "id": "supabase_migrations_20260814172157_circulation_rls_sql_public_items"
+      "norm_label": "public.items"
     },
     {
       "label": "circulation.test.js",
@@ -1014,10 +1014,10 @@
       "source_file": "tests/circulation.test.js",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "tests_circulation_test",
       "community": 14,
       "community_name": "Circulation Unit Tests",
-      "norm_label": "circulation.test.js",
-      "id": "tests_circulation_test"
+      "norm_label": "circulation.test.js"
     },
     {
       "label": "USER",
@@ -1025,10 +1025,10 @@
       "source_file": "tests/circulation.test.js",
       "source_location": "L18",
       "_origin": "ast",
+      "id": "tests_circulation_test_user",
       "community": 14,
       "community_name": "Circulation Unit Tests",
-      "norm_label": "user",
-      "id": "tests_circulation_test_user"
+      "norm_label": "user"
     },
     {
       "label": "mockSupabase.js",
@@ -1036,10 +1036,10 @@
       "source_file": "tests/helpers/mockSupabase.js",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "tests_helpers_mocksupabase",
       "community": 14,
       "community_name": "Circulation Unit Tests",
-      "norm_label": "mocksupabase.js",
-      "id": "tests_helpers_mocksupabase"
+      "norm_label": "mocksupabase.js"
     },
     {
       "label": "public.rate_limit_log",
@@ -1047,10 +1047,10 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
+      "id": "public_rate_limit_log",
       "community": 17,
       "community_name": "Rate Limit Log Pruning",
-      "norm_label": "public.rate_limit_log",
-      "id": "public_rate_limit_log"
+      "norm_label": "public.rate_limit_log"
     },
     {
       "label": "20260815010000_rate_limit_log_pruning.sql",
@@ -1058,10 +1058,10 @@
       "source_file": "supabase/migrations/20260815010000_rate_limit_log_pruning.sql",
       "source_location": null,
       "_origin": "ast",
+      "id": "supabase_migrations_20260815010000_rate_limit_log_pruning",
       "community": 17,
       "community_name": "Rate Limit Log Pruning",
-      "norm_label": "20260815010000_rate_limit_log_pruning.sql",
-      "id": "supabase_migrations_20260815010000_rate_limit_log_pruning"
+      "norm_label": "20260815010000_rate_limit_log_pruning.sql"
     },
     {
       "label": "public.check_rate_limit()",
@@ -1069,10 +1069,10 @@
       "source_file": "supabase/migrations/20260815010000_rate_limit_log_pruning.sql",
       "source_location": "L11",
       "_origin": "ast",
+      "id": "supabase_migrations_20260815010000_rate_limit_log_pruning_public_check_rate_limit",
       "community": 17,
       "community_name": "Rate Limit Log Pruning",
-      "norm_label": "public.check_rate_limit()",
-      "id": "supabase_migrations_20260815010000_rate_limit_log_pruning_public_check_rate_limit"
+      "norm_label": "public.check_rate_limit()"
     },
     {
       "label": "20260814183000_fix_admin_email_cast.sql",
@@ -1080,10 +1080,10 @@
       "source_file": "supabase/migrations/20260814183000_fix_admin_email_cast.sql",
       "source_location": null,
       "_origin": "ast",
+      "id": "supabase_migrations_20260814183000_fix_admin_email_cast",
       "community": 18,
       "community_name": "Admin Email Type Fix",
-      "norm_label": "20260814183000_fix_admin_email_cast.sql",
-      "id": "supabase_migrations_20260814183000_fix_admin_email_cast"
+      "norm_label": "20260814183000_fix_admin_email_cast.sql"
     },
     {
       "label": "public.admin_list_loans()",
@@ -1091,10 +1091,10 @@
       "source_file": "supabase/migrations/20260814183000_fix_admin_email_cast.sql",
       "source_location": "L32",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814183000_fix_admin_email_cast_public_admin_list_loans",
       "community": 18,
       "community_name": "Admin Email Type Fix",
-      "norm_label": "public.admin_list_loans()",
-      "id": "supabase_migrations_20260814183000_fix_admin_email_cast_public_admin_list_loans"
+      "norm_label": "public.admin_list_loans()"
     },
     {
       "label": "public.admin_list_profiles()",
@@ -1102,10 +1102,10 @@
       "source_file": "supabase/migrations/20260814183000_fix_admin_email_cast.sql",
       "source_location": "L7",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814183000_fix_admin_email_cast_public_admin_list_profiles",
       "community": 18,
       "community_name": "Admin Email Type Fix",
-      "norm_label": "public.admin_list_profiles()",
-      "id": "supabase_migrations_20260814183000_fix_admin_email_cast_public_admin_list_profiles"
+      "norm_label": "public.admin_list_profiles()"
     },
     {
       "label": "20260814230000_account_deletion.sql",
@@ -1113,10 +1113,10 @@
       "source_file": "supabase/migrations/20260814230000_account_deletion.sql",
       "source_location": null,
       "_origin": "ast",
+      "id": "supabase_migrations_20260814230000_account_deletion",
       "community": 19,
       "community_name": "Account Deletion (SQL)",
-      "norm_label": "20260814230000_account_deletion.sql",
-      "id": "supabase_migrations_20260814230000_account_deletion"
+      "norm_label": "20260814230000_account_deletion.sql"
     },
     {
       "label": "public.delete_my_account()",
@@ -1124,10 +1124,10 @@
       "source_file": "supabase/migrations/20260814230000_account_deletion.sql",
       "source_location": "L22",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814230000_account_deletion_public_delete_my_account",
       "community": 19,
       "community_name": "Account Deletion (SQL)",
-      "norm_label": "public.delete_my_account()",
-      "id": "supabase_migrations_20260814230000_account_deletion_public_delete_my_account"
+      "norm_label": "public.delete_my_account()"
     },
     {
       "label": "public.profiles",
@@ -1135,10 +1135,10 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814230000_account_deletion_sql_public_profiles",
       "community": 19,
       "community_name": "Account Deletion (SQL)",
-      "norm_label": "public.profiles",
-      "id": "supabase_migrations_20260814230000_account_deletion_sql_public_profiles"
+      "norm_label": "public.profiles"
     },
     {
       "label": "package.json",
@@ -1146,10 +1146,10 @@
       "source_file": "package.json",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "package",
       "community": 2,
       "community_name": "NPM Dev Tooling Config",
-      "norm_label": "package.json",
-      "id": "package"
+      "norm_label": "package.json"
     },
     {
       "label": "description",
@@ -1157,10 +1157,10 @@
       "source_file": "package.json",
       "source_location": "L4",
       "_origin": "ast",
+      "id": "package_description",
       "community": 2,
       "community_name": "NPM Dev Tooling Config",
-      "norm_label": "description",
-      "id": "package_description"
+      "norm_label": "description"
     },
     {
       "label": "devDependencies",
@@ -1168,10 +1168,10 @@
       "source_file": "package.json",
       "source_location": "L11",
       "_origin": "ast",
+      "id": "package_devdependencies",
       "community": 2,
       "community_name": "NPM Dev Tooling Config",
-      "norm_label": "devdependencies",
-      "id": "package_devdependencies"
+      "norm_label": "devdependencies"
     },
     {
       "label": "jsdom",
@@ -1179,10 +1179,10 @@
       "source_file": "package.json",
       "source_location": "L13",
       "_origin": "ast",
+      "id": "package_devdependencies_jsdom",
       "community": 2,
       "community_name": "NPM Dev Tooling Config",
-      "norm_label": "jsdom",
-      "id": "package_devdependencies_jsdom"
+      "norm_label": "jsdom"
     },
     {
       "label": "@playwright/test",
@@ -1190,10 +1190,10 @@
       "source_file": "package.json",
       "source_location": "L12",
       "_origin": "ast",
+      "id": "package_devdependencies_playwright_test",
       "community": 2,
       "community_name": "NPM Dev Tooling Config",
-      "norm_label": "@playwright/test",
-      "id": "package_devdependencies_playwright_test"
+      "norm_label": "@playwright/test"
     },
     {
       "label": "vitest",
@@ -1201,10 +1201,10 @@
       "source_file": "package.json",
       "source_location": "L14",
       "_origin": "ast",
+      "id": "package_devdependencies_vitest",
       "community": 2,
       "community_name": "NPM Dev Tooling Config",
-      "norm_label": "vitest",
-      "id": "package_devdependencies_vitest"
+      "norm_label": "vitest"
     },
     {
       "label": "name",
@@ -1212,10 +1212,10 @@
       "source_file": "package.json",
       "source_location": "L2",
       "_origin": "ast",
+      "id": "package_name",
       "community": 2,
       "community_name": "NPM Dev Tooling Config",
-      "norm_label": "name",
-      "id": "package_name"
+      "norm_label": "name"
     },
     {
       "label": "private",
@@ -1223,10 +1223,10 @@
       "source_file": "package.json",
       "source_location": "L3",
       "_origin": "ast",
+      "id": "package_private",
       "community": 2,
       "community_name": "NPM Dev Tooling Config",
-      "norm_label": "private",
-      "id": "package_private"
+      "norm_label": "private"
     },
     {
       "label": "scripts",
@@ -1234,10 +1234,10 @@
       "source_file": "package.json",
       "source_location": "L6",
       "_origin": "ast",
+      "id": "package_scripts",
       "community": 2,
       "community_name": "NPM Dev Tooling Config",
-      "norm_label": "scripts",
-      "id": "package_scripts"
+      "norm_label": "scripts"
     },
     {
       "label": "test",
@@ -1245,10 +1245,10 @@
       "source_file": "package.json",
       "source_location": "L7",
       "_origin": "ast",
+      "id": "package_scripts_test",
       "community": 2,
       "community_name": "NPM Dev Tooling Config",
-      "norm_label": "test",
-      "id": "package_scripts_test"
+      "norm_label": "test"
     },
     {
       "label": "test:e2e",
@@ -1256,10 +1256,10 @@
       "source_file": "package.json",
       "source_location": "L9",
       "_origin": "ast",
+      "id": "package_scripts_test_e2e",
       "community": 2,
       "community_name": "NPM Dev Tooling Config",
-      "norm_label": "test:e2e",
-      "id": "package_scripts_test_e2e"
+      "norm_label": "test:e2e"
     },
     {
       "label": "test:watch",
@@ -1267,10 +1267,10 @@
       "source_file": "package.json",
       "source_location": "L8",
       "_origin": "ast",
+      "id": "package_scripts_test_watch",
       "community": 2,
       "community_name": "NPM Dev Tooling Config",
-      "norm_label": "test:watch",
-      "id": "package_scripts_test_watch"
+      "norm_label": "test:watch"
     },
     {
       "label": "type",
@@ -1278,10 +1278,10 @@
       "source_file": "package.json",
       "source_location": "L5",
       "_origin": "ast",
+      "id": "package_type",
       "community": 2,
       "community_name": "NPM Dev Tooling Config",
-      "norm_label": "type",
-      "id": "package_type"
+      "norm_label": "type"
     },
     {
       "label": "jsdom",
@@ -1289,10 +1289,10 @@
       "source_file": "package.json",
       "source_location": "L13",
       "_origin": "ast",
+      "id": "jsdom",
       "community": 2,
       "community_name": "NPM Dev Tooling Config",
-      "norm_label": "jsdom",
-      "id": "jsdom"
+      "norm_label": "jsdom"
     },
     {
       "label": "@playwright/test",
@@ -1300,10 +1300,10 @@
       "source_file": "package.json",
       "source_location": "L12",
       "_origin": "ast",
+      "id": "playwright_test",
       "community": 2,
       "community_name": "NPM Dev Tooling Config",
-      "norm_label": "@playwright/test",
-      "id": "playwright_test"
+      "norm_label": "@playwright/test"
     },
     {
       "label": "vitest",
@@ -1311,10 +1311,10 @@
       "source_file": "package.json",
       "source_location": "L14",
       "_origin": "ast",
+      "id": "vitest",
       "community": 2,
       "community_name": "NPM Dev Tooling Config",
-      "norm_label": "vitest",
-      "id": "vitest"
+      "norm_label": "vitest"
     },
     {
       "label": "playwright.config.js",
@@ -1322,10 +1322,10 @@
       "source_file": "playwright.config.js",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "playwright_config",
       "community": 21,
       "community_name": "Playwright Test Config",
-      "norm_label": "playwright.config.js",
-      "id": "playwright_config"
+      "norm_label": "playwright.config.js"
     },
     {
       "label": "{ defineConfig, devices }",
@@ -1333,10 +1333,10 @@
       "source_file": "playwright.config.js",
       "source_location": "L2",
       "_origin": "ast",
+      "id": "playwright_config_defineconfig_devices",
       "community": 21,
       "community_name": "Playwright Test Config",
-      "norm_label": "{ defineconfig, devices }",
-      "id": "playwright_config_defineconfig_devices"
+      "norm_label": "{ defineconfig, devices }"
     },
     {
       "label": "20260814190000_catalog_metadata.sql",
@@ -1344,10 +1344,10 @@
       "source_file": "supabase/migrations/20260814190000_catalog_metadata.sql",
       "source_location": null,
       "_origin": "ast",
+      "id": "supabase_migrations_20260814190000_catalog_metadata",
       "community": 22,
       "community_name": "Catalog Metadata Migration",
-      "norm_label": "20260814190000_catalog_metadata.sql",
-      "id": "supabase_migrations_20260814190000_catalog_metadata"
+      "norm_label": "20260814190000_catalog_metadata.sql"
     },
     {
       "label": "public.admin_upsert_item()",
@@ -1355,10 +1355,10 @@
       "source_file": "supabase/migrations/20260814190000_catalog_metadata.sql",
       "source_location": "L82",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814190000_catalog_metadata_public_admin_upsert_item",
       "community": 22,
       "community_name": "Catalog Metadata Migration",
-      "norm_label": "public.admin_upsert_item()",
-      "id": "supabase_migrations_20260814190000_catalog_metadata_public_admin_upsert_item"
+      "norm_label": "public.admin_upsert_item()"
     },
     {
       "label": "rls-verification.sql",
@@ -1366,10 +1366,10 @@
       "source_file": "tests/e2e/rls-verification.sql",
       "source_location": null,
       "_origin": "ast",
+      "id": "tests_e2e_rls_verification",
       "community": 23,
       "community_name": "RLS Verification Test",
-      "norm_label": "rls-verification.sql",
-      "id": "tests_e2e_rls_verification"
+      "norm_label": "rls-verification.sql"
     },
     {
       "label": "t16_rls_results",
@@ -1377,10 +1377,10 @@
       "source_file": "tests/e2e/rls-verification.sql",
       "source_location": "L18",
       "_origin": "ast",
+      "id": "tests_e2e_rls_verification_t16_rls_results",
       "community": 23,
       "community_name": "RLS Verification Test",
-      "norm_label": "t16_rls_results",
-      "id": "tests_e2e_rls_verification_t16_rls_results"
+      "norm_label": "t16_rls_results"
     },
     {
       "label": "support-donation.spec.js",
@@ -1388,10 +1388,10 @@
       "source_file": "tests/e2e/support-donation.spec.js",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "tests_e2e_support_donation_spec",
       "community": 24,
       "community_name": "Donation Flow E2E Test",
-      "norm_label": "support-donation.spec.js",
-      "id": "tests_e2e_support_donation_spec"
+      "norm_label": "support-donation.spec.js"
     },
     {
       "label": "{ test, expect }",
@@ -1399,10 +1399,10 @@
       "source_file": "tests/e2e/support-donation.spec.js",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "tests_e2e_support_donation_spec_test_expect",
       "community": 24,
       "community_name": "Donation Flow E2E Test",
-      "norm_label": "{ test, expect }",
-      "id": "tests_e2e_support_donation_spec_test_expect"
+      "norm_label": "{ test, expect }"
     },
     {
       "label": "public.items",
@@ -1410,10 +1410,10 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814190000_catalog_metadata_sql_public_items",
       "community": 28,
       "community_name": "Items Table",
-      "norm_label": "public.items",
-      "id": "supabase_migrations_20260814190000_catalog_metadata_sql_public_items"
+      "norm_label": "public.items"
     },
     {
       "label": "20260814220000_cover_image_storage.sql",
@@ -1421,10 +1421,10 @@
       "source_file": "supabase/migrations/20260814220000_cover_image_storage.sql",
       "source_location": null,
       "_origin": "ast",
+      "id": "supabase_migrations_20260814220000_cover_image_storage",
       "community": 29,
       "community_name": "Cover Image Storage Migration",
-      "norm_label": "20260814220000_cover_image_storage.sql",
-      "id": "supabase_migrations_20260814220000_cover_image_storage"
+      "norm_label": "20260814220000_cover_image_storage.sql"
     },
     {
       "label": "HON_CATALOG",
@@ -1432,10 +1432,10 @@
       "source_file": "js/circulation.js",
       "source_location": "L17",
       "_origin": "ast",
+      "id": "js_circulation_hon_catalog",
       "community": 3,
       "community_name": "Catalog Form & CRUD",
-      "norm_label": "hon_catalog",
-      "id": "js_circulation_hon_catalog"
+      "norm_label": "hon_catalog"
     },
     {
       "label": "20260815000000_cover_upload_hardening.sql",
@@ -1443,10 +1443,10 @@
       "source_file": "supabase/migrations/20260815000000_cover_upload_hardening.sql",
       "source_location": null,
       "_origin": "ast",
+      "id": "supabase_migrations_20260815000000_cover_upload_hardening",
       "community": 30,
       "community_name": "Cover Upload Hardening Migration",
-      "norm_label": "20260815000000_cover_upload_hardening.sql",
-      "id": "supabase_migrations_20260815000000_cover_upload_hardening"
+      "norm_label": "20260815000000_cover_upload_hardening.sql"
     },
     {
       "label": "race-condition.sql",
@@ -1454,10 +1454,10 @@
       "source_file": "tests/e2e/race-condition.sql",
       "source_location": null,
       "_origin": "ast",
+      "id": "tests_e2e_race_condition",
       "community": 31,
       "community_name": "Race Condition Test (SQL)",
-      "norm_label": "race-condition.sql",
-      "id": "tests_e2e_race_condition"
+      "norm_label": "race-condition.sql"
     },
     {
       "label": "vitest.config.js",
@@ -1465,10 +1465,10 @@
       "source_file": "vitest.config.js",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "vitest_config",
       "community": 32,
       "community_name": "Vitest Config",
-      "norm_label": "vitest.config.js",
-      "id": "vitest_config"
+      "norm_label": "vitest.config.js"
     },
     {
       "label": "item.js",
@@ -1498,10 +1498,10 @@
       "source_file": "supabase/migrations/20260814180000_admin_rpc.sql",
       "source_location": null,
       "_origin": "ast",
+      "id": "supabase_migrations_20260814180000_admin_rpc",
       "community": 5,
       "community_name": "Admin RPC Functions (SQL)",
-      "norm_label": "20260814180000_admin_rpc.sql",
-      "id": "supabase_migrations_20260814180000_admin_rpc"
+      "norm_label": "20260814180000_admin_rpc.sql"
     },
     {
       "label": "public.admin_force_return()",
@@ -1509,10 +1509,10 @@
       "source_file": "supabase/migrations/20260814180000_admin_rpc.sql",
       "source_location": "L95",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814180000_admin_rpc_public_admin_force_return",
       "community": 5,
       "community_name": "Admin RPC Functions (SQL)",
-      "norm_label": "public.admin_force_return()",
-      "id": "supabase_migrations_20260814180000_admin_rpc_public_admin_force_return"
+      "norm_label": "public.admin_force_return()"
     },
     {
       "label": "public.admin_issue_card()",
@@ -1520,10 +1520,10 @@
       "source_file": "supabase/migrations/20260814180000_admin_rpc.sql",
       "source_location": "L121",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814180000_admin_rpc_public_admin_issue_card",
       "community": 5,
       "community_name": "Admin RPC Functions (SQL)",
-      "norm_label": "public.admin_issue_card()",
-      "id": "supabase_migrations_20260814180000_admin_rpc_public_admin_issue_card"
+      "norm_label": "public.admin_issue_card()"
     },
     {
       "label": "public.admin_list_loans()",
@@ -1531,10 +1531,10 @@
       "source_file": "supabase/migrations/20260814180000_admin_rpc.sql",
       "source_location": "L64",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814180000_admin_rpc_public_admin_list_loans",
       "community": 5,
       "community_name": "Admin RPC Functions (SQL)",
-      "norm_label": "public.admin_list_loans()",
-      "id": "supabase_migrations_20260814180000_admin_rpc_public_admin_list_loans"
+      "norm_label": "public.admin_list_loans()"
     },
     {
       "label": "public.admin_list_profiles()",
@@ -1542,10 +1542,10 @@
       "source_file": "supabase/migrations/20260814180000_admin_rpc.sql",
       "source_location": "L34",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814180000_admin_rpc_public_admin_list_profiles",
       "community": 5,
       "community_name": "Admin RPC Functions (SQL)",
-      "norm_label": "public.admin_list_profiles()",
-      "id": "supabase_migrations_20260814180000_admin_rpc_public_admin_list_profiles"
+      "norm_label": "public.admin_list_profiles()"
     },
     {
       "label": "public.admin_set_banned()",
@@ -1553,10 +1553,10 @@
       "source_file": "supabase/migrations/20260814180000_admin_rpc.sql",
       "source_location": "L148",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814180000_admin_rpc_public_admin_set_banned",
       "community": 5,
       "community_name": "Admin RPC Functions (SQL)",
-      "norm_label": "public.admin_set_banned()",
-      "id": "supabase_migrations_20260814180000_admin_rpc_public_admin_set_banned"
+      "norm_label": "public.admin_set_banned()"
     },
     {
       "label": "public.check_out()",
@@ -1564,10 +1564,10 @@
       "source_file": "supabase/migrations/20260814180000_admin_rpc.sql",
       "source_location": "L171",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814180000_admin_rpc_public_check_out",
       "community": 5,
       "community_name": "Admin RPC Functions (SQL)",
-      "norm_label": "public.check_out()",
-      "id": "supabase_migrations_20260814180000_admin_rpc_public_check_out"
+      "norm_label": "public.check_out()"
     },
     {
       "label": "public.is_admin()",
@@ -1575,10 +1575,10 @@
       "source_file": "supabase/migrations/20260814180000_admin_rpc.sql",
       "source_location": "L16",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814180000_admin_rpc_public_is_admin",
       "community": 5,
       "community_name": "Admin RPC Functions (SQL)",
-      "norm_label": "public.is_admin()",
-      "id": "supabase_migrations_20260814180000_admin_rpc_public_is_admin"
+      "norm_label": "public.is_admin()"
     },
     {
       "label": "public.join_queue()",
@@ -1586,10 +1586,10 @@
       "source_file": "supabase/migrations/20260814180000_admin_rpc.sql",
       "source_location": "L229",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814180000_admin_rpc_public_join_queue",
       "community": 5,
       "community_name": "Admin RPC Functions (SQL)",
-      "norm_label": "public.join_queue()",
-      "id": "supabase_migrations_20260814180000_admin_rpc_public_join_queue"
+      "norm_label": "public.join_queue()"
     },
     {
       "label": "public.profiles",
@@ -1597,10 +1597,10 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814180000_admin_rpc_sql_public_profiles",
       "community": 5,
       "community_name": "Admin RPC Functions (SQL)",
-      "norm_label": "public.profiles",
-      "id": "supabase_migrations_20260814180000_admin_rpc_sql_public_profiles"
+      "norm_label": "public.profiles"
     },
     {
       "label": "public.library_cards",
@@ -1608,10 +1608,10 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
+      "id": "public_library_cards",
       "community": 6,
       "community_name": "Circulation RPC Functions (SQL)",
-      "norm_label": "public.library_cards",
-      "id": "public_library_cards"
+      "norm_label": "public.library_cards"
     },
     {
       "label": "20260814170857_circulation_rpc.sql",
@@ -1619,10 +1619,10 @@
       "source_file": "supabase/migrations/20260814170857_circulation_rpc.sql",
       "source_location": null,
       "_origin": "ast",
+      "id": "supabase_migrations_20260814170857_circulation_rpc",
       "community": 6,
       "community_name": "Circulation RPC Functions (SQL)",
-      "norm_label": "20260814170857_circulation_rpc.sql",
-      "id": "supabase_migrations_20260814170857_circulation_rpc"
+      "norm_label": "20260814170857_circulation_rpc.sql"
     },
     {
       "label": "public.check_out()",
@@ -1630,10 +1630,10 @@
       "source_file": "supabase/migrations/20260814170857_circulation_rpc.sql",
       "source_location": "L23",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814170857_circulation_rpc_public_check_out",
       "community": 6,
       "community_name": "Circulation RPC Functions (SQL)",
-      "norm_label": "public.check_out()",
-      "id": "supabase_migrations_20260814170857_circulation_rpc_public_check_out"
+      "norm_label": "public.check_out()"
     },
     {
       "label": "public.generate_card_code()",
@@ -1641,10 +1641,10 @@
       "source_file": "supabase/migrations/20260814170857_circulation_rpc.sql",
       "source_location": "L156",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814170857_circulation_rpc_public_generate_card_code",
       "community": 6,
       "community_name": "Circulation RPC Functions (SQL)",
-      "norm_label": "public.generate_card_code()",
-      "id": "supabase_migrations_20260814170857_circulation_rpc_public_generate_card_code"
+      "norm_label": "public.generate_card_code()"
     },
     {
       "label": "public.join_queue()",
@@ -1652,10 +1652,10 @@
       "source_file": "supabase/migrations/20260814170857_circulation_rpc.sql",
       "source_location": "L107",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814170857_circulation_rpc_public_join_queue",
       "community": 6,
       "community_name": "Circulation RPC Functions (SQL)",
-      "norm_label": "public.join_queue()",
-      "id": "supabase_migrations_20260814170857_circulation_rpc_public_join_queue"
+      "norm_label": "public.join_queue()"
     },
     {
       "label": "public.leave_queue()",
@@ -1663,10 +1663,10 @@
       "source_file": "supabase/migrations/20260814170857_circulation_rpc.sql",
       "source_location": "L131",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814170857_circulation_rpc_public_leave_queue",
       "community": 6,
       "community_name": "Circulation RPC Functions (SQL)",
-      "norm_label": "public.leave_queue()",
-      "id": "supabase_migrations_20260814170857_circulation_rpc_public_leave_queue"
+      "norm_label": "public.leave_queue()"
     },
     {
       "label": "public.redeem_card()",
@@ -1674,10 +1674,10 @@
       "source_file": "supabase/migrations/20260814170857_circulation_rpc.sql",
       "source_location": "L185",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814170857_circulation_rpc_public_redeem_card",
       "community": 6,
       "community_name": "Circulation RPC Functions (SQL)",
-      "norm_label": "public.redeem_card()",
-      "id": "supabase_migrations_20260814170857_circulation_rpc_public_redeem_card"
+      "norm_label": "public.redeem_card()"
     },
     {
       "label": "public.return_item()",
@@ -1685,10 +1685,10 @@
       "source_file": "supabase/migrations/20260814170857_circulation_rpc.sql",
       "source_location": "L79",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814170857_circulation_rpc_public_return_item",
       "community": 6,
       "community_name": "Circulation RPC Functions (SQL)",
-      "norm_label": "public.return_item()",
-      "id": "supabase_migrations_20260814170857_circulation_rpc_public_return_item"
+      "norm_label": "public.return_item()"
     },
     {
       "label": "public.validate_card_code()",
@@ -1696,10 +1696,10 @@
       "source_file": "supabase/migrations/20260814170857_circulation_rpc.sql",
       "source_location": "L167",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814170857_circulation_rpc_public_validate_card_code",
       "community": 6,
       "community_name": "Circulation RPC Functions (SQL)",
-      "norm_label": "public.validate_card_code()",
-      "id": "supabase_migrations_20260814170857_circulation_rpc_public_validate_card_code"
+      "norm_label": "public.validate_card_code()"
     },
     {
       "label": "20260814210000_rate_limiting.sql",
@@ -1707,10 +1707,10 @@
       "source_file": "supabase/migrations/20260814210000_rate_limiting.sql",
       "source_location": null,
       "_origin": "ast",
+      "id": "supabase_migrations_20260814210000_rate_limiting",
       "community": 7,
       "community_name": "Rate Limiting (SQL)",
-      "norm_label": "20260814210000_rate_limiting.sql",
-      "id": "supabase_migrations_20260814210000_rate_limiting"
+      "norm_label": "20260814210000_rate_limiting.sql"
     },
     {
       "label": "public.check_out()",
@@ -1718,10 +1718,10 @@
       "source_file": "supabase/migrations/20260814210000_rate_limiting.sql",
       "source_location": "L57",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814210000_rate_limiting_public_check_out",
       "community": 7,
       "community_name": "Rate Limiting (SQL)",
-      "norm_label": "public.check_out()",
-      "id": "supabase_migrations_20260814210000_rate_limiting_public_check_out"
+      "norm_label": "public.check_out()"
     },
     {
       "label": "public.check_rate_limit()",
@@ -1729,10 +1729,10 @@
       "source_file": "supabase/migrations/20260814210000_rate_limiting.sql",
       "source_location": "L26",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814210000_rate_limiting_public_check_rate_limit",
       "community": 7,
       "community_name": "Rate Limiting (SQL)",
-      "norm_label": "public.check_rate_limit()",
-      "id": "supabase_migrations_20260814210000_rate_limiting_public_check_rate_limit"
+      "norm_label": "public.check_rate_limit()"
     },
     {
       "label": "public.join_queue()",
@@ -1740,10 +1740,10 @@
       "source_file": "supabase/migrations/20260814210000_rate_limiting.sql",
       "source_location": "L153",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814210000_rate_limiting_public_join_queue",
       "community": 7,
       "community_name": "Rate Limiting (SQL)",
-      "norm_label": "public.join_queue()",
-      "id": "supabase_migrations_20260814210000_rate_limiting_public_join_queue"
+      "norm_label": "public.join_queue()"
     },
     {
       "label": "public.leave_queue()",
@@ -1751,10 +1751,10 @@
       "source_file": "supabase/migrations/20260814210000_rate_limiting.sql",
       "source_location": "L185",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814210000_rate_limiting_public_leave_queue",
       "community": 7,
       "community_name": "Rate Limiting (SQL)",
-      "norm_label": "public.leave_queue()",
-      "id": "supabase_migrations_20260814210000_rate_limiting_public_leave_queue"
+      "norm_label": "public.leave_queue()"
     },
     {
       "label": "public.rate_limit_log",
@@ -1762,10 +1762,10 @@
       "source_file": "supabase/migrations/20260814210000_rate_limiting.sql",
       "source_location": "L13",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814210000_rate_limiting_public_rate_limit_log",
       "community": 7,
       "community_name": "Rate Limiting (SQL)",
-      "norm_label": "public.rate_limit_log",
-      "id": "supabase_migrations_20260814210000_rate_limiting_public_rate_limit_log"
+      "norm_label": "public.rate_limit_log"
     },
     {
       "label": "public.redeem_card()",
@@ -1773,10 +1773,10 @@
       "source_file": "supabase/migrations/20260814210000_rate_limiting.sql",
       "source_location": "L213",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814210000_rate_limiting_public_redeem_card",
       "community": 7,
       "community_name": "Rate Limiting (SQL)",
-      "norm_label": "public.redeem_card()",
-      "id": "supabase_migrations_20260814210000_rate_limiting_public_redeem_card"
+      "norm_label": "public.redeem_card()"
     },
     {
       "label": "public.return_item()",
@@ -1784,10 +1784,10 @@
       "source_file": "supabase/migrations/20260814210000_rate_limiting.sql",
       "source_location": "L114",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814210000_rate_limiting_public_return_item",
       "community": 7,
       "community_name": "Rate Limiting (SQL)",
-      "norm_label": "public.return_item()",
-      "id": "supabase_migrations_20260814210000_rate_limiting_public_return_item"
+      "norm_label": "public.return_item()"
     },
     {
       "label": "auth.users",
@@ -1795,10 +1795,10 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
+      "id": "supabase_migrations_20260814210000_rate_limiting_sql_auth_users",
       "community": 7,
       "community_name": "Rate Limiting (SQL)",
-      "norm_label": "auth.users",
-      "id": "supabase_migrations_20260814210000_rate_limiting_sql_auth_users"
+      "norm_label": "auth.users"
     },
     {
       "label": "browse.js",
@@ -1817,10 +1817,10 @@
       "source_file": "js/main.js",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "js_main",
       "community": 9,
       "community_name": "Shared Nav Injection",
-      "norm_label": "main.js",
-      "id": "js_main"
+      "norm_label": "main.js"
     },
     {
       "label": "HON_NAV_LINKS",
@@ -1828,10 +1828,10 @@
       "source_file": "js/main.js",
       "source_location": "L4",
       "_origin": "ast",
+      "id": "js_main_hon_nav_links",
       "community": 9,
       "community_name": "Shared Nav Injection",
-      "norm_label": "hon_nav_links",
-      "id": "js_main_hon_nav_links"
+      "norm_label": "hon_nav_links"
     },
     {
       "label": "About Page",
@@ -1842,11 +1842,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "about_page",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "about page",
-      "_origin": "semantic",
-      "id": "about_page"
+      "norm_label": "about page"
     },
     {
       "label": "Admin Page",
@@ -1857,11 +1856,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "admin_page",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "admin page",
-      "_origin": "semantic",
-      "id": "admin_page"
+      "norm_label": "admin page"
     },
     {
       "label": "Catalog / Archive Page",
@@ -1872,11 +1870,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "catalog_page",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "catalog / archive page",
-      "_origin": "semantic",
-      "id": "catalog_page"
+      "norm_label": "catalog / archive page"
     },
     {
       "label": "css/style.css",
@@ -1887,11 +1884,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "css_style_module",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "css/style.css",
-      "_origin": "semantic",
-      "id": "css_style_module"
+      "norm_label": "css/style.css"
     },
     {
       "label": "Home Page",
@@ -1902,11 +1898,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "home_page",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "home page",
-      "_origin": "semantic",
-      "id": "home_page"
+      "norm_label": "home page"
     },
     {
       "label": "How It Works Page",
@@ -1917,11 +1912,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "how_it_works_page",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "how it works page",
-      "_origin": "semantic",
-      "id": "how_it_works_page"
+      "norm_label": "how it works page"
     },
     {
       "label": "Splash / Index Page",
@@ -1932,11 +1926,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "index_page",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "splash / index page",
-      "_origin": "semantic",
-      "id": "index_page"
+      "norm_label": "splash / index page"
     },
     {
       "label": "Item Detail Page",
@@ -1947,11 +1940,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "item_page",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "item detail page",
-      "_origin": "semantic",
-      "id": "item_page"
+      "norm_label": "item detail page"
     },
     {
       "label": "js/browse.js",
@@ -1962,11 +1954,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "js_browse_module",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "js/browse.js",
-      "_origin": "semantic",
-      "id": "js_browse_module"
+      "norm_label": "js/browse.js"
     },
     {
       "label": "js/catalog-data.js (removed)",
@@ -1977,11 +1968,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "js_catalog_data_module",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "js/catalog-data.js (removed)",
-      "_origin": "semantic",
-      "id": "js_catalog_data_module"
+      "norm_label": "js/catalog-data.js (removed)"
     },
     {
       "label": "js/circulation.js",
@@ -1992,11 +1982,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "js_circulation_module",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "js/circulation.js",
-      "_origin": "semantic",
-      "id": "js_circulation_module"
+      "norm_label": "js/circulation.js"
     },
     {
       "label": "js/item.js",
@@ -2007,11 +1996,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "js_item_module",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "js/item.js",
-      "_origin": "semantic",
-      "id": "js_item_module"
+      "norm_label": "js/item.js"
     },
     {
       "label": "js/main.js",
@@ -2022,11 +2010,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "js_main_module",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "js/main.js",
-      "_origin": "semantic",
-      "id": "js_main_module"
+      "norm_label": "js/main.js"
     },
     {
       "label": "js/supabase-config.js",
@@ -2037,11 +2024,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "js_supabase_config_module",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "js/supabase-config.js",
-      "_origin": "semantic",
-      "id": "js_supabase_config_module"
+      "norm_label": "js/supabase-config.js"
     },
     {
       "label": "Membership Page",
@@ -2052,11 +2038,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "membership_page",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "membership page",
-      "_origin": "semantic",
-      "id": "membership_page"
+      "norm_label": "membership page"
     },
     {
       "label": "robots.txt Disallow /admin.html",
@@ -2067,11 +2052,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "robots_disallow_admin",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "robots.txt disallow /admin.html",
-      "_origin": "semantic",
-      "id": "robots_disallow_admin"
+      "norm_label": "robots.txt disallow /admin.html"
     },
     {
       "label": "Support Page",
@@ -2082,11 +2066,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "support_page",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "support page",
-      "_origin": "semantic",
-      "id": "support_page"
+      "norm_label": "support page"
     },
     {
       "label": "Controlled Digital Lending (CDL)",
@@ -2097,11 +2080,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "how_it_works_cdl",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "controlled digital lending (cdl)",
-      "_origin": "semantic",
-      "id": "how_it_works_cdl"
+      "norm_label": "controlled digital lending (cdl)"
     },
     {
       "label": "One Copy, One Reader Model",
@@ -2112,11 +2094,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "how_it_works_one_copy_one_reader",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "one copy, one reader model",
-      "_origin": "semantic",
-      "id": "how_it_works_one_copy_one_reader"
+      "norm_label": "one copy, one reader model"
     },
     {
       "label": "Server-Side is_admin Admin Gating",
@@ -2127,11 +2108,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "project_notes_admin_gating",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "server-side is_admin admin gating",
-      "_origin": "semantic",
-      "id": "project_notes_admin_gating"
+      "norm_label": "server-side is_admin admin gating"
     },
     {
       "label": "Catalog Metadata Migrated to Supabase (T12)",
@@ -2142,11 +2122,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "project_notes_catalog_metadata_migration",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "catalog metadata migrated to supabase (t12)",
-      "_origin": "semantic",
-      "id": "project_notes_catalog_metadata_migration"
+      "norm_label": "catalog metadata migrated to supabase (t12)"
     },
     {
       "label": "CDG-Derived Split Design Language",
@@ -2157,11 +2136,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "project_notes_cdg_design_split",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "cdg-derived split design language",
-      "_origin": "semantic",
-      "id": "project_notes_cdg_design_split"
+      "norm_label": "cdg-derived split design language"
     },
     {
       "label": "Five-Card Invite System",
@@ -2172,11 +2150,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "project_notes_five_card_invite_system",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "five-card invite system",
-      "_origin": "semantic",
-      "id": "project_notes_five_card_invite_system"
+      "norm_label": "five-card invite system"
     },
     {
       "label": "items Table Empty Since T1",
@@ -2187,11 +2164,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "project_notes_items_empty_bug",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "items table empty since t1",
-      "_origin": "semantic",
-      "id": "project_notes_items_empty_bug"
+      "norm_label": "items table empty since t1"
     },
     {
       "label": "JS-Injected Black-Circle Nav Pattern",
@@ -2202,11 +2178,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "project_notes_js_injected_nav",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "js-injected black-circle nav pattern",
-      "_origin": "semantic",
-      "id": "project_notes_js_injected_nav"
+      "norm_label": "js-injected black-circle nav pattern"
     },
     {
       "label": "Non-Functional Demo-Only Forms (Waitlist & Donation)",
@@ -2217,11 +2192,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "project_notes_mock_forms_limitation",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "non-functional demo-only forms (waitlist & donation)",
-      "_origin": "semantic",
-      "id": "project_notes_mock_forms_limitation"
+      "norm_label": "non-functional demo-only forms (waitlist & donation)"
     },
     {
       "label": "No Build Step Principle",
@@ -2232,11 +2206,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "project_notes_no_build_step",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "no build step principle",
-      "_origin": "semantic",
-      "id": "project_notes_no_build_step"
+      "norm_label": "no build step principle"
     },
     {
       "label": "Per-User Rate Limiting on Write RPCs (T14)",
@@ -2247,11 +2220,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "project_notes_rate_limiting",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "per-user rate limiting on write rpcs (t14)",
-      "_origin": "semantic",
-      "id": "project_notes_rate_limiting"
+      "norm_label": "per-user rate limiting on write rpcs (t14)"
     },
     {
       "label": "Real Photographed Cover Scans Decision",
@@ -2262,11 +2234,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "project_notes_real_cover_scans",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "real photographed cover scans decision",
-      "_origin": "semantic",
-      "id": "project_notes_real_cover_scans"
+      "norm_label": "real photographed cover scans decision"
     },
     {
       "label": "Splash/Home Page Swap",
@@ -2277,11 +2248,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "project_notes_splash_home_swap",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "splash/home page swap",
-      "_origin": "semantic",
-      "id": "project_notes_splash_home_swap"
+      "norm_label": "splash/home page swap"
     },
     {
       "label": "Checkout State Migrated to Supabase (T1-T5)",
@@ -2292,11 +2262,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "project_notes_supabase_migration",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "checkout state migrated to supabase (t1-t5)",
-      "_origin": "semantic",
-      "id": "project_notes_supabase_migration"
+      "norm_label": "checkout state migrated to supabase (t1-t5)"
     },
     {
       "label": "Vitest Test Toolchain (T15)",
@@ -2307,11 +2276,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "project_notes_test_toolchain",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "vitest test toolchain (t15)",
-      "_origin": "semantic",
-      "id": "project_notes_test_toolchain"
+      "norm_label": "vitest test toolchain (t15)"
     },
     {
       "label": "honRenderAdmin()",
@@ -2322,11 +2290,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "admin_honrenderadmin",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honrenderadmin()",
-      "_origin": "semantic",
-      "id": "admin_honrenderadmin"
+      "norm_label": "honrenderadmin()"
     },
     {
       "label": "honRenderLoansTable()",
@@ -2337,11 +2304,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "admin_honrenderloanstable",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honrenderloanstable()",
-      "_origin": "semantic",
-      "id": "admin_honrenderloanstable"
+      "norm_label": "honrenderloanstable()"
     },
     {
       "label": "honRenderMembersTable()",
@@ -2352,11 +2318,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "admin_honrendermemberstable",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honrendermemberstable()",
-      "_origin": "semantic",
-      "id": "admin_honrendermemberstable"
+      "norm_label": "honrendermemberstable()"
     },
     {
       "label": "honRefreshMembershipView()",
@@ -2367,11 +2332,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "membership_honrefreshmembershipview",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honrefreshmembershipview()",
-      "_origin": "semantic",
-      "id": "membership_honrefreshmembershipview"
+      "norm_label": "honrefreshmembershipview()"
     },
     {
       "label": "honRenderAccountSection()",
@@ -2382,14 +2346,13 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "membership_honrenderaccountsection",
       "community": 1,
       "community_name": "circulation.js API Surface",
-      "norm_label": "honrenderaccountsection()",
-      "_origin": "semantic",
-      "id": "membership_honrenderaccountsection"
+      "norm_label": "honrenderaccountsection()"
     },
     {
-      "label": "\u672c (hon) Project",
+      "label": "本 (hon) Project",
       "file_type": "concept",
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
@@ -2397,11 +2360,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "project_notes_hon_project",
       "community": 15,
       "community_name": "Project Overview Concepts",
-      "norm_label": "\u672c (hon) project",
-      "_origin": "semantic",
-      "id": "project_notes_hon_project"
+      "norm_label": "本 (hon) project"
     },
     {
       "label": "Supabase Backend",
@@ -2412,11 +2374,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "project_notes_supabase",
       "community": 15,
       "community_name": "Project Overview Concepts",
-      "norm_label": "supabase backend",
-      "_origin": "semantic",
-      "id": "project_notes_supabase"
+      "norm_label": "supabase backend"
     },
     {
       "label": "Continuous Random Flicker Splash Animation",
@@ -2427,11 +2388,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "index_splash_flicker_pattern",
       "community": 15,
       "community_name": "Project Overview Concepts",
-      "norm_label": "continuous random flicker splash animation",
-      "_origin": "semantic",
-      "id": "index_splash_flicker_pattern"
+      "norm_label": "continuous random flicker splash animation"
     },
     {
       "label": "SQL-Based E2E Race-Condition Tests (T16)",
@@ -2442,11 +2402,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "project_notes_e2e_sql_tests",
       "community": 15,
       "community_name": "Project Overview Concepts",
-      "norm_label": "sql-based e2e race-condition tests (t16)",
-      "_origin": "semantic",
-      "id": "project_notes_e2e_sql_tests"
+      "norm_label": "sql-based e2e race-condition tests (t16)"
     },
     {
       "label": "honCardRowHTML()",
@@ -2457,11 +2416,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "membership_honcardrowhtml",
       "community": 16,
       "community_name": "Membership Cards Dashboard",
-      "norm_label": "honcardrowhtml()",
-      "_origin": "semantic",
-      "id": "membership_honcardrowhtml"
+      "norm_label": "honcardrowhtml()"
     },
     {
       "label": "honRelativeTime()",
@@ -2472,11 +2430,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "membership_honrelativetime",
       "community": 16,
       "community_name": "Membership Cards Dashboard",
-      "norm_label": "honrelativetime()",
-      "_origin": "semantic",
-      "id": "membership_honrelativetime"
+      "norm_label": "honrelativetime()"
     },
     {
       "label": "honRenderCardsDashboard()",
@@ -2487,11 +2444,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "membership_honrendercardsdashboard",
       "community": 16,
       "community_name": "Membership Cards Dashboard",
-      "norm_label": "honrendercardsdashboard()",
-      "_origin": "semantic",
-      "id": "membership_honrendercardsdashboard"
+      "norm_label": "honrendercardsdashboard()"
     },
     {
       "label": "No Algorithmic Feed / No Paywall / No Open Sign-Up Principles",
@@ -2502,11 +2458,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "about_no_algorithmic_feed",
       "community": 20,
       "community_name": "Product Philosophy Principles",
-      "norm_label": "no algorithmic feed / no paywall / no open sign-up principles",
-      "_origin": "semantic",
-      "id": "about_no_algorithmic_feed"
+      "norm_label": "no algorithmic feed / no paywall / no open sign-up principles"
     },
     {
       "label": "\"Nothing Here Is For You\" Thesis",
@@ -2517,11 +2472,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "home_anti_feed_thesis",
       "community": 20,
       "community_name": "Product Philosophy Principles",
-      "norm_label": "\"nothing here is for you\" thesis",
-      "_origin": "semantic",
-      "id": "home_anti_feed_thesis"
+      "norm_label": "\"nothing here is for you\" thesis"
     },
     {
       "label": "gstack Skill Suite",
@@ -2532,11 +2486,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "claude_gstack",
       "community": 25,
       "community_name": "gstack Skill Suite",
-      "norm_label": "gstack skill suite",
-      "_origin": "semantic",
-      "id": "claude_gstack"
+      "norm_label": "gstack skill suite"
     },
     {
       "label": "Skill Routing Rules",
@@ -2547,11 +2500,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "claude_skill_routing",
       "community": 26,
       "community_name": "Skill Routing Rules",
-      "norm_label": "skill routing rules",
-      "_origin": "semantic",
-      "id": "claude_skill_routing"
+      "norm_label": "skill routing rules"
     },
     {
       "label": "Queue / Waitlist Mechanic",
@@ -2562,11 +2514,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "how_it_works_queue_mechanic",
       "community": 27,
       "community_name": "Queue / Waitlist Mechanic",
-      "norm_label": "queue / waitlist mechanic",
-      "_origin": "semantic",
-      "id": "how_it_works_queue_mechanic"
+      "norm_label": "queue / waitlist mechanic"
     },
     {
       "label": "HON_ITEM_ID_PATTERN regex",
@@ -2577,11 +2528,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "admin_hon_item_id_pattern",
       "community": 3,
       "community_name": "Catalog Form & CRUD",
-      "norm_label": "hon_item_id_pattern regex",
-      "_origin": "semantic",
-      "id": "admin_hon_item_id_pattern"
+      "norm_label": "hon_item_id_pattern regex"
     },
     {
       "label": "honCatalogFormToItem()",
@@ -2592,11 +2542,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "admin_honcatalogformtoitem",
       "community": 3,
       "community_name": "Catalog Form & CRUD",
-      "norm_label": "honcatalogformtoitem()",
-      "_origin": "semantic",
-      "id": "admin_honcatalogformtoitem"
+      "norm_label": "honcatalogformtoitem()"
     },
     {
       "label": "honClearCatalogForm()",
@@ -2607,11 +2556,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "admin_honclearcatalogform",
       "community": 3,
       "community_name": "Catalog Form & CRUD",
-      "norm_label": "honclearcatalogform()",
-      "_origin": "semantic",
-      "id": "admin_honclearcatalogform"
+      "norm_label": "honclearcatalogform()"
     },
     {
       "label": "honFillCatalogForm()",
@@ -2622,11 +2570,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "admin_honfillcatalogform",
       "community": 3,
       "community_name": "Catalog Form & CRUD",
-      "norm_label": "honfillcatalogform()",
-      "_origin": "semantic",
-      "id": "admin_honfillcatalogform"
+      "norm_label": "honfillcatalogform()"
     },
     {
       "label": "honHandleCoverFileChange()",
@@ -2637,11 +2584,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "admin_honhandlecoverfilechange",
       "community": 3,
       "community_name": "Catalog Form & CRUD",
-      "norm_label": "honhandlecoverfilechange()",
-      "_origin": "semantic",
-      "id": "admin_honhandlecoverfilechange"
+      "norm_label": "honhandlecoverfilechange()"
     },
     {
       "label": "honRenderCatalogSection()",
@@ -2652,11 +2598,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "admin_honrendercatalogsection",
       "community": 3,
       "community_name": "Catalog Form & CRUD",
-      "norm_label": "honrendercatalogsection()",
-      "_origin": "semantic",
-      "id": "admin_honrendercatalogsection"
+      "norm_label": "honrendercatalogsection()"
     },
     {
       "label": "honRenderCatalogTable()",
@@ -2667,11 +2612,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "admin_honrendercatalogtable",
       "community": 3,
       "community_name": "Catalog Form & CRUD",
-      "norm_label": "honrendercatalogtable()",
-      "_origin": "semantic",
-      "id": "admin_honrendercatalogtable"
+      "norm_label": "honrendercatalogtable()"
     },
     {
       "label": "honRenderImagePreview()",
@@ -2682,11 +2626,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "admin_honrenderimagepreview",
       "community": 3,
       "community_name": "Catalog Form & CRUD",
-      "norm_label": "honrenderimagepreview()",
-      "_origin": "semantic",
-      "id": "admin_honrenderimagepreview"
+      "norm_label": "honrenderimagepreview()"
     },
     {
       "label": "honUpdateAllSwatches()",
@@ -2697,11 +2640,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "admin_honupdateallswatches",
       "community": 3,
       "community_name": "Catalog Form & CRUD",
-      "norm_label": "honupdateallswatches()",
-      "_origin": "semantic",
-      "id": "admin_honupdateallswatches"
+      "norm_label": "honupdateallswatches()"
     },
     {
       "label": "honUpdateSwatch()",
@@ -2712,11 +2654,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
+      "id": "admin_honupdateswatch",
       "community": 3,
       "community_name": "Catalog Form & CRUD",
-      "norm_label": "honupdateswatch()",
-      "_origin": "semantic",
-      "id": "admin_honupdateswatch"
+      "norm_label": "honupdateswatch()"
     }
   ],
   "links": [
@@ -2725,7 +2666,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "js/browse.js",
-      "source_location": "L98",
+      "source_location": "L94",
       "weight": 1.0,
       "_origin": "ast",
       "source": "js_browse_honbuildfilters",
@@ -2761,7 +2702,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "js/browse.js",
-      "source_location": "L116",
+      "source_location": "L112",
       "weight": 1.0,
       "_origin": "ast",
       "source": "js_browse_honrendershelf",
@@ -2773,7 +2714,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "js/browse.js",
-      "source_location": "L117",
+      "source_location": "L113",
       "weight": 1.0,
       "_origin": "ast",
       "source": "js_browse_honrendershelf",
@@ -2788,9 +2729,9 @@
       "source_location": "L432",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honcheckout",
-      "target": "js_circulation_honfetchstatus"
+      "target": "js_circulation_honfetchstatus",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -2800,9 +2741,9 @@
       "source_location": "L360",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honfetchallstatuses",
-      "target": "js_circulation_hongetcurrentuser"
+      "target": "js_circulation_hongetcurrentuser",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -2812,9 +2753,9 @@
       "source_location": "L125",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honfetchmycards",
-      "target": "js_circulation_hongetcurrentuser"
+      "target": "js_circulation_hongetcurrentuser",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -2824,9 +2765,9 @@
       "source_location": "L268",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honfetchmynotifications",
-      "target": "js_circulation_hongetcurrentuser"
+      "target": "js_circulation_hongetcurrentuser",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -2836,9 +2777,9 @@
       "source_location": "L170",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honfetchmyprofile",
-      "target": "js_circulation_hongetcurrentuser"
+      "target": "js_circulation_hongetcurrentuser",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -2848,9 +2789,9 @@
       "source_location": "L62",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honfetchoneitem",
-      "target": "js_circulation_honmapitemrow"
+      "target": "js_circulation_honmapitemrow",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -2860,9 +2801,9 @@
       "source_location": "L299",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honfetchstatus",
-      "target": "js_circulation_hongetcurrentuser"
+      "target": "js_circulation_hongetcurrentuser",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -2872,9 +2813,9 @@
       "source_location": "L456",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honjoinqueue",
-      "target": "js_circulation_honfetchstatus"
+      "target": "js_circulation_honfetchstatus",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -2884,9 +2825,9 @@
       "source_location": "L467",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honleavequeue",
-      "target": "js_circulation_honfetchstatus"
+      "target": "js_circulation_honfetchstatus",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -2896,9 +2837,9 @@
       "source_location": "L445",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honreturnitem",
-      "target": "js_circulation_honfetchstatus"
+      "target": "js_circulation_honfetchstatus",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -2908,9 +2849,9 @@
       "source_location": "L490",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honstatusinfo",
-      "target": "js_circulation_honisoverdue"
+      "target": "js_circulation_honisoverdue",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -2920,9 +2861,9 @@
       "source_location": "L491",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honstatusinfo",
-      "target": "js_circulation_honformatdate"
+      "target": "js_circulation_honformatdate",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3052,9 +2993,9 @@
       "source_location": "L43",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_main_honinjectnav",
-      "target": "js_main_honcurrentpage"
+      "target": "js_main_honcurrentpage",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3064,9 +3005,9 @@
       "source_location": "L26",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "tests_helpers_mocksupabase_createmocksupabase",
-      "target": "tests_helpers_mocksupabase_chainable"
+      "target": "tests_helpers_mocksupabase_chainable",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -3076,9 +3017,9 @@
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "package_devdependencies_jsdom",
-      "target": "jsdom"
+      "target": "jsdom",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -3088,9 +3029,9 @@
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "package_devdependencies_playwright_test",
-      "target": "playwright_test"
+      "target": "playwright_test",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -3100,9 +3041,9 @@
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "package_devdependencies_vitest",
-      "target": "vitest"
+      "target": "vitest",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -3112,9 +3053,9 @@
       "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "tests_circulation_test",
-      "target": "tests_helpers_mocksupabase_createmocksupabase"
+      "target": "tests_helpers_mocksupabase_createmocksupabase",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -3124,9 +3065,9 @@
       "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "tests_circulation_test",
-      "target": "tests_helpers_mocksupabase"
+      "target": "tests_helpers_mocksupabase",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -3136,26 +3077,15 @@
       "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "tests_circulation_test",
-      "target": "js_circulation"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "js/browse.js",
-      "source_location": "L103",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "js_browse",
-      "target": "js_browse_honupdatestats",
+      "target": "js_circulation",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "js/browse.js",
-      "source_location": "L113",
+      "source_location": "L109",
       "weight": 1.0,
       "_origin": "ast",
       "source": "js_browse",
@@ -3209,13 +3139,24 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "js/browse.js",
+      "source_location": "L99",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "js_browse",
+      "target": "js_browse_honupdatestats",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "js/circulation.js",
       "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation",
-      "target": "js_circulation_honstate"
+      "target": "js_circulation_honstate",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3224,9 +3165,9 @@
       "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation",
-      "target": "js_circulation_hon_catalog"
+      "target": "js_circulation_hon_catalog",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3235,9 +3176,9 @@
       "source_location": "L21",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation",
-      "target": "js_circulation_honmapitemrow"
+      "target": "js_circulation_honmapitemrow",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3246,9 +3187,9 @@
       "source_location": "L236",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation",
-      "target": "js_circulation_hon_cover_extensions"
+      "target": "js_circulation_hon_cover_extensions",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3367,9 +3308,9 @@
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_main",
-      "target": "js_main_honcurrentpage"
+      "target": "js_main_honcurrentpage",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3378,9 +3319,9 @@
       "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_main",
-      "target": "js_main_honinjectskiplink"
+      "target": "js_main_honinjectskiplink",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3389,9 +3330,9 @@
       "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_main",
-      "target": "js_main_hon_nav_links"
+      "target": "js_main_hon_nav_links",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3400,9 +3341,9 @@
       "source_location": "L42",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_main",
-      "target": "js_main_honinjectnav"
+      "target": "js_main_honinjectnav",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3411,9 +3352,9 @@
       "source_location": "L83",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_main",
-      "target": "js_main_honshownotifications"
+      "target": "js_main_honshownotifications",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3422,9 +3363,9 @@
       "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_supabase_config",
-      "target": "js_supabase_config_honsupabase"
+      "target": "js_supabase_config_honsupabase",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3433,9 +3374,9 @@
       "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "package",
-      "target": "package_devdependencies"
+      "target": "package_devdependencies",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3444,9 +3385,9 @@
       "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "package",
-      "target": "package_name"
+      "target": "package_name",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3455,9 +3396,9 @@
       "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "package",
-      "target": "package_private"
+      "target": "package_private",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3466,9 +3407,9 @@
       "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "package",
-      "target": "package_description"
+      "target": "package_description",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3477,9 +3418,9 @@
       "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "package",
-      "target": "package_type"
+      "target": "package_type",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3488,9 +3429,9 @@
       "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "package",
-      "target": "package_scripts"
+      "target": "package_scripts",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3499,9 +3440,9 @@
       "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "package_devdependencies",
-      "target": "package_devdependencies_playwright_test"
+      "target": "package_devdependencies_playwright_test",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3510,9 +3451,9 @@
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "package_devdependencies",
-      "target": "package_devdependencies_jsdom"
+      "target": "package_devdependencies_jsdom",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3521,9 +3462,9 @@
       "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "package_devdependencies",
-      "target": "package_devdependencies_vitest"
+      "target": "package_devdependencies_vitest",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3532,9 +3473,9 @@
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "package_scripts",
-      "target": "package_scripts_test"
+      "target": "package_scripts_test",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3543,9 +3484,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "package_scripts",
-      "target": "package_scripts_test_watch"
+      "target": "package_scripts_test_watch",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3554,9 +3495,9 @@
       "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "package_scripts",
-      "target": "package_scripts_test_e2e"
+      "target": "package_scripts_test_e2e",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3565,9 +3506,9 @@
       "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "playwright_config",
-      "target": "playwright_config_defineconfig_devices"
+      "target": "playwright_config_defineconfig_devices",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3576,9 +3517,9 @@
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814073301_circulation_schema",
-      "target": "supabase_migrations_20260814073301_circulation_schema_public_items"
+      "target": "supabase_migrations_20260814073301_circulation_schema_public_items",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3587,9 +3528,9 @@
       "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814073301_circulation_schema",
-      "target": "supabase_migrations_20260814073301_circulation_schema_public_loans"
+      "target": "supabase_migrations_20260814073301_circulation_schema_public_loans",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3598,9 +3539,9 @@
       "source_location": "L33",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814073301_circulation_schema",
-      "target": "supabase_migrations_20260814073301_circulation_schema_public_queue_entries"
+      "target": "supabase_migrations_20260814073301_circulation_schema_public_queue_entries",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3609,9 +3550,9 @@
       "source_location": "L43",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814073301_circulation_schema",
-      "target": "supabase_migrations_20260814073301_circulation_schema_public_library_cards"
+      "target": "supabase_migrations_20260814073301_circulation_schema_public_library_cards",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3620,9 +3561,9 @@
       "source_location": "L107",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814170857_circulation_rpc",
-      "target": "supabase_migrations_20260814170857_circulation_rpc_public_join_queue"
+      "target": "supabase_migrations_20260814170857_circulation_rpc_public_join_queue",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3631,9 +3572,9 @@
       "source_location": "L131",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814170857_circulation_rpc",
-      "target": "supabase_migrations_20260814170857_circulation_rpc_public_leave_queue"
+      "target": "supabase_migrations_20260814170857_circulation_rpc_public_leave_queue",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3642,9 +3583,9 @@
       "source_location": "L156",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814170857_circulation_rpc",
-      "target": "supabase_migrations_20260814170857_circulation_rpc_public_generate_card_code"
+      "target": "supabase_migrations_20260814170857_circulation_rpc_public_generate_card_code",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3653,9 +3594,9 @@
       "source_location": "L167",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814170857_circulation_rpc",
-      "target": "supabase_migrations_20260814170857_circulation_rpc_public_validate_card_code"
+      "target": "supabase_migrations_20260814170857_circulation_rpc_public_validate_card_code",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3664,9 +3605,9 @@
       "source_location": "L185",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814170857_circulation_rpc",
-      "target": "supabase_migrations_20260814170857_circulation_rpc_public_redeem_card"
+      "target": "supabase_migrations_20260814170857_circulation_rpc_public_redeem_card",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3675,9 +3616,9 @@
       "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814170857_circulation_rpc",
-      "target": "supabase_migrations_20260814170857_circulation_rpc_public_check_out"
+      "target": "supabase_migrations_20260814170857_circulation_rpc_public_check_out",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3686,9 +3627,9 @@
       "source_location": "L79",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814170857_circulation_rpc",
-      "target": "supabase_migrations_20260814170857_circulation_rpc_public_return_item"
+      "target": "supabase_migrations_20260814170857_circulation_rpc_public_return_item",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3697,9 +3638,9 @@
       "source_location": "L39",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814172157_circulation_rls",
-      "target": "supabase_migrations_20260814172157_circulation_rls_public_item_availability"
+      "target": "supabase_migrations_20260814172157_circulation_rls_public_item_availability",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3708,9 +3649,9 @@
       "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814172710_profiles_and_admin",
-      "target": "supabase_migrations_20260814172710_profiles_and_admin_public_profiles"
+      "target": "supabase_migrations_20260814172710_profiles_and_admin_public_profiles",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3719,9 +3660,9 @@
       "source_location": "L31",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814172710_profiles_and_admin",
-      "target": "supabase_migrations_20260814172710_profiles_and_admin_public_handle_new_user"
+      "target": "supabase_migrations_20260814172710_profiles_and_admin_public_handle_new_user",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3730,9 +3671,9 @@
       "source_location": "L43",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814172710_profiles_and_admin",
-      "target": "supabase_migrations_20260814172710_profiles_and_admin_on_auth_user_created"
+      "target": "supabase_migrations_20260814172710_profiles_and_admin_on_auth_user_created",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3741,9 +3682,9 @@
       "source_location": "L121",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814180000_admin_rpc",
-      "target": "supabase_migrations_20260814180000_admin_rpc_public_admin_issue_card"
+      "target": "supabase_migrations_20260814180000_admin_rpc_public_admin_issue_card",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3752,9 +3693,9 @@
       "source_location": "L148",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814180000_admin_rpc",
-      "target": "supabase_migrations_20260814180000_admin_rpc_public_admin_set_banned"
+      "target": "supabase_migrations_20260814180000_admin_rpc_public_admin_set_banned",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3763,9 +3704,9 @@
       "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814180000_admin_rpc",
-      "target": "supabase_migrations_20260814180000_admin_rpc_public_is_admin"
+      "target": "supabase_migrations_20260814180000_admin_rpc_public_is_admin",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3774,9 +3715,9 @@
       "source_location": "L171",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814180000_admin_rpc",
-      "target": "supabase_migrations_20260814180000_admin_rpc_public_check_out"
+      "target": "supabase_migrations_20260814180000_admin_rpc_public_check_out",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3785,9 +3726,9 @@
       "source_location": "L229",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814180000_admin_rpc",
-      "target": "supabase_migrations_20260814180000_admin_rpc_public_join_queue"
+      "target": "supabase_migrations_20260814180000_admin_rpc_public_join_queue",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3796,9 +3737,9 @@
       "source_location": "L34",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814180000_admin_rpc",
-      "target": "supabase_migrations_20260814180000_admin_rpc_public_admin_list_profiles"
+      "target": "supabase_migrations_20260814180000_admin_rpc_public_admin_list_profiles",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3807,9 +3748,9 @@
       "source_location": "L64",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814180000_admin_rpc",
-      "target": "supabase_migrations_20260814180000_admin_rpc_public_admin_list_loans"
+      "target": "supabase_migrations_20260814180000_admin_rpc_public_admin_list_loans",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3818,9 +3759,9 @@
       "source_location": "L95",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814180000_admin_rpc",
-      "target": "supabase_migrations_20260814180000_admin_rpc_public_admin_force_return"
+      "target": "supabase_migrations_20260814180000_admin_rpc_public_admin_force_return",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3829,9 +3770,9 @@
       "source_location": "L32",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814183000_fix_admin_email_cast",
-      "target": "supabase_migrations_20260814183000_fix_admin_email_cast_public_admin_list_loans"
+      "target": "supabase_migrations_20260814183000_fix_admin_email_cast_public_admin_list_loans",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3840,9 +3781,9 @@
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814183000_fix_admin_email_cast",
-      "target": "supabase_migrations_20260814183000_fix_admin_email_cast_public_admin_list_profiles"
+      "target": "supabase_migrations_20260814183000_fix_admin_email_cast_public_admin_list_profiles",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3851,9 +3792,9 @@
       "source_location": "L82",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814190000_catalog_metadata",
-      "target": "supabase_migrations_20260814190000_catalog_metadata_public_admin_upsert_item"
+      "target": "supabase_migrations_20260814190000_catalog_metadata_public_admin_upsert_item",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3862,9 +3803,9 @@
       "source_location": "L103",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814200000_notifications",
-      "target": "supabase_migrations_20260814200000_notifications_public_admin_force_return"
+      "target": "supabase_migrations_20260814200000_notifications_public_admin_force_return",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3873,9 +3814,9 @@
       "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814200000_notifications",
-      "target": "supabase_migrations_20260814200000_notifications_public_notifications"
+      "target": "supabase_migrations_20260814200000_notifications_public_notifications",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3884,9 +3825,9 @@
       "source_location": "L36",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814200000_notifications",
-      "target": "supabase_migrations_20260814200000_notifications_public_mark_notification_read"
+      "target": "supabase_migrations_20260814200000_notifications_public_mark_notification_read",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3895,9 +3836,9 @@
       "source_location": "L66",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814200000_notifications",
-      "target": "supabase_migrations_20260814200000_notifications_public_return_item"
+      "target": "supabase_migrations_20260814200000_notifications_public_return_item",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3906,9 +3847,9 @@
       "source_location": "L114",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814210000_rate_limiting",
-      "target": "supabase_migrations_20260814210000_rate_limiting_public_return_item"
+      "target": "supabase_migrations_20260814210000_rate_limiting_public_return_item",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3917,9 +3858,9 @@
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814210000_rate_limiting",
-      "target": "supabase_migrations_20260814210000_rate_limiting_public_rate_limit_log"
+      "target": "supabase_migrations_20260814210000_rate_limiting_public_rate_limit_log",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3928,9 +3869,9 @@
       "source_location": "L153",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814210000_rate_limiting",
-      "target": "supabase_migrations_20260814210000_rate_limiting_public_join_queue"
+      "target": "supabase_migrations_20260814210000_rate_limiting_public_join_queue",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3939,9 +3880,9 @@
       "source_location": "L185",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814210000_rate_limiting",
-      "target": "supabase_migrations_20260814210000_rate_limiting_public_leave_queue"
+      "target": "supabase_migrations_20260814210000_rate_limiting_public_leave_queue",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3950,9 +3891,9 @@
       "source_location": "L213",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814210000_rate_limiting",
-      "target": "supabase_migrations_20260814210000_rate_limiting_public_redeem_card"
+      "target": "supabase_migrations_20260814210000_rate_limiting_public_redeem_card",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3961,9 +3902,9 @@
       "source_location": "L26",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814210000_rate_limiting",
-      "target": "supabase_migrations_20260814210000_rate_limiting_public_check_rate_limit"
+      "target": "supabase_migrations_20260814210000_rate_limiting_public_check_rate_limit",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3972,9 +3913,9 @@
       "source_location": "L57",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814210000_rate_limiting",
-      "target": "supabase_migrations_20260814210000_rate_limiting_public_check_out"
+      "target": "supabase_migrations_20260814210000_rate_limiting_public_check_out",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3983,9 +3924,9 @@
       "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814230000_account_deletion",
-      "target": "supabase_migrations_20260814230000_account_deletion_public_delete_my_account"
+      "target": "supabase_migrations_20260814230000_account_deletion_public_delete_my_account",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3994,9 +3935,9 @@
       "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260815010000_rate_limit_log_pruning",
-      "target": "supabase_migrations_20260815010000_rate_limit_log_pruning_public_check_rate_limit"
+      "target": "supabase_migrations_20260815010000_rate_limit_log_pruning_public_check_rate_limit",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -4005,9 +3946,9 @@
       "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "tests_circulation_test",
-      "target": "tests_circulation_test_user"
+      "target": "tests_circulation_test_user",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -4016,9 +3957,9 @@
       "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "tests_e2e_rls_verification",
-      "target": "tests_e2e_rls_verification_t16_rls_results"
+      "target": "tests_e2e_rls_verification_t16_rls_results",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -4027,9 +3968,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "tests_e2e_support_donation_spec",
-      "target": "tests_e2e_support_donation_spec_test_expect"
+      "target": "tests_e2e_support_donation_spec_test_expect",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -4038,9 +3979,9 @@
       "source_location": "L24",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "tests_helpers_mocksupabase",
-      "target": "tests_helpers_mocksupabase_createmocksupabase"
+      "target": "tests_helpers_mocksupabase_createmocksupabase",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -4049,9 +3990,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "tests_helpers_mocksupabase",
-      "target": "tests_helpers_mocksupabase_chainable"
+      "target": "tests_helpers_mocksupabase_chainable",
+      "confidence_score": 1.0
     },
     {
       "relation": "reads_from",
@@ -4060,9 +4001,9 @@
       "source_location": "L175",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814170857_circulation_rpc_public_validate_card_code",
-      "target": "public_library_cards"
+      "target": "public_library_cards",
+      "confidence_score": 1.0
     },
     {
       "relation": "reads_from",
@@ -4071,9 +4012,9 @@
       "source_location": "L47",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814172157_circulation_rls_public_item_availability",
-      "target": "supabase_migrations_20260814172157_circulation_rls_sql_public_items"
+      "target": "supabase_migrations_20260814172157_circulation_rls_sql_public_items",
+      "confidence_score": 1.0
     },
     {
       "relation": "reads_from",
@@ -4082,9 +4023,9 @@
       "source_location": "L48",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814172157_circulation_rls_public_item_availability",
-      "target": "public_loans"
+      "target": "public_loans",
+      "confidence_score": 1.0
     },
     {
       "relation": "reads_from",
@@ -4093,9 +4034,9 @@
       "source_location": "L49",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814172157_circulation_rls_public_item_availability",
-      "target": "public_queue_entries"
+      "target": "public_queue_entries",
+      "confidence_score": 1.0
     },
     {
       "relation": "reads_from",
@@ -4104,9 +4045,9 @@
       "source_location": "L24",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814180000_admin_rpc_public_is_admin",
-      "target": "supabase_migrations_20260814180000_admin_rpc_sql_public_profiles"
+      "target": "supabase_migrations_20260814180000_admin_rpc_sql_public_profiles",
+      "confidence_score": 1.0
     },
     {
       "relation": "reads_from",
@@ -4115,9 +4056,9 @@
       "source_location": "L36",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814210000_rate_limiting_public_check_rate_limit",
-      "target": "supabase_migrations_20260814210000_rate_limiting_public_rate_limit_log"
+      "target": "supabase_migrations_20260814210000_rate_limiting_public_rate_limit_log",
+      "confidence_score": 1.0
     },
     {
       "relation": "reads_from",
@@ -4126,9 +4067,9 @@
       "source_location": "L37",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814230000_account_deletion_public_delete_my_account",
-      "target": "supabase_migrations_20260814230000_account_deletion_sql_public_profiles"
+      "target": "supabase_migrations_20260814230000_account_deletion_sql_public_profiles",
+      "confidence_score": 1.0
     },
     {
       "relation": "reads_from",
@@ -4137,9 +4078,9 @@
       "source_location": "L24",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260815010000_rate_limit_log_pruning_public_check_rate_limit",
-      "target": "public_rate_limit_log"
+      "target": "public_rate_limit_log",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -4148,9 +4089,9 @@
       "source_location": "L43",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814073301_circulation_schema_public_library_cards",
-      "target": "supabase_migrations_20260814073301_circulation_schema_sql_auth_users"
+      "target": "supabase_migrations_20260814073301_circulation_schema_sql_auth_users",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -4159,9 +4100,9 @@
       "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814073301_circulation_schema_public_loans",
-      "target": "supabase_migrations_20260814073301_circulation_schema_public_items"
+      "target": "supabase_migrations_20260814073301_circulation_schema_public_items",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -4170,9 +4111,9 @@
       "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814073301_circulation_schema_public_loans",
-      "target": "supabase_migrations_20260814073301_circulation_schema_sql_auth_users"
+      "target": "supabase_migrations_20260814073301_circulation_schema_sql_auth_users",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -4181,9 +4122,9 @@
       "source_location": "L33",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814073301_circulation_schema_public_queue_entries",
-      "target": "supabase_migrations_20260814073301_circulation_schema_public_items"
+      "target": "supabase_migrations_20260814073301_circulation_schema_public_items",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -4192,9 +4133,9 @@
       "source_location": "L33",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814073301_circulation_schema_public_queue_entries",
-      "target": "supabase_migrations_20260814073301_circulation_schema_sql_auth_users"
+      "target": "supabase_migrations_20260814073301_circulation_schema_sql_auth_users",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -4203,9 +4144,9 @@
       "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814172710_profiles_and_admin_public_profiles",
-      "target": "supabase_migrations_20260814172710_profiles_and_admin_sql_auth_users"
+      "target": "supabase_migrations_20260814172710_profiles_and_admin_sql_auth_users",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -4214,9 +4155,9 @@
       "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814200000_notifications_public_notifications",
-      "target": "supabase_migrations_20260814200000_notifications_sql_auth_users"
+      "target": "supabase_migrations_20260814200000_notifications_sql_auth_users",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -4225,9 +4166,9 @@
       "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814200000_notifications_public_notifications",
-      "target": "supabase_migrations_20260814200000_notifications_sql_public_items"
+      "target": "supabase_migrations_20260814200000_notifications_sql_public_items",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -4236,9 +4177,9 @@
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814210000_rate_limiting_public_rate_limit_log",
-      "target": "supabase_migrations_20260814210000_rate_limiting_sql_auth_users"
+      "target": "supabase_migrations_20260814210000_rate_limiting_sql_auth_users",
+      "confidence_score": 1.0
     },
     {
       "relation": "triggers",
@@ -4247,9 +4188,9 @@
       "source_location": "L43",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260814172710_profiles_and_admin_on_auth_user_created",
-      "target": "public_handle_new_user"
+      "target": "public_handle_new_user",
+      "confidence_score": 1.0
     },
     {
       "relation": "indirect_call",
@@ -4259,9 +4200,9 @@
       "source_location": "L46",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 0.5,
       "source": "js_circulation_honfetchcatalog",
-      "target": "js_circulation_honmapitemrow"
+      "target": "js_circulation_honmapitemrow",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4271,9 +4212,9 @@
       "source_location": "L70",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 0.5,
       "source": "js_main_honinjectnav",
-      "target": "js_main_honinjectnav_toggle"
+      "target": "js_main_honinjectnav_toggle",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4283,9 +4224,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honescape"
+      "target": "js_circulation_honescape",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4295,9 +4236,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honfetchcatalog"
+      "target": "js_circulation_honfetchcatalog",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4307,9 +4248,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honfetchoneitem"
+      "target": "js_circulation_honfetchoneitem",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4319,9 +4260,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honformatdate"
+      "target": "js_circulation_honformatdate",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4331,9 +4272,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_hongetcurrentuser"
+      "target": "js_circulation_hongetcurrentuser",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4343,9 +4284,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honsigninwithemail"
+      "target": "js_circulation_honsigninwithemail",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4355,9 +4296,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_hondeletemyaccount"
+      "target": "js_circulation_hondeletemyaccount",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4367,9 +4308,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honfetchmycards"
+      "target": "js_circulation_honfetchmycards",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4379,9 +4320,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honredeemcard"
+      "target": "js_circulation_honredeemcard",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4391,9 +4332,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honvalidatecardcode"
+      "target": "js_circulation_honvalidatecardcode",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4403,9 +4344,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honstashpendingcardcode"
+      "target": "js_circulation_honstashpendingcardcode",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4415,9 +4356,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_hontakependingcardcode"
+      "target": "js_circulation_hontakependingcardcode",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4427,9 +4368,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honadminlistloans"
+      "target": "js_circulation_honadminlistloans",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4439,9 +4380,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honadminlistprofiles"
+      "target": "js_circulation_honadminlistprofiles",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4451,9 +4392,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honfetchmyprofile"
+      "target": "js_circulation_honfetchmyprofile",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4463,9 +4404,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honadminforcereturn"
+      "target": "js_circulation_honadminforcereturn",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4475,9 +4416,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honadminissuecard"
+      "target": "js_circulation_honadminissuecard",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4487,9 +4428,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honadminsetbanned"
+      "target": "js_circulation_honadminsetbanned",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4499,9 +4440,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honadminupsertitem"
+      "target": "js_circulation_honadminupsertitem",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4511,9 +4452,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honuploadcoverimage"
+      "target": "js_circulation_honuploadcoverimage",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4523,9 +4464,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honfetchmynotifications"
+      "target": "js_circulation_honfetchmynotifications",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4535,9 +4476,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honmarknotificationread"
+      "target": "js_circulation_honmarknotificationread",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4547,9 +4488,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honfetchallstatuses"
+      "target": "js_circulation_honfetchallstatuses",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4559,9 +4500,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honfetchstatus"
+      "target": "js_circulation_honfetchstatus",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4571,9 +4512,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honcheckout"
+      "target": "js_circulation_honcheckout",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4583,9 +4524,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honjoinqueue"
+      "target": "js_circulation_honjoinqueue",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4595,9 +4536,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honleavequeue"
+      "target": "js_circulation_honleavequeue",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4607,9 +4548,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honreturnitem"
+      "target": "js_circulation_honreturnitem",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4619,9 +4560,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honisoverdue"
+      "target": "js_circulation_honisoverdue",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4631,9 +4572,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honstatusinfo"
+      "target": "js_circulation_honstatusinfo",
+      "confidence_score": 0.5
     },
     {
       "relation": "calls",
@@ -4642,7 +4583,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honclearcatalogform",
       "target": "admin_honrenderimagepreview"
     },
@@ -4653,7 +4593,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honfillcatalogform",
       "target": "admin_honrenderimagepreview"
     },
@@ -4664,7 +4603,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honfillcatalogform",
       "target": "admin_honupdateallswatches"
     },
@@ -4675,7 +4613,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honhandlecoverfilechange",
       "target": "admin_honrenderimagepreview"
     },
@@ -4686,7 +4623,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honhandlecoverfilechange",
       "target": "js_circulation_honuploadcoverimage"
     },
@@ -4697,7 +4633,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrenderadmin",
       "target": "admin_honrendercatalogsection"
     },
@@ -4708,7 +4643,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrenderadmin",
       "target": "admin_honrenderloanstable"
     },
@@ -4719,7 +4653,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrenderadmin",
       "target": "admin_honrendermemberstable"
     },
@@ -4730,7 +4663,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrenderadmin",
       "target": "js_circulation_honadminissuecard"
     },
@@ -4741,7 +4673,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrenderadmin",
       "target": "js_circulation_honfetchmyprofile"
     },
@@ -4752,7 +4683,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrenderadmin",
       "target": "js_circulation_hongetcurrentuser"
     },
@@ -4763,7 +4693,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrendercatalogsection",
       "target": "admin_honcatalogformtoitem"
     },
@@ -4774,7 +4703,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrendercatalogsection",
       "target": "admin_honclearcatalogform"
     },
@@ -4785,7 +4713,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrendercatalogsection",
       "target": "admin_honhandlecoverfilechange"
     },
@@ -4796,7 +4723,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrendercatalogsection",
       "target": "admin_honrendercatalogtable"
     },
@@ -4807,7 +4733,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrendercatalogsection",
       "target": "admin_honupdateswatch"
     },
@@ -4818,7 +4743,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrendercatalogsection",
       "target": "js_circulation_honadminupsertitem"
     },
@@ -4829,7 +4753,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrendercatalogsection",
       "target": "js_circulation_honfetchcatalog"
     },
@@ -4840,7 +4763,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrendercatalogtable",
       "target": "admin_honfillcatalogform"
     },
@@ -4851,7 +4773,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrendercatalogtable",
       "target": "js_circulation_honescape"
     },
@@ -4862,7 +4783,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrenderloanstable",
       "target": "js_circulation_honadminforcereturn"
     },
@@ -4873,7 +4793,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrenderloanstable",
       "target": "js_circulation_honadminlistloans"
     },
@@ -4884,7 +4803,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrenderloanstable",
       "target": "js_circulation_honescape"
     },
@@ -4895,7 +4813,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrenderloanstable",
       "target": "js_circulation_honformatdate"
     },
@@ -4906,7 +4823,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrendermemberstable",
       "target": "js_circulation_honadminlistprofiles"
     },
@@ -4917,7 +4833,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrendermemberstable",
       "target": "js_circulation_honadminsetbanned"
     },
@@ -4928,7 +4843,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrendermemberstable",
       "target": "js_circulation_honescape"
     },
@@ -4939,7 +4853,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honupdateallswatches",
       "target": "admin_honupdateswatch"
     },
@@ -4950,7 +4863,6 @@
       "source_file": "membership.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "membership_honcardrowhtml",
       "target": "membership_honrelativetime"
     },
@@ -4961,7 +4873,6 @@
       "source_file": "membership.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "membership_honrefreshmembershipview",
       "target": "js_circulation_honfetchmycards"
     },
@@ -4972,7 +4883,6 @@
       "source_file": "membership.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "membership_honrefreshmembershipview",
       "target": "js_circulation_hongetcurrentuser"
     },
@@ -4983,7 +4893,6 @@
       "source_file": "membership.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "membership_honrefreshmembershipview",
       "target": "js_circulation_honredeemcard"
     },
@@ -4994,7 +4903,6 @@
       "source_file": "membership.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "membership_honrefreshmembershipview",
       "target": "js_circulation_honstashpendingcardcode"
     },
@@ -5005,7 +4913,6 @@
       "source_file": "membership.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "membership_honrefreshmembershipview",
       "target": "js_circulation_hontakependingcardcode"
     },
@@ -5016,7 +4923,6 @@
       "source_file": "membership.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "membership_honrefreshmembershipview",
       "target": "membership_honrenderaccountsection"
     },
@@ -5027,7 +4933,6 @@
       "source_file": "membership.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "membership_honrefreshmembershipview",
       "target": "membership_honrendercardsdashboard"
     },
@@ -5038,7 +4943,6 @@
       "source_file": "membership.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "membership_honrendercardsdashboard",
       "target": "membership_honcardrowhtml"
     },
@@ -5049,7 +4953,6 @@
       "source_file": "membership.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "membership_page",
       "target": "js_circulation_hondeletemyaccount"
     },
@@ -5060,7 +4963,6 @@
       "source_file": "membership.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "membership_page",
       "target": "js_circulation_honsigninwithemail"
     },
@@ -5071,7 +4973,6 @@
       "source_file": "membership.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "membership_page",
       "target": "js_circulation_honstashpendingcardcode"
     },
@@ -5082,7 +4983,6 @@
       "source_file": "membership.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "membership_page",
       "target": "js_circulation_honvalidatecardcode"
     },
@@ -5093,7 +4993,6 @@
       "source_file": "membership.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "membership_page",
       "target": "js_supabase_config_honsupabase"
     },
@@ -5104,7 +5003,6 @@
       "source_file": "membership.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "membership_page",
       "target": "membership_honrefreshmembershipview"
     },
@@ -5115,7 +5013,6 @@
       "source_file": "about.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "about_page",
       "target": "css_style_module"
     },
@@ -5126,7 +5023,6 @@
       "source_file": "about.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "about_page",
       "target": "js_main_module"
     },
@@ -5137,7 +5033,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_page",
       "target": "catalog_page"
     },
@@ -5148,7 +5043,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_page",
       "target": "css_style_module"
     },
@@ -5159,7 +5053,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_page",
       "target": "js_circulation_module"
     },
@@ -5170,7 +5063,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_page",
       "target": "js_main_module"
     },
@@ -5181,7 +5073,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_page",
       "target": "js_supabase_config_module"
     },
@@ -5192,7 +5083,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_page",
       "target": "membership_page"
     },
@@ -5203,7 +5093,6 @@
       "source_file": "catalog.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "catalog_page",
       "target": "css_style_module"
     },
@@ -5214,7 +5103,6 @@
       "source_file": "catalog.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "catalog_page",
       "target": "how_it_works_page"
     },
@@ -5225,7 +5113,6 @@
       "source_file": "catalog.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "catalog_page",
       "target": "js_browse_module"
     },
@@ -5236,7 +5123,6 @@
       "source_file": "catalog.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "catalog_page",
       "target": "js_circulation_module"
     },
@@ -5247,7 +5133,6 @@
       "source_file": "catalog.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "catalog_page",
       "target": "js_main_module"
     },
@@ -5258,7 +5143,6 @@
       "source_file": "catalog.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "catalog_page",
       "target": "js_supabase_config_module"
     },
@@ -5269,7 +5153,6 @@
       "source_file": "home.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "home_page",
       "target": "catalog_page"
     },
@@ -5280,7 +5163,6 @@
       "source_file": "home.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "home_page",
       "target": "css_style_module"
     },
@@ -5291,7 +5173,6 @@
       "source_file": "home.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "home_page",
       "target": "how_it_works_page"
     },
@@ -5302,7 +5183,6 @@
       "source_file": "home.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "home_page",
       "target": "js_main_module"
     },
@@ -5313,7 +5193,6 @@
       "source_file": "home.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "home_page",
       "target": "membership_page"
     },
@@ -5324,7 +5203,6 @@
       "source_file": "home.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "home_page",
       "target": "support_page"
     },
@@ -5335,7 +5213,6 @@
       "source_file": "how-it-works.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "how_it_works_one_copy_one_reader",
       "target": "catalog_page"
     },
@@ -5346,7 +5223,6 @@
       "source_file": "how-it-works.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "how_it_works_one_copy_one_reader",
       "target": "home_page"
     },
@@ -5357,7 +5233,6 @@
       "source_file": "how-it-works.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "how_it_works_page",
       "target": "css_style_module"
     },
@@ -5368,7 +5243,6 @@
       "source_file": "how-it-works.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "how_it_works_page",
       "target": "js_main_module"
     },
@@ -5379,7 +5253,6 @@
       "source_file": "index.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "index_page",
       "target": "catalog_page"
     },
@@ -5390,7 +5263,6 @@
       "source_file": "item.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "item_page",
       "target": "css_style_module"
     },
@@ -5401,7 +5273,6 @@
       "source_file": "item.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "item_page",
       "target": "js_circulation_module"
     },
@@ -5412,7 +5283,6 @@
       "source_file": "item.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "item_page",
       "target": "js_item_module"
     },
@@ -5423,7 +5293,6 @@
       "source_file": "item.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "item_page",
       "target": "js_main_module"
     },
@@ -5434,7 +5303,6 @@
       "source_file": "item.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "item_page",
       "target": "js_supabase_config_module"
     },
@@ -5445,7 +5313,6 @@
       "source_file": "membership.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "membership_page",
       "target": "css_style_module"
     },
@@ -5456,7 +5323,6 @@
       "source_file": "membership.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "membership_page",
       "target": "js_circulation_module"
     },
@@ -5467,7 +5333,6 @@
       "source_file": "membership.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "membership_page",
       "target": "js_main_module"
     },
@@ -5478,7 +5343,6 @@
       "source_file": "membership.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "membership_page",
       "target": "js_supabase_config_module"
     },
@@ -5489,7 +5353,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_admin_gating",
       "target": "admin_page"
     },
@@ -5500,7 +5363,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_catalog_metadata_migration",
       "target": "admin_page"
     },
@@ -5511,7 +5373,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_catalog_metadata_migration",
       "target": "js_catalog_data_module"
     },
@@ -5522,7 +5383,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_catalog_metadata_migration",
       "target": "js_circulation_module"
     },
@@ -5533,7 +5393,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_cdg_design_split",
       "target": "about_page"
     },
@@ -5544,7 +5403,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_cdg_design_split",
       "target": "catalog_page"
     },
@@ -5555,7 +5413,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_cdg_design_split",
       "target": "home_page"
     },
@@ -5566,7 +5423,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_cdg_design_split",
       "target": "how_it_works_page"
     },
@@ -5577,7 +5433,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_cdg_design_split",
       "target": "item_page"
     },
@@ -5588,7 +5443,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_cdg_design_split",
       "target": "membership_page"
     },
@@ -5599,7 +5453,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_cdg_design_split",
       "target": "support_page"
     },
@@ -5610,7 +5463,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_e2e_sql_tests",
       "target": "project_notes_supabase"
     },
@@ -5621,7 +5473,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_five_card_invite_system",
       "target": "membership_page"
     },
@@ -5632,7 +5483,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_hon_project",
       "target": "index_splash_flicker_pattern"
     },
@@ -5643,7 +5493,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_hon_project",
       "target": "project_notes_supabase"
     },
@@ -5654,7 +5503,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_items_empty_bug",
       "target": "project_notes_catalog_metadata_migration"
     },
@@ -5665,7 +5513,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_js_injected_nav",
       "target": "js_main_module"
     },
@@ -5676,7 +5523,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_mock_forms_limitation",
       "target": "membership_page"
     },
@@ -5687,7 +5533,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_mock_forms_limitation",
       "target": "support_page"
     },
@@ -5698,7 +5543,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_no_build_step",
       "target": "js_supabase_config_module"
     },
@@ -5709,7 +5553,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_splash_home_swap",
       "target": "home_page"
     },
@@ -5720,7 +5563,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_splash_home_swap",
       "target": "index_page"
     },
@@ -5731,7 +5573,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_supabase_migration",
       "target": "js_circulation_module"
     },
@@ -5742,7 +5583,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_test_toolchain",
       "target": "js_circulation_module"
     },
@@ -5753,7 +5593,6 @@
       "source_file": "robots.txt",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "robots_disallow_admin",
       "target": "admin_page"
     },
@@ -5764,7 +5603,6 @@
       "source_file": "support.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "support_page",
       "target": "css_style_module"
     },
@@ -5775,7 +5613,6 @@
       "source_file": "support.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "support_page",
       "target": "js_main_module"
     },
@@ -5786,7 +5623,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrendercatalogsection",
       "target": "js_circulation_hon_catalog"
     },
@@ -5797,7 +5633,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrendercatalogtable",
       "target": "js_circulation_hon_catalog"
     },
@@ -5808,7 +5643,6 @@
       "source_file": "how-it-works.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "how_it_works_cdl",
       "target": "project_notes_real_cover_scans"
     },
@@ -5819,7 +5653,6 @@
       "source_file": "how-it-works.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "how_it_works_cdl",
       "target": "how_it_works_one_copy_one_reader"
     },
@@ -5830,7 +5663,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_rate_limiting",
       "target": "js_circulation_module"
     },
@@ -5841,7 +5673,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_real_cover_scans",
       "target": "catalog_page"
     },
@@ -5852,7 +5683,6 @@
       "source_file": "PROJECT_NOTES.md",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "project_notes_real_cover_scans",
       "target": "item_page"
     },
@@ -5863,7 +5693,6 @@
       "source_file": "about.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "about_no_algorithmic_feed",
       "target": "home_anti_feed_thesis"
     },
@@ -5874,7 +5703,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honhandlecoverfilechange",
       "target": "admin_hon_item_id_pattern"
     },
@@ -5885,7 +5713,6 @@
       "source_file": "admin.html",
       "source_location": null,
       "weight": 1.0,
-      "_origin": "semantic",
       "source": "admin_honrendercatalogsection",
       "target": "admin_hon_item_id_pattern"
     }
@@ -5939,5 +5766,5 @@
       "source_file": "PROJECT_NOTES.md"
     }
   ],
-  "built_at_commit": "bf4d782ae5a7e9918197c3f3c299763e3902c3c3"
+  "built_at_commit": "3dec04881b29eda1df6d497731532f2ed4a30866"
 }
