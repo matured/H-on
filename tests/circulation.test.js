@@ -95,7 +95,7 @@ describe('honStatusInfo', () => {
 
   it('shows queue position when the caller is in the queue', () => {
     setHonState({ 'burst-vol15': { status: 'checked_out_other', youInQueue: true, queueLen: 3, copiesTotal: 1 } });
-    expect(honStatusInfo(item).metaText).toBe("You're #3 in line");
+    expect(honStatusInfo(item).metaText).toBe('You’re #3 in line');
   });
 
   it('shows plural reader count when others wait and caller is not queued', () => {

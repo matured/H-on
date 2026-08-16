@@ -4,8 +4,8 @@
   "description": "Dev-only test tooling for 本 (hon). The site itself ships with no build step and no dependencies — this package.json exists solely so Vitest can run js/circulation.js's unit tests; it is never loaded by any HTML page.",
   "type": "commonjs",
   "scripts": {
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "NODE_OPTIONS=--no-experimental-webstorage vitest run",
+    "test:watch": "NODE_OPTIONS=--no-experimental-webstorage vitest",
     "test:e2e": "PLAYWRIGHT_HTML_OPEN=never playwright test"
   },
   "devDependencies": {
