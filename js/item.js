@@ -91,7 +91,7 @@ async function honRenderItem() {
   } catch (err) {
     root.innerHTML = `
       <p class="eyebrow">SOMETHING WENT WRONG</p>
-      <h1 style="font-size: clamp(26px,4vw,40px); margin-top:14px;">Couldn't load this item.</h1>
+      <h1 style="font-size: clamp(26px,4vw,40px); margin-top:14px;">Couldn’t load this item.</h1>
       <p class="serif-lede" style="margin-top:14px;">${honEscape(err.message || err)}</p>
       <a href="catalog.html" class="btn" style="margin-top:22px; display:inline-flex;">Back to the Shelf &rarr;</a>
     `;
@@ -102,7 +102,7 @@ async function honRenderItem() {
   if (!item) {
     root.innerHTML = `
       <p class="eyebrow">NOT FOUND</p>
-      <h1 style="font-size: clamp(30px,5vw,50px); margin-top:14px;">This title isn't in the archive.</h1>
+      <h1 style="font-size: clamp(30px,5vw,50px); margin-top:14px;">This title isn’t in the archive.</h1>
       <a href="catalog.html" class="btn" style="margin-top:22px; display:inline-flex;">Back to the Shelf &rarr;</a>
     `;
     document.title = 'Not Found · 本 (hon)';
@@ -114,7 +114,7 @@ async function honRenderItem() {
   } catch (err) {
     root.innerHTML = `
       <p class="eyebrow">SOMETHING WENT WRONG</p>
-      <h1 style="font-size: clamp(26px,4vw,40px); margin-top:14px;">Couldn't load this item.</h1>
+      <h1 style="font-size: clamp(26px,4vw,40px); margin-top:14px;">Couldn’t load this item.</h1>
       <p class="serif-lede" style="margin-top:14px;">${honEscape(err.message || err)}</p>
       <a href="catalog.html" class="btn" style="margin-top:22px; display:inline-flex;">Back to the Shelf &rarr;</a>
     `;
@@ -213,11 +213,11 @@ function bindItemActions(item) {
 
 function honFriendlyError(err) {
   const msg = err?.message || String(err);
-  if (msg.includes('must be authenticated')) return "You'll need to sign in first. Head to the Membership page.";
+  if (msg.includes('must be authenticated')) return "You’ll need to sign in first. Head to the Membership page.";
   if (msg.includes('no copies available')) return 'Someone just took the last copy. Try joining the queue instead.';
   if (msg.includes('overdue')) return "You have an overdue item. Return it before checking out another.";
-  if (msg.includes('already in queue')) return "You're already in the queue for this one.";
-  if (msg.includes('rate limit exceeded')) return "You're doing that a bit fast. Give it a minute and try again.";
+  if (msg.includes('already in queue')) return "You’re already in the queue for this one.";
+  if (msg.includes('rate limit exceeded')) return "You’re doing that a bit fast. Give it a minute and try again.";
   return `Something went wrong: ${msg}`;
 }
 

@@ -69,14 +69,14 @@ async function honRenderAdmin() {
   try {
     profile = await honFetchMyProfile();
   } catch (err) {
-    root.innerHTML = `<p class="eyebrow">ERROR</p><p style="margin-top:12px;">Couldn't check admin status: ${honEscape(err.message || err)}</p>`;
+    root.innerHTML = `<p class="eyebrow">ERROR</p><p style="margin-top:12px;">Couldn’t check admin status: ${honEscape(err.message || err)}</p>`;
     return;
   }
 
   if (!profile || !profile.is_admin) {
     root.innerHTML = `
       <p class="eyebrow">NOT AUTHORIZED</p>
-      <h2 style="font-size: clamp(22px, 2.8vw, 28px); margin-top:14px;">This account isn't an admin.</h2>
+      <h2 style="font-size: clamp(22px, 2.8vw, 28px); margin-top:14px;">This account isn’t an admin.</h2>
       <a href="catalog.html" class="btn" style="margin-top:20px; display:inline-flex;">Back to the Archive &rarr;</a>
     `;
     return;
@@ -86,7 +86,7 @@ async function honRenderAdmin() {
     <div style="margin-bottom:48px;">
       <p class="eyebrow">ISSUE A CARD</p>
       <h2 style="font-size: clamp(20px, 2.6vw, 24px); margin-top:12px;">Mint an extra invite.</h2>
-      <p style="margin-top:10px; font-size:14.5px; color:#2c2b28;">Attributed to your own account — it'll also show up on your card dashboard on the Membership page.</p>
+      <p style="margin-top:10px; font-size:14.5px; color:#2c2b28;">Attributed to your own account — it’ll also show up on your card dashboard on the Membership page.</p>
       <button class="btn btn-solid" id="issue-card-btn" style="margin-top:16px;">Issue Card &rarr;</button>
       <p id="issue-card-status" role="status" aria-live="polite" style="margin-top:10px; font-size:14px;"></p>
     </div>
@@ -165,7 +165,7 @@ async function honRenderAdmin() {
       statusEl.textContent = `New code: ${card.code}`;
       statusEl.style.color = 'var(--ink)';
     } catch (err) {
-      statusEl.textContent = `Couldn't issue a card: ${err.message || err}`;
+      statusEl.textContent = `Couldn’t issue a card: ${err.message || err}`;
       statusEl.style.color = 'var(--red)';
     } finally {
       btn.disabled = false;
@@ -318,7 +318,7 @@ async function honRenderCatalogSection() {
   try {
     await honFetchCatalog();
   } catch (err) {
-    document.getElementById('catalog-table-wrap').innerHTML = `<p style="color:var(--red); font-size:14px;">Couldn't load the catalog: ${honEscape(err.message || err)}</p>`;
+    document.getElementById('catalog-table-wrap').innerHTML = `<p style="color:var(--red); font-size:14px;">Couldn’t load the catalog: ${honEscape(err.message || err)}</p>`;
     return;
   }
   honRenderCatalogTable();
@@ -357,7 +357,7 @@ async function honRenderCatalogSection() {
       statusEl.textContent = `Saved "${item.title}".`;
       statusEl.style.color = 'var(--ink)';
     } catch (err) {
-      statusEl.textContent = `Couldn't save: ${err.message || err}`;
+      statusEl.textContent = `Couldn’t save: ${err.message || err}`;
       statusEl.style.color = 'var(--red)';
     } finally {
       btn.disabled = false;
@@ -372,7 +372,7 @@ async function honRenderLoansTable() {
   try {
     loans = await honAdminListLoans();
   } catch (err) {
-    wrap.innerHTML = `<p style="color:var(--red); font-size:14px;">Couldn't load loans: ${honEscape(err.message || err)}</p>`;
+    wrap.innerHTML = `<p style="color:var(--red); font-size:14px;">Couldn’t load loans: ${honEscape(err.message || err)}</p>`;
     return;
   }
   if (!loans.length) {
@@ -427,7 +427,7 @@ async function honRenderMembersTable() {
   try {
     profiles = await honAdminListProfiles();
   } catch (err) {
-    wrap.innerHTML = `<p style="color:var(--red); font-size:14px;">Couldn't load members: ${honEscape(err.message || err)}</p>`;
+    wrap.innerHTML = `<p style="color:var(--red); font-size:14px;">Couldn’t load members: ${honEscape(err.message || err)}</p>`;
     return;
   }
   wrap.innerHTML = `

@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
       await honFetchCatalog();
     } catch (err) {
-      shelf.innerHTML = `<p class="eyebrow" style="padding: 40px 0; color:var(--red);">Couldn't load the catalog: ${honEscape(err.message || err)}</p>`;
+      shelf.innerHTML = `<p class="eyebrow" style="padding: 40px 0; color:var(--red);">Couldn’t load the catalog: ${honEscape(err.message || err)}</p>`;
       return;
     }
     honBuildFilters();

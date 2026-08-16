@@ -17,7 +17,7 @@
         You get in through someone, not an ad.
       </h1>
       <p class="serif-lede" style="max-width: 56ch; margin-top:22px;">
-        本 is invite-only for now, on purpose. We're starting with people who
+        本 is invite-only for now, on purpose. We’re starting with people who
         already care about this specific era of Japanese print media, and
         growing only as far as word of mouth carries us.
       </p>
@@ -32,7 +32,7 @@
       <p class="eyebrow">ALREADY A MEMBER?</p>
       <h2 style="font-size: clamp(22px, 2.8vw, 28px); margin-top:14px;">Sign in.</h2>
       <p style="margin-top:12px; font-size:15px; color:#2c2b28;">
-        Enter the email your account is under. We'll send a one-time link, no password needed.
+        Enter the email your account is under. We’ll send a one-time link, no password needed.
       </p>
       <form id="signin-form" style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;">
         <div style="flex:1; min-width:220px;">
@@ -54,7 +54,7 @@
       <h2 style="font-size: clamp(22px, 2.8vw, 28px); margin-top:14px;">Redeem it.</h2>
       <p style="margin-top:12px; font-size:15px; color:#2c2b28;">
         Enter the code someone gave you and the email you want your account under.
-        We'll check the code, then send a one-time link. Click it to finish joining.
+        We’ll check the code, then send a one-time link. Click it to finish joining.
       </p>
       <form id="redeem-form" style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;">
         <div style="flex:1; min-width:180px;">
@@ -78,7 +78,7 @@
     <div class="wrap" style="display:grid; grid-template-columns: 1fr 1fr; gap:56px;">
       <div>
         <p class="eyebrow">THE LIBRARY CARD SYSTEM</p>
-        <h2 style="font-size: clamp(26px, 3.4vw, 38px); margin-top:14px;">Five cards. That's how it spreads.</h2>
+        <h2 style="font-size: clamp(26px, 3.4vw, 38px); margin-top:14px;">Five cards. That’s how it spreads.</h2>
         <p style="margin-top:18px; color:#2c2b28;">
           Every member who joins 本 receives <strong>five library cards</strong>
           to give to people they think belong here. A card is a one-time invite
@@ -86,9 +86,9 @@
           five cards of their own to pass along.
         </p>
         <p style="margin-top:14px; color:#2c2b28;">
-          There's no ad budget and no open sign-up page. If the archive grows,
+          There’s no ad budget and no open sign-up page. If the archive grows,
           it grows because someone who already loves this material vouched
-          for the next person. That's slower on purpose, and it's also the only
+          for the next person. That’s slower on purpose, and it’s also the only
           way we know to keep a small collection from being overwhelmed
           before we can properly care for it.
         </p>
@@ -117,8 +117,8 @@
         <p class="mono-tag" style="color:var(--red);">DANGER ZONE</p>
         <p style="margin-top:10px; font-size:14px; color:#2c2b28;">
           Deleting your account permanently removes your profile, library
-          cards, queue entries, and notifications. This can't be undone, and
-          you'll need to return any active loan first.
+          cards, queue entries, and notifications. This can’t be undone, and
+          you’ll need to return any active loan first.
         </p>
         <button type="button" class="btn btn-red" id="delete-account-btn" style="margin-top:14px;">Delete My Account&hellip;</button>
 
@@ -159,11 +159,11 @@
   <!-- REQUEST FORM (mock) -->
   <section id="request">
     <div class="wrap" style="max-width: 60ch;">
-      <p class="eyebrow">DON'T HAVE A CARD?</p>
+      <p class="eyebrow">DON’T HAVE A CARD?</p>
       <h2 style="font-size: clamp(26px, 3.4vw, 36px); margin-top:14px;">Ask to be on the list.</h2>
       <p style="margin-top:14px; color:#2c2b28;">
         We keep a short waitlist for people without a member connection. It
-        won't get you in faster than a card would, but we do read every
+        won’t get you in faster than a card would, but we do read every
         submission ourselves.
       </p>
       <form onsubmit="event.preventDefault(); document.getElementById('form-confirm').style.display='block'; this.style.opacity='0.5'; this.querySelectorAll('input,button,textarea').forEach(el=>el.disabled=true);" style="margin-top:26px; display:flex; flex-direction:column; gap:14px;">
@@ -241,7 +241,7 @@ document.getElementById('signin-form').addEventListener('submit', async (e) => {
     statusEl.textContent = `Check ${email} for a sign-in link.`;
     statusEl.style.color = 'var(--ink)';
   } catch (err) {
-    statusEl.textContent = `Couldn't send that: ${err.message || err}`;
+    statusEl.textContent = `Couldn’t send that: ${err.message || err}`;
     statusEl.style.color = 'var(--red)';
   } finally {
     btn.disabled = false;
@@ -261,7 +261,7 @@ document.getElementById('redeem-form').addEventListener('submit', async (e) => {
   try {
     const valid = await honValidateCardCode(code);
     if (!valid) {
-      statusEl.textContent = "That code isn't valid, or it's already been used.";
+      statusEl.textContent = "That code isn’t valid, or it’s already been used.";
       statusEl.style.color = 'var(--red)';
       return;
     }
@@ -345,10 +345,10 @@ async function honRefreshMembershipView() {
   if (user && pendingCode) {
     try {
       await honRedeemCard(pendingCode);
-      redeemStatusEl.textContent = "Welcome. You're in. Your five cards are ready below.";
+      redeemStatusEl.textContent = "Welcome. You’re in. Your five cards are ready below.";
       redeemStatusEl.style.color = 'var(--ink)';
     } catch (err) {
-      redeemStatusEl.textContent = `Couldn't redeem that code: ${err.message || err}`;
+      redeemStatusEl.textContent = `Couldn’t redeem that code: ${err.message || err}`;
       redeemStatusEl.style.color = 'var(--red)';
     }
   } else if (pendingCode) {
@@ -361,7 +361,7 @@ async function honRefreshMembershipView() {
     const cards = await honFetchMyCards();
     honRenderCardsDashboard(cards);
   } catch (err) {
-    document.getElementById('cards-list').innerHTML = `<p style="font-size:14px; color:var(--red);">Couldn't load your cards: ${honEscape(err.message || err)}</p>`;
+    document.getElementById('cards-list').innerHTML = `<p style="font-size:14px; color:var(--red);">Couldn’t load your cards: ${honEscape(err.message || err)}</p>`;
   }
 }
 
@@ -372,7 +372,7 @@ document.getElementById('cards-list').addEventListener('click', async (e) => {
     await navigator.clipboard.writeText(btn.dataset.code);
     btn.textContent = 'Copied';
   } catch {
-    btn.textContent = "Couldn't copy";
+    btn.textContent = "Couldn’t copy";
   } finally {
     btn.disabled = true;
     setTimeout(() => { btn.textContent = 'Copy'; btn.disabled = false; }, 1500);

@@ -102,7 +102,7 @@ async function honShowNotifications() {
   const banner = document.createElement('div');
   banner.className = 'hon-notify-banner';
   banner.innerHTML = `
-    <span>${notifications.length === 1 ? "An item you're waiting for is available." : `${notifications.length} items you're waiting for are available.`} <a href="catalog.html">Check the Archive &rarr;</a></span>
+    <span>${notifications.length === 1 ? "An item you’re waiting for is available." : `${notifications.length} items you’re waiting for are available.`} <a href="catalog.html">Check the Archive &rarr;</a></span>
     <button class="hon-notify-dismiss" aria-label="Dismiss">&times;</button>
   `;
   document.body.prepend(banner);
