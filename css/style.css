@@ -331,6 +331,10 @@ section { padding: clamp(48px, 8vw, 96px) 0; }
 .stamp-checked   { color: var(--red); }
 .stamp-yours     { color: #1a4fa0; }
 
+/* ---------- Archive: hero ---------- */
+.catalog-hero { padding-top: clamp(64px, 9vw, 108px); padding-bottom: 0; }
+.catalog-hero h1 { font-size: clamp(30px, 5vw, 52px); margin-top: 14px; max-width: 22ch; text-wrap: balance; }
+
 /* ---------- Archive: filter bar ---------- */
 .filter-bar {
   display: flex;
@@ -354,12 +358,13 @@ section { padding: clamp(48px, 8vw, 96px) 0; }
 .filter-chip.active { background: var(--ink); color: var(--paper); }
 .filter-chip:hover:not(.active) { border-color: var(--red); color: var(--red); }
 
-.catalog-stats { color: var(--grey); }
+.catalog-stats { color: var(--grey); margin-top: 22px; }
 
 /* ---------- Archive: scattered floating shelf ---------- */
 .shelf {
   position: relative;
   width: 100%;
+  padding: 0 var(--gutter);
 }
 .shelf-item {
   position: absolute;
@@ -478,6 +483,17 @@ section { padding: clamp(48px, 8vw, 96px) 0; }
   }
   .shelf-caption { opacity: 1; transform: none; }
 }
+
+/* ---------- Archive: checkout note ---------- */
+.checkout-note {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.checkout-note-copy { max-width: 46ch; }
+.checkout-note-copy p:not(.eyebrow) { margin: 10px 0 0; font-size: 14.5px; color: #2c2b28; }
 
 /* ---------- Item detail page ---------- */
 body.item-page { position: relative; }
