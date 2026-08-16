@@ -1,2 +1,7 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Vendored AI-agent skill tooling (not project code) — exclude from GitHub
+# language stats.
+.claude/skills/** linguist-vendored
+.agents/skills/** linguist-vendored
