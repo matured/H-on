@@ -1,12 +1,18 @@
 # Graph Report - Claude code  (2026-08-16)
 
 ## Corpus Check
-- Corpus is ~24,770 words - fits in a single context window. You may not need a graph.
+- 28 files · ~24,892 words
+- Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
 - 216 nodes · 282 edges · 33 communities (20 shown, 13 thin omitted)
 - Extraction: 86% EXTRACTED · 14% INFERRED · 0% AMBIGUOUS · INFERRED: 40 edges (avg confidence: 0.57)
-- Token cost: 117,159 input · 0 output
+- Token cost: 0 input · 0 output
+
+## Graph Freshness
+- Built from commit: `bf4d782a`
+- Run `git rev-parse HEAD` and compare to check if the graph is stale.
+- Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - Core Site Pages
@@ -41,33 +47,33 @@
 1. `Membership Page` - 15 edges
 2. `Catalog / Archive Page` - 12 edges
 3. `honRenderCatalogSection()` - 10 edges
-4. `js/main.js` - 9 edges
-5. `Admin Page` - 9 edges
-6. `Home Page` - 9 edges
+4. `Admin Page` - 9 edges
+5. `Home Page` - 9 edges
+6. `js/main.js` - 9 edges
 7. `honGetCurrentUser()` - 8 edges
-8. `js/circulation.js` - 8 edges
-9. `css/style.css` - 8 edges
+8. `css/style.css` - 8 edges
+9. `js/circulation.js` - 8 edges
 10. `honRefreshMembershipView()` - 8 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `honRenderCatalogSection()` --calls--> `honFetchCatalog()`  [EXTRACTED]
-  admin.html → js/circulation.js
-- `honRenderLoansTable()` --calls--> `honEscape()`  [EXTRACTED]
-  admin.html → js/circulation.js
-- `honRenderMembersTable()` --calls--> `honEscape()`  [EXTRACTED]
-  admin.html → js/circulation.js
-- `Membership Page` --calls--> `honSignInWithEmail()`  [EXTRACTED]
-  membership.html → js/circulation.js
 - `Membership Page` --calls--> `honDeleteMyAccount()`  [EXTRACTED]
   membership.html → js/circulation.js
+- `Membership Page` --calls--> `honSignInWithEmail()`  [EXTRACTED]
+  membership.html → js/circulation.js
+- `Membership Page` --calls--> `honValidateCardCode()`  [EXTRACTED]
+  membership.html → js/circulation.js
+- `honRenderLoansTable()` --calls--> `honAdminForceReturn()`  [EXTRACTED]
+  admin.html → js/circulation.js
+- `honRenderAdmin()` --calls--> `honAdminIssueCard()`  [EXTRACTED]
+  admin.html → js/circulation.js
 
 ## Import Cycles
 - None detected.
 
 ## Hyperedges (group relationships)
-- **Shared Site Footer Navigation Component** — about_page, catalog_page, home_page, how_it_works_page, item_page, membership_page, support_page [EXTRACTED 0.95]
-- **Supabase-Backed Circulation Backend Build (T1-T16)** — project_notes_supabase, project_notes_supabase_migration, js_circulation_module, admin_page, membership_page [EXTRACTED 0.90]
 - **Admin Catalog Add/Edit CRUD Flow** — admin_honcatalogformtoitem, admin_honfillcatalogform, admin_honrendercatalogtable, admin_honrendercatalogsection, project_notes_catalog_metadata_migration [EXTRACTED 0.90]
+- **Supabase-Backed Circulation Backend Build (T1-T16)** — project_notes_supabase, project_notes_supabase_migration, js_circulation_module, admin_page, membership_page [EXTRACTED 0.90]
+- **Shared Site Footer Navigation Component** — about_page, catalog_page, home_page, how_it_works_page, item_page, membership_page, support_page [EXTRACTED 0.95]
 
 ## Communities (33 total, 13 thin omitted)
 
@@ -128,7 +134,7 @@ Cohesion: 0.50
 Nodes (4): Continuous Random Flicker Splash Animation, SQL-Based E2E Race-Condition Tests (T16), 本 (hon) Project, Supabase Backend
 
 ## Knowledge Gaps
-- **23 isolated node(s):** `honState`, `HON_COVER_EXTENSIONS`, `HON_ACTION_LOADING_LABEL`, `HON_NAV_LINKS`, `name` (+18 more)
+- **23 isolated node(s):** `HON_ACTION_LOADING_LABEL`, `HON_COVER_EXTENSIONS`, `honState`, `USER`, `description` (+18 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **13 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -139,7 +145,7 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.090) - this node is a cross-community bridge._
 - **Why does `honRefreshMembershipView()` connect `circulation.js API Surface` to `Membership Cards Dashboard`, `Core Site Pages`?**
   _High betweenness centrality (0.025) - this node is a cross-community bridge._
-- **What connects `honState`, `HON_COVER_EXTENSIONS`, `HON_ACTION_LOADING_LABEL` to the rest of the system?**
+- **What connects `HON_ACTION_LOADING_LABEL`, `HON_COVER_EXTENSIONS`, `honState` to the rest of the system?**
   _23 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Core Site Pages` be split into smaller, more focused modules?**
   _Cohesion score 0.1021021021021021 - nodes in this community are weakly interconnected._

@@ -453,7 +453,7 @@
       "label": "bindItemActions()",
       "file_type": "code",
       "source_file": "js/item.js",
-      "source_location": "L179",
+      "source_location": "L185",
       "_callable": true,
       "_origin": "ast",
       "id": "js_item_binditemactions",
@@ -465,7 +465,7 @@
       "label": "bindItemDots()",
       "file_type": "code",
       "source_file": "js/item.js",
-      "source_location": "L224",
+      "source_location": "L230",
       "_callable": true,
       "_origin": "ast",
       "id": "js_item_binditemdots",
@@ -513,7 +513,7 @@
       "label": "honFriendlyError()",
       "file_type": "code",
       "source_file": "js/item.js",
-      "source_location": "L214",
+      "source_location": "L220",
       "_callable": true,
       "_origin": "ast",
       "id": "js_item_honfriendlyerror",
@@ -564,10 +564,10 @@
       "source_location": "L83",
       "_callable": true,
       "_origin": "ast",
-      "id": "js_browse_honbuildfilters",
       "community": 8,
       "community_name": "Catalog Shelf Rendering",
-      "norm_label": "honbuildfilters()"
+      "norm_label": "honbuildfilters()",
+      "id": "js_browse_honbuildfilters"
     },
     {
       "label": "honCoverHTML()",
@@ -576,10 +576,10 @@
       "source_location": "L13",
       "_callable": true,
       "_origin": "ast",
-      "id": "js_browse_honcoverhtml",
       "community": 8,
       "community_name": "Catalog Shelf Rendering",
-      "norm_label": "honcoverhtml()"
+      "norm_label": "honcoverhtml()",
+      "id": "js_browse_honcoverhtml"
     },
     {
       "label": "honLayoutShelf()",
@@ -588,10 +588,10 @@
       "source_location": "L34",
       "_callable": true,
       "_origin": "ast",
-      "id": "js_browse_honlayoutshelf",
       "community": 8,
       "community_name": "Catalog Shelf Rendering",
-      "norm_label": "honlayoutshelf()"
+      "norm_label": "honlayoutshelf()",
+      "id": "js_browse_honlayoutshelf"
     },
     {
       "label": "honRenderShelf()",
@@ -600,10 +600,10 @@
       "source_location": "L113",
       "_callable": true,
       "_origin": "ast",
-      "id": "js_browse_honrendershelf",
       "community": 8,
       "community_name": "Catalog Shelf Rendering",
-      "norm_label": "honrendershelf()"
+      "norm_label": "honrendershelf()",
+      "id": "js_browse_honrendershelf"
     },
     {
       "label": "honSeeded()",
@@ -612,10 +612,10 @@
       "source_location": "L8",
       "_callable": true,
       "_origin": "ast",
-      "id": "js_browse_honseeded",
       "community": 8,
       "community_name": "Catalog Shelf Rendering",
-      "norm_label": "honseeded()"
+      "norm_label": "honseeded()",
+      "id": "js_browse_honseeded"
     },
     {
       "label": "honUpdateStats()",
@@ -624,10 +624,10 @@
       "source_location": "L103",
       "_callable": true,
       "_origin": "ast",
-      "id": "js_browse_honupdatestats",
       "community": 8,
       "community_name": "Catalog Shelf Rendering",
-      "norm_label": "honupdatestats()"
+      "norm_label": "honupdatestats()",
+      "id": "js_browse_honupdatestats"
     },
     {
       "label": "honCurrentPage()",
@@ -1485,7 +1485,7 @@
       "label": "HON_ACTION_LOADING_LABEL",
       "file_type": "code",
       "source_file": "js/item.js",
-      "source_location": "L172",
+      "source_location": "L178",
       "_origin": "ast",
       "id": "js_item_hon_action_loading_label",
       "community": 4,
@@ -1806,10 +1806,10 @@
       "source_file": "js/browse.js",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "js_browse",
       "community": 8,
       "community_name": "Catalog Shelf Rendering",
-      "norm_label": "browse.js"
+      "norm_label": "browse.js",
+      "id": "js_browse"
     },
     {
       "label": "main.js",
@@ -2728,9 +2728,9 @@
       "source_location": "L98",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "js_browse_honbuildfilters",
-      "target": "js_browse_honrendershelf",
-      "confidence_score": 1.0
+      "target": "js_browse_honrendershelf"
     },
     {
       "relation": "calls",
@@ -2740,9 +2740,9 @@
       "source_location": "L46",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "js_browse_honlayoutshelf",
-      "target": "js_browse_honseeded",
-      "confidence_score": 1.0
+      "target": "js_browse_honseeded"
     },
     {
       "relation": "calls",
@@ -2752,9 +2752,9 @@
       "source_location": "L66",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "js_browse_honlayoutshelf",
-      "target": "js_browse_honcoverhtml",
-      "confidence_score": 1.0
+      "target": "js_browse_honcoverhtml"
     },
     {
       "relation": "calls",
@@ -2764,9 +2764,9 @@
       "source_location": "L116",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "js_browse_honrendershelf",
-      "target": "js_browse_honlayoutshelf",
-      "confidence_score": 1.0
+      "target": "js_browse_honlayoutshelf"
     },
     {
       "relation": "calls",
@@ -2776,9 +2776,9 @@
       "source_location": "L117",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "js_browse_honrendershelf",
-      "target": "js_browse_honupdatestats",
-      "confidence_score": 1.0
+      "target": "js_browse_honupdatestats"
     },
     {
       "relation": "calls",
@@ -2929,7 +2929,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "js/item.js",
-      "source_location": "L193",
+      "source_location": "L199",
       "weight": 1.0,
       "_origin": "ast",
       "source": "js_item_binditemactions",
@@ -2941,7 +2941,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "js/item.js",
-      "source_location": "L195",
+      "source_location": "L201",
       "weight": 1.0,
       "_origin": "ast",
       "source": "js_item_binditemactions",
@@ -2953,7 +2953,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "js/item.js",
-      "source_location": "L204",
+      "source_location": "L210",
       "weight": 1.0,
       "_origin": "ast",
       "source": "js_item_binditemactions",
@@ -2965,7 +2965,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "js/item.js",
-      "source_location": "L231",
+      "source_location": "L237",
       "weight": 1.0,
       "_origin": "ast",
       "source": "js_item_binditemdots",
@@ -2977,7 +2977,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "js/item.js",
-      "source_location": "L126",
+      "source_location": "L132",
       "weight": 1.0,
       "_origin": "ast",
       "source": "js_item_honrenderitem",
@@ -2989,7 +2989,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "js/item.js",
-      "source_location": "L135",
+      "source_location": "L141",
       "weight": 1.0,
       "_origin": "ast",
       "source": "js_item_honrenderitem",
@@ -3001,7 +3001,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "js/item.js",
-      "source_location": "L151",
+      "source_location": "L157",
       "weight": 1.0,
       "_origin": "ast",
       "source": "js_item_honrenderitem",
@@ -3013,7 +3013,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "js/item.js",
-      "source_location": "L168",
+      "source_location": "L174",
       "weight": 1.0,
       "_origin": "ast",
       "source": "js_item_honrenderitem",
@@ -3025,7 +3025,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "js/item.js",
-      "source_location": "L169",
+      "source_location": "L175",
       "weight": 1.0,
       "_origin": "ast",
       "source": "js_item_honrenderitem",
@@ -3147,9 +3147,9 @@
       "source_location": "L103",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "js_browse",
-      "target": "js_browse_honupdatestats",
-      "confidence_score": 1.0
+      "target": "js_browse_honupdatestats"
     },
     {
       "relation": "contains",
@@ -3158,9 +3158,9 @@
       "source_location": "L113",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "js_browse",
-      "target": "js_browse_honrendershelf",
-      "confidence_score": 1.0
+      "target": "js_browse_honrendershelf"
     },
     {
       "relation": "contains",
@@ -3169,9 +3169,9 @@
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "js_browse",
-      "target": "js_browse_honcoverhtml",
-      "confidence_score": 1.0
+      "target": "js_browse_honcoverhtml"
     },
     {
       "relation": "contains",
@@ -3180,9 +3180,9 @@
       "source_location": "L34",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "js_browse",
-      "target": "js_browse_honlayoutshelf",
-      "confidence_score": 1.0
+      "target": "js_browse_honlayoutshelf"
     },
     {
       "relation": "contains",
@@ -3191,9 +3191,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "js_browse",
-      "target": "js_browse_honseeded",
-      "confidence_score": 1.0
+      "target": "js_browse_honseeded"
     },
     {
       "relation": "contains",
@@ -3202,9 +3202,9 @@
       "source_location": "L83",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "js_browse",
-      "target": "js_browse_honbuildfilters",
-      "confidence_score": 1.0
+      "target": "js_browse_honbuildfilters"
     },
     {
       "relation": "contains",
@@ -3265,7 +3265,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "js/item.js",
-      "source_location": "L172",
+      "source_location": "L178",
       "weight": 1.0,
       "_origin": "ast",
       "source": "js_item",
@@ -3276,7 +3276,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "js/item.js",
-      "source_location": "L179",
+      "source_location": "L185",
       "weight": 1.0,
       "_origin": "ast",
       "source": "js_item",
@@ -3287,7 +3287,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "js/item.js",
-      "source_location": "L214",
+      "source_location": "L220",
       "weight": 1.0,
       "_origin": "ast",
       "source": "js_item",
@@ -3298,7 +3298,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "js/item.js",
-      "source_location": "L224",
+      "source_location": "L230",
       "weight": 1.0,
       "_origin": "ast",
       "source": "js_item",
@@ -5939,5 +5939,5 @@
       "source_file": "PROJECT_NOTES.md"
     }
   ],
-  "built_at_commit": "bf4d782ae5a7e9918197c3f3c299763e3902c3c3"
+  "built_at_commit": "0a624e3a650580167c27cd8317a6e5e053add648"
 }
