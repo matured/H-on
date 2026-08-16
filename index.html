@@ -47,6 +47,17 @@ html, body {
 .tile.tile-dim span { color: #d8d4c8; }
 .tile:hover span { transform: scale(1.1); }
 
+#splash-grid:focus-visible {
+  outline: 2px solid #c8102e;
+  outline-offset: -4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile span { transition: none; }
+  .tile:hover span { transform: none; }
+  body.hon-leaving #splash-grid { transition: none; }
+}
+
 #hon-caption {
   position: fixed;
   bottom: 30px;
@@ -86,7 +97,7 @@ body.hon-leaving #splash-grid {
 </head>
 <body>
 
-<div id="splash-grid"></div>
+<div id="splash-grid" role="button" tabindex="0" aria-label="Enter site"></div>
 <p id="hon-caption">Click any 本 to enter</p>
 <a id="hon-skip" href="catalog.html">Skip &rarr;</a>
 
@@ -107,6 +118,7 @@ body.hon-leaving #splash-grid {
   for (let i = 0; i < total; i++) {
     const tile = document.createElement('div');
     tile.className = 'tile';
+    tile.setAttribute('aria-hidden', 'true'); // decorative — #splash-grid carries the one real action
     const glyph = document.createElement('span');
     glyph.textContent = '本';
     tile.appendChild(glyph);
@@ -115,9 +127,22 @@ body.hon-leaving #splash-grid {
     tiles.push(tile);
   }
 
+  // Every tile does the same thing (enter the site), so the grid itself is
+  // the one real control — a screen reader / keyboard user gets a single
+  // "Enter site" stop instead of tabbing through dozens of identical tiles.
+  grid.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      enterSite();
+    }
+  });
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   // Continuous random flicker — no ramp, no single winner.
   // Each cycle dims a handful of random tiles briefly, then schedules
   // the next cycle at a slightly randomized interval for an organic feel.
+  // Skipped entirely under prefers-reduced-motion (grid stays static).
   function flicker() {
     const burst = 2 + Math.floor(Math.random() * 4); // 2–5 tiles per cycle
     for (let i = 0; i < burst; i++) {
@@ -132,10 +157,10 @@ body.hon-leaving #splash-grid {
 
   function enterSite() {
     document.body.classList.add('hon-leaving');
-    setTimeout(() => { window.location.href = 'catalog.html'; }, 480);
+    setTimeout(() => { window.location.href = 'catalog.html'; }, prefersReducedMotion ? 0 : 480);
   }
 
-  flicker();
+  if (!prefersReducedMotion) flicker();
   setTimeout(() => caption.classList.add('show'), 900);
 })();
 </script>
