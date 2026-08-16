@@ -37,11 +37,11 @@
       <form id="signin-form" style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;">
         <div style="flex:1; min-width:220px;">
           <label for="signin-email" style="display:block; font-family:var(--mono); font-size:11px; letter-spacing:0.1em; font-weight:600; text-transform:uppercase; color:var(--grey); margin-bottom:6px;">Email</label>
-          <input id="signin-email" type="email" placeholder="you@example.com" required style="width:100%; font-family:var(--mono); font-size:14px; padding:12px 14px; border:1px solid var(--ink); background:var(--paper);">
+          <input id="signin-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required style="width:100%; font-family:var(--mono); font-size:14px; padding:12px 14px; border:1px solid var(--ink); background:var(--paper);">
         </div>
         <button type="submit" class="btn btn-solid" id="signin-submit">Send Link &rarr;</button>
       </form>
-      <p id="signin-status" style="margin-top:12px; font-size:14px;"></p>
+      <p id="signin-status" role="status" aria-live="polite" style="margin-top:12px; font-size:14px;"></p>
     </div>
   </section>
 
@@ -59,15 +59,15 @@
       <form id="redeem-form" style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;">
         <div style="flex:1; min-width:180px;">
           <label for="redeem-code" style="display:block; font-family:var(--mono); font-size:11px; letter-spacing:0.1em; font-weight:600; text-transform:uppercase; color:var(--grey); margin-bottom:6px;">Card Code</label>
-          <input id="redeem-code" type="text" placeholder="32-character code" required style="width:100%; font-family:var(--mono); font-size:14px; padding:12px 14px; border:1px solid var(--ink); background:var(--paper);">
+          <input id="redeem-code" name="redeem-code" type="text" autocomplete="off" spellcheck="false" placeholder="32-character code" required style="width:100%; font-family:var(--mono); font-size:14px; padding:12px 14px; border:1px solid var(--ink); background:var(--paper);">
         </div>
         <div style="flex:1; min-width:220px;">
           <label for="redeem-email" style="display:block; font-family:var(--mono); font-size:11px; letter-spacing:0.1em; font-weight:600; text-transform:uppercase; color:var(--grey); margin-bottom:6px;">Email</label>
-          <input id="redeem-email" type="email" placeholder="you@example.com" required style="width:100%; font-family:var(--mono); font-size:14px; padding:12px 14px; border:1px solid var(--ink); background:var(--paper);">
+          <input id="redeem-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required style="width:100%; font-family:var(--mono); font-size:14px; padding:12px 14px; border:1px solid var(--ink); background:var(--paper);">
         </div>
         <button type="submit" class="btn btn-solid" id="redeem-submit">Redeem &rarr;</button>
       </form>
-      <p id="redeem-status" style="margin-top:12px; font-size:14px;"></p>
+      <p id="redeem-status" role="status" aria-live="polite" style="margin-top:12px; font-size:14px;"></p>
     </div>
   </section>
 
@@ -99,7 +99,7 @@
         <div id="cards-list" style="display:grid; grid-template-columns: repeat(1, 1fr); gap:10px;">
           <p style="font-size:14px; color:var(--grey);">Loading&hellip;</p>
         </div>
-        <p id="cards-caption" style="font-size:12.5px; color:var(--grey); margin-top:12px;"></p>
+        <p id="cards-caption" role="status" aria-live="polite" style="font-size:12.5px; color:var(--grey); margin-top:12px;"></p>
       </div>
     </div>
   </section>
@@ -129,7 +129,7 @@
             <button type="button" class="btn btn-red" id="delete-confirm-btn" disabled style="opacity:0.4;">Permanently Delete</button>
             <button type="button" class="btn" id="delete-cancel-btn">Cancel</button>
           </div>
-          <p id="delete-status" style="margin-top:12px; font-size:14px;"></p>
+          <p id="delete-status" role="status" aria-live="polite" style="margin-top:12px; font-size:14px;"></p>
         </div>
       </div>
     </div>
@@ -169,11 +169,11 @@
       <form onsubmit="event.preventDefault(); document.getElementById('form-confirm').style.display='block'; this.style.opacity='0.5'; this.querySelectorAll('input,button,textarea').forEach(el=>el.disabled=true);" style="margin-top:26px; display:flex; flex-direction:column; gap:14px;">
         <div>
           <label for="waitlist-name" style="display:block; font-family:var(--mono); font-size:11px; letter-spacing:0.1em; font-weight:600; text-transform:uppercase; color:var(--grey); margin-bottom:6px;">Name</label>
-          <input id="waitlist-name" type="text" placeholder="Name" required style="width:100%; font-family:var(--mono); font-size:14px; padding:12px 14px; border:1px solid var(--ink); background:var(--paper);">
+          <input id="waitlist-name" name="name" type="text" autocomplete="name" placeholder="Name" required style="width:100%; font-family:var(--mono); font-size:14px; padding:12px 14px; border:1px solid var(--ink); background:var(--paper);">
         </div>
         <div>
           <label for="waitlist-email" style="display:block; font-family:var(--mono); font-size:11px; letter-spacing:0.1em; font-weight:600; text-transform:uppercase; color:var(--grey); margin-bottom:6px;">Email</label>
-          <input id="waitlist-email" type="email" placeholder="Email" required style="width:100%; font-family:var(--mono); font-size:14px; padding:12px 14px; border:1px solid var(--ink); background:var(--paper);">
+          <input id="waitlist-email" name="email" type="email" autocomplete="email" placeholder="Email" required style="width:100%; font-family:var(--mono); font-size:14px; padding:12px 14px; border:1px solid var(--ink); background:var(--paper);">
         </div>
         <div>
           <label for="waitlist-note" style="display:block; font-family:var(--mono); font-size:11px; letter-spacing:0.1em; font-weight:600; text-transform:uppercase; color:var(--grey); margin-bottom:6px;">What draws you to this specific era of print media?</label>
@@ -181,7 +181,7 @@
         </div>
         <button type="submit" class="btn btn-solid" style="align-self:flex-start;">Join the Waitlist &rarr;</button>
       </form>
-      <p id="form-confirm" style="display:none; margin-top:16px; font-family:var(--mono); font-size:13px; color:#1c6b3f;">✓ Request received. This is a demo form for presentation purposes.</p>
+      <p id="form-confirm" role="status" aria-live="polite" style="display:none; margin-top:16px; font-family:var(--mono); font-size:13px; color:#1c6b3f;">✓ Request received. This is a demo form for presentation purposes.</p>
     </div>
   </section>
 

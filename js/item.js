@@ -55,7 +55,7 @@ function honCoverInnerHTML(item, view) {
     const src = view === 'detail' ? (item.backImage || item.coverImage) : item.coverImage;
     const label = view === 'detail' ? 'Back cover' : `${title} ${issue}`;
     return `
-      <img src="${honEscape(src)}" alt="${view === 'detail' ? 'Back cover of' : 'Front cover of'} ${title} ${issue}" loading="lazy">
+      <img src="${honEscape(src)}" alt="${view === 'detail' ? 'Back cover of' : 'Front cover of'} ${title} ${issue}">
       <span class="mono-tag item-cover-photo-tag" style="background:${accent}; color:${fg};">${label}</span>
     `;
   }
@@ -151,8 +151,8 @@ async function honRenderItem() {
         <div class="item-spec-list" id="item-spec-list">${honSpecRows(item)}</div>
 
         <button class="item-cta" id="item-cta-btn" data-action="${cta.action}">${cta.label} &rarr;</button>
-        <div class="mono-tag" id="item-action-error" style="color:var(--red); margin-top:10px; display:none;"></div>
-        <div class="mono-tag" id="item-meta" style="color:var(--grey); margin-top:14px;">${status.metaText}</div>
+        <div class="mono-tag" id="item-action-error" role="alert" aria-live="polite" style="color:var(--red); margin-top:10px; display:none;"></div>
+        <div class="mono-tag" id="item-meta" role="status" aria-live="polite" style="color:var(--grey); margin-top:14px;">${status.metaText}</div>
 
         <details class="item-disclosure">
           <summary>How Checkout Works</summary>

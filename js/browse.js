@@ -85,12 +85,16 @@ function honBuildFilters() {
   if (!bar) return;
   const genres = ['all', ...new Set(HON_CATALOG.map(i => i.genre))];
   bar.innerHTML = genres.map(g =>
-    `<button class="filter-chip ${g === 'all' ? 'active' : ''}" data-genre="${honEscape(g)}">${g === 'all' ? 'All Titles' : honEscape(g)}</button>`
+    `<button class="filter-chip ${g === 'all' ? 'active' : ''}" aria-pressed="${g === 'all'}" data-genre="${honEscape(g)}">${g === 'all' ? 'All Titles' : honEscape(g)}</button>`
   ).join('');
   bar.querySelectorAll('.filter-chip').forEach(chip => {
     chip.addEventListener('click', () => {
-      bar.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      bar.querySelectorAll('.filter-chip').forEach(c => {
+        c.classList.remove('active');
+        c.setAttribute('aria-pressed', 'false');
+      });
       chip.classList.add('active');
+      chip.setAttribute('aria-pressed', 'true');
       honRenderShelf(chip.dataset.genre);
     });
   });

@@ -88,7 +88,7 @@ async function honRenderAdmin() {
       <h2 style="font-size: clamp(20px, 2.6vw, 24px); margin-top:12px;">Mint an extra invite.</h2>
       <p style="margin-top:10px; font-size:14.5px; color:#2c2b28;">Attributed to your own account — it'll also show up on your card dashboard on the Membership page.</p>
       <button class="btn btn-solid" id="issue-card-btn" style="margin-top:16px;">Issue Card &rarr;</button>
-      <p id="issue-card-status" style="margin-top:10px; font-size:14px;"></p>
+      <p id="issue-card-status" role="status" aria-live="polite" style="margin-top:10px; font-size:14px;"></p>
     </div>
 
     <div style="margin-bottom:48px;">
@@ -109,24 +109,24 @@ async function honRenderAdmin() {
         <div class="hon-form-group">
           <div class="hon-form-group-label">Details</div>
           <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:14px;">
-            <div><label style="${HON_LABEL_STYLE}">Item ID (slug)</label><input id="cf-id" style="${HON_INPUT_STYLE}"></div>
-            <div><label style="${HON_LABEL_STYLE}">Title</label><input id="cf-title" style="${HON_INPUT_STYLE}"></div>
-            <div><label style="${HON_LABEL_STYLE}">Subtitle</label><input id="cf-subtitle" style="${HON_INPUT_STYLE}"></div>
-            <div><label style="${HON_LABEL_STYLE}">Issue</label><input id="cf-issue" style="${HON_INPUT_STYLE}"></div>
-            <div><label style="${HON_LABEL_STYLE}">Era (year)</label><input id="cf-era" style="${HON_INPUT_STYLE}"></div>
-            <div><label style="${HON_LABEL_STYLE}">Genre</label><input id="cf-genre" style="${HON_INPUT_STYLE}"></div>
-            <div><label style="${HON_LABEL_STYLE}">Call Number</label><input id="cf-call" style="${HON_INPUT_STYLE}"></div>
-            <div><label style="${HON_LABEL_STYLE}">Copies</label><input id="cf-copies" type="number" min="1" value="1" style="${HON_INPUT_STYLE}"></div>
+            <div><label for="cf-id" style="${HON_LABEL_STYLE}">Item ID (slug)</label><input id="cf-id" name="cf-id" autocomplete="off" style="${HON_INPUT_STYLE}"></div>
+            <div><label for="cf-title" style="${HON_LABEL_STYLE}">Title</label><input id="cf-title" name="cf-title" autocomplete="off" style="${HON_INPUT_STYLE}"></div>
+            <div><label for="cf-subtitle" style="${HON_LABEL_STYLE}">Subtitle</label><input id="cf-subtitle" name="cf-subtitle" autocomplete="off" style="${HON_INPUT_STYLE}"></div>
+            <div><label for="cf-issue" style="${HON_LABEL_STYLE}">Issue</label><input id="cf-issue" name="cf-issue" autocomplete="off" style="${HON_INPUT_STYLE}"></div>
+            <div><label for="cf-era" style="${HON_LABEL_STYLE}">Era (year)</label><input id="cf-era" name="cf-era" autocomplete="off" style="${HON_INPUT_STYLE}"></div>
+            <div><label for="cf-genre" style="${HON_LABEL_STYLE}">Genre</label><input id="cf-genre" name="cf-genre" autocomplete="off" style="${HON_INPUT_STYLE}"></div>
+            <div><label for="cf-call" style="${HON_LABEL_STYLE}">Call Number</label><input id="cf-call" name="cf-call" autocomplete="off" style="${HON_INPUT_STYLE}"></div>
+            <div><label for="cf-copies" style="${HON_LABEL_STYLE}">Copies</label><input id="cf-copies" name="cf-copies" autocomplete="off" type="number" min="1" value="1" style="${HON_INPUT_STYLE}"></div>
           </div>
-          <div style="margin-top:14px;"><label style="${HON_LABEL_STYLE}">Description</label><textarea id="cf-desc" rows="3" style="width:100%; font-family:var(--serif); font-size:14px; padding:10px 12px; border:1px solid var(--ink); background:var(--paper); resize:vertical;"></textarea></div>
+          <div style="margin-top:14px;"><label for="cf-desc" style="${HON_LABEL_STYLE}">Description</label><textarea id="cf-desc" name="cf-desc" autocomplete="off" rows="3" style="width:100%; font-family:var(--serif); font-size:14px; padding:10px 12px; border:1px solid var(--ink); background:var(--paper); resize:vertical;"></textarea></div>
         </div>
 
         <div class="hon-form-group">
           <div class="hon-form-group-label">Cover Style</div>
           <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap:14px;">
-            <div><label style="${HON_LABEL_STYLE}">Cover BG (hex)</label><div class="hon-swatch-field"><div class="hon-swatch" id="cf-coverbg-swatch"></div><input id="cf-coverbg" style="${HON_INPUT_STYLE}"></div></div>
-            <div><label style="${HON_LABEL_STYLE}">Cover FG (hex)</label><div class="hon-swatch-field"><div class="hon-swatch" id="cf-coverfg-swatch"></div><input id="cf-coverfg" style="${HON_INPUT_STYLE}"></div></div>
-            <div><label style="${HON_LABEL_STYLE}">Cover Accent (hex)</label><div class="hon-swatch-field"><div class="hon-swatch" id="cf-coveraccent-swatch"></div><input id="cf-coveraccent" style="${HON_INPUT_STYLE}"></div></div>
+            <div><label for="cf-coverbg" style="${HON_LABEL_STYLE}">Cover BG (hex)</label><div class="hon-swatch-field"><div class="hon-swatch" id="cf-coverbg-swatch"></div><input id="cf-coverbg" name="cf-coverbg" autocomplete="off" style="${HON_INPUT_STYLE}"></div></div>
+            <div><label for="cf-coverfg" style="${HON_LABEL_STYLE}">Cover FG (hex)</label><div class="hon-swatch-field"><div class="hon-swatch" id="cf-coverfg-swatch"></div><input id="cf-coverfg" name="cf-coverfg" autocomplete="off" style="${HON_INPUT_STYLE}"></div></div>
+            <div><label for="cf-coveraccent" style="${HON_LABEL_STYLE}">Cover Accent (hex)</label><div class="hon-swatch-field"><div class="hon-swatch" id="cf-coveraccent-swatch"></div><input id="cf-coveraccent" name="cf-coveraccent" autocomplete="off" style="${HON_INPUT_STYLE}"></div></div>
           </div>
         </div>
 
@@ -134,12 +134,12 @@ async function honRenderAdmin() {
           <div class="hon-form-group-label">Images</div>
           <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:14px;">
             <div>
-              <label style="${HON_LABEL_STYLE}">Cover Image (front)</label>
+              <label for="cf-coverimage-file" style="${HON_LABEL_STYLE}">Cover Image (front)</label>
               <input type="file" accept="image/*" id="cf-coverimage-file" class="hon-file-input">
               <div id="cf-coverimage-preview" class="hon-image-frame">No Image</div>
             </div>
             <div>
-              <label style="${HON_LABEL_STYLE}">Back Image</label>
+              <label for="cf-backimage-file" style="${HON_LABEL_STYLE}">Back Image</label>
               <input type="file" accept="image/*" id="cf-backimage-file" class="hon-file-input">
               <div id="cf-backimage-preview" class="hon-image-frame">No Image</div>
             </div>
@@ -149,7 +149,7 @@ async function honRenderAdmin() {
       <div style="margin-top:14px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
         <button class="btn btn-solid" id="catalog-save-btn">Save Title &rarr;</button>
         <button class="btn" id="catalog-clear-btn" type="button">New / Clear</button>
-        <p id="catalog-form-status" style="font-size:14px; margin:0;"></p>
+        <p id="catalog-form-status" role="status" aria-live="polite" style="font-size:14px; margin:0;"></p>
       </div>
       <div id="catalog-table-wrap" style="margin-top:28px; overflow-x:auto;">Loading&hellip;</div>
     </div>
@@ -199,7 +199,8 @@ function honCatalogFormToItem() {
 
 function honRenderImagePreview(previewId, url) {
   const el = document.getElementById(previewId);
-  el.innerHTML = url ? `<img src="${url}" alt="">` : 'No Image';
+  const alt = previewId.includes('back') ? 'Back cover preview' : 'Front cover preview';
+  el.innerHTML = url ? `<img src="${url}" alt="${alt}">` : 'No Image';
 }
 
 // Hex swatch fields (Cover BG/FG/Accent) — the swatch is decorative feedback
@@ -255,12 +256,12 @@ async function honHandleCoverFileChange(side, storageSlot, fileInputId, previewI
   if (!file) return;
   const itemId = document.getElementById('cf-id').value.trim();
   if (!itemId) {
-    alert('Enter the Item ID first, then choose an image.');
+    document.getElementById(previewId).textContent = 'Enter the Item ID first, then choose an image.';
     fileInput.value = '';
     return;
   }
   if (!HON_ITEM_ID_PATTERN.test(itemId)) {
-    alert('Item ID can only use lowercase letters, numbers, and hyphens (e.g. burst-vol15).');
+    document.getElementById(previewId).textContent = 'Item ID can only use lowercase letters, numbers, and hyphens (e.g. burst-vol15).';
     fileInput.value = '';
     return;
   }
@@ -412,9 +413,9 @@ async function honRenderLoansTable() {
         await honAdminForceReturn(btn.dataset.loanId);
         await honRenderLoansTable();
       } catch (err) {
-        alert(`Couldn't force-return: ${err.message || err}`);
         btn.disabled = false;
-        btn.textContent = 'Force Return';
+        btn.textContent = 'Failed — retry?';
+        btn.title = err.message || String(err);
       }
     });
   });
@@ -460,9 +461,9 @@ async function honRenderMembersTable() {
         await honAdminSetBanned(btn.dataset.userId, nextBanned);
         await honRenderMembersTable();
       } catch (err) {
-        alert(`Couldn't update that member: ${err.message || err}`);
         btn.disabled = false;
-        btn.textContent = nextBanned ? 'Ban' : 'Unban';
+        btn.textContent = 'Failed — retry?';
+        btn.title = err.message || String(err);
       }
     });
   });
