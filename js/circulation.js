@@ -16,13 +16,10 @@ let honState = {};
 // every page that reads HON_CATALOG must await it first.
 let HON_CATALOG = [];
 
-async function honFetchCatalog() {
-  const { data, error } = await honSupabase
-    .from('items')
-    .select('item_id, title, subtitle, issue, era, genre, call_number, copies_total, cover_bg, cover_fg, cover_accent, cover_image, back_image, description')
-    .order('item_id', { ascending: true });
-  if (error) throw error;
-  HON_CATALOG = (data || []).map(row => ({
+const HON_ITEM_COLUMNS = 'item_id, title, subtitle, issue, era, genre, call_number, copies_total, cover_bg, cover_fg, cover_accent, cover_image, back_image, description';
+
+function honMapItemRow(row) {
+  return {
     id: row.item_id,
     title: row.title,
     subtitle: row.subtitle || undefined,
@@ -37,8 +34,32 @@ async function honFetchCatalog() {
     coverImage: row.cover_image || undefined,
     backImage: row.back_image || undefined,
     desc: row.description,
-  }));
+  };
+}
+
+async function honFetchCatalog() {
+  const { data, error } = await honSupabase
+    .from('items')
+    .select(HON_ITEM_COLUMNS)
+    .order('item_id', { ascending: true });
+  if (error) throw error;
+  HON_CATALOG = (data || []).map(honMapItemRow);
   return HON_CATALOG;
+}
+
+// item.html only ever needs the one title it's displaying — pulling the
+// whole catalog there (as honFetchCatalog does, correctly, for the
+// browse/shelf page) means downloading every other item's metadata just
+// to throw it away, and that cost grows with the catalog size instead of
+// staying flat per item view.
+async function honFetchOneItem(itemId) {
+  const { data, error } = await honSupabase
+    .from('items')
+    .select(HON_ITEM_COLUMNS)
+    .eq('item_id', itemId)
+    .maybeSingle();
+  if (error) throw error;
+  return data ? honMapItemRow(data) : null;
 }
 
 // Every field interpolated into innerHTML below is admin-writable (catalog
@@ -210,14 +231,28 @@ async function honAdminUpsertItem(item) {
   return data;
 }
 
+// Extensions the covers bucket accepts (kept in sync with the
+// allowed_mime_types set in the cover_upload_hardening migration).
+const HON_COVER_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+
 // Uploads a cover/back image to the 'covers' Storage bucket at a
-// deterministic path ({item_id}/{side}.{ext}) — re-uploading for the same
-// item and side just replaces the file (upsert: true) instead of
-// accumulating orphaned files. Returns the public URL to feed into
-// honAdminUpsertItem's p_cover_image/p_back_image.
+// deterministic path ({item_id}/{side}.{ext}). upsert:true replaces the
+// file in place when a re-upload keeps the same extension — but if the
+// extension changes (a .jpg swapped for a .png, say), that's a different
+// path, and the old file would otherwise sit in Storage forever with
+// nothing left pointing at it. Clearing every other known extension for
+// this item+side first guarantees at most one file per side, regardless
+// of how many times its type changes. Best-effort: a failed cleanup
+// shouldn't block the actual upload the admin is waiting on.
 async function honUploadCoverImage(itemId, side, file) {
   const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
   const path = `${itemId}/${side}.${ext}`;
+  const stalePaths = HON_COVER_EXTENSIONS.filter(e => e !== ext).map(e => `${itemId}/${side}.${e}`);
+  try {
+    await honSupabase.storage.from('covers').remove(stalePaths);
+  } catch (err) {
+    console.error('Failed to clean up stale cover file(s):', err);
+  }
   const { error } = await honSupabase.storage.from('covers').upload(path, file, { upsert: true, contentType: file.type });
   if (error) throw error;
   const { data } = honSupabase.storage.from('covers').getPublicUrl(path);
@@ -471,7 +506,7 @@ function honStatusInfo(item) {
 // replaces it.
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
-    honFetchCatalog, honFormatDate, honEscape, honGetCurrentUser, honSignInWithEmail,
+    honFetchCatalog, honFetchOneItem, honFormatDate, honEscape, honGetCurrentUser, honSignInWithEmail,
     honDeleteMyAccount,
     honFetchMyCards, honValidateCardCode, honRedeemCard,
     honStashPendingCardCode, honTakePendingCardCode,

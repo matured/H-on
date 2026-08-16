@@ -5,10 +5,9 @@
    and a repeating kanji wallpaper behind the layout.
    ============================================ */
 
-function honGetItemFromURL() {
+function honGetItemIdFromURL() {
   const params = new URLSearchParams(window.location.search);
-  const id = params.get('id');
-  return HON_CATALOG.find(i => i.id === id) || null;
+  return params.get('id');
 }
 
 function honBuildBackgroundPattern() {
@@ -82,8 +81,23 @@ function honCoverInnerHTML(item, view) {
 }
 
 async function honRenderItem() {
-  const item = honGetItemFromURL();
+  const itemId = honGetItemIdFromURL();
   const root = document.getElementById('item-root');
+  root.innerHTML = `<p class="eyebrow">LOADING…</p>`;
+
+  let item;
+  try {
+    item = itemId ? await honFetchOneItem(itemId) : null;
+  } catch (err) {
+    root.innerHTML = `
+      <p class="eyebrow">SOMETHING WENT WRONG</p>
+      <h1 style="font-size: clamp(26px,4vw,40px); margin-top:14px;">Couldn't load this item.</h1>
+      <p class="serif-lede" style="margin-top:14px;">${honEscape(err.message || err)}</p>
+      <a href="catalog.html" class="btn" style="margin-top:22px; display:inline-flex;">Back to the Shelf &rarr;</a>
+    `;
+    document.title = 'Error · 本 (hon)';
+    return;
+  }
 
   if (!item) {
     root.innerHTML = `
@@ -95,7 +109,6 @@ async function honRenderItem() {
     return;
   }
 
-  root.innerHTML = `<p class="eyebrow">LOADING…</p>`;
   try {
     await honFetchStatus(item.id);
   } catch (err) {
@@ -225,19 +238,6 @@ function bindItemDots(item) {
 
 document.addEventListener('DOMContentLoaded', async () => {
   honBuildBackgroundPattern();
-  document.getElementById('item-root').innerHTML = `<p class="eyebrow">LOADING…</p>`;
-  try {
-    await honFetchCatalog();
-  } catch (err) {
-    document.getElementById('item-root').innerHTML = `
-      <p class="eyebrow">SOMETHING WENT WRONG</p>
-      <h1 style="font-size: clamp(26px,4vw,40px); margin-top:14px;">Couldn't load the catalog.</h1>
-      <p class="serif-lede" style="margin-top:14px;">${honEscape(err.message || err)}</p>
-      <a href="catalog.html" class="btn" style="margin-top:22px; display:inline-flex;">Back to the Shelf &rarr;</a>
-    `;
-    document.title = 'Error · 本 (hon)';
-    return;
-  }
   await honRenderItem();
   let resizeTimer;
   window.addEventListener('resize', () => {
