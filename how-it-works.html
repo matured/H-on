@@ -10,13 +10,11 @@
 
 <main>
 
-  <section style="padding-bottom: 20px; padding-top: clamp(64px, 9vw, 108px);">
+  <section class="page-intro">
     <div class="wrap">
       <p class="eyebrow">HOW IT WORKS</p>
-      <h1 style="font-size: clamp(36px, 6vw, 68px); margin-top:16px; max-width: 20ch;">
-        One copy. One reader. A line, if you need one.
-      </h1>
-      <p class="serif-lede" style="max-width: 56ch; margin-top:22px;">
+      <h1>One copy. One reader. A line, if you need one.</h1>
+      <p class="serif-lede">
         本 borrows its entire circulation logic from a physical library,
         because that model already solved the problem we care about: giving
         people access without giving everyone the same thing at once.
@@ -31,30 +29,30 @@
     <div class="wrap">
       <p class="eyebrow" style="margin-bottom:36px;">THE CIRCULATION CYCLE</p>
 
-      <div class="grid-cols-4" style="border-top:2px solid var(--ink);">
+      <div class="grid-cols-4 divided-grid hiw-steps">
 
-        <div style="padding:26px 26px 26px 0; border-right:1px solid var(--line);">
-          <span class="mono-tag" style="color:var(--red); font-size:26px; font-weight:600;">1·4</span>
-          <h3 style="font-size:20px; text-transform:none; margin:16px 0 10px;">Find it on the shelf</h3>
-          <p style="font-size:14.5px; margin:0; color:#2c2b28;">Browse by genre and era. Every title shows its status plainly: on the shelf, checked out, or how many people are waiting.</p>
+        <div>
+          <span class="mono-tag">1·4</span>
+          <h2>Find it on the shelf</h2>
+          <p>Browse by genre and era. Every title shows its status plainly: on the shelf, checked out, or how many people are waiting.</p>
         </div>
 
-        <div style="padding:26px; border-right:1px solid var(--line);">
-          <span class="mono-tag" style="color:var(--red); font-size:26px; font-weight:600;">2·4</span>
-          <h3 style="font-size:20px; text-transform:none; margin:16px 0 10px;">Check it out</h3>
-          <p style="font-size:14.5px; margin:0; color:#2c2b28;">One tap reserves the only copy to you for 14 days. It disappears from the shelf for every other member the moment you do.</p>
+        <div>
+          <span class="mono-tag">2·4</span>
+          <h2>Check it out</h2>
+          <p>One tap reserves the only copy to you for 14 days. It disappears from the shelf for every other member the moment you do.</p>
         </div>
 
-        <div style="padding:26px; border-right:1px solid var(--line);">
-          <span class="mono-tag" style="color:var(--red); font-size:26px; font-weight:600;">3·4</span>
-          <h3 style="font-size:20px; text-transform:none; margin:16px 0 10px;">Read at your pace</h3>
-          <p style="font-size:14.5px; margin:0; color:#2c2b28;">Full pages, cover to cover, in our reader. No related content, no autoplay into something else.</p>
+        <div>
+          <span class="mono-tag">3·4</span>
+          <h2>Read at your pace</h2>
+          <p>Full pages, cover to cover, in our reader. No related content, no autoplay into something else.</p>
         </div>
 
-        <div style="padding:26px 0 26px 26px;">
-          <span class="mono-tag" style="color:var(--red); font-size:26px; font-weight:600;">4·4</span>
-          <h3 style="font-size:20px; text-transform:none; margin:16px 0 10px;">Return it</h3>
-          <p style="font-size:14.5px; margin:0; color:#2c2b28;">The copy releases back to the shelf, or straight to the next person in line if one has formed.</p>
+        <div>
+          <span class="mono-tag">4·4</span>
+          <h2>Return it</h2>
+          <p>The copy releases back to the shelf, or straight to the next person in line if one has formed.</p>
         </div>
 
       </div>
@@ -65,11 +63,11 @@
 
   <!-- QUEUE MECHANIC -->
   <section>
-    <div class="wrap" style="display:grid; grid-template-columns: 1fr 1fr; gap:56px;">
-      <div>
+    <div class="wrap queue-mechanic">
+      <div class="queue-mechanic-copy">
         <p class="eyebrow">WHEN SOMETHING'S TAKEN</p>
         <h2 style="font-size: clamp(28px, 3.6vw, 40px); margin-top:14px;">You wait. That's the point.</h2>
-        <p style="margin-top:18px; color:#2c2b28;">
+        <p>
           If a title is already checked out, you can join the queue instead of
           being shown something else. You'll see exactly how many people are
           ahead of you and when the current reader's copy is due back.
@@ -77,15 +75,15 @@
           in line. First come, first served, visible to everyone.
         </p>
       </div>
-      <div style="display:flex; flex-direction:column; gap:14px; justify-content:center;">
-        <div style="border:1px solid var(--line-strong); padding:18px; display:flex; justify-content:space-between; align-items:center;">
+      <div class="queue-mechanic-cards" aria-hidden="true">
+        <div class="queue-mechanic-row">
           <span class="mono-tag">BURST · Vol.17</span>
           <span class="stamp stamp-checked">CHECKED OUT</span>
         </div>
-        <div style="border:1px solid var(--line-strong); padding:18px; display:flex; justify-content:space-between; align-items:center;">
+        <div class="queue-mechanic-row">
           <span class="mono-tag">Due back in 6 days · 2 readers waiting</span>
         </div>
-        <div style="border:1px dashed var(--grey-light); padding:18px; display:flex; justify-content:space-between; align-items:center;">
+        <div class="queue-mechanic-row is-open">
           <span class="mono-tag" style="color:var(--grey);">You'd be #3 in line</span>
           <span class="mono-tag" style="color:var(--red);">JOIN QUEUE &rarr;</span>
         </div>
@@ -97,10 +95,10 @@
 
   <!-- LENDING MODEL / RATIONALE -->
   <section>
-    <div class="wrap" style="max-width: 74ch;">
+    <div class="wrap lending-model">
       <p class="eyebrow">WHY IT WORKS THIS WAY</p>
       <h2 style="font-size: clamp(26px, 3.4vw, 36px); margin-top:14px;">Controlled digital lending, not distribution.</h2>
-      <p style="margin-top:18px; color:#2c2b28;">
+      <p>
         本 is built around a practice called <strong>controlled digital
         lending</strong>: the idea that a library can lend a digital scan of
         a physical item it owns, as long as it enforces the same limits a
@@ -109,7 +107,7 @@
         it. It's the same logic your local library uses for its physical
         stacks, applied to a scanned page instead of a printed one.
       </p>
-      <p style="margin-top:14px; color:#2c2b28;">
+      <p>
         It's worth saying plainly: this model is <strong>legally contested in
         the United States</strong>, and courts have not settled it the same
         way for every kind of institution. We're not presenting this as

@@ -788,6 +788,7 @@ body.item-page { position: relative; }
   font-size: clamp(36px, 6vw, 68px);
   margin-top: 16px;
   max-width: 20ch;
+  text-wrap: balance;
 }
 .page-intro .serif-lede {
   max-width: 56ch;
@@ -834,6 +835,8 @@ body.item-page { position: relative; }
 }
 
 /* ---------- Support page ---------- */
+.eyebrow-section { margin-bottom: 30px; }
+
 .support-demo-note {
   display: inline-block;
   color: var(--grey);
@@ -1012,32 +1015,91 @@ body.item-page { position: relative; }
   text-wrap: balance;
 }
 
-.wont-do-grid {
+/* Structural mixin for a grid-cols-3/grid-cols-4 row divided into bordered
+   columns (About's "what we won't do", How It Works' circulation steps).
+   Typography stays per-page since sizes differ. */
+.divided-grid {
   gap: 0;
   border-top: 2px solid var(--ink);
 }
-.wont-do-grid > div { padding: 26px; }
-.wont-do-grid > div:first-child { padding-left: 0; }
-.wont-do-grid > div:last-child { padding-right: 0; }
-.wont-do-grid > div:not(:last-child) { border-right: 1px solid var(--line); }
-.wont-do-grid h3 {
-  font-size: 19px;
-  text-transform: none;
-  margin: 0 0 10px;
-}
-.wont-do-grid p {
-  font-size: 14.5px;
-  margin: 0;
-  color: #2c2b28;
-}
+.divided-grid > div { padding: 26px; }
+.divided-grid > div:first-child { padding-left: 0; }
+.divided-grid > div:last-child { padding-right: 0; }
+.divided-grid > div:not(:last-child) { border-right: 1px solid var(--line); }
 @media (max-width: 640px) {
-  .wont-do-grid > div {
+  .divided-grid > div {
     padding: 24px 0 !important;
     border-right: none !important;
     border-bottom: 1px solid var(--line);
   }
-  .wont-do-grid > div:last-child { border-bottom: none; }
+  .divided-grid > div:last-child { border-bottom: none; }
 }
+
+.about-wont-do h3 {
+  font-size: 19px;
+  text-transform: none;
+  margin: 0 0 10px;
+}
+.about-wont-do p {
+  font-size: 14.5px;
+  margin: 0;
+  color: #2c2b28;
+}
+
+/* ---------- How It Works page ---------- */
+.hiw-steps .mono-tag {
+  color: var(--red);
+  font-size: 26px;
+  font-weight: 600;
+}
+.hiw-steps h2 {
+  font-size: 20px;
+  text-transform: none;
+  margin: 16px 0 10px;
+}
+.hiw-steps p {
+  font-size: 14.5px;
+  margin: 0;
+  color: #2c2b28;
+}
+
+.queue-mechanic {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+}
+@media (max-width: 720px) {
+  .queue-mechanic { grid-template-columns: 1fr; gap: 32px; }
+}
+.queue-mechanic-copy p {
+  margin-top: 18px;
+  color: #2c2b28;
+}
+.queue-mechanic-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  justify-content: center;
+}
+.queue-mechanic-row {
+  border: 1px solid var(--line-strong);
+  padding: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.queue-mechanic-row.is-open {
+  border: 1px dashed var(--grey-light);
+}
+
+.lending-model {
+  max-width: 74ch;
+}
+.lending-model p {
+  margin-top: 18px;
+  color: #2c2b28;
+}
+.lending-model p + p { margin-top: 14px; }
 
 /* ---------- Utility ---------- */
 .tac { text-align: center; }
