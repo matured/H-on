@@ -1,0 +1,13 @@
+# Vendored AI-agent skill tooling — not project code.
+.claude/skills/**
+.agents/**
+.gstack/**
+
+# Cover-art assets — not architecturally relevant to the codebase graph.
+images/**
+
+# Harness-local config, not project code.
+.claude/launch.json
+.claude/settings.json
+.claude/settings.local.json
+skills-lock.json
