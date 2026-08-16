@@ -808,12 +808,12 @@ body.item-page { position: relative; }
 .split-cols > div:last-child {
   padding: 32px 0 32px 32px;
 }
-.split-cols h3 {
+.split-cols h2 {
   font-size: 19px;
   text-transform: none;
   margin: 0 0 14px;
 }
-.split-cols h3.is-accent { color: var(--red); }
+.split-cols h2.is-accent { color: var(--red); }
 .split-cols ul {
   margin: 0;
   padding-left: 18px;

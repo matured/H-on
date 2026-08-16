@@ -24,7 +24,7 @@ test.describe('Support page — donation flow', () => {
     await expect(page.getByRole('radio', { name: '$15 Supporter' })).toHaveAttribute('aria-checked', 'true');
     const donateBtn = page.getByRole('button', { name: 'Donate $15 →' });
     await expect(donateBtn).toBeEnabled();
-    await expect(page.locator('#donate-hint')).toHaveText("You're about to contribute $15 (demo only).");
+    await expect(page.locator('#donate-hint')).toHaveText('You’re about to contribute $15 (demo only).');
   });
 
   test('arrow keys move selection through the radiogroup', async ({ page }) => {
