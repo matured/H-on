@@ -1,0 +1,1 @@
+{"nodes": [{"id": "$graphify-root$_supabase_migrations_20260814220000_cover_image_storage_sql", "label": "20260814220000_cover_image_storage.sql", "file_type": "code", "source_file": "supabase/migrations/20260814220000_cover_image_storage.sql", "source_location": null}], "edges": []}

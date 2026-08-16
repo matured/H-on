@@ -5,3 +5,4 @@
 # language stats.
 .claude/skills/** linguist-vendored
 .agents/skills/** linguist-vendored
+graphify-out/graph.json merge=graphify
