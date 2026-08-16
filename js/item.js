@@ -63,8 +63,8 @@ function honCoverInnerHTML(item, view) {
     const copiesTotal = honState[item.id]?.copiesTotal ?? 1;
     return `
       <span class="mono-tag" style="color:${accent}; letter-spacing:0.12em;">${honEscape(item.call)}</span>
-      <div style="text-align:center;">
-        <div class="item-cover-title" style="font-size: clamp(38px, 6vw, 60px);">${era}</div>
+      <div>
+        <div class="item-cover-title item-cover-title-lg">${era}</div>
         <div class="item-cover-sub">${honEscape(item.genre)}</div>
       </div>
       <span class="mono-tag" style="color:${accent}; letter-spacing:0.1em;">${copiesTotal} ${copiesTotal > 1 ? 'copies' : 'copy'} held</span>
@@ -90,10 +90,12 @@ async function honRenderItem() {
     item = itemId ? await honFetchOneItem(itemId) : null;
   } catch (err) {
     root.innerHTML = `
-      <p class="eyebrow">SOMETHING WENT WRONG</p>
-      <h1 style="font-size: clamp(26px,4vw,40px); margin-top:14px;">Couldn’t load this item.</h1>
-      <p class="serif-lede" style="margin-top:14px;">${honEscape(err.message || err)}</p>
-      <a href="catalog.html" class="btn" style="margin-top:22px; display:inline-flex;">Back to the Shelf &rarr;</a>
+      <div class="item-state item-state-error">
+        <p class="eyebrow">SOMETHING WENT WRONG</p>
+        <h1>Couldn’t load this item.</h1>
+        <p class="serif-lede">${honEscape(err.message || err)}</p>
+        <a href="catalog.html" class="btn">Back to the Shelf &rarr;</a>
+      </div>
     `;
     document.title = 'Error · 本 (hon)';
     return;
@@ -101,9 +103,11 @@ async function honRenderItem() {
 
   if (!item) {
     root.innerHTML = `
-      <p class="eyebrow">NOT FOUND</p>
-      <h1 style="font-size: clamp(30px,5vw,50px); margin-top:14px;">This title isn’t in the archive.</h1>
-      <a href="catalog.html" class="btn" style="margin-top:22px; display:inline-flex;">Back to the Shelf &rarr;</a>
+      <div class="item-state item-state-notfound">
+        <p class="eyebrow">NOT FOUND</p>
+        <h1>This title isn’t in the archive.</h1>
+        <a href="catalog.html" class="btn">Back to the Shelf &rarr;</a>
+      </div>
     `;
     document.title = 'Not Found · 本 (hon)';
     return;
@@ -113,10 +117,12 @@ async function honRenderItem() {
     await honFetchStatus(item.id);
   } catch (err) {
     root.innerHTML = `
-      <p class="eyebrow">SOMETHING WENT WRONG</p>
-      <h1 style="font-size: clamp(26px,4vw,40px); margin-top:14px;">Couldn’t load this item.</h1>
-      <p class="serif-lede" style="margin-top:14px;">${honEscape(err.message || err)}</p>
-      <a href="catalog.html" class="btn" style="margin-top:22px; display:inline-flex;">Back to the Shelf &rarr;</a>
+      <div class="item-state item-state-error">
+        <p class="eyebrow">SOMETHING WENT WRONG</p>
+        <h1>Couldn’t load this item.</h1>
+        <p class="serif-lede">${honEscape(err.message || err)}</p>
+        <a href="catalog.html" class="btn">Back to the Shelf &rarr;</a>
+      </div>
     `;
     document.title = 'Error · 本 (hon)';
     return;
@@ -129,7 +135,7 @@ async function honRenderItem() {
   root.innerHTML = `
     <a href="catalog.html" class="back-link">&larr; Back to the shelf</a>
 
-    <div class="item-hero" style="margin-top: 28px;">
+    <div class="item-hero">
       <div class="item-media">
         <div class="item-cover-large${item.coverImage ? ' item-cover-large-photo' : ''}" id="item-cover" style="${item.coverImage ? `border-color:${honEscape(item.coverAccent)};` : `background:${honEscape(item.coverBg)}; color:${honEscape(item.coverFg)};`}">
           ${honCoverInnerHTML(item, 'cover')}
@@ -146,13 +152,13 @@ async function honRenderItem() {
         </div>
         <p class="item-subline">${honEscape(item.call)}</p>
 
-        <p class="serif-lede" style="margin-top:22px; font-size:16px;">${honEscape(item.desc)}</p>
+        <p class="serif-lede item-desc">${honEscape(item.desc)}</p>
 
         <div class="item-spec-list" id="item-spec-list">${honSpecRows(item)}</div>
 
         <button class="item-cta" id="item-cta-btn" data-action="${cta.action}">${cta.label} &rarr;</button>
-        <div class="mono-tag" id="item-action-error" role="alert" aria-live="polite" style="color:var(--red); margin-top:10px; display:none;"></div>
-        <div class="mono-tag" id="item-meta" role="status" aria-live="polite" style="color:var(--grey); margin-top:14px;">${status.metaText}</div>
+        <div class="mono-tag" id="item-action-error" role="alert" aria-live="polite"></div>
+        <div class="mono-tag" id="item-meta" role="status" aria-live="polite">${status.metaText}</div>
 
         <details class="item-disclosure">
           <summary>How Checkout Works</summary>
@@ -184,14 +190,14 @@ function bindItemActions(item) {
     const action = btn.dataset.action;
     btn.disabled = true;
     btn.innerHTML = HON_ACTION_LOADING_LABEL[action] || '…';
-    errorEl.style.display = 'none';
+    errorEl.classList.remove('is-visible');
     errorEl.textContent = '';
 
     const rerender = (err) => {
       btn.disabled = false;
       if (err) {
         errorEl.textContent = honFriendlyError(err);
-        errorEl.style.display = 'block';
+        errorEl.classList.add('is-visible');
         btn.innerHTML = `${honCtaLabel(item).label} &rarr;`;
         bindItemActions(item);
         return;
@@ -230,7 +236,7 @@ function bindItemDots(item) {
       dot.classList.add('active');
       cover.innerHTML = honCoverInnerHTML(item, dot.dataset.view);
       if (!item.coverImage) {
-        cover.style.textAlign = dot.dataset.view === 'detail' ? 'center' : '';
+        cover.classList.toggle('item-cover-detail-mode', dot.dataset.view === 'detail');
       }
     });
   });
