@@ -5,10 +5,12 @@
   "type": "commonjs",
   "scripts": {
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:e2e": "PLAYWRIGHT_HTML_OPEN=never playwright test"
   },
   "devDependencies": {
-    "vitest": "^2.1.0",
-    "jsdom": "^25.0.0"
+    "@playwright/test": "^1.62.1",
+    "jsdom": "^25.0.0",
+    "vitest": "^2.1.0"
   }
 }

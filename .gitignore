@@ -1,2 +1,6 @@
 node_modules/
 .gstack/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/

@@ -244,6 +244,10 @@ body.menu-locked { overflow: hidden; }
   transition: background 0.15s, color 0.15s;
 }
 .btn:hover { background: var(--ink); color: var(--paper); }
+.btn:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
 .btn-solid {
   background: var(--ink);
   color: var(--paper);
@@ -773,6 +777,191 @@ body.item-page { position: relative; }
   text-transform: uppercase;
   color: var(--grey);
   margin-bottom: 12px;
+}
+
+/* ---------- Marketing page intro (shared hero rhythm) ---------- */
+.page-intro {
+  padding-bottom: 30px;
+  padding-top: clamp(64px, 9vw, 108px);
+}
+.page-intro h1 {
+  font-size: clamp(36px, 6vw, 68px);
+  margin-top: 16px;
+  max-width: 20ch;
+}
+.page-intro .serif-lede {
+  max-width: 56ch;
+  margin-top: 22px;
+}
+
+/* ---------- Split compare columns (Support, Membership, etc.) ---------- */
+.split-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 2px solid var(--ink);
+}
+.split-cols > div:first-child {
+  padding: 32px 32px 32px 0;
+  border-right: 1px solid var(--line);
+}
+.split-cols > div:last-child {
+  padding: 32px 0 32px 32px;
+}
+.split-cols h3 {
+  font-size: 19px;
+  text-transform: none;
+  margin: 0 0 14px;
+}
+.split-cols h3.is-accent { color: var(--red); }
+.split-cols ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 14.5px;
+  color: #2c2b28;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+@media (max-width: 720px) {
+  .split-cols { grid-template-columns: 1fr; }
+  .split-cols > div:first-child {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+    padding: 24px 0;
+  }
+  .split-cols > div:last-child { padding: 24px 0; }
+}
+
+/* ---------- Support page ---------- */
+.support-demo-note {
+  display: inline-block;
+  color: var(--grey);
+  border-left: 2px solid var(--line-strong);
+  padding-left: 10px;
+  margin: -10px 0 32px;
+}
+
+.support-tiers {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  background: var(--line-strong);
+  border: 2px solid var(--ink);
+}
+@media (max-width: 640px) {
+  .support-tiers { grid-template-columns: 1fr 1fr; }
+}
+
+.support-tier {
+  background: var(--paper);
+  border: none;
+  padding: 32px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+  font-family: var(--display);
+  align-items: flex-start;
+  text-align: left;
+  color: var(--ink);
+  transition: background 0.15s ease, color 0.15s ease;
+  touch-action: manipulation;
+}
+.support-tier .mono-tag { color: var(--grey); font-size: 13px; }
+.support-tier .tier-label {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+.support-tier:hover:not(.active):not(:disabled) {
+  background: var(--paper-dim);
+}
+.support-tier:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: -2px;
+  position: relative;
+  z-index: 1;
+}
+.support-tier.active {
+  background: var(--ink);
+  color: var(--paper);
+}
+.support-tier.active .mono-tag { color: var(--red); }
+.support-tier:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.support-custom-wrap {
+  margin-top: 28px;
+  max-width: 280px;
+}
+.support-custom-wrap[hidden] { display: none; }
+.support-custom-wrap label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin-bottom: 6px;
+}
+.support-custom-wrap input {
+  width: 100%;
+  font-family: var(--mono);
+  font-size: 14px;
+  padding: 12px 14px;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+}
+.support-custom-wrap input:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+
+.support-action {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+.support-hint {
+  color: var(--grey);
+  margin: 0;
+  font-size: 12px;
+}
+.support-confirm {
+  margin: 0;
+  padding: 14px 18px;
+  border-left: 2px solid var(--red);
+  background: var(--paper-dim);
+  color: #2c2b28;
+  font-size: 14px;
+  display: none;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  max-width: 52ch;
+}
+.support-confirm.is-visible { display: flex; }
+
+.btn-solid:disabled,
+.btn-solid[disabled] {
+  opacity: 1;
+  cursor: not-allowed;
+  background: transparent !important;
+  color: var(--grey) !important;
+  border-color: var(--grey-light) !important;
+}
+.btn-solid:disabled:hover,
+.btn-solid[disabled]:hover {
+  background: transparent !important;
+  color: var(--grey) !important;
+  border-color: var(--grey-light) !important;
 }
 
 /* ---------- Utility ---------- */

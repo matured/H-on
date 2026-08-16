@@ -10,13 +10,11 @@
 
 <main>
 
-  <section style="padding-bottom: 20px; padding-top: clamp(64px, 9vw, 108px);">
+  <section class="page-intro">
     <div class="wrap">
       <p class="eyebrow">SUPPORT THE ARCHIVE</p>
-      <h1 style="font-size: clamp(36px, 6vw, 68px); margin-top:16px; max-width: 20ch;">
-        Free to read. Never free to run.
-      </h1>
-      <p class="serif-lede" style="max-width: 56ch; margin-top:22px;">
+      <h1>Free to read. Never free to run.</h1>
+      <p class="serif-lede">
         本 doesn't sell ads and never will paywall a title. Sourcing,
         digitizing, and hosting real print media costs money. Like a
         public library, we ask the people who can give to help fund the ones
@@ -27,52 +25,75 @@
 
   <hr class="rule">
 
-  <!-- DONATION TIERS (mock) -->
-  <section>
+  <section aria-labelledby="contribute-heading">
     <div class="wrap">
-      <p class="eyebrow" style="margin-bottom:30px;">MAKE A CONTRIBUTION</p>
-      <div class="grid-cols-4" style="gap:2px; background:var(--line-strong); border:2px solid var(--ink); margin-bottom:20px;">
-        <button class="support-tier" data-amount="5">
+      <p class="eyebrow" id="contribute-heading" style="margin-bottom:30px;">MAKE A CONTRIBUTION</p>
+      <p class="support-demo-note mono-tag">Demo only · no payment is processed on this page</p>
+
+      <div
+        id="support-tiers"
+        class="support-tiers"
+        role="radiogroup"
+        aria-label="Choose a contribution amount"
+      >
+        <button type="button" class="support-tier" role="radio" aria-checked="false" data-amount="5" tabindex="-1">
           <span class="mono-tag">$5</span>
           <span class="tier-label">Reader</span>
         </button>
-        <button class="support-tier" data-amount="15">
+        <button type="button" class="support-tier" role="radio" aria-checked="false" data-amount="15" tabindex="-1">
           <span class="mono-tag">$15</span>
           <span class="tier-label">Supporter</span>
         </button>
-        <button class="support-tier" data-amount="40">
+        <button type="button" class="support-tier" role="radio" aria-checked="false" data-amount="40" tabindex="-1">
           <span class="mono-tag">$40</span>
           <span class="tier-label">Patron</span>
         </button>
-        <button class="support-tier" data-amount="custom">
+        <button type="button" class="support-tier" role="radio" aria-checked="false" data-amount="custom" tabindex="-1">
           <span class="mono-tag">ANY</span>
           <span class="tier-label">Custom</span>
         </button>
       </div>
-      <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
-        <button id="donate-btn" class="btn btn-solid" disabled>Select an amount</button>
-        <span id="donate-confirm" class="mono-tag" style="display:none; color:#1c6b3f;">✓ Thank you. This is a demo confirmation only, no payment is processed on this page.</span>
+
+      <div id="custom-amount-wrap" class="support-custom-wrap" hidden>
+        <label for="custom-amount">Custom amount (USD)</label>
+        <input
+          id="custom-amount"
+          name="custom-amount"
+          type="number"
+          inputmode="decimal"
+          min="1"
+          step="1"
+          placeholder="25"
+          autocomplete="off"
+          aria-describedby="custom-amount-hint"
+        >
+        <p id="custom-amount-hint" class="support-hint" style="margin-top:8px;">Enter any whole-dollar amount.</p>
+      </div>
+
+      <div class="support-action">
+        <button type="button" id="donate-btn" class="btn btn-solid" disabled aria-describedby="donate-hint">Select an amount</button>
+        <p id="donate-hint" class="support-hint mono-tag">Pick a tier above to continue.</p>
+        <p id="donate-confirm" class="support-confirm mono-tag" role="status" aria-live="polite"></p>
       </div>
     </div>
   </section>
 
   <hr class="rule">
 
-  <!-- WHAT DONATING UNLOCKS -->
-  <section>
+  <section aria-labelledby="compare-heading">
     <div class="wrap">
-      <p class="eyebrow" style="margin-bottom:30px;">WHAT SUPPORTING CHANGES, AND WHAT IT DOESN'T</p>
-      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0; border-top:2px solid var(--ink);">
-        <div style="padding:28px 28px 28px 0; border-right:1px solid var(--line);">
-          <h3 style="font-size:19px; text-transform:none; margin:0 0 14px; color:var(--red);">Changes</h3>
-          <ul style="margin:0; padding-left:18px; font-size:14.5px; color:#2c2b28; display:flex; flex-direction:column; gap:8px;">
+      <p class="eyebrow" id="compare-heading" style="margin-bottom:30px;">WHAT SUPPORTING CHANGES, AND WHAT IT DOESN'T</p>
+      <div class="split-cols">
+        <div>
+          <h3 class="is-accent">Changes</h3>
+          <ul>
             <li>A <strong>Supporter</strong> tag next to your username</li>
             <li>Faster download speeds for scanned pages</li>
           </ul>
         </div>
-        <div style="padding:28px 0 28px 28px;">
-          <h3 style="font-size:19px; text-transform:none; margin:0 0 14px;">Never changes</h3>
-          <ul style="margin:0; padding-left:18px; font-size:14.5px; color:#2c2b28; display:flex; flex-direction:column; gap:8px;">
+        <div>
+          <h3>Never changes</h3>
+          <ul>
             <li>Reading any title is always free</li>
             <li>Everyone still checks items out one at a time</li>
             <li>Queue order is always first come, first served</li>
@@ -121,45 +142,125 @@
   </div>
 </footer>
 
-<style>
-  .support-tier {
-    background: var(--paper);
-    border: none;
-    padding: 26px 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    cursor: pointer;
-    font-family: var(--display);
-    align-items: flex-start;
-  }
-  .support-tier .mono-tag { color: var(--grey); font-size:13px; }
-  .support-tier .tier-label {
-    font-family: var(--display);
-    font-weight: 900;
-    font-size: 20px;
-    text-transform: uppercase;
-  }
-  .support-tier.active { background: var(--ink); color: var(--paper); }
-  .support-tier.active .mono-tag { color: var(--red); }
-</style>
-
 <script src="js/main.js"></script>
 <script>
-  let selected = null;
-  document.querySelectorAll('.support-tier').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.support-tier').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      selected = btn.dataset.amount;
-      const donateBtn = document.getElementById('donate-btn');
-      donateBtn.disabled = false;
-      donateBtn.textContent = selected === 'custom' ? 'Donate a Custom Amount →' : `Donate $${selected} →`;
+(() => {
+  const tiers = Array.from(document.querySelectorAll('.support-tier'));
+  const donateBtn = document.getElementById('donate-btn');
+  const donateHint = document.getElementById('donate-hint');
+  const donateConfirm = document.getElementById('donate-confirm');
+  const customWrap = document.getElementById('custom-amount-wrap');
+  const customInput = document.getElementById('custom-amount');
+
+  let selectedAmount = null;
+  let submitted = false;
+
+  function formatDonateLabel(amount) {
+    if (amount === 'custom') {
+      const value = parseInt(customInput.value, 10);
+      return Number.isFinite(value) && value >= 1
+        ? `Donate $${value} →`
+        : 'Enter a custom amount →';
+    }
+    return `Donate $${amount} →`;
+  }
+
+  function updateDonateButton() {
+    if (submitted) return;
+
+    if (!selectedAmount) {
+      donateBtn.disabled = true;
+      donateBtn.textContent = 'Select an amount';
+      donateHint.hidden = false;
+      return;
+    }
+
+    if (selectedAmount === 'custom') {
+      const value = parseInt(customInput.value, 10);
+      const valid = Number.isFinite(value) && value >= 1;
+      donateBtn.disabled = !valid;
+      donateBtn.textContent = formatDonateLabel('custom');
+      donateHint.textContent = valid
+        ? `You're about to contribute $${value} (demo only).`
+        : 'Enter a whole-dollar amount to continue.';
+      donateHint.hidden = false;
+      return;
+    }
+
+    donateBtn.disabled = false;
+    donateBtn.textContent = formatDonateLabel(selectedAmount);
+    donateHint.textContent = `You're about to contribute $${selectedAmount} (demo only).`;
+    donateHint.hidden = false;
+  }
+
+  function selectTier(btn) {
+    if (submitted) return;
+
+    tiers.forEach((tier, index) => {
+      const active = tier === btn;
+      tier.classList.toggle('active', active);
+      tier.setAttribute('aria-checked', active ? 'true' : 'false');
+      tier.tabIndex = active ? 0 : -1;
+      if (active) tier.focus();
     });
+
+    selectedAmount = btn.dataset.amount;
+    const isCustom = selectedAmount === 'custom';
+    customWrap.hidden = !isCustom;
+    if (isCustom) {
+      customInput.value = '';
+      customInput.focus();
+    }
+    updateDonateButton();
+  }
+
+  tiers.forEach((btn) => {
+    btn.addEventListener('click', () => selectTier(btn));
   });
-  document.getElementById('donate-btn').addEventListener('click', () => {
-    document.getElementById('donate-confirm').style.display = 'inline';
+
+  customInput.addEventListener('input', updateDonateButton);
+
+  document.getElementById('support-tiers').addEventListener('keydown', (e) => {
+    if (submitted) return;
+    const currentIndex = tiers.findIndex((tier) => tier.getAttribute('aria-checked') === 'true');
+    const index = currentIndex >= 0 ? currentIndex : 0;
+    let nextIndex = null;
+
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      nextIndex = (index + 1) % tiers.length;
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      nextIndex = (index - 1 + tiers.length) % tiers.length;
+    } else if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
+      selectTier(tiers[index]);
+      return;
+    }
+
+    if (nextIndex !== null) {
+      e.preventDefault();
+      selectTier(tiers[nextIndex]);
+    }
   });
+
+  donateBtn.addEventListener('click', () => {
+    if (donateBtn.disabled || submitted) return;
+
+    submitted = true;
+    const amount = selectedAmount === 'custom'
+      ? parseInt(customInput.value, 10)
+      : selectedAmount;
+
+    tiers.forEach((tier) => { tier.disabled = true; });
+    customInput.disabled = true;
+    donateBtn.style.display = 'none';
+    donateHint.hidden = true;
+
+    donateConfirm.innerHTML = `<span class="stamp stamp-available">Contribution recorded</span> Thank you for the $${amount}. This is a demo confirmation only — no payment was processed.`;
+    donateConfirm.classList.add('is-visible');
+  });
+
+  tiers[0].tabIndex = 0;
+})();
 </script>
 </body>
 </html>
