@@ -285,6 +285,18 @@ section { padding: clamp(48px, 8vw, 96px) 0; }
   grid-template-columns: 1.3fr 1fr 1fr 1fr;
   gap: 32px;
 }
+.footer-brand-mark {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 26px;
+  margin: 0 0 10px;
+}
+.footer-brand-tagline {
+  font-size: 14px;
+  color: #2c2b28;
+  max-width: 32ch;
+  margin: 0;
+}
 .footer-grid h4 {
   font-family: var(--mono);
   font-size: 11px;
@@ -868,14 +880,6 @@ body.item-page { position: relative; }
 
 /* ---------- Support page ---------- */
 .eyebrow-section { margin-bottom: 30px; }
-
-.support-demo-note {
-  display: inline-block;
-  color: var(--grey);
-  border-left: 2px solid var(--line-strong);
-  padding-left: 10px;
-  margin: -10px 0 32px;
-}
 
 .support-tiers {
   display: grid;

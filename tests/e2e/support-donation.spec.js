@@ -24,7 +24,7 @@ test.describe('Support page — donation flow', () => {
     await expect(page.getByRole('radio', { name: '$15 Supporter' })).toHaveAttribute('aria-checked', 'true');
     const donateBtn = page.getByRole('button', { name: 'Donate $15 →' });
     await expect(donateBtn).toBeEnabled();
-    await expect(page.locator('#donate-hint')).toHaveText('You’re about to contribute $15 (demo only).');
+    await expect(page.locator('#donate-hint')).toHaveText('You’re about to contribute $15.');
   });
 
   test('arrow keys move selection through the radiogroup', async ({ page }) => {
@@ -59,9 +59,24 @@ test.describe('Support page — donation flow', () => {
     await expect(donateBtn).toHaveText('Donate $75 →');
   });
 
-  test('submitting shows a demo confirmation and locks the form', async ({ page }) => {
+  test('submitting posts to the checkout session function and redirects on success', async ({ page }) => {
+    let requestBody = null;
+    await page.route('**/functions/v1/create-checkout-session', async (route) => {
+      requestBody = route.request().postDataJSON();
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({ url: '/support.html?donation=success&amount=40' }),
+      });
+    });
+
     await page.getByRole('radio', { name: '$40 Patron' }).click();
     await page.getByRole('button', { name: 'Donate $40 →' }).click();
+
+    await page.waitForURL(/donation=success/);
+    expect(requestBody.amount).toBe(40);
+    expect(requestBody.successUrl).toContain('donation=success');
+    expect(requestBody.cancelUrl).toContain('donation=cancelled');
 
     const confirm = page.locator('#donate-confirm');
     await expect(confirm).toBeVisible();
@@ -73,6 +88,22 @@ test.describe('Support page — donation flow', () => {
       await expect(tier).toBeDisabled();
     }
     await expect(page.getByRole('button', { name: 'Donate $40 →' })).toBeHidden();
+  });
+
+  test('shows an error and re-enables the form if checkout session creation fails', async ({ page }) => {
+    await page.route('**/functions/v1/create-checkout-session', async (route) => {
+      await route.fulfill({
+        status: 400,
+        contentType: 'application/json',
+        body: JSON.stringify({ error: 'Stripe is not configured' }),
+      });
+    });
+
+    await page.getByRole('radio', { name: '$15 Supporter' }).click();
+    await page.getByRole('button', { name: 'Donate $15 →' }).click();
+
+    await expect(page.locator('#donate-hint')).toContainText('Couldn’t start checkout');
+    await expect(page.getByRole('button', { name: 'Donate $15 →' })).toBeEnabled();
   });
 
   test('donate button shows a visible focus ring on keyboard focus', async ({ page }) => {

@@ -6,3 +6,4 @@ blob-report/
 playwright/.cache/
 graphify-out/.graphify_python
 graphify-out/.graphify_root
+.context/

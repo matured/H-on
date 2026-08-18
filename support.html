@@ -28,7 +28,6 @@
   <section aria-labelledby="contribute-heading">
     <div class="wrap">
       <p class="eyebrow eyebrow-section" id="contribute-heading">MAKE A CONTRIBUTION</p>
-      <p class="support-demo-note mono-tag">Demo only · no payment is processed on this page</p>
 
       <div
         id="support-tiers"
@@ -110,8 +109,8 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <p style="font-family: var(--display); font-weight:900; font-size:26px; margin:0 0 10px;">本</p>
-        <p style="font-size:14px; color:#2c2b28; max-width:32ch; margin:0;">A circulating archive of Japanese print media, 1998 to 2025. Invite-only. No ads, no feed, no paywall.</p>
+        <p class="footer-brand-mark">本</p>
+        <p class="footer-brand-tagline">A circulating archive of Japanese print media, 1998 to 2025. Invite-only. No ads, no feed, no paywall.</p>
       </div>
       <div>
         <h4>Site</h4>
@@ -136,12 +135,14 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>本 ARCHIVE · A FICTIONAL COMPANY, COMMUNICATIONS SEMINAR FINAL PROJECT</span>
-      <span>EST. THIS YEAR</span>
+      <span>本 ARCHIVE · INVITE-ONLY CIRCULATING LIBRARY</span>
+      <span>EST. 2026</span>
     </div>
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/supabase-config.js"></script>
 <script src="js/main.js"></script>
 <script>
 (() => {
@@ -181,7 +182,7 @@
       donateBtn.disabled = !valid;
       donateBtn.textContent = formatDonateLabel('custom');
       donateHint.textContent = valid
-        ? `You’re about to contribute $${value} (demo only).`
+        ? `You’re about to contribute $${value}.`
         : 'Enter a whole-dollar amount to continue.';
       donateHint.hidden = false;
       return;
@@ -189,7 +190,7 @@
 
     donateBtn.disabled = false;
     donateBtn.textContent = formatDonateLabel(selectedAmount);
-    donateHint.textContent = `You’re about to contribute $${selectedAmount} (demo only).`;
+    donateHint.textContent = `You’re about to contribute $${selectedAmount}.`;
     donateHint.hidden = false;
   }
 
@@ -242,22 +243,62 @@
     }
   });
 
-  donateBtn.addEventListener('click', () => {
+  donateBtn.addEventListener('click', async () => {
     if (donateBtn.disabled || submitted) return;
 
     submitted = true;
     const amount = selectedAmount === 'custom'
       ? parseInt(customInput.value, 10)
-      : selectedAmount;
+      : parseInt(selectedAmount, 10);
 
+    tiers.forEach((tier) => { tier.disabled = true; });
+    customInput.disabled = true;
+    donateBtn.disabled = true;
+    donateBtn.textContent = 'Redirecting to checkout…';
+    donateHint.hidden = true;
+
+    try {
+      const res = await fetch(`${HON_SUPABASE_URL}/functions/v1/create-checkout-session`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          apikey: HON_SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${HON_SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify({
+          amount,
+          successUrl: `${location.origin}${location.pathname}?donation=success&amount=${amount}`,
+          cancelUrl: `${location.origin}${location.pathname}?donation=cancelled`,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.url) throw new Error(data.error || 'Could not start checkout');
+      window.location.href = data.url;
+    } catch (err) {
+      submitted = false;
+      tiers.forEach((tier) => { tier.disabled = false; });
+      customInput.disabled = false;
+      donateBtn.disabled = false;
+      donateBtn.textContent = formatDonateLabel(selectedAmount);
+      donateHint.hidden = false;
+      donateHint.textContent = `Couldn’t start checkout: ${err.message}`;
+    }
+  });
+
+  const params = new URLSearchParams(location.search);
+  if (params.get('donation') === 'success') {
+    const amount = parseInt(params.get('amount'), 10);
     tiers.forEach((tier) => { tier.disabled = true; });
     customInput.disabled = true;
     donateBtn.style.display = 'none';
     donateHint.hidden = true;
-
-    donateConfirm.innerHTML = `<span class="stamp stamp-available">Contribution recorded</span> Thank you for the $${amount}. This is a demo confirmation only — no payment was processed.`;
+    submitted = true;
+    donateConfirm.innerHTML = `<span class="stamp stamp-available">Contribution recorded</span> Thank you for the $${amount}${amount ? '' : ' contribution'}.`;
     donateConfirm.classList.add('is-visible');
-  });
+  } else if (params.get('donation') === 'cancelled') {
+    donateHint.hidden = false;
+    donateHint.textContent = 'Checkout was cancelled — pick a tier above to try again.';
+  }
 
   tiers[0].tabIndex = 0;
 })();

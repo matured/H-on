@@ -5,7 +5,8 @@ Mock company site for a Communications Industry Mock Company final project.
 Japanese print media from 1990–2005, one reader at a time — the anti-feed,
 anti-algorithm answer to how media discovery works today.
 
-Last updated: this session (V6 + the T1-T16 backend build, 2026-08-14).
+Last updated: this session (V6 + the T1-T16 backend build, 2026-08-14;
+accessibility/design pass + test infra, 2026-08-16).
 
 ---
 
@@ -177,6 +178,85 @@ for the original design doc.
 
 ---
 
+## Completed 2026-08-16 — accessibility, design cleanup, test infra
+
+A guideline audit (Vercel's Web Interface Guidelines) plus a design pass
+against about.html, how-it-works.html, catalog.html, item.html, and
+support.html. Everything below is live and verified in-browser.
+
+**Accessibility fixes:**
+- `index.html` (splash): the primary "enter site" interaction was ~40+
+  `<div class="tile">` elements with click listeners only — no keyboard
+  path in except the small "Skip" link. `#splash-grid` is now a single
+  `role="button" tabindex="0"` control (every tile does the same thing,
+  so one focus stop beats tabbing through dozens of identical divs);
+  tiles are `aria-hidden`. The continuous flicker animation now checks
+  `prefers-reduced-motion` and never starts if that's set.
+- `admin.html`: ~13 catalog-form `<label>`s were visually labeled but
+  never associated via `for`/`id` (clicking a label did nothing, screen
+  readers announced no field name) — fixed, plus `name`/`autocomplete`
+  added to every field. Fixed an empty `alt=""` on the cover-image
+  previews. Replaced all 4 `alert()` calls with inline error states.
+  Added `aria-live` to the status messages.
+- `catalog.html`: filter-chip buttons now toggle `aria-pressed`.
+- `item.html`: removed `loading="lazy"` from the hero cover image (it's
+  the page's primary above-the-fold content — lazy-loading it delays
+  LCP instead of helping it). Added `aria-live` to the action-error and
+  meta status regions.
+- `membership.html`: `autocomplete="email"/"name"` on the real auth
+  fields, `spellcheck="false"` on the card-code field, `aria-live` on
+  all 5 dynamic status elements.
+- `support.html`: ARIA radiogroup semantics + keyboard arrow nav on the
+  tier picker (was already partly there, finished it), `autocomplete`
+  on the custom-amount field, a visible `:focus-visible` ring added to
+  the shared `.btn` class (previously only `.support-tier` had one),
+  and the `h1 → h3` heading-hierarchy skip on both this page and
+  `how-it-works.html` fixed to `h1 → h2`.
+- Site-wide: every straight apostrophe/quote in actual rendered copy
+  converted to curly (`'` → `'`, `"…"` → `"…"`) — checked line-by-line
+  per file so source comments and JS string-literal syntax (`'active'`,
+  `'checkout'`, etc.) were left untouched.
+
+**Design cleanup** (inline styles extracted into `css/style.css`,
+zero unintended visual change, verified against the exact prior values):
+- `about.html`, `how-it-works.html`, `catalog.html`, `item.html`: fully
+  converted from scattered `style="..."` attributes to proper CSS
+  classes, matching the token system already established by
+  `support.html`'s original build (`--ink`/`--paper`/`--red`/`--grey`,
+  zero border-radius, Archivo/Newsreader/IBM Plex Mono).
+- `how-it-works.html`'s and `about.html`'s matching 3/4-column divided
+  grids were duplicated CSS — generalized into one shared `.divided-grid`
+  structural class instead.
+- `catalog.html` got the site's only missing `<h1>` (every other page
+  had one; this was the sole exception) — reused a line that already
+  exists verbatim on `home.html` rather than inventing new copy.
+- Found and fixed a real dead-code bug while redesigning `catalog.html`:
+  `honUpdateStats()` in `browse.js` has always targeted
+  `#catalog-stats`, but that element never existed in `catalog.html`,
+  so the "N titles · N in circulation · N on your card" line has
+  silently rendered nothing since the feature was written. Added the
+  target element; confirmed it now shows live data.
+- `item.html`: two JS-driven inline-style toggles (`errorEl.style.display`,
+  `cover.style.textAlign`) replaced with `classList` toggles matching
+  the `.is-visible` pattern already used on `support.html`.
+- `membership.html` and `admin.html` got the accessibility fixes above
+  but not the full inline-style extraction pass yet — still on the list
+  below.
+
+**Test infrastructure:**
+- Added a Playwright e2e suite (`tests/e2e/support-donation.spec.js`,
+  6 tests covering the donation flow's radiogroup, keyboard nav,
+  validation, and the new focus ring) — `npm run test:e2e`.
+- Fixed the Vitest unit suite, which had been silently failing all 55
+  tests: Node v26 ships an experimental native `localStorage` global
+  (behind `--localstorage-file`) that shadows jsdom's implementation
+  inside Vitest's `jsdom` environment, so `globalThis.localStorage`
+  evaluated to `undefined` even with `environment: 'jsdom'` set.
+  `NODE_OPTIONS=--no-experimental-webstorage` in the `test`/`test:watch`
+  npm scripts fixes it.
+
+---
+
 ## Known limitations (by design, worth saying out loud in the presentation)
 
 - ~~No real backend~~ — **outdated as of 2026-08-14.** Checkout/return/queue
@@ -199,17 +279,25 @@ for the original design doc.
 
 - [ ] No logo yet beyond the 本 kanji as logotype — fine as-is per your
       original direction ("logo will come later"), but worth deciding before
-      final submission whether that's the permanent mark.
-- [ ] Mobile pass: the Archive's scattered shelf falls back to a simple
-      stacked column under 760px and the item page hasn't been specifically
-      tested at narrow widths with the new wallpaper background — worth a
-      quick check.
+      final submission whether that's the permanent mark. (A candidate
+      identity system — a "call number" lockup built from the existing
+      glyph, not a new icon — was sketched as a design spec 2026-08-16,
+      not yet applied to the site.)
+- [x] Mobile pass — done 2026-08-16 for about.html, how-it-works.html,
+      catalog.html, item.html, and support.html: each checked at both
+      desktop and mobile widths in-browser, no layout regressions.
+      membership.html and admin.html weren't specifically re-checked
+      this pass.
 - [ ] Team member names/roles on the About page are still generic placeholder
       titles (Founder, Archivist, Community, Systems) — swap in your actual
       teammates before submission if the rubric expects real names.
 - [ ] Decide if you want real teammate photos/bios or keep it role-based.
-- [ ] No accessibility pass yet (keyboard nav through the overlay menu, focus
-      states, alt text equivalents for the typographic covers).
+- [x] Accessibility pass — done 2026-08-16, see above (form labels,
+      focus states, aria-live, keyboard access on the splash grid,
+      reduced-motion support). Not yet covered: keyboard nav through the
+      fullscreen overlay menu itself (focus trap, Escape to close), and
+      `membership.html`/`admin.html` haven't had the full design/inline-
+      style-extraction pass the other pages got.
 - [ ] The presentation deck (PowerPoint) is a separate deliverable your
       teammates are handling — this site doesn't cover that.
 

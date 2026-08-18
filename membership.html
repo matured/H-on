@@ -156,7 +156,7 @@
 
   <hr class="rule">
 
-  <!-- REQUEST FORM (mock) -->
+  <!-- REQUEST FORM -->
   <section id="request">
     <div class="wrap" style="max-width: 60ch;">
       <p class="eyebrow">DON’T HAVE A CARD?</p>
@@ -166,7 +166,7 @@
         won’t get you in faster than a card would, but we do read every
         submission ourselves.
       </p>
-      <form onsubmit="event.preventDefault(); document.getElementById('form-confirm').style.display='block'; this.style.opacity='0.5'; this.querySelectorAll('input,button,textarea').forEach(el=>el.disabled=true);" style="margin-top:26px; display:flex; flex-direction:column; gap:14px;">
+      <form id="waitlist-form" style="margin-top:26px; display:flex; flex-direction:column; gap:14px;">
         <div>
           <label for="waitlist-name" style="display:block; font-family:var(--mono); font-size:11px; letter-spacing:0.1em; font-weight:600; text-transform:uppercase; color:var(--grey); margin-bottom:6px;">Name</label>
           <input id="waitlist-name" name="name" type="text" autocomplete="name" placeholder="Name" required style="width:100%; font-family:var(--mono); font-size:14px; padding:12px 14px; border:1px solid var(--ink); background:var(--paper);">
@@ -179,9 +179,9 @@
           <label for="waitlist-note" style="display:block; font-family:var(--mono); font-size:11px; letter-spacing:0.1em; font-weight:600; text-transform:uppercase; color:var(--grey); margin-bottom:6px;">What draws you to this specific era of print media?</label>
           <textarea id="waitlist-note" placeholder="What draws you to this specific era of print media?" rows="3" style="width:100%; font-family:var(--serif); font-size:15px; padding:12px 14px; border:1px solid var(--ink); background:var(--paper); resize:vertical;"></textarea>
         </div>
-        <button type="submit" class="btn btn-solid" style="align-self:flex-start;">Join the Waitlist &rarr;</button>
+        <button type="submit" class="btn btn-solid" id="waitlist-submit" style="align-self:flex-start;">Join the Waitlist &rarr;</button>
       </form>
-      <p id="form-confirm" role="status" aria-live="polite" style="display:none; margin-top:16px; font-family:var(--mono); font-size:13px; color:#1c6b3f;">✓ Request received. This is a demo form for presentation purposes.</p>
+      <p id="waitlist-status" role="status" aria-live="polite" style="margin-top:16px; font-family:var(--mono); font-size:13px;"></p>
     </div>
   </section>
 
@@ -191,8 +191,8 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <p style="font-family: var(--display); font-weight:900; font-size:26px; margin:0 0 10px;">本</p>
-        <p style="font-size:14px; color:#2c2b28; max-width:32ch; margin:0;">A circulating archive of Japanese print media, 1998 to 2025. Invite-only. No ads, no feed, no paywall.</p>
+        <p class="footer-brand-mark">本</p>
+        <p class="footer-brand-tagline">A circulating archive of Japanese print media, 1998 to 2025. Invite-only. No ads, no feed, no paywall.</p>
       </div>
       <div>
         <h4>Site</h4>
@@ -217,8 +217,8 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>本 ARCHIVE · A FICTIONAL COMPANY, COMMUNICATIONS SEMINAR FINAL PROJECT</span>
-      <span>EST. THIS YEAR</span>
+      <span>本 ARCHIVE · INVITE-ONLY CIRCULATING LIBRARY</span>
+      <span>EST. 2026</span>
     </div>
   </div>
 </footer>
@@ -276,6 +276,34 @@ document.getElementById('redeem-form').addEventListener('submit', async (e) => {
   } finally {
     btn.disabled = false;
     btn.textContent = 'Redeem →';
+  }
+});
+
+document.getElementById('waitlist-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const name = document.getElementById('waitlist-name').value.trim();
+  const email = document.getElementById('waitlist-email').value.trim();
+  const note = document.getElementById('waitlist-note').value.trim();
+  const statusEl = document.getElementById('waitlist-status');
+  const btn = document.getElementById('waitlist-submit');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+  statusEl.textContent = '';
+  try {
+    const { error } = await honSupabase
+      .from('waitlist_requests')
+      .insert({ name, email, note: note || null });
+    if (error) throw error;
+    e.target.reset();
+    e.target.querySelectorAll('input, textarea').forEach((el) => { el.disabled = true; });
+    statusEl.textContent = '✓ Request received. We read every submission ourselves.';
+    statusEl.style.color = 'var(--ink)';
+    btn.style.display = 'none';
+  } catch (err) {
+    statusEl.textContent = `Couldn’t send that: ${err.message || err}`;
+    statusEl.style.color = 'var(--red)';
+    btn.disabled = false;
+    btn.textContent = 'Join the Waitlist →';
   }
 });
 
