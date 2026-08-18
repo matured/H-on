@@ -13,17 +13,17 @@
 <main>
 
   <!-- HERO -->
-  <section style="padding-top: clamp(48px, 9vw, 100px); padding-bottom: clamp(40px, 6vw, 72px);">
+  <section class="home-hero">
     <div class="wrap">
-      <p class="eyebrow" style="margin-bottom: 22px;">本 · A CIRCULATING PRINT ARCHIVE, EST. 2026</p>
-      <h1 style="font-size: clamp(42px, 8vw, 108px); max-width: 16ch;">
+      <p class="eyebrow">本 · A CIRCULATING PRINT ARCHIVE, EST. 2026</p>
+      <h1>
         Before the feed,<br>there were <span class="asterisk">pages.</span>
       </h1>
-      <div style="display:flex; gap: 48px; flex-wrap: wrap; margin-top: 40px; align-items: flex-end;">
-        <p class="serif-lede" style="max-width: 40ch; margin: 0;">
+      <div class="home-hero-actions">
+        <p class="serif-lede">
           A small, invite-only library for real print media. One copy. One reader. A line, if you want to wait.
         </p>
-        <div style="display:flex; gap: 14px; flex-wrap: wrap;">
+        <div class="home-hero-buttons">
           <a href="catalog.html" class="btn btn-solid">Browse the Shelf &rarr;</a>
           <a href="how-it-works.html" class="btn">How Checkout Works</a>
         </div>
@@ -35,13 +35,13 @@
 
   <!-- MISSION -->
   <section>
-    <div class="wrap" style="display:grid; grid-template-columns: 1fr 1.4fr; gap: 56px;">
+    <div class="wrap home-thesis-grid">
       <div>
         <p class="eyebrow">THE THESIS</p>
-        <h2 style="font-size: clamp(30px, 4vw, 46px); margin-top: 14px;">Nothing here is<br>“for you.”</h2>
+        <h2>Nothing here is<br>“for you.”</h2>
       </div>
       <div>
-        <p class="serif-lede" style="margin:0;">
+        <p class="serif-lede">
           From the late '90s to today, Japanese magazines ran street fashion next to media theory,
           then went out of print. 本 puts that material back on a shelf, not a feed.
         </p>
@@ -52,27 +52,27 @@
   <hr class="rule">
 
   <!-- WHY PRINT / PRINCIPLES -->
-  <section>
+  <section class="home-difference">
     <div class="wrap">
-      <p class="eyebrow" style="margin-bottom: 40px;">HOW THIS IS DIFFERENT</p>
-      <div class="grid-cols-3" style="gap: 0; border-top: 2px solid var(--ink);">
+      <p class="eyebrow">HOW THIS IS DIFFERENT</p>
+      <div class="grid-cols-3 divided-grid">
 
-        <div style="padding: 28px 28px 28px 0; border-right: 1px solid var(--line);">
-          <span class="mono-tag" style="color:var(--red); font-size:13px;">01</span>
-          <h3 style="font-size: 22px; margin: 14px 0 12px; text-transform:none;">One copy, one reader</h3>
-          <p style="margin:0; font-size:15px; color:#2c2b28;">Checked out means unavailable to everyone.</p>
+        <div>
+          <span class="mono-tag">01</span>
+          <h3>One copy, one reader</h3>
+          <p>Checked out means unavailable to everyone.</p>
         </div>
 
-        <div style="padding: 28px; border-right: 1px solid var(--line);">
-          <span class="mono-tag" style="color:var(--red); font-size:13px;">02</span>
-          <h3 style="font-size: 22px; margin: 14px 0 12px; text-transform:none;">Nothing is ranked for you</h3>
-          <p style="margin:0; font-size:15px; color:#2c2b28;">Sorted by genre and era. Nothing “recommended.”</p>
+        <div>
+          <span class="mono-tag">02</span>
+          <h3>Nothing is ranked for you</h3>
+          <p>Sorted by genre and era. Nothing “recommended.”</p>
         </div>
 
-        <div style="padding: 28px 0 28px 28px;">
-          <span class="mono-tag" style="color:var(--red); font-size:13px;">03</span>
-          <h3 style="font-size: 22px; margin: 14px 0 12px; text-transform:none;">Invited, not advertised</h3>
-          <p style="margin:0; font-size:15px; color:#2c2b28;">You get in through a member, not an ad.</p>
+        <div>
+          <span class="mono-tag">03</span>
+          <h3>Invited, not advertised</h3>
+          <p>You get in through a member, not an ad.</p>
         </div>
 
       </div>
@@ -84,41 +84,41 @@
   <!-- FEATURED SHELF PREVIEW -->
   <section>
     <div class="wrap">
-      <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px; margin-bottom: 30px;">
+      <div class="home-shelf-header">
         <div>
           <p class="eyebrow">FROM THE SHELF</p>
-          <h2 style="font-size: clamp(26px, 3.4vw, 38px); margin-top: 12px;">Seventeen titles, to start.</h2>
+          <h2>Seventeen titles, to start.</h2>
         </div>
         <a href="catalog.html" class="btn">View Full Archive &rarr;</a>
       </div>
 
-      <div class="grid-cols-4" style="border-top: 1px solid var(--ink); border-left: 1px solid var(--ink);">
-        <div style="border-right:1px solid var(--ink); border-bottom:1px solid var(--ink); padding:18px; background:#0a0a0a; color:#faf9f4;">
+      <div class="grid-cols-4 home-shelf-grid">
+        <div class="home-shelf-card" style="background:#0a0a0a; color:#faf9f4;">
           <span class="mono-tag" style="color:#c8102e;">1998</span>
-          <p style="font-family:var(--display); font-weight:900; font-size:20px; margin:8px 0 0; text-transform:uppercase;">Burst</p>
+          <p class="home-shelf-card-title">Burst</p>
         </div>
-        <div style="border-right:1px solid var(--ink); border-bottom:1px solid var(--ink); padding:18px; background:#0f4c81; color:#faf9f4;">
+        <div class="home-shelf-card" style="background:#0f4c81; color:#faf9f4;">
           <span class="mono-tag" style="color:#faf9f4;">2005</span>
-          <p style="font-family:var(--display); font-weight:900; font-size:20px; margin:8px 0 0; text-transform:uppercase;">Fruits</p>
+          <p class="home-shelf-card-title">Fruits</p>
         </div>
-        <div style="border-right:1px solid var(--ink); border-bottom:1px solid var(--ink); padding:18px; background:#f0ede2; color:#0a0a0a;">
+        <div class="home-shelf-card" style="background:#f0ede2; color:#0a0a0a;">
           <span class="mono-tag" style="color:#c8102e;">2023</span>
-          <p style="font-family:var(--display); font-weight:900; font-size:20px; margin:8px 0 0; text-transform:uppercase;">Lightning</p>
+          <p class="home-shelf-card-title">Lightning</p>
         </div>
-        <div style="border-right:1px solid var(--ink); border-bottom:1px solid var(--ink); padding:18px; background:#0a3d3d; color:#faf9f4;">
+        <div class="home-shelf-card" style="background:#0a3d3d; color:#faf9f4;">
           <span class="mono-tag" style="color:#ff4d6d;">2006</span>
-          <p style="font-family:var(--display); font-weight:900; font-size:20px; margin:8px 0 0; text-transform:uppercase;">Street</p>
+          <p class="home-shelf-card-title">Street</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- CTA BAND -->
-  <section style="background: var(--ink); color: var(--paper);">
-    <div class="wrap" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px;">
-      <h2 style="font-size: clamp(28px, 4vw, 44px); color: var(--paper); max-width: 14ch;">Know someone with a card?</h2>
-      <div style="display:flex; gap:14px; flex-wrap:wrap;">
-        <a href="membership.html" class="btn" style="border-color:var(--paper); color:var(--paper);">How Invites Work &rarr;</a>
+  <section class="home-cta-band">
+    <div class="wrap">
+      <h2>Know someone with a card?</h2>
+      <div class="home-cta-buttons">
+        <a href="membership.html" class="btn">How Invites Work &rarr;</a>
         <a href="support.html" class="btn btn-red">Support the Archive</a>
       </div>
     </div>

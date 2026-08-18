@@ -343,6 +343,67 @@ section { padding: clamp(48px, 8vw, 96px) 0; }
 .stamp-checked   { color: var(--red); }
 .stamp-yours     { color: #1a4fa0; }
 
+/* ---------- Home ---------- */
+.home-hero { padding-top: clamp(48px, 9vw, 100px); padding-bottom: clamp(40px, 6vw, 72px); }
+.home-hero .eyebrow { margin-bottom: 22px; }
+.home-hero h1 { font-size: clamp(42px, 8vw, 108px); max-width: 16ch; }
+.home-hero-actions {
+  display: flex;
+  gap: 48px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  align-items: flex-end;
+}
+.home-hero-actions .serif-lede { max-width: 40ch; margin: 0; }
+.home-hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+
+.home-thesis-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 56px;
+}
+@media (max-width: 720px) {
+  .home-thesis-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+.home-thesis-grid h2 { font-size: clamp(30px, 4vw, 46px); margin-top: 14px; }
+.home-thesis-grid .serif-lede { margin: 0; }
+
+.home-difference .eyebrow { margin-bottom: 40px; }
+.home-difference h3 { font-size: 22px; margin: 14px 0 12px; text-transform: none; }
+.home-difference p { margin: 0; font-size: 15px; color: #2c2b28; }
+.home-difference .mono-tag { color: var(--red); font-size: 13px; }
+
+.home-shelf-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+.home-shelf-header h2 { font-size: clamp(26px, 3.4vw, 38px); margin-top: 12px; }
+.home-shelf-grid { border-top: 1px solid var(--ink); border-left: 1px solid var(--ink); }
+.home-shelf-card { border-right: 1px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 18px; }
+.home-shelf-card-title {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 20px;
+  margin: 8px 0 0;
+  text-transform: uppercase;
+}
+
+.home-cta-band { background: var(--ink); color: var(--paper); }
+.home-cta-band .wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.home-cta-band h2 { font-size: clamp(28px, 4vw, 44px); color: var(--paper); max-width: 14ch; }
+.home-cta-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+.home-cta-buttons .btn:first-child { border-color: var(--paper); color: var(--paper); }
+
 /* ---------- Archive: hero ---------- */
 .catalog-hero { padding-top: clamp(64px, 9vw, 108px); padding-bottom: 0; }
 .catalog-hero h1 { font-size: clamp(30px, 5vw, 52px); margin-top: 14px; max-width: 22ch; text-wrap: balance; }
