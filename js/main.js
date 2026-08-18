@@ -74,6 +74,29 @@ function honInjectNav() {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && overlay.classList.contains('open')) toggle();
   });
+
+  honMaybeShowAdminLink(overlay, current);
+}
+
+// Only pages that load circulation.js have honFetchMyProfile — on the
+// ones that don't (home/about/how-it-works/support), there's no signed-in
+// admin state to check, so this is a silent no-op there.
+async function honMaybeShowAdminLink(overlay, current) {
+  if (typeof honFetchMyProfile !== 'function') return;
+
+  let profile;
+  try {
+    profile = await honFetchMyProfile();
+  } catch {
+    return;
+  }
+  if (!profile || !profile.is_admin) return;
+
+  const link = document.createElement('a');
+  link.href = 'admin.html';
+  link.textContent = 'Admin';
+  if (current === 'admin.html') link.setAttribute('aria-current', 'page');
+  overlay.querySelector('.overlay-links').appendChild(link);
 }
 
 // Queue notifications (T13). Silently skipped on pages that don't load
