@@ -1,16 +1,16 @@
 # Graph Report - Claude code  (2026-08-18)
 
 ## Corpus Check
-- 32 files · ~26,767 words
+- 32 files · ~26,624 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 229 nodes · 292 edges · 37 communities (21 shown, 16 thin omitted)
+- 228 nodes · 290 edges · 37 communities (21 shown, 16 thin omitted)
 - Extraction: 86% EXTRACTED · 14% INFERRED · 0% AMBIGUOUS · INFERRED: 40 edges (avg confidence: 0.57)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c827e04d`
+- Built from commit: `40b4eff9`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -24,7 +24,7 @@
 - Circulation RPC Functions (SQL)
 - Rate Limiting (SQL)
 - Catalog Shelf Rendering
-- main.js
+- Shared Nav Injection
 - Notifications (SQL)
 - New User Profile Trigger
 - Core Circulation Schema
@@ -109,9 +109,9 @@ Nodes (3): public.check_rate_limit(), public.rate_limit_log, auth.users
 Cohesion: 0.52
 Nodes (6): honBuildFilters(), honCoverHTML(), honLayoutShelf(), honRenderShelf(), honSeeded(), honUpdateStats()
 
-### Community 9 - "main.js"
-Cohesion: 0.32
-Nodes (4): HON_NAV_LINKS, honCurrentPage(), honInjectNav(), honMaybeShowAdminLink()
+### Community 9 - "Shared Nav Injection"
+Cohesion: 0.33
+Nodes (3): HON_NAV_LINKS, honCurrentPage(), honInjectNav()
 
 ### Community 10 - "Notifications (SQL)"
 Cohesion: 0.29
@@ -142,7 +142,7 @@ Cohesion: 0.50
 Nodes (3): CORS_HEADERS, stripe, supabase
 
 ## Knowledge Gaps
-- **29 isolated node(s):** `HON_NAV_LINKS`, `HON_COVER_EXTENSIONS`, `honState`, `USER`, `description` (+24 more)
+- **29 isolated node(s):** `CORS_HEADERS`, `stripe`, `supabase`, `stripe`, `supabase` (+24 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -150,10 +150,10 @@ Nodes (3): CORS_HEADERS, stripe, supabase
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Membership Page` connect `Core Site Pages` to `circulation.js API Surface`?**
-  _High betweenness centrality (0.080) - this node is a cross-community bridge._
+  _High betweenness centrality (0.081) - this node is a cross-community bridge._
 - **Why does `honRefreshMembershipView()` connect `circulation.js API Surface` to `Membership Cards Dashboard`, `Core Site Pages`?**
   _High betweenness centrality (0.022) - this node is a cross-community bridge._
-- **What connects `HON_NAV_LINKS`, `HON_COVER_EXTENSIONS`, `honState` to the rest of the system?**
+- **What connects `CORS_HEADERS`, `stripe`, `supabase` to the rest of the system?**
   _29 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Core Site Pages` be split into smaller, more focused modules?**
   _Cohesion score 0.1021021021021021 - nodes in this community are weakly interconnected._

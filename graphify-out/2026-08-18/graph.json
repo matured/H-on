@@ -636,10 +636,10 @@
       "source_location": "L13",
       "_callable": true,
       "_origin": "ast",
-      "id": "js_main_honcurrentpage",
       "community": 9,
-      "community_name": "main.js",
-      "norm_label": "honcurrentpage()"
+      "community_name": "Shared Nav Injection",
+      "norm_label": "honcurrentpage()",
+      "id": "js_main_honcurrentpage"
     },
     {
       "label": "honInjectNav()",
@@ -648,10 +648,10 @@
       "source_location": "L42",
       "_callable": true,
       "_origin": "ast",
-      "id": "js_main_honinjectnav",
       "community": 9,
-      "community_name": "main.js",
-      "norm_label": "honinjectnav()"
+      "community_name": "Shared Nav Injection",
+      "norm_label": "honinjectnav()",
+      "id": "js_main_honinjectnav"
     },
     {
       "label": "toggle()",
@@ -660,10 +660,10 @@
       "source_location": "L64",
       "_callable": true,
       "_origin": "ast",
-      "id": "js_main_honinjectnav_toggle",
       "community": 9,
-      "community_name": "main.js",
-      "norm_label": "toggle()"
+      "community_name": "Shared Nav Injection",
+      "norm_label": "toggle()",
+      "id": "js_main_honinjectnav_toggle"
     },
     {
       "label": "honInjectSkipLink()",
@@ -672,34 +672,22 @@
       "source_location": "L23",
       "_callable": true,
       "_origin": "ast",
-      "id": "js_main_honinjectskiplink",
       "community": 9,
-      "community_name": "main.js",
-      "norm_label": "honinjectskiplink()"
-    },
-    {
-      "label": "honMaybeShowAdminLink()",
-      "file_type": "code",
-      "source_file": "js/main.js",
-      "source_location": "L84",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "js_main_honmaybeshowadminlink",
-      "community": 9,
-      "community_name": "main.js",
-      "norm_label": "honmaybeshowadminlink()"
+      "community_name": "Shared Nav Injection",
+      "norm_label": "honinjectskiplink()",
+      "id": "js_main_honinjectskiplink"
     },
     {
       "label": "honShowNotifications()",
       "file_type": "code",
       "source_file": "js/main.js",
-      "source_location": "L106",
+      "source_location": "L83",
       "_callable": true,
       "_origin": "ast",
-      "id": "js_main_honshownotifications",
       "community": 9,
-      "community_name": "main.js",
-      "norm_label": "honshownotifications()"
+      "community_name": "Shared Nav Injection",
+      "norm_label": "honshownotifications()",
+      "id": "js_main_honshownotifications"
     },
     {
       "label": "supabase-config.js",
@@ -1400,10 +1388,10 @@
       "source_file": "tests/e2e/support-donation.spec.js",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "tests_e2e_support_donation_spec",
       "community": 24,
       "community_name": "Donation Flow E2E Test",
-      "norm_label": "support-donation.spec.js",
-      "id": "tests_e2e_support_donation_spec"
+      "norm_label": "support-donation.spec.js"
     },
     {
       "label": "{ test, expect }",
@@ -1411,10 +1399,10 @@
       "source_file": "tests/e2e/support-donation.spec.js",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "tests_e2e_support_donation_spec_test_expect",
       "community": 24,
       "community_name": "Donation Flow E2E Test",
-      "norm_label": "{ test, expect }",
-      "id": "tests_e2e_support_donation_spec_test_expect"
+      "norm_label": "{ test, expect }"
     },
     {
       "label": "public.items",
@@ -1488,10 +1476,10 @@
       "source_file": "supabase/functions/create-checkout-session/index.ts",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "supabase_functions_create_checkout_session_index",
       "community": 33,
       "community_name": "create-checkout-session/index.ts",
-      "norm_label": "create-checkout-session/index.ts",
-      "id": "supabase_functions_create_checkout_session_index"
+      "norm_label": "create-checkout-session/index.ts"
     },
     {
       "label": "CORS_HEADERS",
@@ -1499,10 +1487,10 @@
       "source_file": "supabase/functions/create-checkout-session/index.ts",
       "source_location": "L12",
       "_origin": "ast",
+      "id": "supabase_functions_create_checkout_session_index_cors_headers",
       "community": 33,
       "community_name": "create-checkout-session/index.ts",
-      "norm_label": "cors_headers",
-      "id": "supabase_functions_create_checkout_session_index_cors_headers"
+      "norm_label": "cors_headers"
     },
     {
       "label": "stripe",
@@ -1510,10 +1498,10 @@
       "source_file": "supabase/functions/create-checkout-session/index.ts",
       "source_location": "L18",
       "_origin": "ast",
+      "id": "supabase_functions_create_checkout_session_index_stripe",
       "community": 33,
       "community_name": "create-checkout-session/index.ts",
-      "norm_label": "stripe",
-      "id": "supabase_functions_create_checkout_session_index_stripe"
+      "norm_label": "stripe"
     },
     {
       "label": "supabase",
@@ -1521,10 +1509,10 @@
       "source_file": "supabase/functions/create-checkout-session/index.ts",
       "source_location": "L22",
       "_origin": "ast",
+      "id": "supabase_functions_create_checkout_session_index_supabase",
       "community": 33,
       "community_name": "create-checkout-session/index.ts",
-      "norm_label": "supabase",
-      "id": "supabase_functions_create_checkout_session_index_supabase"
+      "norm_label": "supabase"
     },
     {
       "label": "auth.users",
@@ -1532,10 +1520,10 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
+      "id": "auth_users",
       "community": 34,
       "community_name": "public.contributions",
-      "norm_label": "auth.users",
-      "id": "auth_users"
+      "norm_label": "auth.users"
     },
     {
       "label": "20260817010000_contributions.sql",
@@ -1543,10 +1531,10 @@
       "source_file": "supabase/migrations/20260817010000_contributions.sql",
       "source_location": null,
       "_origin": "ast",
+      "id": "supabase_migrations_20260817010000_contributions",
       "community": 34,
       "community_name": "public.contributions",
-      "norm_label": "20260817010000_contributions.sql",
-      "id": "supabase_migrations_20260817010000_contributions"
+      "norm_label": "20260817010000_contributions.sql"
     },
     {
       "label": "public.contributions",
@@ -1554,10 +1542,10 @@
       "source_file": "supabase/migrations/20260817010000_contributions.sql",
       "source_location": "L8",
       "_origin": "ast",
+      "id": "supabase_migrations_20260817010000_contributions_public_contributions",
       "community": 34,
       "community_name": "public.contributions",
-      "norm_label": "public.contributions",
-      "id": "supabase_migrations_20260817010000_contributions_public_contributions"
+      "norm_label": "public.contributions"
     },
     {
       "label": "stripe-webhook/index.ts",
@@ -1565,10 +1553,10 @@
       "source_file": "supabase/functions/stripe-webhook/index.ts",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "supabase_functions_stripe_webhook_index",
       "community": 35,
       "community_name": "stripe-webhook/index.ts",
-      "norm_label": "stripe-webhook/index.ts",
-      "id": "supabase_functions_stripe_webhook_index"
+      "norm_label": "stripe-webhook/index.ts"
     },
     {
       "label": "stripe",
@@ -1576,10 +1564,10 @@
       "source_file": "supabase/functions/stripe-webhook/index.ts",
       "source_location": "L11",
       "_origin": "ast",
+      "id": "supabase_functions_stripe_webhook_index_stripe",
       "community": 35,
       "community_name": "stripe-webhook/index.ts",
-      "norm_label": "stripe",
-      "id": "supabase_functions_stripe_webhook_index_stripe"
+      "norm_label": "stripe"
     },
     {
       "label": "supabase",
@@ -1587,10 +1575,10 @@
       "source_file": "supabase/functions/stripe-webhook/index.ts",
       "source_location": "L17",
       "_origin": "ast",
+      "id": "supabase_functions_stripe_webhook_index_supabase",
       "community": 35,
       "community_name": "stripe-webhook/index.ts",
-      "norm_label": "supabase",
-      "id": "supabase_functions_stripe_webhook_index_supabase"
+      "norm_label": "supabase"
     },
     {
       "label": "20260817000000_waitlist_requests.sql",
@@ -1598,10 +1586,10 @@
       "source_file": "supabase/migrations/20260817000000_waitlist_requests.sql",
       "source_location": null,
       "_origin": "ast",
+      "id": "supabase_migrations_20260817000000_waitlist_requests",
       "community": 36,
       "community_name": "20260817000000_waitlist_requests.sql",
-      "norm_label": "20260817000000_waitlist_requests.sql",
-      "id": "supabase_migrations_20260817000000_waitlist_requests"
+      "norm_label": "20260817000000_waitlist_requests.sql"
     },
     {
       "label": "public.waitlist_requests",
@@ -1609,10 +1597,10 @@
       "source_file": "supabase/migrations/20260817000000_waitlist_requests.sql",
       "source_location": "L12",
       "_origin": "ast",
+      "id": "supabase_migrations_20260817000000_waitlist_requests_public_waitlist_requests",
       "community": 36,
       "community_name": "20260817000000_waitlist_requests.sql",
-      "norm_label": "public.waitlist_requests",
-      "id": "supabase_migrations_20260817000000_waitlist_requests_public_waitlist_requests"
+      "norm_label": "public.waitlist_requests"
     },
     {
       "label": "item.js",
@@ -1961,10 +1949,10 @@
       "source_file": "js/main.js",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "js_main",
       "community": 9,
-      "community_name": "main.js",
-      "norm_label": "main.js"
+      "community_name": "Shared Nav Injection",
+      "norm_label": "main.js",
+      "id": "js_main"
     },
     {
       "label": "HON_NAV_LINKS",
@@ -1972,10 +1960,10 @@
       "source_file": "js/main.js",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "js_main_hon_nav_links",
       "community": 9,
-      "community_name": "main.js",
-      "norm_label": "hon_nav_links"
+      "community_name": "Shared Nav Injection",
+      "norm_label": "hon_nav_links",
+      "id": "js_main_hon_nav_links"
     },
     {
       "label": "About Page",
@@ -3196,21 +3184,9 @@
       "source_location": "L43",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "js_main_honinjectnav",
-      "target": "js_main_honcurrentpage",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "js/main.js",
-      "source_location": "L78",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "js_main_honinjectnav",
-      "target": "js_main_honmaybeshowadminlink",
-      "confidence_score": 1.0
+      "target": "js_main_honcurrentpage"
     },
     {
       "relation": "calls",
@@ -3520,23 +3496,12 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "js/main.js",
-      "source_location": "L106",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "js_main",
-      "target": "js_main_honshownotifications",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "js/main.js",
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "js_main",
-      "target": "js_main_honcurrentpage",
-      "confidence_score": 1.0
+      "target": "js_main_honcurrentpage"
     },
     {
       "relation": "contains",
@@ -3545,9 +3510,9 @@
       "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "js_main",
-      "target": "js_main_honinjectskiplink",
-      "confidence_score": 1.0
+      "target": "js_main_honinjectskiplink"
     },
     {
       "relation": "contains",
@@ -3556,9 +3521,9 @@
       "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "js_main",
-      "target": "js_main_hon_nav_links",
-      "confidence_score": 1.0
+      "target": "js_main_hon_nav_links"
     },
     {
       "relation": "contains",
@@ -3567,20 +3532,20 @@
       "source_location": "L42",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "js_main",
-      "target": "js_main_honinjectnav",
-      "confidence_score": 1.0
+      "target": "js_main_honinjectnav"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "js/main.js",
-      "source_location": "L84",
+      "source_location": "L83",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "js_main",
-      "target": "js_main_honmaybeshowadminlink",
-      "confidence_score": 1.0
+      "target": "js_main_honshownotifications"
     },
     {
       "relation": "contains",
@@ -3743,9 +3708,9 @@
       "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_functions_create_checkout_session_index",
-      "target": "supabase_functions_create_checkout_session_index_cors_headers"
+      "target": "supabase_functions_create_checkout_session_index_cors_headers",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3754,9 +3719,9 @@
       "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_functions_create_checkout_session_index",
-      "target": "supabase_functions_create_checkout_session_index_stripe"
+      "target": "supabase_functions_create_checkout_session_index_stripe",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3765,9 +3730,9 @@
       "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_functions_create_checkout_session_index",
-      "target": "supabase_functions_create_checkout_session_index_supabase"
+      "target": "supabase_functions_create_checkout_session_index_supabase",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3776,9 +3741,9 @@
       "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_functions_stripe_webhook_index",
-      "target": "supabase_functions_stripe_webhook_index_stripe"
+      "target": "supabase_functions_stripe_webhook_index_stripe",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3787,9 +3752,9 @@
       "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_functions_stripe_webhook_index",
-      "target": "supabase_functions_stripe_webhook_index_supabase"
+      "target": "supabase_functions_stripe_webhook_index_supabase",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -4227,9 +4192,9 @@
       "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260817000000_waitlist_requests",
-      "target": "supabase_migrations_20260817000000_waitlist_requests_public_waitlist_requests"
+      "target": "supabase_migrations_20260817000000_waitlist_requests_public_waitlist_requests",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -4238,9 +4203,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260817010000_contributions",
-      "target": "supabase_migrations_20260817010000_contributions_public_contributions"
+      "target": "supabase_migrations_20260817010000_contributions_public_contributions",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -4271,9 +4236,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "tests_e2e_support_donation_spec",
-      "target": "tests_e2e_support_donation_spec_test_expect"
+      "target": "tests_e2e_support_donation_spec_test_expect",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -4491,9 +4456,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "supabase_migrations_20260817010000_contributions_public_contributions",
-      "target": "auth_users"
+      "target": "auth_users",
+      "confidence_score": 1.0
     },
     {
       "relation": "triggers",
@@ -4526,9 +4491,9 @@
       "source_location": "L70",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 0.5,
       "source": "js_main_honinjectnav",
-      "target": "js_main_honinjectnav_toggle",
-      "confidence_score": 0.5
+      "target": "js_main_honinjectnav_toggle"
     },
     {
       "relation": "indirect_call",
@@ -6194,5 +6159,5 @@
       "source_file": "PROJECT_NOTES.md"
     }
   ],
-  "built_at_commit": "c827e04dc67afe97eab390c32c8c9086fc8afbc8"
+  "built_at_commit": "40b4eff928711c97f683decde120ae9e2914f740"
 }
