@@ -99,10 +99,10 @@ async function honMaybeShowAdminLink(overlay, current) {
   overlay.querySelector('.overlay-links').appendChild(link);
 }
 
-// Queue notifications (T13). Silently skipped on pages that don't load
-// the Supabase client at all (home/about/how-it-works/support — none of
-// them need it otherwise) rather than adding that client to four pages
-// just for this banner.
+// Queue notifications (T13). The `typeof` guard is now mostly a formality
+// since every page loads the Supabase client (for the Admin nav-link check
+// in honMaybeShowAdminLink above), but it's harmless to keep as a defensive
+// check against a future page that opts out of loading it.
 async function honShowNotifications() {
   if (typeof honSupabase === 'undefined') return;
   let user;
