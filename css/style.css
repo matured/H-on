@@ -200,8 +200,8 @@ body.menu-locked { overflow: hidden; }
 main, footer { position: relative; z-index: 1; }
 #hon-corner-mark {
   position: fixed;
-  right: -5vw;
-  bottom: -8vw;
+  right: -2vw;
+  bottom: -5vw;
   font-family: var(--display);
   font-weight: 900;
   font-size: 38vw;
