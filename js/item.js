@@ -54,8 +54,12 @@ function honCoverInnerHTML(item, view) {
   if (item.coverImage) {
     const src = view === 'detail' ? (item.backImage || item.coverImage) : item.coverImage;
     const label = view === 'detail' ? 'Back cover' : `${title} ${issue}`;
+    const webpSrc = honEscape(honImageVariant(src, { webp: true }));
     return `
-      <img src="${honEscape(src)}" alt="${view === 'detail' ? 'Back cover of' : 'Front cover of'} ${title} ${issue}">
+      <picture>
+        <source srcset="${webpSrc}" type="image/webp">
+        <img src="${honEscape(src)}" alt="${view === 'detail' ? 'Back cover of' : 'Front cover of'} ${title} ${issue}">
+      </picture>
       <span class="mono-tag item-cover-photo-tag" style="background:${accent}; color:${fg};">${label}</span>
     `;
   }

@@ -14,9 +14,14 @@ function honCoverHTML(item) {
   const bg = honEscape(item.coverBg), fg = honEscape(item.coverFg), accent = honEscape(item.coverAccent);
   const title = honEscape(item.title), issue = honEscape(item.issue), era = honEscape(item.era);
   if (item.coverImage) {
+    const gridWebp = honEscape(honImageVariant(item.coverImage, { grid: true, webp: true }));
+    const gridJpg = honEscape(honImageVariant(item.coverImage, { grid: true }));
     return `
       <div class="shelf-cover shelf-cover-photo" style="border-color:${accent};">
-        <img src="${honEscape(item.coverImage)}" alt="${title} ${issue} cover" loading="lazy">
+        <picture>
+          <source srcset="${gridWebp}" type="image/webp">
+          <img src="${gridJpg}" alt="${title} ${issue} cover" loading="lazy">
+        </picture>
         <span class="shelf-cover-photo-tag mono-tag" style="background:${accent}; color:${fg};">${era}</span>
       </div>
     `;

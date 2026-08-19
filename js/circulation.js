@@ -231,32 +231,80 @@ async function honAdminUpsertItem(item) {
   return data;
 }
 
-// Extensions the covers bucket accepts (kept in sync with the
-// allowed_mime_types set in the cover_upload_hardening migration).
-const HON_COVER_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+// Every cover, regardless of what the admin uploads (a raw phone photo of
+// a magazine, a giant flatbed scan, whatever), gets normalized client-side
+// into 4 fixed files before it ever reaches Storage:
+//   {side}.jpg        full size, capped at 1400px long edge — the hero/
+//                      detail view on item.html
+//   {side}.webp       same dimensions, WebP (smaller, modern browsers)
+//   {side}-grid.jpg   760px wide — the Archive shelf thumbnail
+//   {side}-grid.webp  same, WebP
+// Fixed filenames (not derived from the source extension) means no stale
+// leftover file from a previous upload of a different type — every
+// re-upload just upserts the same 4 paths.
+const HON_COVER_FULL_MAX = 1400;
+const HON_COVER_GRID_WIDTH = 760;
 
-// Uploads a cover/back image to the 'covers' Storage bucket at a
-// deterministic path ({item_id}/{side}.{ext}). upsert:true replaces the
-// file in place when a re-upload keeps the same extension — but if the
-// extension changes (a .jpg swapped for a .png, say), that's a different
-// path, and the old file would otherwise sit in Storage forever with
-// nothing left pointing at it. Clearing every other known extension for
-// this item+side first guarantees at most one file per side, regardless
-// of how many times its type changes. Best-effort: a failed cleanup
-// shouldn't block the actual upload the admin is waiting on.
+function honLoadImageElement(file) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Could not read image file')); };
+    img.src = url;
+  });
+}
+
+function honDrawToCanvas(img, maxDimOrWidth, byWidth) {
+  const scale = byWidth
+    ? Math.min(1, maxDimOrWidth / img.naturalWidth)
+    : Math.min(1, maxDimOrWidth / Math.max(img.naturalWidth, img.naturalHeight));
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.max(1, Math.round(img.naturalWidth * scale));
+  canvas.height = Math.max(1, Math.round(img.naturalHeight * scale));
+  canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+  return canvas;
+}
+
+function honCanvasToBlob(canvas, type, quality) {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('Image encoding failed')), type, quality);
+  });
+}
+
 async function honUploadCoverImage(itemId, side, file) {
-  const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
-  const path = `${itemId}/${side}.${ext}`;
-  const stalePaths = HON_COVER_EXTENSIONS.filter(e => e !== ext).map(e => `${itemId}/${side}.${e}`);
-  try {
-    await honSupabase.storage.from('covers').remove(stalePaths);
-  } catch (err) {
-    console.error('Failed to clean up stale cover file(s):', err);
+  const img = await honLoadImageElement(file);
+  const fullCanvas = honDrawToCanvas(img, HON_COVER_FULL_MAX, false);
+  const gridCanvas = honDrawToCanvas(img, HON_COVER_GRID_WIDTH, true);
+
+  const variants = await Promise.all([
+    honCanvasToBlob(fullCanvas, 'image/jpeg', 0.85).then(blob => [`${itemId}/${side}.jpg`, blob, 'image/jpeg']),
+    honCanvasToBlob(fullCanvas, 'image/webp', 0.8).then(blob => [`${itemId}/${side}.webp`, blob, 'image/webp']),
+    honCanvasToBlob(gridCanvas, 'image/jpeg', 0.82).then(blob => [`${itemId}/${side}-grid.jpg`, blob, 'image/jpeg']),
+    honCanvasToBlob(gridCanvas, 'image/webp', 0.8).then(blob => [`${itemId}/${side}-grid.webp`, blob, 'image/webp']),
+  ]);
+
+  for (const [path, blob, contentType] of variants) {
+    const { error } = await honSupabase.storage.from('covers').upload(path, blob, { upsert: true, contentType });
+    if (error) throw error;
   }
-  const { error } = await honSupabase.storage.from('covers').upload(path, file, { upsert: true, contentType: file.type });
-  if (error) throw error;
-  const { data } = honSupabase.storage.from('covers').getPublicUrl(path);
+
+  const { data } = honSupabase.storage.from('covers').getPublicUrl(`${itemId}/${side}.jpg`);
   return data.publicUrl;
+}
+
+// Derives a sibling variant's URL from a stored coverImage/backImage URL
+// by suffix convention, rather than storing 4 URLs per side in the
+// database. Works identically for the local images/covers/*.jpg seed
+// paths and full Supabase Storage URLs, since it's pure string surgery
+// on whatever URL is already there.
+function honImageVariant(url, { grid = false, webp = false } = {}) {
+  if (!url) return url;
+  const dot = url.lastIndexOf('.');
+  if (dot === -1) return url;
+  const base = url.slice(0, dot);
+  const ext = webp ? 'webp' : url.slice(dot + 1);
+  return `${base}${grid ? '-grid' : ''}.${ext}`;
 }
 
 // ---- notifications ----
