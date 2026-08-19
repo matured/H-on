@@ -39,6 +39,14 @@ function honInjectSkipLink() {
   document.body.prepend(skip);
 }
 
+function honInjectCornerMark() {
+  const mark = document.createElement('div');
+  mark.id = 'hon-corner-mark';
+  mark.textContent = '本';
+  mark.setAttribute('aria-hidden', 'true');
+  document.body.prepend(mark);
+}
+
 function honInjectNav() {
   const current = honCurrentPage();
 
@@ -141,6 +149,7 @@ async function honShowNotifications() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  honInjectCornerMark();
   honInjectNav();
   honInjectSkipLink();
   honShowNotifications();

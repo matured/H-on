@@ -192,6 +192,37 @@ h1, h2, h3, h4 {
 }
 body.menu-locked { overflow: hidden; }
 
+/* ---------- Corner brand mark (fixed, site-wide) ----------
+   A big low-contrast 本 anchored to the viewport corner, slowly
+   spinning in 3D. Sits behind normal page content — see "main, footer"
+   stacking rule below — and behind the item-page's own tiled kanji
+   background (suppressed there entirely to avoid competing with it). */
+main, footer { position: relative; z-index: 1; }
+#hon-corner-mark {
+  position: fixed;
+  right: -5vw;
+  bottom: -8vw;
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: 38vw;
+  line-height: 1;
+  color: #e3e0d5;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  animation: hon-corner-spin 36s linear infinite;
+}
+@keyframes hon-corner-spin {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  #hon-corner-mark { animation: none; }
+}
+.item-page #hon-corner-mark { display: none; }
+
 /* ---------- Queue notification banner (T13) ---------- */
 .hon-notify-banner {
   position: fixed;
