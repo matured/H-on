@@ -39,11 +39,26 @@ function honInjectSkipLink() {
   document.body.prepend(skip);
 }
 
+// Must match the "36s" in #hon-corner-mark's animation-duration (css/style.css).
+const HON_CORNER_SPIN_MS = 36000;
+
 function honInjectCornerMark() {
   const mark = document.createElement('div');
   mark.id = 'hon-corner-mark';
   mark.textContent = '本';
   mark.setAttribute('aria-hidden', 'true');
+
+  // Every page load otherwise restarts the CSS animation at 0deg, so
+  // navigating site-wide looked like the spin kept resetting. A negative
+  // animation-delay tells the browser "pretend this has already been
+  // running for N ms" — computing N from Date.now() (a clock every page
+  // shares, unlike a page's own load time) makes the rotation land on
+  // the same phase it'd be at if it had actually been spinning
+  // continuously since some fixed point, so it reads as one unbroken
+  // spin across page loads instead of restarting each time.
+  const elapsed = Date.now() % HON_CORNER_SPIN_MS;
+  mark.style.animationDelay = `-${elapsed}ms`;
+
   document.body.prepend(mark);
 }
 
