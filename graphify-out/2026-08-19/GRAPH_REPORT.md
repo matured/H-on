@@ -1,16 +1,16 @@
 # Graph Report - Claude code  (2026-08-19)
 
 ## Corpus Check
-- 32 files · ~26,882 words
+- 32 files · ~26,864 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 233 nodes · 299 edges · 37 communities (21 shown, 16 thin omitted)
+- 232 nodes · 298 edges · 37 communities (21 shown, 16 thin omitted)
 - Extraction: 87% EXTRACTED · 13% INFERRED · 0% AMBIGUOUS · INFERRED: 40 edges (avg confidence: 0.57)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `4f7a42c9`
+- Built from commit: `58bf81f2`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -60,16 +60,16 @@
 10. `honRefreshMembershipView()` - 8 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Membership Page` --calls--> `honDeleteMyAccount()`  [EXTRACTED]
-  membership.html → js/circulation.js
+- `honRenderCatalogSection()` --calls--> `honFetchCatalog()`  [EXTRACTED]
+  admin.html → js/circulation.js
+- `honRenderLoansTable()` --calls--> `honEscape()`  [EXTRACTED]
+  admin.html → js/circulation.js
+- `honRenderMembersTable()` --calls--> `honEscape()`  [EXTRACTED]
+  admin.html → js/circulation.js
 - `Membership Page` --calls--> `honSignInWithEmail()`  [EXTRACTED]
   membership.html → js/circulation.js
-- `Membership Page` --calls--> `honValidateCardCode()`  [EXTRACTED]
+- `Membership Page` --calls--> `honDeleteMyAccount()`  [EXTRACTED]
   membership.html → js/circulation.js
-- `honRenderLoansTable()` --calls--> `honAdminForceReturn()`  [EXTRACTED]
-  admin.html → js/circulation.js
-- `honRenderAdmin()` --calls--> `honAdminIssueCard()`  [EXTRACTED]
-  admin.html → js/circulation.js
 
 ## Import Cycles
 - None detected.
@@ -110,7 +110,7 @@ Cohesion: 0.52
 Nodes (6): honBuildFilters(), honCoverHTML(), honLayoutShelf(), honRenderShelf(), honSeeded(), honUpdateStats()
 
 ### Community 9 - "main.js"
-Cohesion: 0.28
+Cohesion: 0.32
 Nodes (4): HON_NAV_LINKS, honCurrentPage(), honInjectNav(), honMaybeShowAdminLink()
 
 ### Community 10 - "Notifications (SQL)"
@@ -142,7 +142,7 @@ Cohesion: 0.50
 Nodes (3): CORS_HEADERS, stripe, supabase
 
 ## Knowledge Gaps
-- **28 isolated node(s):** `HON_NAV_LINKS`, `honState`, `USER`, `description`, `name` (+23 more)
+- **28 isolated node(s):** `honState`, `HON_ACTION_LOADING_LABEL`, `USER`, `description`, `name` (+23 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -150,10 +150,10 @@ Nodes (3): CORS_HEADERS, stripe, supabase
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Membership Page` connect `Core Site Pages` to `circulation.js`?**
-  _High betweenness centrality (0.081) - this node is a cross-community bridge._
+  _High betweenness centrality (0.082) - this node is a cross-community bridge._
 - **Why does `honRefreshMembershipView()` connect `circulation.js` to `Membership Cards Dashboard`, `Core Site Pages`?**
   _High betweenness centrality (0.022) - this node is a cross-community bridge._
-- **What connects `HON_NAV_LINKS`, `honState`, `USER` to the rest of the system?**
+- **What connects `honState`, `HON_ACTION_LOADING_LABEL`, `USER` to the rest of the system?**
   _28 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Core Site Pages` be split into smaller, more focused modules?**
   _Cohesion score 0.1021021021021021 - nodes in this community are weakly interconnected._

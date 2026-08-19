@@ -60,10 +60,10 @@
       "source_location": "L113",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_hondeletemyaccount",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "hondeletemyaccount()",
-      "id": "js_circulation_hondeletemyaccount"
+      "norm_label": "hondeletemyaccount()"
     },
     {
       "label": "honSignInWithEmail()",
@@ -72,10 +72,10 @@
       "source_location": "L100",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honsigninwithemail",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "honsigninwithemail()",
-      "id": "js_circulation_honsigninwithemail"
+      "norm_label": "honsigninwithemail()"
     },
     {
       "label": "honValidateCardCode()",
@@ -84,10 +84,10 @@
       "source_location": "L136",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honvalidatecardcode",
       "community": 0,
       "community_name": "Core Site Pages",
-      "norm_label": "honvalidatecardcode()",
-      "id": "js_circulation_honvalidatecardcode"
+      "norm_label": "honvalidatecardcode()"
     },
     {
       "label": "honAdminForceReturn()",
@@ -96,10 +96,10 @@
       "source_location": "L193",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honadminforcereturn",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honadminforcereturn()",
-      "id": "js_circulation_honadminforcereturn"
+      "norm_label": "honadminforcereturn()"
     },
     {
       "label": "honAdminIssueCard()",
@@ -108,10 +108,10 @@
       "source_location": "L198",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honadminissuecard",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honadminissuecard()",
-      "id": "js_circulation_honadminissuecard"
+      "norm_label": "honadminissuecard()"
     },
     {
       "label": "honAdminListLoans()",
@@ -120,10 +120,10 @@
       "source_location": "L187",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honadminlistloans",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honadminlistloans()",
-      "id": "js_circulation_honadminlistloans"
+      "norm_label": "honadminlistloans()"
     },
     {
       "label": "honAdminListProfiles()",
@@ -132,10 +132,10 @@
       "source_location": "L181",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honadminlistprofiles",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honadminlistprofiles()",
-      "id": "js_circulation_honadminlistprofiles"
+      "norm_label": "honadminlistprofiles()"
     },
     {
       "label": "honAdminSetBanned()",
@@ -144,10 +144,10 @@
       "source_location": "L204",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honadminsetbanned",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honadminsetbanned()",
-      "id": "js_circulation_honadminsetbanned"
+      "norm_label": "honadminsetbanned()"
     },
     {
       "label": "honCanvasToBlob()",
@@ -156,10 +156,10 @@
       "source_location": "L269",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honcanvastoblob",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honcanvastoblob()",
-      "id": "js_circulation_honcanvastoblob"
+      "norm_label": "honcanvastoblob()"
     },
     {
       "label": "honCheckOut()",
@@ -168,10 +168,10 @@
       "source_location": "L476",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honcheckout",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honcheckout()",
-      "id": "js_circulation_honcheckout"
+      "norm_label": "honcheckout()"
     },
     {
       "label": "honDrawToCanvas()",
@@ -180,10 +180,10 @@
       "source_location": "L258",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_hondrawtocanvas",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "hondrawtocanvas()",
-      "id": "js_circulation_hondrawtocanvas"
+      "norm_label": "hondrawtocanvas()"
     },
     {
       "label": "honFetchAllStatuses()",
@@ -192,10 +192,10 @@
       "source_location": "L397",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honfetchallstatuses",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honfetchallstatuses()",
-      "id": "js_circulation_honfetchallstatuses"
+      "norm_label": "honfetchallstatuses()"
     },
     {
       "label": "honFetchCatalog()",
@@ -204,10 +204,10 @@
       "source_location": "L40",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honfetchcatalog",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honfetchcatalog()",
-      "id": "js_circulation_honfetchcatalog"
+      "norm_label": "honfetchcatalog()"
     },
     {
       "label": "honFetchMyCards()",
@@ -216,10 +216,10 @@
       "source_location": "L124",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honfetchmycards",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honfetchmycards()",
-      "id": "js_circulation_honfetchmycards"
+      "norm_label": "honfetchmycards()"
     },
     {
       "label": "honFetchMyNotifications()",
@@ -228,10 +228,10 @@
       "source_location": "L315",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honfetchmynotifications",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honfetchmynotifications()",
-      "id": "js_circulation_honfetchmynotifications"
+      "norm_label": "honfetchmynotifications()"
     },
     {
       "label": "honFetchMyProfile()",
@@ -240,10 +240,10 @@
       "source_location": "L169",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honfetchmyprofile",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honfetchmyprofile()",
-      "id": "js_circulation_honfetchmyprofile"
+      "norm_label": "honfetchmyprofile()"
     },
     {
       "label": "honFetchOneItem()",
@@ -252,10 +252,10 @@
       "source_location": "L55",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honfetchoneitem",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honfetchoneitem()",
-      "id": "js_circulation_honfetchoneitem"
+      "norm_label": "honfetchoneitem()"
     },
     {
       "label": "honFetchStatus()",
@@ -264,10 +264,10 @@
       "source_location": "L339",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honfetchstatus",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honfetchstatus()",
-      "id": "js_circulation_honfetchstatus"
+      "norm_label": "honfetchstatus()"
     },
     {
       "label": "honFormatDate()",
@@ -276,10 +276,10 @@
       "source_location": "L82",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honformatdate",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honformatdate()",
-      "id": "js_circulation_honformatdate"
+      "norm_label": "honformatdate()"
     },
     {
       "label": "honGetCurrentUser()",
@@ -288,10 +288,10 @@
       "source_location": "L90",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_hongetcurrentuser",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "hongetcurrentuser()",
-      "id": "js_circulation_hongetcurrentuser"
+      "norm_label": "hongetcurrentuser()"
     },
     {
       "label": "honImageVariant()",
@@ -300,10 +300,10 @@
       "source_location": "L301",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honimagevariant",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honimagevariant()",
-      "id": "js_circulation_honimagevariant"
+      "norm_label": "honimagevariant()"
     },
     {
       "label": "honIsOverdue()",
@@ -312,10 +312,10 @@
       "source_location": "L523",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honisoverdue",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honisoverdue()",
-      "id": "js_circulation_honisoverdue"
+      "norm_label": "honisoverdue()"
     },
     {
       "label": "honJoinQueue()",
@@ -324,10 +324,10 @@
       "source_location": "L500",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honjoinqueue",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honjoinqueue()",
-      "id": "js_circulation_honjoinqueue"
+      "norm_label": "honjoinqueue()"
     },
     {
       "label": "honLeaveQueue()",
@@ -336,10 +336,10 @@
       "source_location": "L511",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honleavequeue",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honleavequeue()",
-      "id": "js_circulation_honleavequeue"
+      "norm_label": "honleavequeue()"
     },
     {
       "label": "honLoadImageElement()",
@@ -348,10 +348,10 @@
       "source_location": "L248",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honloadimageelement",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honloadimageelement()",
-      "id": "js_circulation_honloadimageelement"
+      "norm_label": "honloadimageelement()"
     },
     {
       "label": "honMapItemRow()",
@@ -360,10 +360,10 @@
       "source_location": "L21",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honmapitemrow",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honmapitemrow()",
-      "id": "js_circulation_honmapitemrow"
+      "norm_label": "honmapitemrow()"
     },
     {
       "label": "honMarkNotificationRead()",
@@ -372,10 +372,10 @@
       "source_location": "L328",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honmarknotificationread",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honmarknotificationread()",
-      "id": "js_circulation_honmarknotificationread"
+      "norm_label": "honmarknotificationread()"
     },
     {
       "label": "honRedeemCard()",
@@ -384,10 +384,10 @@
       "source_location": "L142",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honredeemcard",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honredeemcard()",
-      "id": "js_circulation_honredeemcard"
+      "norm_label": "honredeemcard()"
     },
     {
       "label": "honReturnItem()",
@@ -396,10 +396,10 @@
       "source_location": "L487",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honreturnitem",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honreturnitem()",
-      "id": "js_circulation_honreturnitem"
+      "norm_label": "honreturnitem()"
     },
     {
       "label": "honStashPendingCardCode()",
@@ -408,10 +408,10 @@
       "source_location": "L154",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honstashpendingcardcode",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honstashpendingcardcode()",
-      "id": "js_circulation_honstashpendingcardcode"
+      "norm_label": "honstashpendingcardcode()"
     },
     {
       "label": "honStatusInfo()",
@@ -420,10 +420,10 @@
       "source_location": "L529",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honstatusinfo",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honstatusinfo()",
-      "id": "js_circulation_honstatusinfo"
+      "norm_label": "honstatusinfo()"
     },
     {
       "label": "honTakePendingCardCode()",
@@ -432,10 +432,10 @@
       "source_location": "L158",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_hontakependingcardcode",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "hontakependingcardcode()",
-      "id": "js_circulation_hontakependingcardcode"
+      "norm_label": "hontakependingcardcode()"
     },
     {
       "label": "honUploadCoverImage()",
@@ -444,10 +444,10 @@
       "source_location": "L275",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honuploadcoverimage",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honuploadcoverimage()",
-      "id": "js_circulation_honuploadcoverimage"
+      "norm_label": "honuploadcoverimage()"
     },
     {
       "label": "chainable()",
@@ -480,10 +480,10 @@
       "source_location": "L213",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honadminupsertitem",
       "community": 3,
       "community_name": "honRenderCatalogSection",
-      "norm_label": "honadminupsertitem()",
-      "id": "js_circulation_honadminupsertitem"
+      "norm_label": "honadminupsertitem()"
     },
     {
       "label": "honEscape()",
@@ -492,10 +492,10 @@
       "source_location": "L71",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_circulation_honescape",
       "community": 3,
       "community_name": "honRenderCatalogSection",
-      "norm_label": "honescape()",
-      "id": "js_circulation_honescape"
+      "norm_label": "honescape()"
     },
     {
       "label": "bindItemActions()",
@@ -504,10 +504,10 @@
       "source_location": "L189",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_item_binditemactions",
       "community": 4,
       "community_name": "Item Detail Rendering",
-      "norm_label": "binditemactions()",
-      "id": "js_item_binditemactions"
+      "norm_label": "binditemactions()"
     },
     {
       "label": "bindItemDots()",
@@ -516,10 +516,10 @@
       "source_location": "L234",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_item_binditemdots",
       "community": 4,
       "community_name": "Item Detail Rendering",
-      "norm_label": "binditemdots()",
-      "id": "js_item_binditemdots"
+      "norm_label": "binditemdots()"
     },
     {
       "label": "honBuildBackgroundPattern()",
@@ -528,10 +528,10 @@
       "source_location": "L13",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_item_honbuildbackgroundpattern",
       "community": 4,
       "community_name": "Item Detail Rendering",
-      "norm_label": "honbuildbackgroundpattern()",
-      "id": "js_item_honbuildbackgroundpattern"
+      "norm_label": "honbuildbackgroundpattern()"
     },
     {
       "label": "honCoverInnerHTML()",
@@ -540,10 +540,10 @@
       "source_location": "L51",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_item_honcoverinnerhtml",
       "community": 4,
       "community_name": "Item Detail Rendering",
-      "norm_label": "honcoverinnerhtml()",
-      "id": "js_item_honcoverinnerhtml"
+      "norm_label": "honcoverinnerhtml()"
     },
     {
       "label": "honCtaLabel()",
@@ -552,10 +552,10 @@
       "source_location": "L29",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_item_honctalabel",
       "community": 4,
       "community_name": "Item Detail Rendering",
-      "norm_label": "honctalabel()",
-      "id": "js_item_honctalabel"
+      "norm_label": "honctalabel()"
     },
     {
       "label": "honFriendlyError()",
@@ -564,10 +564,10 @@
       "source_location": "L224",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_item_honfriendlyerror",
       "community": 4,
       "community_name": "Item Detail Rendering",
-      "norm_label": "honfriendlyerror()",
-      "id": "js_item_honfriendlyerror"
+      "norm_label": "honfriendlyerror()"
     },
     {
       "label": "honGetItemIdFromURL()",
@@ -576,10 +576,10 @@
       "source_location": "L8",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_item_hongetitemidfromurl",
       "community": 4,
       "community_name": "Item Detail Rendering",
-      "norm_label": "hongetitemidfromurl()",
-      "id": "js_item_hongetitemidfromurl"
+      "norm_label": "hongetitemidfromurl()"
     },
     {
       "label": "honRenderItem()",
@@ -588,10 +588,10 @@
       "source_location": "L87",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_item_honrenderitem",
       "community": 4,
       "community_name": "Item Detail Rendering",
-      "norm_label": "honrenderitem()",
-      "id": "js_item_honrenderitem"
+      "norm_label": "honrenderitem()"
     },
     {
       "label": "honSpecRows()",
@@ -600,10 +600,10 @@
       "source_location": "L38",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_item_honspecrows",
       "community": 4,
       "community_name": "Item Detail Rendering",
-      "norm_label": "honspecrows()",
-      "id": "js_item_honspecrows"
+      "norm_label": "honspecrows()"
     },
     {
       "label": "honBuildFilters()",
@@ -612,10 +612,10 @@
       "source_location": "L88",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_browse_honbuildfilters",
       "community": 8,
       "community_name": "Catalog Shelf Rendering",
-      "norm_label": "honbuildfilters()",
-      "id": "js_browse_honbuildfilters"
+      "norm_label": "honbuildfilters()"
     },
     {
       "label": "honCoverHTML()",
@@ -624,10 +624,10 @@
       "source_location": "L13",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_browse_honcoverhtml",
       "community": 8,
       "community_name": "Catalog Shelf Rendering",
-      "norm_label": "honcoverhtml()",
-      "id": "js_browse_honcoverhtml"
+      "norm_label": "honcoverhtml()"
     },
     {
       "label": "honLayoutShelf()",
@@ -636,10 +636,10 @@
       "source_location": "L39",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_browse_honlayoutshelf",
       "community": 8,
       "community_name": "Catalog Shelf Rendering",
-      "norm_label": "honlayoutshelf()",
-      "id": "js_browse_honlayoutshelf"
+      "norm_label": "honlayoutshelf()"
     },
     {
       "label": "honRenderShelf()",
@@ -648,10 +648,10 @@
       "source_location": "L118",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_browse_honrendershelf",
       "community": 8,
       "community_name": "Catalog Shelf Rendering",
-      "norm_label": "honrendershelf()",
-      "id": "js_browse_honrendershelf"
+      "norm_label": "honrendershelf()"
     },
     {
       "label": "honSeeded()",
@@ -660,10 +660,10 @@
       "source_location": "L8",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_browse_honseeded",
       "community": 8,
       "community_name": "Catalog Shelf Rendering",
-      "norm_label": "honseeded()",
-      "id": "js_browse_honseeded"
+      "norm_label": "honseeded()"
     },
     {
       "label": "honUpdateStats()",
@@ -672,10 +672,10 @@
       "source_location": "L108",
       "_callable": true,
       "_origin": "ast",
+      "id": "js_browse_honupdatestats",
       "community": 8,
       "community_name": "Catalog Shelf Rendering",
-      "norm_label": "honupdatestats()",
-      "id": "js_browse_honupdatestats"
+      "norm_label": "honupdatestats()"
     },
     {
       "label": "honCurrentPage()",
@@ -684,46 +684,34 @@
       "source_location": "L13",
       "_callable": true,
       "_origin": "ast",
-      "id": "js_main_honcurrentpage",
       "community": 9,
       "community_name": "main.js",
-      "norm_label": "honcurrentpage()"
-    },
-    {
-      "label": "honInjectCornerMark()",
-      "file_type": "code",
-      "source_file": "js/main.js",
-      "source_location": "L42",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "js_main_honinjectcornermark",
-      "community": 9,
-      "community_name": "main.js",
-      "norm_label": "honinjectcornermark()"
+      "norm_label": "honcurrentpage()",
+      "id": "js_main_honcurrentpage"
     },
     {
       "label": "honInjectNav()",
       "file_type": "code",
       "source_file": "js/main.js",
-      "source_location": "L50",
+      "source_location": "L42",
       "_callable": true,
       "_origin": "ast",
-      "id": "js_main_honinjectnav",
       "community": 9,
       "community_name": "main.js",
-      "norm_label": "honinjectnav()"
+      "norm_label": "honinjectnav()",
+      "id": "js_main_honinjectnav"
     },
     {
       "label": "toggle()",
       "file_type": "code",
       "source_file": "js/main.js",
-      "source_location": "L72",
+      "source_location": "L64",
       "_callable": true,
       "_origin": "ast",
-      "id": "js_main_honinjectnav_toggle",
       "community": 9,
       "community_name": "main.js",
-      "norm_label": "toggle()"
+      "norm_label": "toggle()",
+      "id": "js_main_honinjectnav_toggle"
     },
     {
       "label": "honInjectSkipLink()",
@@ -732,34 +720,34 @@
       "source_location": "L23",
       "_callable": true,
       "_origin": "ast",
-      "id": "js_main_honinjectskiplink",
       "community": 9,
       "community_name": "main.js",
-      "norm_label": "honinjectskiplink()"
+      "norm_label": "honinjectskiplink()",
+      "id": "js_main_honinjectskiplink"
     },
     {
       "label": "honMaybeShowAdminLink()",
       "file_type": "code",
       "source_file": "js/main.js",
-      "source_location": "L92",
+      "source_location": "L84",
       "_callable": true,
       "_origin": "ast",
-      "id": "js_main_honmaybeshowadminlink",
       "community": 9,
       "community_name": "main.js",
-      "norm_label": "honmaybeshowadminlink()"
+      "norm_label": "honmaybeshowadminlink()",
+      "id": "js_main_honmaybeshowadminlink"
     },
     {
       "label": "honShowNotifications()",
       "file_type": "code",
       "source_file": "js/main.js",
-      "source_location": "L114",
+      "source_location": "L106",
       "_callable": true,
       "_origin": "ast",
-      "id": "js_main_honshownotifications",
       "community": 9,
       "community_name": "main.js",
-      "norm_label": "honshownotifications()"
+      "norm_label": "honshownotifications()",
+      "id": "js_main_honshownotifications"
     },
     {
       "label": "supabase-config.js",
@@ -789,10 +777,10 @@
       "source_file": "js/circulation.js",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "js_circulation",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "circulation.js",
-      "id": "js_circulation"
+      "norm_label": "circulation.js"
     },
     {
       "label": "honState",
@@ -800,10 +788,10 @@
       "source_file": "js/circulation.js",
       "source_location": "L10",
       "_origin": "ast",
+      "id": "js_circulation_honstate",
       "community": 1,
       "community_name": "circulation.js",
-      "norm_label": "honstate",
-      "id": "js_circulation_honstate"
+      "norm_label": "honstate"
     },
     {
       "label": "20260814200000_notifications.sql",
@@ -1493,10 +1481,10 @@
       "source_file": "js/circulation.js",
       "source_location": "L17",
       "_origin": "ast",
+      "id": "js_circulation_hon_catalog",
       "community": 3,
       "community_name": "honRenderCatalogSection",
-      "norm_label": "hon_catalog",
-      "id": "js_circulation_hon_catalog"
+      "norm_label": "hon_catalog"
     },
     {
       "label": "20260815000000_cover_upload_hardening.sql",
@@ -1669,10 +1657,10 @@
       "source_file": "js/item.js",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "js_item",
       "community": 4,
       "community_name": "Item Detail Rendering",
-      "norm_label": "item.js",
-      "id": "js_item"
+      "norm_label": "item.js"
     },
     {
       "label": "HON_ACTION_LOADING_LABEL",
@@ -1680,10 +1668,10 @@
       "source_file": "js/item.js",
       "source_location": "L182",
       "_origin": "ast",
+      "id": "js_item_hon_action_loading_label",
       "community": 4,
       "community_name": "Item Detail Rendering",
-      "norm_label": "hon_action_loading_label",
-      "id": "js_item_hon_action_loading_label"
+      "norm_label": "hon_action_loading_label"
     },
     {
       "label": "20260814180000_admin_rpc.sql",
@@ -1999,10 +1987,10 @@
       "source_file": "js/browse.js",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "js_browse",
       "community": 8,
       "community_name": "Catalog Shelf Rendering",
-      "norm_label": "browse.js",
-      "id": "js_browse"
+      "norm_label": "browse.js"
     },
     {
       "label": "main.js",
@@ -2010,10 +1998,10 @@
       "source_file": "js/main.js",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "js_main",
       "community": 9,
       "community_name": "main.js",
-      "norm_label": "main.js"
+      "norm_label": "main.js",
+      "id": "js_main"
     },
     {
       "label": "HON_NAV_LINKS",
@@ -2021,10 +2009,10 @@
       "source_file": "js/main.js",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "js_main_hon_nav_links",
       "community": 9,
       "community_name": "main.js",
-      "norm_label": "hon_nav_links"
+      "norm_label": "hon_nav_links",
+      "id": "js_main_hon_nav_links"
     },
     {
       "label": "About Page",
@@ -2921,9 +2909,9 @@
       "source_location": "L103",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_browse_honbuildfilters",
-      "target": "js_browse_honrendershelf"
+      "target": "js_browse_honrendershelf",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -2933,9 +2921,9 @@
       "source_location": "L51",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_browse_honlayoutshelf",
-      "target": "js_browse_honseeded"
+      "target": "js_browse_honseeded",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -2945,9 +2933,9 @@
       "source_location": "L71",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_browse_honlayoutshelf",
-      "target": "js_browse_honcoverhtml"
+      "target": "js_browse_honcoverhtml",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -2957,9 +2945,9 @@
       "source_location": "L121",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_browse_honrendershelf",
-      "target": "js_browse_honlayoutshelf"
+      "target": "js_browse_honlayoutshelf",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -2969,9 +2957,9 @@
       "source_location": "L122",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_browse_honrendershelf",
-      "target": "js_browse_honupdatestats"
+      "target": "js_browse_honupdatestats",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -2981,9 +2969,9 @@
       "source_location": "L480",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honcheckout",
-      "target": "js_circulation_honfetchstatus"
+      "target": "js_circulation_honfetchstatus",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -2993,9 +2981,9 @@
       "source_location": "L408",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honfetchallstatuses",
-      "target": "js_circulation_hongetcurrentuser"
+      "target": "js_circulation_hongetcurrentuser",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3005,9 +2993,9 @@
       "source_location": "L125",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honfetchmycards",
-      "target": "js_circulation_hongetcurrentuser"
+      "target": "js_circulation_hongetcurrentuser",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3017,9 +3005,9 @@
       "source_location": "L316",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honfetchmynotifications",
-      "target": "js_circulation_hongetcurrentuser"
+      "target": "js_circulation_hongetcurrentuser",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3029,9 +3017,9 @@
       "source_location": "L170",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honfetchmyprofile",
-      "target": "js_circulation_hongetcurrentuser"
+      "target": "js_circulation_hongetcurrentuser",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3041,9 +3029,9 @@
       "source_location": "L62",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honfetchoneitem",
-      "target": "js_circulation_honmapitemrow"
+      "target": "js_circulation_honmapitemrow",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3053,9 +3041,9 @@
       "source_location": "L347",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honfetchstatus",
-      "target": "js_circulation_hongetcurrentuser"
+      "target": "js_circulation_hongetcurrentuser",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3065,9 +3053,9 @@
       "source_location": "L504",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honjoinqueue",
-      "target": "js_circulation_honfetchstatus"
+      "target": "js_circulation_honfetchstatus",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3077,9 +3065,9 @@
       "source_location": "L515",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honleavequeue",
-      "target": "js_circulation_honfetchstatus"
+      "target": "js_circulation_honfetchstatus",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3089,9 +3077,9 @@
       "source_location": "L493",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honreturnitem",
-      "target": "js_circulation_honfetchstatus"
+      "target": "js_circulation_honfetchstatus",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3101,9 +3089,9 @@
       "source_location": "L538",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honstatusinfo",
-      "target": "js_circulation_honisoverdue"
+      "target": "js_circulation_honisoverdue",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3113,9 +3101,9 @@
       "source_location": "L539",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honstatusinfo",
-      "target": "js_circulation_honformatdate"
+      "target": "js_circulation_honformatdate",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3125,9 +3113,9 @@
       "source_location": "L276",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honuploadcoverimage",
-      "target": "js_circulation_honloadimageelement"
+      "target": "js_circulation_honloadimageelement",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3137,9 +3125,9 @@
       "source_location": "L277",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honuploadcoverimage",
-      "target": "js_circulation_hondrawtocanvas"
+      "target": "js_circulation_hondrawtocanvas",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3149,9 +3137,9 @@
       "source_location": "L281",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation_honuploadcoverimage",
-      "target": "js_circulation_honcanvastoblob"
+      "target": "js_circulation_honcanvastoblob",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3161,9 +3149,9 @@
       "source_location": "L203",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_item_binditemactions",
-      "target": "js_item_honfriendlyerror"
+      "target": "js_item_honfriendlyerror",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3173,9 +3161,9 @@
       "source_location": "L205",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_item_binditemactions",
-      "target": "js_item_honctalabel"
+      "target": "js_item_honctalabel",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3185,9 +3173,9 @@
       "source_location": "L214",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_item_binditemactions",
-      "target": "js_item_honspecrows"
+      "target": "js_item_honspecrows",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3197,9 +3185,9 @@
       "source_location": "L241",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_item_binditemdots",
-      "target": "js_item_honcoverinnerhtml"
+      "target": "js_item_honcoverinnerhtml",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3209,9 +3197,9 @@
       "source_location": "L136",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_item_honrenderitem",
-      "target": "js_item_honctalabel"
+      "target": "js_item_honctalabel",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3221,9 +3209,9 @@
       "source_location": "L145",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_item_honrenderitem",
-      "target": "js_item_honcoverinnerhtml"
+      "target": "js_item_honcoverinnerhtml",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3233,9 +3221,9 @@
       "source_location": "L161",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_item_honrenderitem",
-      "target": "js_item_honspecrows"
+      "target": "js_item_honspecrows",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3245,9 +3233,9 @@
       "source_location": "L178",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_item_honrenderitem",
-      "target": "js_item_binditemactions"
+      "target": "js_item_binditemactions",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3257,9 +3245,9 @@
       "source_location": "L179",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_item_honrenderitem",
-      "target": "js_item_binditemdots"
+      "target": "js_item_binditemdots",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -3269,20 +3257,8 @@
       "source_location": "L88",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_item_honrenderitem",
-      "target": "js_item_hongetitemidfromurl"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "js/main.js",
-      "source_location": "L51",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "js_main_honinjectnav",
-      "target": "js_main_honcurrentpage",
+      "target": "js_item_hongetitemidfromurl",
       "confidence_score": 1.0
     },
     {
@@ -3290,12 +3266,24 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "js/main.js",
-      "source_location": "L86",
+      "source_location": "L43",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "js_main_honinjectnav",
-      "target": "js_main_honmaybeshowadminlink",
-      "confidence_score": 1.0
+      "target": "js_main_honcurrentpage"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "js/main.js",
+      "source_location": "L78",
+      "weight": 1.0,
+      "_origin": "ast",
+      "confidence_score": 1.0,
+      "source": "js_main_honinjectnav",
+      "target": "js_main_honmaybeshowadminlink"
     },
     {
       "relation": "calls",
@@ -3388,9 +3376,9 @@
       "source_location": "L108",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_browse",
-      "target": "js_browse_honupdatestats"
+      "target": "js_browse_honupdatestats",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3399,9 +3387,9 @@
       "source_location": "L118",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_browse",
-      "target": "js_browse_honrendershelf"
+      "target": "js_browse_honrendershelf",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3410,9 +3398,9 @@
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_browse",
-      "target": "js_browse_honcoverhtml"
+      "target": "js_browse_honcoverhtml",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3421,9 +3409,9 @@
       "source_location": "L39",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_browse",
-      "target": "js_browse_honlayoutshelf"
+      "target": "js_browse_honlayoutshelf",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3432,9 +3420,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_browse",
-      "target": "js_browse_honseeded"
+      "target": "js_browse_honseeded",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3443,9 +3431,9 @@
       "source_location": "L88",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_browse",
-      "target": "js_browse_honbuildfilters"
+      "target": "js_browse_honbuildfilters",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3454,9 +3442,9 @@
       "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation",
-      "target": "js_circulation_honstate"
+      "target": "js_circulation_honstate",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3465,9 +3453,9 @@
       "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation",
-      "target": "js_circulation_hon_catalog"
+      "target": "js_circulation_hon_catalog",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3476,9 +3464,9 @@
       "source_location": "L21",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation",
-      "target": "js_circulation_honmapitemrow"
+      "target": "js_circulation_honmapitemrow",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3487,9 +3475,9 @@
       "source_location": "L248",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation",
-      "target": "js_circulation_honloadimageelement"
+      "target": "js_circulation_honloadimageelement",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3498,9 +3486,9 @@
       "source_location": "L258",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation",
-      "target": "js_circulation_hondrawtocanvas"
+      "target": "js_circulation_hondrawtocanvas",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3509,9 +3497,9 @@
       "source_location": "L269",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation",
-      "target": "js_circulation_honcanvastoblob"
+      "target": "js_circulation_honcanvastoblob",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3520,9 +3508,9 @@
       "source_location": "L301",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_circulation",
-      "target": "js_circulation_honimagevariant"
+      "target": "js_circulation_honimagevariant",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3531,9 +3519,9 @@
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_item",
-      "target": "js_item_honbuildbackgroundpattern"
+      "target": "js_item_honbuildbackgroundpattern",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3542,9 +3530,9 @@
       "source_location": "L182",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_item",
-      "target": "js_item_hon_action_loading_label"
+      "target": "js_item_hon_action_loading_label",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3553,9 +3541,9 @@
       "source_location": "L189",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_item",
-      "target": "js_item_binditemactions"
+      "target": "js_item_binditemactions",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3564,9 +3552,9 @@
       "source_location": "L224",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_item",
-      "target": "js_item_honfriendlyerror"
+      "target": "js_item_honfriendlyerror",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3575,9 +3563,9 @@
       "source_location": "L234",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_item",
-      "target": "js_item_binditemdots"
+      "target": "js_item_binditemdots",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3586,9 +3574,9 @@
       "source_location": "L29",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_item",
-      "target": "js_item_honctalabel"
+      "target": "js_item_honctalabel",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3597,9 +3585,9 @@
       "source_location": "L38",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_item",
-      "target": "js_item_honspecrows"
+      "target": "js_item_honspecrows",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3608,9 +3596,9 @@
       "source_location": "L51",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_item",
-      "target": "js_item_honcoverinnerhtml"
+      "target": "js_item_honcoverinnerhtml",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3619,9 +3607,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_item",
-      "target": "js_item_hongetitemidfromurl"
+      "target": "js_item_hongetitemidfromurl",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3630,20 +3618,20 @@
       "source_location": "L87",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "js_item",
-      "target": "js_item_honrenderitem"
+      "target": "js_item_honrenderitem",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "js/main.js",
-      "source_location": "L114",
+      "source_location": "L106",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "js_main",
-      "target": "js_main_honshownotifications",
-      "confidence_score": 1.0
+      "target": "js_main_honshownotifications"
     },
     {
       "relation": "contains",
@@ -3652,9 +3640,9 @@
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "js_main",
-      "target": "js_main_honcurrentpage",
-      "confidence_score": 1.0
+      "target": "js_main_honcurrentpage"
     },
     {
       "relation": "contains",
@@ -3663,9 +3651,9 @@
       "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "js_main",
-      "target": "js_main_honinjectskiplink",
-      "confidence_score": 1.0
+      "target": "js_main_honinjectskiplink"
     },
     {
       "relation": "contains",
@@ -3674,9 +3662,9 @@
       "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "js_main",
-      "target": "js_main_hon_nav_links",
-      "confidence_score": 1.0
+      "target": "js_main_hon_nav_links"
     },
     {
       "relation": "contains",
@@ -3685,31 +3673,20 @@
       "source_location": "L42",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "js_main",
-      "target": "js_main_honinjectcornermark",
-      "confidence_score": 1.0
+      "target": "js_main_honinjectnav"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "js/main.js",
-      "source_location": "L50",
+      "source_location": "L84",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "js_main",
-      "target": "js_main_honinjectnav",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "js/main.js",
-      "source_location": "L92",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "js_main",
-      "target": "js_main_honmaybeshowadminlink",
-      "confidence_score": 1.0
+      "target": "js_main_honmaybeshowadminlink"
     },
     {
       "relation": "contains",
@@ -4643,20 +4620,32 @@
       "source_location": "L46",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 0.5,
       "source": "js_circulation_honfetchcatalog",
-      "target": "js_circulation_honmapitemrow"
+      "target": "js_circulation_honmapitemrow",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
       "context": "argument",
       "confidence": "INFERRED",
       "source_file": "js/main.js",
-      "source_location": "L78",
+      "source_location": "L70",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 0.5,
       "source": "js_main_honinjectnav",
-      "target": "js_main_honinjectnav_toggle",
+      "target": "js_main_honinjectnav_toggle"
+    },
+    {
+      "relation": "indirect_call",
+      "confidence": "INFERRED",
+      "source_file": "js/circulation.js",
+      "source_location": "L557",
+      "weight": 1.0,
+      "_origin": "ast",
+      "context": "collection",
+      "source": "js_circulation",
+      "target": "js_circulation_honescape",
       "confidence_score": 0.5
     },
     {
@@ -4667,9 +4656,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honescape"
+      "target": "js_circulation_honfetchcatalog",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4679,9 +4668,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honfetchcatalog"
+      "target": "js_circulation_honfetchoneitem",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4691,9 +4680,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honfetchoneitem"
+      "target": "js_circulation_honformatdate",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4703,9 +4692,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honformatdate"
+      "target": "js_circulation_hongetcurrentuser",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4715,21 +4704,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_hongetcurrentuser"
-    },
-    {
-      "relation": "indirect_call",
-      "confidence": "INFERRED",
-      "source_file": "js/circulation.js",
-      "source_location": "L557",
-      "weight": 1.0,
-      "_origin": "ast",
-      "context": "collection",
-      "confidence_score": 0.5,
-      "source": "js_circulation",
-      "target": "js_circulation_honsigninwithemail"
+      "target": "js_circulation_honsigninwithemail",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4739,9 +4716,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_hondeletemyaccount"
+      "target": "js_circulation_hondeletemyaccount",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4751,9 +4728,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honfetchmycards"
+      "target": "js_circulation_honfetchmycards",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4763,9 +4740,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honredeemcard"
+      "target": "js_circulation_honredeemcard",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4775,9 +4752,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honvalidatecardcode"
+      "target": "js_circulation_honvalidatecardcode",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4787,9 +4764,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honstashpendingcardcode"
+      "target": "js_circulation_honstashpendingcardcode",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4799,9 +4776,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_hontakependingcardcode"
+      "target": "js_circulation_hontakependingcardcode",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4811,9 +4788,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honadminlistloans"
+      "target": "js_circulation_honadminlistloans",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4823,9 +4800,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honadminlistprofiles"
+      "target": "js_circulation_honadminlistprofiles",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4835,9 +4812,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honfetchmyprofile"
+      "target": "js_circulation_honfetchmyprofile",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4847,9 +4824,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honadminforcereturn"
+      "target": "js_circulation_honadminforcereturn",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4859,9 +4836,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honadminissuecard"
+      "target": "js_circulation_honadminissuecard",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4871,9 +4848,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honadminsetbanned"
+      "target": "js_circulation_honadminsetbanned",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4883,9 +4860,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honadminupsertitem"
+      "target": "js_circulation_honadminupsertitem",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4895,9 +4872,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honuploadcoverimage"
+      "target": "js_circulation_honuploadcoverimage",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4907,9 +4884,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honfetchmynotifications"
+      "target": "js_circulation_honfetchmynotifications",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4919,9 +4896,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honmarknotificationread"
+      "target": "js_circulation_honmarknotificationread",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4931,9 +4908,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honfetchallstatuses"
+      "target": "js_circulation_honfetchallstatuses",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4943,9 +4920,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honfetchstatus"
+      "target": "js_circulation_honfetchstatus",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4955,9 +4932,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honcheckout"
+      "target": "js_circulation_honcheckout",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4967,9 +4944,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honjoinqueue"
+      "target": "js_circulation_honjoinqueue",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4979,9 +4956,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honleavequeue"
+      "target": "js_circulation_honleavequeue",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -4991,9 +4968,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honreturnitem"
+      "target": "js_circulation_honreturnitem",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -5003,9 +4980,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honisoverdue"
+      "target": "js_circulation_honisoverdue",
+      "confidence_score": 0.5
     },
     {
       "relation": "indirect_call",
@@ -5015,9 +4992,9 @@
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
-      "confidence_score": 0.5,
       "source": "js_circulation",
-      "target": "js_circulation_honstatusinfo"
+      "target": "js_circulation_honstatusinfo",
+      "confidence_score": 0.5
     },
     {
       "relation": "calls",
@@ -6323,5 +6300,5 @@
       "source_file": "PROJECT_NOTES.md"
     }
   ],
-  "built_at_commit": "4f7a42c9452aed91ca3e05715de860fbd8545e9e"
+  "built_at_commit": "58bf81f2e8847a737d0c8db598ba57151bd2a7ad"
 }
