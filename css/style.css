@@ -222,6 +222,17 @@ main, footer { position: relative; z-index: 1; }
   #hon-corner-mark { animation: none; }
 }
 .item-page #hon-corner-mark { display: none; }
+@media (max-width: 760px) {
+  /* Same vw units, but mobile has far less width to spare — at the
+     desktop sizing this crowded straight into the footer text. Smaller
+     and tucked further into the corner so it reads as a quiet accent
+     instead of competing with content. */
+  #hon-corner-mark {
+    font-size: 24vw;
+    right: -8vw;
+    bottom: -12vw;
+  }
+}
 
 /* ---------- Queue notification banner (T13) ---------- */
 .hon-notify-banner {
