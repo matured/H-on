@@ -539,6 +539,7 @@ section { padding: clamp(48px, 8vw, 96px) 0; }
 @media (prefers-reduced-motion: reduce) {
   .shelf-cover-photo { animation: none; background-image: none; }
 }
+.shelf-cover-photo picture,
 .shelf-cover-photo img {
   width: 100%;
   height: 100%;
@@ -694,6 +695,7 @@ body.item-page { position: relative; }
   border: 3px solid;
   background: var(--paper);
 }
+.item-cover-large-photo picture,
 .item-cover-large-photo img {
   width: 100%;
   height: 100%;
