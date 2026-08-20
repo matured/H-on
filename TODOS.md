@@ -1,5 +1,16 @@
 # TODOS
 
+## Features
+
+### Community message board (伝言板 / dengonban)
+
+**What:** A shared message board members can post short public notes to — modeled on the Japanese train-station 伝言板 ("dengonban"/"rengonban"): the green chalkboard grid where people left handwritten notes for each other before mobile phones (e.g. "Waiting at the west exit until 6, meet me there — Kenji").
+**Why:** Fits 本's whole anti-feed, pre-phone, physical-media premise better than a generic comments section would — it's the same "message left for a stranger to find" idea the whole site is already built around, just applied to member-to-member notes instead of magazines.
+**Context:** Reference images gathered 2026-08-19 (Google Images search for "rengonban 伝言板") — real dengonban boards are a green chalkboard/whiteboard ruled into a grid (date/time/message columns), handwritten, physically erased over time. Needs real design/product thought before building: a Supabase table + RLS policy for public writes (rate-limited, since it's the first genuinely public-write surface on the site), a UI treatment that reads as "chalkboard" without just being a comments widget, and a moderation story (report/hide, since there's no moderation tooling on the site yet beyond admin.html's member management).
+**Effort:** L
+**Priority:** P3
+**Depends on:** None
+
 ## Design
 
 ### Decide on a permanent brand mark
