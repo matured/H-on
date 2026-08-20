@@ -81,13 +81,15 @@ function honInjectNav() {
   const btn = document.createElement('button');
   btn.className = 'menu-btn';
   btn.setAttribute('aria-label', 'Open menu');
+  btn.setAttribute('aria-expanded', 'false');
   btn.innerHTML = `<span class="dot"></span><span class="close-x">&times;</span>`;
 
   const overlay = document.createElement('div');
   overlay.className = 'menu-overlay';
+  overlay.setAttribute('inert', '');
   overlay.innerHTML = `
     <div class="overlay-inner">
-      <nav class="overlay-links">
+      <nav class="overlay-links" aria-label="Site">
         ${HON_NAV_LINKS.map(l => `<a href="${l.href}" ${l.href === current ? 'aria-current="page"' : ''}>${l.label}</a>`).join('')}
       </nav>
       <p class="overlay-meta">本 is a circulating archive of Japanese print media, 1998 to 2025. Invite-only.</p>
@@ -97,10 +99,29 @@ function honInjectNav() {
   document.body.prepend(overlay);
   document.body.prepend(btn);
 
+  // Everything the overlay isn't: made inert while it's open so Tab can't
+  // escape into content sitting behind the (visually) fullscreen menu, and
+  // so screen readers don't announce it either. `inert` handles both the
+  // focus trap and the "background is hidden from AT" half of a modal
+  // overlay in one attribute — no manual Tab-cycling keydown handler needed.
+  const others = () => [...document.body.children].filter(el => el !== overlay);
+
   function toggle() {
     const open = overlay.classList.toggle('open');
     btn.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     document.body.classList.toggle('menu-locked', open);
+
+    if (open) {
+      overlay.removeAttribute('inert');
+      others().forEach(el => el.setAttribute('inert', ''));
+      overlay.querySelector('.overlay-links a')?.focus();
+    } else {
+      overlay.setAttribute('inert', '');
+      others().forEach(el => el.removeAttribute('inert'));
+      btn.focus();
+    }
   }
 
   btn.addEventListener('click', toggle);

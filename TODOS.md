@@ -20,15 +20,6 @@
 **Priority:** P3
 **Depends on:** None
 
-### Add keyboard focus trap + Escape handling to the fullscreen nav overlay
-
-**What:** The black-circle → fullscreen overlay menu (injected by js/main.js on every page) doesn't yet trap focus or close on Escape.
-**Why:** Accessibility gap called out explicitly in the 2026-08-16 accessibility pass as not yet covered.
-**Context:** See "Completed 2026-08-16" in PROJECT_NOTES.md, "Not yet covered" note.
-**Effort:** S
-**Priority:** P3
-**Depends on:** None
-
 ## Content
 
 ### Swap placeholder team names/roles on About page
@@ -41,6 +32,16 @@
 **Depends on:** None
 
 ## Completed
+
+### Add keyboard focus trap to the fullscreen nav overlay
+
+**What:** The black-circle → fullscreen overlay menu didn't trap focus while open — Tab could reach page content sitting behind it, and the overlay's own links stayed tabbable even while closed and transformed off-screen. Escape-to-close already worked (the earlier TODO item describing it as missing was stale).
+**Why:** Real accessibility gap called out in the 2026-08-16 accessibility pass. Fixed using the `inert` attribute: everything except the overlay is made inert while it's open (removes focus trap + AT-hiding in one attribute, no manual Tab-cycling keydown handler needed), focus moves to the first link on open and back to the trigger button on close, and the trigger's `aria-expanded`/`aria-label` now reflect state.
+**Context:** js/main.js's `honInjectNav()`. New regression tests in tests/e2e/nav-overlay-focus.spec.js.
+**Effort:** S
+**Priority:** P3
+**Depends on:** None
+**Completed:** v0.0.1.0 (2026-08-19)
 
 ### Fix corner brand mark 3D spin + add per-magazine hover variation
 
