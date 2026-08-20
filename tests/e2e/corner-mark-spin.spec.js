@@ -9,6 +9,24 @@ const { test, expect } = require('@playwright/test');
 // work: backface-visibility:hidden makes a lone face render nothing (not a
 // mirror) for the half of the rotation where its back points at the viewer.
 test.describe('Site-wide corner brand mark — 3D spin', () => {
+  // Regression test: the wrapper (#hon-corner-mark) has no in-flow content
+  // of its own — both faces are position:absolute, taken out of flow — so
+  // without an explicit width/height it collapses to 0x0 and the faces have
+  // nothing to fill, rendering nothing at all. None of the other tests here
+  // would have caught this: they all read the computed `transform` matrix,
+  // which is perfectly valid math on a zero-size box. Only checking actual
+  // rendered geometry (getBoundingClientRect) catches it.
+  test('the wrapper has real, nonzero rendered dimensions', async ({ page }) => {
+    await page.goto('/home.html');
+    const mark = page.locator('#hon-corner-mark');
+    await expect(mark).toBeAttached();
+
+    const box = await mark.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box.width).toBeGreaterThan(0);
+    expect(box.height).toBeGreaterThan(0);
+  });
+
   test('rotateY animation carries the perspective divisor onto its own transform', async ({ page }) => {
     await page.goto('/home.html');
     const faces = page.locator('.hon-corner-face');

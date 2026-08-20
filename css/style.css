@@ -202,6 +202,13 @@ main, footer { position: relative; z-index: 1; }
   position: fixed;
   right: -2vw;
   bottom: -5vw;
+  /* Both faces are position:absolute (out of flow), so this wrapper has
+     no in-flow content left to size itself from — without an explicit
+     box it collapses to 0x0 and the absolutely-positioned faces have
+     nothing to fill. 1em (of its own font-size below) approximates the
+     square em-box a single "本" glyph would have occupied inline. */
+  width: 1em;
+  height: 1em;
   font-family: var(--display);
   font-weight: 900;
   font-size: 38vw;
