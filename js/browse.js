@@ -52,6 +52,11 @@ function honLayoutShelf(visibleItems) {
     const widthPct = 20 + honSeeded(globalIndex * 7 + 2) * 8; // 20–28%
     const leftPct = side === 0 ? 4 + jitter * 0.5 : 50 + jitter;
     const rotate = (honSeeded(globalIndex * 11 + 4) - 0.5) * 5;
+    // Per-item hover personality: each magazine tilts, scales and lifts a
+    // little differently on hover instead of all sharing one motion.
+    const hoverRotate = -4 + (honSeeded(globalIndex * 13 + 5) - 0.5) * 16;
+    const hoverScale = 1.16 + (honSeeded(globalIndex * 17 + 6) - 0.5) * 0.08;
+    const hoverLift = -14 + (honSeeded(globalIndex * 19 + 7) - 0.5) * 8;
 
     const el = document.createElement('a');
     el.href = `item.html?id=${item.id}`;
@@ -59,6 +64,9 @@ function honLayoutShelf(visibleItems) {
     el.dataset.genre = item.genre;
     el.style.width = widthPct + '%';
     el.style.transform = `rotate(${rotate.toFixed(1)}deg)`;
+    el.style.setProperty('--cover-hover-rotate', hoverRotate.toFixed(1) + 'deg');
+    el.style.setProperty('--cover-hover-scale', hoverScale.toFixed(2));
+    el.style.setProperty('--cover-hover-lift', hoverLift.toFixed(1) + 'px');
 
     if (!isMobile) {
       el.style.top = sideTop[side] + 'px';
@@ -145,3 +153,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 });
+
+// Node/Vitest only — mirrors the export guard at the bottom of
+// circulation.js. `module` is always undefined for the plain <script> tag
+// this file loads as in the browser, so this branch never runs there.
+// honSeeded is the one pure, DOM-free function in this file, and it's what
+// the per-item hover rotate/scale/lift values in honLayoutShelf are derived
+// from. honLayoutShelf itself is also exported so a test can exercise the
+// actual DOM-write path (el.style.setProperty(--cover-hover-*)) against a
+// real jsdom element — same as browse.js does in the browser, this still
+// expects honEscape/honImageVariant/honStatusInfo and HON_CATALOG to exist
+// as globals (from circulation.js in the browser; stubbed by the caller
+// in tests).
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { honSeeded, honLayoutShelf };
+}

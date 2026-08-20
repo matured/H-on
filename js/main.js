@@ -39,14 +39,26 @@ function honInjectSkipLink() {
   document.body.prepend(skip);
 }
 
-// Must match the "36s" in #hon-corner-mark's animation-duration (css/style.css).
+// Must match the "36s" in .hon-corner-face's animation-duration (css/style.css).
 const HON_CORNER_SPIN_MS = 36000;
 
 function honInjectCornerMark() {
   const mark = document.createElement('div');
   mark.id = 'hon-corner-mark';
-  mark.textContent = '本';
   mark.setAttribute('aria-hidden', 'true');
+
+  // Two stacked faces, not one rotating glyph: backface-visibility:hidden
+  // on a single face means it renders nothing (not a mirror) for the half
+  // of every rotation where its back points at the viewer. Phase-shifting
+  // a second face by half a cycle keeps exactly one face front-facing at
+  // all times, so the mark never blinks out.
+  const front = document.createElement('span');
+  front.className = 'hon-corner-face';
+  front.textContent = '本';
+  const back = document.createElement('span');
+  back.className = 'hon-corner-face';
+  back.textContent = '本';
+  mark.append(front, back);
 
   // Every page load otherwise restarts the CSS animation at 0deg, so
   // navigating site-wide looked like the spin kept resetting. A negative
@@ -57,7 +69,8 @@ function honInjectCornerMark() {
   // continuously since some fixed point, so it reads as one unbroken
   // spin across page loads instead of restarting each time.
   const elapsed = Date.now() % HON_CORNER_SPIN_MS;
-  mark.style.animationDelay = `-${elapsed}ms`;
+  front.style.animationDelay = `-${elapsed}ms`;
+  back.style.animationDelay = `-${(elapsed + HON_CORNER_SPIN_MS / 2) % HON_CORNER_SPIN_MS}ms`;
 
   document.body.prepend(mark);
 }

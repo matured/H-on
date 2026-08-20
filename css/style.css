@@ -210,16 +210,19 @@ main, footer { position: relative; z-index: 1; }
   z-index: 0;
   pointer-events: none;
   user-select: none;
-  perspective: 1200px;
-  transform-style: preserve-3d;
+}
+.hon-corner-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
   animation: hon-corner-spin 36s linear infinite;
 }
 @keyframes hon-corner-spin {
-  from { transform: rotateY(0deg); }
-  to { transform: rotateY(360deg); }
+  from { transform: perspective(1200px) rotateY(0deg); }
+  to { transform: perspective(1200px) rotateY(360deg); }
 }
 @media (prefers-reduced-motion: reduce) {
-  #hon-corner-mark { animation: none; }
+  .hon-corner-face { animation: none; }
 }
 .item-page #hon-corner-mark { display: none; }
 @media (max-width: 760px) {
@@ -515,9 +518,16 @@ section { padding: clamp(48px, 8vw, 96px) 0; }
 .shelf-item:hover {
   z-index: 20;
 }
-.shelf-item:hover .shelf-cover {
-  transform: scale(1.16) rotate(-7deg) translateY(-14px);
-  box-shadow: 0 34px 60px rgba(10,10,10,0.24);
+@media (hover: hover) and (pointer: fine) {
+  .shelf-item:hover .shelf-cover {
+    transform: scale(var(--cover-hover-scale, 1.16)) rotate(var(--cover-hover-rotate, -7deg)) translateY(var(--cover-hover-lift, -14px));
+    box-shadow: 0 34px 60px rgba(10,10,10,0.24);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .shelf-item:hover .shelf-cover {
+    transform: none;
+  }
 }
 .shelf-cover-era { letter-spacing: 0.12em; font-size: 11px; }
 .shelf-cover-title {

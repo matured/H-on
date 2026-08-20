@@ -1,7 +1,6 @@
 # 本 (hon) — Project Notes
 
-Mock company site for a Communications Industry Mock Company final project.
-本 ("book") is a fictional invite-only digital library that circulates real
+A real personal project. 本 ("book") is a fictional invite-only digital library that circulates real
 Japanese print media from 1990–2005, one reader at a time — the anti-feed,
 anti-algorithm answer to how media discovery works today.
 
@@ -278,8 +277,8 @@ zero unintended visual change, verified against the exact prior values):
 ## Suggested next steps (not yet done)
 
 - [ ] No logo yet beyond the 本 kanji as logotype — fine as-is per your
-      original direction ("logo will come later"), but worth deciding before
-      final submission whether that's the permanent mark. (A candidate
+      original direction ("logo will come later"), but worth deciding at
+      some point whether that's the permanent mark. (A candidate
       identity system — a "call number" lockup built from the existing
       glyph, not a new icon — was sketched as a design spec 2026-08-16,
       not yet applied to the site.)
@@ -289,17 +288,15 @@ zero unintended visual change, verified against the exact prior values):
       membership.html and admin.html weren't specifically re-checked
       this pass.
 - [ ] Team member names/roles on the About page are still generic placeholder
-      titles (Founder, Archivist, Community, Systems) — swap in your actual
-      teammates before submission if the rubric expects real names.
-- [ ] Decide if you want real teammate photos/bios or keep it role-based.
+      titles (Founder, Archivist, Community, Systems) — swap in real names/
+      roles whenever the team behind the project is settled.
+- [ ] Decide if you want real photos/bios or keep it role-based.
 - [x] Accessibility pass — done 2026-08-16, see above (form labels,
       focus states, aria-live, keyboard access on the splash grid,
       reduced-motion support). Not yet covered: keyboard nav through the
       fullscreen overlay menu itself (focus trap, Escape to close), and
       `membership.html`/`admin.html` haven't had the full design/inline-
       style-extraction pass the other pages got.
-- [ ] The presentation deck (PowerPoint) is a separate deliverable your
-      teammates are handling — this site doesn't cover that.
 
 ---
 
