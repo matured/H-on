@@ -4,7 +4,7 @@
 
 [ho-n.com](https://ho-n.com) · [![Test](https://github.com/matured/H-on/actions/workflows/test.yml/badge.svg)](https://github.com/matured/H-on/actions/workflows/test.yml)
 
-![本 homepage screenshot](docs/readme-hero.png)
+![The Archive — 本's scattered, browsable catalog shelf](docs/readme-hero.png)
 
 ## What this is
 
