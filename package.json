@@ -1,7 +1,7 @@
 {
   "name": "hon",
   "private": true,
-  "description": "Dev-only test tooling for 本 (hon). The site itself ships with no build step and no dependencies — this package.json exists solely so Vitest can run js/circulation.js's unit tests; it is never loaded by any HTML page.",
+  "description": "Dev-only test tooling for 本 (hon). The site itself ships with no build step and no dependencies — this package.json exists solely so Vitest can run the js/circulation.js and js/browse.js unit tests; it is never loaded by any HTML page.",
   "type": "commonjs",
   "scripts": {
     "test": "NODE_OPTIONS=--no-experimental-webstorage vitest run",
@@ -12,5 +12,6 @@
     "@playwright/test": "^1.62.1",
     "jsdom": "^25.0.0",
     "vitest": "^2.1.0"
-  }
+  },
+  "version": "0.0.1"
 }
