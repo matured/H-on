@@ -5,7 +5,7 @@
 ### Decide on a permanent brand mark
 
 **What:** Decide whether the 本 kanji-as-logotype is the permanent identity mark, or whether the sketched "call number" lockup concept should be applied.
-**Why:** No logo exists yet beyond the kanji; worth locking in before final submission.
+**Why:** No logo exists yet beyond the kanji; worth locking in at some point.
 **Context:** A candidate identity system (a "call number" lockup built from the existing glyph, not a new icon) was sketched as a design spec on 2026-08-16 but never applied to the site. See PROJECT_NOTES.md.
 **Effort:** M
 **Priority:** P2
@@ -33,7 +33,7 @@
 
 ### Swap placeholder team names/roles on About page
 
-**What:** Replace the generic role titles (Founder, Archivist, Community, Systems) on about.html with real teammate names if the submission rubric expects them.
+**What:** Replace the generic role titles (Founder, Archivist, Community, Systems) on about.html with real names/roles whenever the team behind the project is settled.
 **Why:** Currently placeholder content; decide real names/photos vs. staying role-based.
 **Context:** See PROJECT_NOTES.md "Suggested next steps."
 **Effort:** S
