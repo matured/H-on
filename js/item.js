@@ -10,6 +10,30 @@ function honGetItemIdFromURL() {
   return params.get('id');
 }
 
+// item.html has no server-side rendering, so the static <head> only ever
+// carries generic fallback copy. Once the real item loads client-side,
+// swap the description/canonical/OG/Twitter tags to match it — crawlers
+// that execute JS (Googlebot does) then see the real per-item content
+// instead of the generic placeholder every item would otherwise share.
+function honSetItemMetaTags(item) {
+  const title = `${item.title} · 本 (hon)`;
+  const desc = (item.desc || `${item.title}${item.issue ? ` ${item.issue}` : ''} — a real magazine available to borrow from 本's circulating archive.`).slice(0, 200);
+  const url = `https://ho-n.com/item.html?id=${encodeURIComponent(item.id)}`;
+
+  const setContent = (id, value) => {
+    const el = document.getElementById(id);
+    if (el) el.setAttribute(el.tagName === 'LINK' ? 'href' : 'content', value);
+  };
+
+  setContent('hon-meta-description', desc);
+  setContent('hon-meta-canonical', url);
+  setContent('hon-meta-og-url', url);
+  setContent('hon-meta-og-title', title);
+  setContent('hon-meta-og-description', desc);
+  setContent('hon-meta-twitter-title', title);
+  setContent('hon-meta-twitter-description', desc);
+}
+
 function honBuildBackgroundPattern() {
   const bg = document.getElementById('item-bg-pattern');
   if (!bg) return;
@@ -133,6 +157,7 @@ async function honRenderItem() {
   }
 
   document.title = `${item.title} · 本 (hon)`;
+  honSetItemMetaTags(item);
   const cta = honCtaLabel(item);
   const status = honStatusInfo(item);
 
