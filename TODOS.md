@@ -11,6 +11,15 @@
 **Priority:** P3
 **Depends on:** None
 
+### Automatic email when a waitlist request is accepted
+
+**What:** Accepting a waitlist request currently shows the card code once in the admin panel; there's no automatic email to the person. An admin has to copy the code and send it themselves.
+**Why:** Explicitly deferred (2026-08-21) in favor of shipping Accept/Decline without new infrastructure. Supabase's built-in email only covers auth flows (magic link, etc.), not custom transactional content — this would need a provider (e.g. Resend) and a new Supabase edge function.
+**Context:** Would also need the card to be linked back to the waitlist request row (not the case today) so the email can be triggered from the right place with the right recipient.
+**Effort:** M
+**Priority:** P3
+**Depends on:** None
+
 ## Security
 
 ### Rate-limit the public waitlist insert
@@ -62,6 +71,16 @@
 **Depends on:** None
 
 ## Completed
+
+### Accept/Decline buttons on the waitlist admin panel
+
+**What:** The waitlist panel could only be read, not acted on — issuing a card meant using the separate, unconnected "Issue Card" button. Added `admin_accept_waitlist_request` (mints a card, row-locked against double-accepting) and `admin_decline_waitlist_request`, both `is_admin()`-gated. `admin_list_waitlist` now also returns a `status` column (pending/accepted/declined) and sorts pending requests first.
+**Why:** Requested directly, alongside how the person would find out — decided to keep that manual for now (see the new Security TODO below) rather than build email infrastructure.
+**Context:** supabase/migrations/20260821010000_waitlist_accept_decline.sql, admin.html's Accept/Decline buttons. Accepting shows the card code once, inline — it isn't linked back to the request row in the database, so copy it and send it yourself.
+**Effort:** S
+**Priority:** P2
+**Depends on:** None
+**Completed:** v0.0.4.0 (2026-08-21)
 
 ### Enter the splash page on any keypress
 

@@ -64,7 +64,15 @@ $$;
 -- sorted first — that's the queue an admin actually works through; already
 -- handled requests are still visible below for a record of who was
 -- accepted/declined, not hidden once acted on.
-create or replace function public.admin_list_waitlist()
+--
+-- CREATE OR REPLACE cannot change a function's return-column list (only
+-- the body) — Postgres raises "cannot change return type of existing
+-- function" and refuses. The prior version (20260821000000) returns table
+-- (id, name, email, note, created_at); this one adds status, so the old
+-- function has to be dropped first or the whole migration file aborts.
+drop function if exists public.admin_list_waitlist();
+
+create function public.admin_list_waitlist()
 returns table (
   id bigint,
   name text,
@@ -90,8 +98,13 @@ begin
 end;
 $$;
 
+-- admin_list_waitlist's own grant doesn't survive the drop above — a
+-- freshly created function starts with default (no) privileges, not
+-- whatever the dropped one had.
 revoke execute on function public.admin_accept_waitlist_request(bigint) from public;
 revoke execute on function public.admin_decline_waitlist_request(bigint) from public;
+revoke execute on function public.admin_list_waitlist() from public;
 
 grant execute on function public.admin_accept_waitlist_request(bigint) to authenticated;
 grant execute on function public.admin_decline_waitlist_request(bigint) to authenticated;
+grant execute on function public.admin_list_waitlist() to authenticated;
