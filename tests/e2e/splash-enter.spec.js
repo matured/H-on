@@ -140,4 +140,41 @@ test.describe('Splash page — enter on click or any key', () => {
   test('caption text reflects the any-key affordance', async ({ page }) => {
     await expect(page.locator('#hon-caption')).toHaveText('Click or press any key to enter');
   });
+
+  // Regression: the caption used to sit directly on the busy tile grid in a
+  // muted grey (#a8a397) with no backing — ~2.4:1 contrast against the
+  // #faf9f4 tiles, well under WCAG AA's 4.5:1 minimum for normal text, and
+  // worse still where it crossed a tile's black glyph stroke. A solid
+  // near-black plate with cream text (~17.9:1) fixes that regardless of
+  // what's rendered behind it. This pins the actual computed colors, not
+  // just that SOME background exists, so a future edit can't quietly
+  // reintroduce a low-contrast pairing.
+  test('caption has a solid, high-contrast background instead of floating on the tile grid', async ({ page }) => {
+    const caption = page.locator('#hon-caption');
+    const styles = await caption.evaluate((el) => {
+      const computed = getComputedStyle(el);
+      return { color: computed.color, background: computed.backgroundColor };
+    });
+    expect(styles.color).toBe('rgb(250, 249, 244)'); // #faf9f4
+    expect(styles.background).toBe('rgb(10, 10, 10)'); // #0a0a0a
+  });
+
+  // The new backing plate's horizontal padding (18px each side, 36px total)
+  // widens the caption's shrink-to-fit box from ~275px to ~311px. #hon-caption
+  // is centered with left:50%+translateX(-50%) and never wraps
+  // (white-space: nowrap), so it has no reflow escape hatch — measured at
+  // WCAG 1.4.10's 320px reflow baseline, the widened box now clears the
+  // viewport edge by only ~4px per side (vs. ~22px before this diff). That's
+  // not yet a regression, but it's a much thinner margin than it looks like
+  // from the source, and a future nudge to padding, font-size, or
+  // letter-spacing on this element could push it into clipping at exactly
+  // the width WCAG says must stay usable. Pin the box inside the viewport now
+  // so that regression fails loudly instead of shipping silently.
+  test('caption stays within the viewport at the 320px WCAG reflow baseline', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 800 });
+    await page.goto('/index.html');
+    const rect = await page.locator('#hon-caption').evaluate((el) => el.getBoundingClientRect());
+    expect(rect.left).toBeGreaterThanOrEqual(0);
+    expect(rect.right).toBeLessThanOrEqual(320);
+  });
 });

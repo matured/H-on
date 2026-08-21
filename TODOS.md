@@ -72,6 +72,16 @@
 
 ## Completed
 
+### Fix splash caption legibility
+
+**What:** The "click or press any key" caption sat directly on the flickering tile grid in a muted grey (#a8a397) with no backing — ~2.4:1 contrast against the tiles, under WCAG AA's 4.5:1 minimum. Gave it a solid plate reusing the page's own near-black/cream palette for ~17.9:1 contrast.
+**Why:** Requested directly, after a screenshot showed the caption hard to read.
+**Context:** index.html's `#hon-caption` rule. Checked with the `web-design-guidelines` skill (fetched, but that guideline set doesn't carry numeric contrast thresholds) and `impeccable`'s audit criteria (which do — WCAG AA 4.5:1), then computed the actual ratios directly.
+**Effort:** S
+**Priority:** P2
+**Depends on:** None
+**Completed:** v0.0.5.0 (2026-08-21)
+
 ### Accept/Decline buttons on the waitlist admin panel
 
 **What:** The waitlist panel could only be read, not acted on — issuing a card meant using the separate, unconnected "Issue Card" button. Added `admin_accept_waitlist_request` (mints a card, row-locked against double-accepting) and `admin_decline_waitlist_request`, both `is_admin()`-gated. `admin_list_waitlist` now also returns `status` (pending/accepted/declined) and `card_code` (via a `library_cards.waitlist_request_id` FK), and sorts pending requests first. Also closed a real gap the pre-landing review caught: the original insert policy on `waitlist_requests` was `with check (true)`, which let an anonymous submitter set `status` to `accepted`/`declined` directly, bypassing both RPCs — tightened to `with check (status = 'pending')`.
