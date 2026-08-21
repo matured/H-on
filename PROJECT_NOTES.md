@@ -256,7 +256,7 @@ zero unintended visual change, verified against the exact prior values):
 
 ---
 
-## Known limitations (by design, worth saying out loud in the presentation)
+## Known limitations (by design)
 
 - ~~No real backend~~ — **outdated as of 2026-08-14.** Checkout/return/queue
   now run against a real shared Supabase backend with real accounts (RLS
@@ -266,9 +266,13 @@ zero unintended visual change, verified against the exact prior values):
   validated against the DB before any email is sent, and redeem_card claims
   it (minting 5 new cards) once the user comes back signed in from the
   magic link. The card dashboard now shows real issued/unused cards for the
-  signed-in user instead of a hardcoded mockup. The waitlist form and the
-  support/donation form are still non-functional mockups with a fake
-  confirmation message — clearly labeled as demo-only in the copy.
+  signed-in user instead of a hardcoded mockup. The waitlist form on
+  membership.html is real too (2026-08-17): it writes to a `waitlist_requests`
+  table, and admin.html has an admin-only panel (2026-08-21) listing every
+  submission via `admin_list_waitlist`, so signups are visible in-app instead
+  of only in the Supabase dashboard. The support/donation form is still a
+  non-functional mockup with a fake confirmation message, clearly labeled as
+  demo-only in the copy.
 - Covers are real photographed scans of actual magazines, not typographic
   placeholders — a deliberate, risk-aware choice (see above), not a gap.
 

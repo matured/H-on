@@ -11,6 +11,17 @@
 **Priority:** P3
 **Depends on:** None
 
+## Security
+
+### Rate-limit the public waitlist insert
+
+**What:** membership.html's waitlist form writes to `waitlist_requests` via a bare anon-role `insert` RLS policy (`with check (true)`) — no CAPTCHA, no per-IP/session throttling. `check_rate_limit()` already exists (supabase/migrations/20260814210000_rate_limiting.sql) but is only wired into check_out/return_item/join_queue/leave_queue/redeem_card, not this insert path.
+**Why:** Flagged by /ship's red-team review on the admin waitlist panel (2026-08-21): now that submissions are readable in-app (`admin_list_waitlist`, capped at 500 rows as a stopgap), an unbounded flood of anon writes is a real nuisance vector against the admin panel, not just inert rows in an unreadable table.
+**Context:** Would mean routing the insert through a rate-limited RPC instead of a raw client-side `.insert()`, which changes the shipped membership.html form's write path — bigger and riskier than the panel work it was found alongside, so deferred rather than bundled in.
+**Effort:** M
+**Priority:** P2
+**Depends on:** None
+
 ## Design
 
 ### Decide on a permanent brand mark
@@ -43,6 +54,16 @@
 **Depends on:** None
 
 ## Completed
+
+### Add an admin-visible waitlist panel
+
+**What:** membership.html's waitlist form was already writing to a real `waitlist_requests` table, but nothing could read it back — no select policy, no admin UI, no notification of any kind. Added an `admin_list_waitlist` RPC (gated by `is_admin()`, same pattern as the other admin reads) and a "Waitlist" panel on admin.html listing name/email/note/submitted date for every signup.
+**Why:** The founder had no way to know someone had signed up short of opening the Supabase dashboard directly.
+**Context:** supabase/migrations/20260821000000_admin_list_waitlist.sql, js/circulation.js's `honAdminListWaitlist()`, admin.html's `honRenderWaitlistTable()`. True push notification (email/SMS on submit) is still open — would need a DB webhook or trigger, not yet built.
+**Effort:** S
+**Priority:** P2
+**Depends on:** None
+**Completed:** 2026-08-21
 
 ### Add keyboard focus trap to the fullscreen nav overlay
 

@@ -6,7 +6,7 @@ const {
   honFetchCatalog, honFormatDate, honGetCurrentUser, honSignInWithEmail,
   honFetchMyCards, honValidateCardCode, honRedeemCard,
   honStashPendingCardCode, honTakePendingCardCode,
-  honFetchMyProfile, honAdminListProfiles, honAdminListLoans,
+  honFetchMyProfile, honAdminListProfiles, honAdminListLoans, honAdminListWaitlist,
   honAdminForceReturn, honAdminIssueCard, honAdminSetBanned, honAdminUpsertItem,
   honFetchMyNotifications, honMarkNotificationRead,
   honFetchStatus, honFetchAllStatuses,
@@ -503,5 +503,22 @@ describe('admin wrappers', () => {
     });
     expect(await honAdminListProfiles()).toEqual([]);
     expect(await honAdminListLoans()).toEqual([]);
+  });
+
+  it('honAdminListWaitlist calls admin_list_waitlist and returns the rows on success', async () => {
+    const rows = [{ id: 1, name: 'Jane', email: 'jane@example.com', note: 'hi', created_at: '2026-01-01T00:00:00Z' }];
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_list_waitlist: { data: rows, error: null } } });
+    expect(await honAdminListWaitlist()).toEqual(rows);
+    expect(global.honSupabase.rpc).toHaveBeenCalledWith('admin_list_waitlist');
+  });
+
+  it('honAdminListWaitlist defaults to [] instead of null', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_list_waitlist: { data: null, error: null } } });
+    expect(await honAdminListWaitlist()).toEqual([]);
+  });
+
+  it('honAdminListWaitlist throws on RPC error (e.g. a non-admin caller)', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_list_waitlist: { data: null, error: new Error('admin only') } } });
+    await expect(honAdminListWaitlist()).rejects.toThrow('admin only');
   });
 });

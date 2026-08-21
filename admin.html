@@ -102,6 +102,12 @@ async function honRenderAdmin() {
       <div id="members-table-wrap" style="margin-top:16px; overflow-x:auto;">Loading&hellip;</div>
     </div>
 
+    <div style="margin-bottom:48px;">
+      <p class="eyebrow">WAITLIST</p>
+      <p style="margin-top:10px; font-size:14.5px; color:#2c2b28;">People who asked to be on the list from the Membership page. Issue them a card above once you've read their note.</p>
+      <div id="waitlist-table-wrap" style="margin-top:16px; overflow-x:auto;">Loading&hellip;</div>
+    </div>
+
     <div>
       <p class="eyebrow">CATALOG</p>
       <h2 style="font-size: clamp(20px, 2.6vw, 24px); margin-top:12px;">Add or edit a title.</h2>
@@ -176,6 +182,7 @@ async function honRenderAdmin() {
 
   await honRenderLoansTable();
   await honRenderMembersTable();
+  await honRenderWaitlistTable();
   await honRenderCatalogSection();
 }
 
@@ -468,6 +475,41 @@ async function honRenderMembersTable() {
       }
     });
   });
+}
+
+async function honRenderWaitlistTable() {
+  const wrap = document.getElementById('waitlist-table-wrap');
+  let requests;
+  try {
+    requests = await honAdminListWaitlist();
+  } catch (err) {
+    wrap.innerHTML = `<p style="color:var(--red); font-size:14px;">Couldn’t load the waitlist: ${honEscape(err.message || err)}</p>`;
+    return;
+  }
+  if (!requests.length) {
+    wrap.innerHTML = `<p style="font-size:14px; color:var(--grey);">No requests yet.</p>`;
+    return;
+  }
+  wrap.innerHTML = `
+    <table style="width:100%; border-collapse:collapse; min-width:640px;">
+      <thead><tr>
+        <th style="${HON_TH_STYLE}">Name</th>
+        <th style="${HON_TH_STYLE}">Email</th>
+        <th style="${HON_TH_STYLE}">Note</th>
+        <th style="${HON_TH_STYLE}">Submitted</th>
+      </tr></thead>
+      <tbody>
+        ${requests.map(r => `
+          <tr>
+            <td style="${HON_TD_STYLE} overflow-wrap:break-word; max-width:220px;">${honEscape(r.name)}</td>
+            <td style="${HON_TD_STYLE} overflow-wrap:break-word; max-width:220px;">${honEscape(r.email)}</td>
+            <td style="${HON_TD_STYLE} white-space:normal; overflow-wrap:break-word; max-width:360px;">${r.note ? honEscape(r.note) : '<span style="color:var(--grey);">—</span>'}</td>
+            <td style="${HON_TD_STYLE}">${honFormatDate(r.created_at)}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
 }
 
 document.addEventListener('DOMContentLoaded', honRenderAdmin);
