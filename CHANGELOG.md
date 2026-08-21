@@ -2,6 +2,14 @@
 
 All notable changes to this project are documented here.
 
+## [0.0.3.0] - 2026-08-21
+
+### Added
+- The splash page now enters on any keypress, not just clicking a tile or tabbing to it first and pressing Enter/Space — matches the "press any key to continue" pattern.
+
+### Fixed
+- Reverse-tabbing (Shift+Tab) on the splash page no longer accidentally triggers site entry before the keystroke finishes.
+
 ## [0.0.2.0] - 2026-08-21
 
 ### Added
