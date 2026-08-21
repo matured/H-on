@@ -49,6 +49,23 @@ test.describe('Splash page — enter on click or any key', () => {
     expect(await focusedId(page)).toBe('hon-skip');
   });
 
+  // Regression: the browser fires a keydown for the bare Shift press itself
+  // (shiftKey already true on that event, key === 'Shift') before the Tab
+  // keydown that follows it. Without excluding shiftKey alongside
+  // ctrl/meta/alt, that first event alone satisfied every other guard and
+  // fired enterSite() — but only when nothing has focus yet, i.e. its
+  // target is document.body. (Pressing Shift+Tab from an already-focused
+  // element, e.g. the Skip link, wouldn't have caught this: the bare
+  // Shift keydown's target would already be that focused element, which
+  // the target guard excludes on its own regardless of the shiftKey bug —
+  // confirmed by reverting the fix and observing this test still passed
+  // in that scenario, but failed once fired from a fresh, unfocused load.)
+  test('Shift+Tab from a fresh, unfocused page does not enter the site', async ({ page }) => {
+    await page.keyboard.press('Shift+Tab');
+    expect(await isLeaving(page)).toBe(false);
+    await expect(page).toHaveURL(STILL_ON_SPLASH);
+  });
+
   // The interesting half of the e.target guard: a keypress that ISN'T Enter
   // while the skip link holds focus must be ignored by the document handler
   // just like it would be anywhere else, not treated as "entering via body".
