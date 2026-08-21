@@ -93,6 +93,31 @@ test.describe('Admin — Waitlist panel (honRenderWaitlistTable)', () => {
     await expect(wrap.locator('table')).toHaveCount(0);
   });
 
+  // admin_list_waitlist() hard-caps at 500 rows (the migration's own LIMIT)
+  // so an unbounded flood of anon submissions can't blow up this render.
+  // Hitting that cap must never be silent — it means older requests exist
+  // beyond what's shown. This test pins the row count that triggers the
+  // warning, not just that a warning banner CAN exist.
+  function makeRows(n) {
+    return Array.from({ length: n }, (_, i) => ({
+      id: i + 1, name: `Person ${i}`, email: `p${i}@example.com`, note: null, created_at: '2026-01-01T00:00:00Z',
+    }));
+  }
+
+  test('hitting the 500-row cap shows a "showing most recent" warning', async ({ page }) => {
+    await mockAdminAndRender(page, { waitlist: makeRows(500) });
+
+    await expect(page.locator('#waitlist-table-wrap')).toContainText('Showing the 500 most recent requests');
+    await expect(page.locator('#waitlist-table-wrap tbody tr')).toHaveCount(500);
+  });
+
+  test('below the cap shows no truncation warning', async ({ page }) => {
+    await mockAdminAndRender(page, { waitlist: makeRows(499) });
+
+    await expect(page.locator('#waitlist-table-wrap')).not.toContainText('Showing the');
+    await expect(page.locator('#waitlist-table-wrap tbody tr')).toHaveCount(499);
+  });
+
   test('an RPC error (e.g. a non-admin caller) shows an escaped error message instead of throwing', async ({ page }) => {
     await mockAdminAndRender(page, { waitlistError: 'admin only' });
 

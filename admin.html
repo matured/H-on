@@ -43,6 +43,8 @@ const HON_LABEL_STYLE = 'display:block; font-family:var(--mono); font-size:11px;
 const HON_TH_STYLE = 'text-align:left; font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--grey); padding:8px 10px; border-bottom:1px solid var(--line-strong);';
 const HON_TD_STYLE = 'padding:10px; border-bottom:1px solid var(--line); font-size:13.5px; vertical-align:middle;';
 const HON_INPUT_STYLE = 'width:100%; font-family:var(--mono); font-size:13px; padding:10px 12px; border:1px solid var(--ink); background:var(--paper);';
+// Must match the `limit` in admin_list_waitlist() (supabase/migrations/20260821000000_admin_list_waitlist.sql).
+const HON_WAITLIST_ROW_CAP = 500;
 const HON_CATALOG_FIELD_IDS = ['cf-id', 'cf-title', 'cf-subtitle', 'cf-issue', 'cf-era', 'cf-genre', 'cf-call', 'cf-coverbg', 'cf-coverfg', 'cf-coveraccent', 'cf-desc'];
 // item_id doubles as a Storage path segment ({item_id}/{side}.{ext} in
 // honUploadCoverImage) — lowercase-slug-only keeps it a safe, predictable
@@ -490,7 +492,16 @@ async function honRenderWaitlistTable() {
     wrap.innerHTML = `<p style="font-size:14px; color:var(--grey);">No requests yet.</p>`;
     return;
   }
+  // admin_list_waitlist() caps at 500 rows (see the migration) so an
+  // unbounded flood of anon submissions can't blow up this render. That cap
+  // must never be silent — hitting it exactly means older requests exist
+  // beyond what's shown, which is exactly the scenario a spammed public
+  // form produces.
+  const cappedNote = requests.length === HON_WAITLIST_ROW_CAP
+    ? `<p style="margin-bottom:10px; font-size:13px; color:var(--red);">Showing the ${HON_WAITLIST_ROW_CAP} most recent requests — older requests exist beyond this limit.</p>`
+    : '';
   wrap.innerHTML = `
+    ${cappedNote}
     <table style="width:100%; border-collapse:collapse; min-width:640px;">
       <thead><tr>
         <th style="${HON_TH_STYLE}">Name</th>

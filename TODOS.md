@@ -22,6 +22,14 @@
 **Priority:** P2
 **Depends on:** None
 
+### Cap admin_list_profiles() and admin_list_loans() the same way admin_list_waitlist() is capped
+
+**What:** `admin_list_waitlist()` (supabase/migrations/20260821000000_admin_list_waitlist.sql) caps its result at 500 rows so unbounded growth can't blow up the admin page's render. The two older sibling RPCs, `admin_list_profiles()` and `admin_list_loans()` (supabase/migrations/20260814180000_admin_rpc.sql), have no such limit.
+**Why:** Flagged by /ship's Claude adversarial review (2026-08-21) as the same failure class, not introduced by this diff. Lower urgency since both only grow via authenticated member actions, not open anon writes like the waitlist table — but inconsistent with the standard just set.
+**Effort:** S
+**Priority:** P3
+**Depends on:** None
+
 ## Design
 
 ### Decide on a permanent brand mark
