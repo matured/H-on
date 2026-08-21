@@ -111,7 +111,7 @@ body.hon-leaving #splash-grid {
 <body>
 
 <div id="splash-grid" role="button" tabindex="0" aria-label="Enter site"></div>
-<p id="hon-caption">Click any 本 to enter</p>
+<p id="hon-caption">Click or press any key to enter</p>
 <a id="hon-skip" href="catalog.html">Skip &rarr;</a>
 
 <script>
@@ -142,12 +142,29 @@ body.hon-leaving #splash-grid {
 
   // Every tile does the same thing (enter the site), so the grid itself is
   // the one real control — a screen reader / keyboard user gets a single
-  // "Enter site" stop instead of tabbing through dozens of identical tiles.
-  grid.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      enterSite();
-    }
+  // "Enter site" stop instead of tabbing through dozens of identical tiles
+  // (kept focusable/labeled below for that reason, even though sighted
+  // keyboard users can now just press anything without tabbing first).
+  //
+  // Document-level, not scoped to the grid, so a keyboard user doesn't have
+  // to tab to anything first — matches the "press any key" splash pattern.
+  // Modifier combos (Cmd/Ctrl/Alt/Shift) are left alone so browser/OS
+  // shortcuts still work. Tab is left alone so it still moves focus
+  // normally — including to the Skip link, which should get to handle its
+  // own Enter/Space as a real link, not be raced by this handler firing
+  // first. Shift matters here specifically for Shift+Tab: the browser
+  // fires a keydown for the bare Shift press itself (shiftKey already true
+  // on that event) before the following Tab keydown arrives — without
+  // excluding it, that first event alone satisfies every other guard and
+  // fires enterSite() before Tab's own exclusion ever gets a chance,
+  // breaking reverse keyboard navigation to the Skip link.
+  document.addEventListener('keydown', (e) => {
+    if (document.body.classList.contains('hon-leaving')) return;
+    if (e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) return;
+    if (e.key === 'Tab') return;
+    if (e.target !== document.body && e.target !== grid) return;
+    e.preventDefault();
+    enterSite();
   });
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -63,6 +63,16 @@
 
 ## Completed
 
+### Enter the splash page on any keypress
+
+**What:** index.html's splash grid previously only entered on click, or on Enter/Space after tabbing to the grid first. Added a document-level keydown handler so any key enters the site without requiring focus first, matching the "press any key to continue" pattern.
+**Why:** Requested directly — clicking (or discovering you need to tab-then-Enter) was the only way in.
+**Context:** index.html's document keydown listener. Excludes Ctrl/Meta/Alt/Shift modifier combos and Tab so browser shortcuts and normal keyboard navigation (including reaching the Skip link) still work. A pre-landing adversarial review caught and fixed a real regression this introduced: Shift+Tab was accidentally triggering entry via the bare Shift keydown before the Tab keydown arrived.
+**Effort:** S
+**Priority:** P2
+**Depends on:** None
+**Completed:** v0.0.3.0 (2026-08-21)
+
 ### Add an admin-visible waitlist panel
 
 **What:** membership.html's waitlist form was already writing to a real `waitlist_requests` table, but nothing could read it back — no select policy, no admin UI, no notification of any kind. Added an `admin_list_waitlist` RPC (gated by `is_admin()`, same pattern as the other admin reads) and a "Waitlist" panel on admin.html listing name/email/note/submitted date for every signup.

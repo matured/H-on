@@ -14,7 +14,7 @@ accessibility/design pass + test infra, 2026-08-16).
 **Open `index.html` to start** — it's the splash screen, not the homepage.
 
 ```
-index.html          Splash: flickering 本 grid, click any tile to enter
+index.html          Splash: flickering 本 grid, click a tile or press any key to enter
   → catalog.html     (splash leads here — the Archive is the front door)
 
 home.html            The actual marketing homepage (hero, mission, pillars)
