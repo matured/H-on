@@ -78,7 +78,16 @@ html, body {
   font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #a8a397;
+  /* Was #a8a397 directly on the tile grid: ~2.4:1 contrast against the
+     #faf9f4 tiles (WCAG AA needs 4.5:1 for normal text), and worse where
+     it crossed the black glyph strokes underneath — a muted color with no
+     backing plate can't win against a busy, high-contrast background no
+     matter what shade it is. A solid plate in the page's own near-black
+     with cream text reuses the site's two existing colors and gets
+     ~17.9:1, comfortably past even AAA (7:1). */
+  color: #faf9f4;
+  background: #0a0a0a;
+  padding: 10px 18px;
   opacity: 0;
   transition: opacity 0.8s ease;
   pointer-events: none;

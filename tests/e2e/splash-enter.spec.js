@@ -140,4 +140,22 @@ test.describe('Splash page — enter on click or any key', () => {
   test('caption text reflects the any-key affordance', async ({ page }) => {
     await expect(page.locator('#hon-caption')).toHaveText('Click or press any key to enter');
   });
+
+  // Regression: the caption used to sit directly on the busy tile grid in a
+  // muted grey (#a8a397) with no backing — ~2.4:1 contrast against the
+  // #faf9f4 tiles, well under WCAG AA's 4.5:1 minimum for normal text, and
+  // worse still where it crossed a tile's black glyph stroke. A solid
+  // near-black plate with cream text (~17.9:1) fixes that regardless of
+  // what's rendered behind it. This pins the actual computed colors, not
+  // just that SOME background exists, so a future edit can't quietly
+  // reintroduce a low-contrast pairing.
+  test('caption has a solid, high-contrast background instead of floating on the tile grid', async ({ page }) => {
+    const caption = page.locator('#hon-caption');
+    const styles = await caption.evaluate((el) => {
+      const computed = getComputedStyle(el);
+      return { color: computed.color, background: computed.backgroundColor };
+    });
+    expect(styles.color).toBe('rgb(250, 249, 244)'); // #faf9f4
+    expect(styles.background).toBe('rgb(10, 10, 10)'); // #0a0a0a
+  });
 });
