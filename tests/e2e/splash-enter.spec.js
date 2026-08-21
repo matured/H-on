@@ -158,4 +158,23 @@ test.describe('Splash page — enter on click or any key', () => {
     expect(styles.color).toBe('rgb(250, 249, 244)'); // #faf9f4
     expect(styles.background).toBe('rgb(10, 10, 10)'); // #0a0a0a
   });
+
+  // The new backing plate's horizontal padding (18px each side, 36px total)
+  // widens the caption's shrink-to-fit box from ~275px to ~311px. #hon-caption
+  // is centered with left:50%+translateX(-50%) and never wraps
+  // (white-space: nowrap), so it has no reflow escape hatch — measured at
+  // WCAG 1.4.10's 320px reflow baseline, the widened box now clears the
+  // viewport edge by only ~4px per side (vs. ~22px before this diff). That's
+  // not yet a regression, but it's a much thinner margin than it looks like
+  // from the source, and a future nudge to padding, font-size, or
+  // letter-spacing on this element could push it into clipping at exactly
+  // the width WCAG says must stay usable. Pin the box inside the viewport now
+  // so that regression fails loudly instead of shipping silently.
+  test('caption stays within the viewport at the 320px WCAG reflow baseline', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 800 });
+    await page.goto('/index.html');
+    const rect = await page.locator('#hon-caption').evaluate((el) => el.getBoundingClientRect());
+    expect(rect.left).toBeGreaterThanOrEqual(0);
+    expect(rect.right).toBeLessThanOrEqual(320);
+  });
 });
