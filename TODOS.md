@@ -11,11 +11,20 @@
 **Priority:** P3
 **Depends on:** None
 
+### Automatic email when a waitlist request is accepted
+
+**What:** Accepting a waitlist request shows the card code in the admin panel; there's no automatic email to the person. An admin has to copy the code and send it themselves.
+**Why:** Explicitly deferred (2026-08-21) in favor of shipping Accept/Decline without new infrastructure. Supabase's built-in email only covers auth flows (magic link, etc.), not custom transactional content — this would need a provider (e.g. Resend) and a new Supabase edge function.
+**Context:** `library_cards.waitlist_request_id` already links a card back to its request (added so the code is recoverable by re-querying, not just linked for this), so triggering an email from the right place with the right recipient is mostly wiring, not new schema.
+**Effort:** M
+**Priority:** P3
+**Depends on:** None
+
 ## Security
 
 ### Rate-limit the public waitlist insert
 
-**What:** membership.html's waitlist form writes to `waitlist_requests` via a bare anon-role `insert` RLS policy (`with check (true)`) — no CAPTCHA, no per-IP/session throttling. `check_rate_limit()` already exists (supabase/migrations/20260814210000_rate_limiting.sql) but is only wired into check_out/return_item/join_queue/leave_queue/redeem_card, not this insert path.
+**What:** membership.html's waitlist form writes to `waitlist_requests` via an anon-role `insert` RLS policy (`with check (status = 'pending')` as of the Accept/Decline migration, previously `with check (true)`) — no CAPTCHA, no per-IP/session throttling. `check_rate_limit()` already exists (supabase/migrations/20260814210000_rate_limiting.sql) but is only wired into check_out/return_item/join_queue/leave_queue/redeem_card, not this insert path.
 **Why:** Flagged by /ship's red-team review on the admin waitlist panel (2026-08-21): now that submissions are readable in-app (`admin_list_waitlist`, capped at 500 rows as a stopgap), an unbounded flood of anon writes is a real nuisance vector against the admin panel, not just inert rows in an unreadable table.
 **Context:** Would mean routing the insert through a rate-limited RPC instead of a raw client-side `.insert()`, which changes the shipped membership.html form's write path — bigger and riskier than the panel work it was found alongside, so deferred rather than bundled in.
 **Effort:** M
@@ -62,6 +71,16 @@
 **Depends on:** None
 
 ## Completed
+
+### Accept/Decline buttons on the waitlist admin panel
+
+**What:** The waitlist panel could only be read, not acted on — issuing a card meant using the separate, unconnected "Issue Card" button. Added `admin_accept_waitlist_request` (mints a card, row-locked against double-accepting) and `admin_decline_waitlist_request`, both `is_admin()`-gated. `admin_list_waitlist` now also returns `status` (pending/accepted/declined) and `card_code` (via a `library_cards.waitlist_request_id` FK), and sorts pending requests first. Also closed a real gap the pre-landing review caught: the original insert policy on `waitlist_requests` was `with check (true)`, which let an anonymous submitter set `status` to `accepted`/`declined` directly, bypassing both RPCs — tightened to `with check (status = 'pending')`.
+**Why:** Requested directly, alongside how the person would find out — decided to keep that manual for now (see the new Security TODO below) rather than build email infrastructure.
+**Context:** supabase/migrations/20260821010000_waitlist_accept_decline.sql, admin.html's Accept/Decline buttons. Accepting shows the card code inline; because it's linked back to the request row, it's also recoverable by reloading the panel later, not just visible in the moment — closes a real reliability gap the adversarial review found (a lost network response after a server-side-successful accept would otherwise strand the code with no way to see it again).
+**Effort:** S
+**Priority:** P2
+**Depends on:** None
+**Completed:** v0.0.4.0 (2026-08-21)
 
 ### Enter the splash page on any keypress
 
