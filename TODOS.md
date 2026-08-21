@@ -71,7 +71,7 @@
 **Effort:** S
 **Priority:** P2
 **Depends on:** None
-**Completed:** 2026-08-21
+**Completed:** v0.0.2.0 (2026-08-21)
 
 ### Add keyboard focus trap to the fullscreen nav overlay
 
