@@ -206,6 +206,12 @@ async function honAdminSetBanned(userId, banned) {
   if (error) throw error;
 }
 
+async function honAdminListWaitlist() {
+  const { data, error } = await honSupabase.rpc('admin_list_waitlist');
+  if (error) throw error;
+  return data || [];
+}
+
 // item: same shape as a HON_CATALOG entry (id, title, subtitle, issue,
 // era, genre, call, copiesTotal, coverBg, coverFg, coverAccent,
 // coverImage, backImage, desc) — admin.html's form reads/writes that
@@ -558,7 +564,7 @@ if (typeof module !== 'undefined' && module.exports) {
     honDeleteMyAccount,
     honFetchMyCards, honValidateCardCode, honRedeemCard,
     honStashPendingCardCode, honTakePendingCardCode,
-    honFetchMyProfile, honAdminListProfiles, honAdminListLoans,
+    honFetchMyProfile, honAdminListProfiles, honAdminListLoans, honAdminListWaitlist,
     honAdminForceReturn, honAdminIssueCard, honAdminSetBanned, honAdminUpsertItem,
     honUploadCoverImage,
     honFetchMyNotifications, honMarkNotificationRead,

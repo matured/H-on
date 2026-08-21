@@ -13,7 +13,7 @@
 - **The Archive** — a scattered, browsable shelf of the current catalog, sorted by genre and era.
 - **Real circulation** — checkout, return, and queueing against a live backend, row-locked against overselling.
 - **Invite-only membership** — join by redeeming a library card; every member gets five more cards to pass on.
-- **Founder/admin tools** — issue cards, manage loans, and edit the catalog from a gated admin panel.
+- **Founder/admin tools** — issue cards, manage loans, review waitlist signups, and edit the catalog from a gated admin panel.
 
 ## Stack
 
