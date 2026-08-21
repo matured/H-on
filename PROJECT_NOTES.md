@@ -25,8 +25,9 @@ how-it-works.html    Circulation cycle, queue mechanic, CDL legal framing
 membership.html      Invite-only system, 5-library-card mechanic, waitlist form
 support.html         Donation tiers, Supporter perks (mock, non-functional payment)
 admin.html           Founder/admin only: issue cards, force-return loans, ban
-                     members. Not linked from the public nav — gated server-side
-                     by the is_admin flag, not by obscurity. Added 2026-08-14 (T11).
+                     members, accept/decline waitlist requests. Not linked from
+                     the public nav — gated server-side by the is_admin flag,
+                     not by obscurity. Added 2026-08-14 (T11).
 ```
 
 The site-wide nav (black circle top-left → fullscreen overlay menu) is
@@ -269,10 +270,13 @@ zero unintended visual change, verified against the exact prior values):
   signed-in user instead of a hardcoded mockup. The waitlist form on
   membership.html is real too (2026-08-17): it writes to a `waitlist_requests`
   table, and admin.html has an admin-only panel (2026-08-21) listing every
-  submission via `admin_list_waitlist`, so signups are visible in-app instead
-  of only in the Supabase dashboard. The support/donation form is still a
-  non-functional mockup with a fake confirmation message, clearly labeled as
-  demo-only in the copy.
+  submission via `admin_list_waitlist`. The panel is no longer read-only
+  (2026-08-21): Accept and Decline buttons call `admin_accept_waitlist_request`
+  (mints a card, row-locked against double-accepting) and
+  `admin_decline_waitlist_request`, both `is_admin()`-gated, so an admin can
+  act on a signup without switching to the separate "Issue Card" flow. The
+  support/donation form is still a non-functional mockup with a fake
+  confirmation message, clearly labeled as demo-only in the copy.
 - Covers are real photographed scans of actual magazines, not typographic
   placeholders — a deliberate, risk-aware choice (see above), not a gap.
 

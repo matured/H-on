@@ -24,7 +24,7 @@
 
 ### Rate-limit the public waitlist insert
 
-**What:** membership.html's waitlist form writes to `waitlist_requests` via a bare anon-role `insert` RLS policy (`with check (true)`) — no CAPTCHA, no per-IP/session throttling. `check_rate_limit()` already exists (supabase/migrations/20260814210000_rate_limiting.sql) but is only wired into check_out/return_item/join_queue/leave_queue/redeem_card, not this insert path.
+**What:** membership.html's waitlist form writes to `waitlist_requests` via an anon-role `insert` RLS policy (`with check (status = 'pending')` as of the Accept/Decline migration, previously `with check (true)`) — no CAPTCHA, no per-IP/session throttling. `check_rate_limit()` already exists (supabase/migrations/20260814210000_rate_limiting.sql) but is only wired into check_out/return_item/join_queue/leave_queue/redeem_card, not this insert path.
 **Why:** Flagged by /ship's red-team review on the admin waitlist panel (2026-08-21): now that submissions are readable in-app (`admin_list_waitlist`, capped at 500 rows as a stopgap), an unbounded flood of anon writes is a real nuisance vector against the admin panel, not just inert rows in an unreadable table.
 **Context:** Would mean routing the insert through a rate-limited RPC instead of a raw client-side `.insert()`, which changes the shipped membership.html form's write path — bigger and riskier than the panel work it was found alongside, so deferred rather than bundled in.
 **Effort:** M
