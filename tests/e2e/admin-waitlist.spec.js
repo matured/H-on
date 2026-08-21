@@ -10,19 +10,25 @@ const { test, expect } = require('@playwright/test');
 // next time it calls them) and re-invoke honRenderAdmin() ourselves. This
 // exercises honRenderWaitlistTable() (admin.html) without a real Supabase
 // backend or a real admin session.
-async function mockAdminAndRender(page, { waitlist, waitlistError } = {}) {
+async function mockAdminAndRender(page, { waitlist, waitlistError, onAccept, onDecline } = {}) {
   await page.goto('/admin.html');
 
-  await page.evaluate(({ waitlist, waitlistError }) => {
+  await page.evaluate(({ waitlist, waitlistError, onAccept, onDecline }) => {
     window.honGetCurrentUser = async () => ({ id: 'admin-1', email: 'admin@example.com' });
     window.honFetchMyProfile = async () => ({ user_id: 'admin-1', is_admin: true, banned: false });
     window.honAdminListWaitlist = waitlistError
       ? async () => { throw new Error(waitlistError); }
       : async () => waitlist;
+    window.honAdminAcceptWaitlistRequest = onAccept
+      ? new Function('requestId', `return (${onAccept})(requestId);`)
+      : async () => ({ code: 'ABCD-1234' });
+    window.honAdminDeclineWaitlistRequest = onDecline
+      ? new Function('requestId', `return (${onDecline})(requestId);`)
+      : async () => {};
     window.honAdminListLoans = async () => [];
     window.honAdminListProfiles = async () => [];
     window.honFetchCatalog = async () => [];
-  }, { waitlist, waitlistError });
+  }, { waitlist, waitlistError, onAccept: onAccept ? onAccept.toString() : null, onDecline: onDecline ? onDecline.toString() : null });
 
   await page.evaluate(() => window.honRenderAdmin());
 }
@@ -31,7 +37,7 @@ test.describe('Admin — Waitlist panel (honRenderWaitlistTable)', () => {
   test('renders name, email, note, and a formatted submitted date for each request', async ({ page }) => {
     await mockAdminAndRender(page, {
       waitlist: [
-        { id: 1, name: 'Jane Doe', email: 'jane@example.com', note: 'Big fan of the archive', created_at: '2026-03-05T12:00:00Z' },
+        { id: 1, name: 'Jane Doe', email: 'jane@example.com', note: 'Big fan of the archive', status: 'pending', created_at: '2026-03-05T12:00:00Z' },
       ],
     });
 
@@ -45,6 +51,7 @@ test.describe('Admin — Waitlist panel (honRenderWaitlistTable)', () => {
     // Same MON DD, YYYY uppercase format honFormatDate produces elsewhere
     // (tests/circulation.test.js asserts the pattern directly).
     await expect(cells.nth(3)).toHaveText('MAR 05, 2026');
+    await expect(cells.nth(4)).toHaveText('Pending');
   });
 
   test('escapes HTML in name/email/note instead of rendering it (XSS)', async ({ page }) => {
@@ -54,6 +61,7 @@ test.describe('Admin — Waitlist panel (honRenderWaitlistTable)', () => {
         name: '<img src=x onerror=alert(1)>',
         email: '"><script>window.__xss = true</script>',
         note: '<b>bold</b> & <i>italic</i>',
+        status: 'pending',
         created_at: '2026-01-15T00:00:00Z',
       }],
     });
@@ -78,7 +86,7 @@ test.describe('Admin — Waitlist panel (honRenderWaitlistTable)', () => {
 
   test('a null note renders the em-dash placeholder instead of blank or "null"', async ({ page }) => {
     await mockAdminAndRender(page, {
-      waitlist: [{ id: 3, name: 'No Note', email: 'nonote@example.com', note: null, created_at: '2026-01-01T00:00:00Z' }],
+      waitlist: [{ id: 3, name: 'No Note', email: 'nonote@example.com', note: null, status: 'pending', created_at: '2026-01-01T00:00:00Z' }],
     });
 
     const noteCell = page.locator('#waitlist-table-wrap tbody tr').first().locator('td').nth(2);
@@ -100,7 +108,7 @@ test.describe('Admin — Waitlist panel (honRenderWaitlistTable)', () => {
   // warning, not just that a warning banner CAN exist.
   function makeRows(n) {
     return Array.from({ length: n }, (_, i) => ({
-      id: i + 1, name: `Person ${i}`, email: `p${i}@example.com`, note: null, created_at: '2026-01-01T00:00:00Z',
+      id: i + 1, name: `Person ${i}`, email: `p${i}@example.com`, note: null, status: 'pending', created_at: '2026-01-01T00:00:00Z',
     }));
   }
 
@@ -138,5 +146,82 @@ test.describe('Admin — Waitlist panel (honRenderWaitlistTable)', () => {
     await expect(page.locator('#waitlist-table-wrap')).toContainText('Couldn’t load the waitlist');
     await expect(page.locator('#catalog-table-wrap')).not.toHaveText('Loading…');
     await expect(page.locator('#catalog-save-btn')).toBeVisible();
+  });
+
+  test.describe('Accept / Decline', () => {
+    test('a pending request shows Accept and Decline buttons', async ({ page }) => {
+      await mockAdminAndRender(page, {
+        waitlist: [{ id: 10, name: 'Pending Person', email: 'p@example.com', note: null, status: 'pending', created_at: '2026-01-01T00:00:00Z' }],
+      });
+
+      const row = page.locator('#waitlist-table-wrap tbody tr').first();
+      await expect(row.locator('button[data-accept-id="10"]')).toBeVisible();
+      await expect(row.locator('button[data-decline-id="10"]')).toBeVisible();
+    });
+
+    test('an already-accepted or declined request shows no buttons', async ({ page }) => {
+      await mockAdminAndRender(page, {
+        waitlist: [
+          { id: 11, name: 'Already In', email: 'a@example.com', note: null, status: 'accepted', created_at: '2026-01-01T00:00:00Z' },
+          { id: 12, name: 'Turned Away', email: 'd@example.com', note: null, status: 'declined', created_at: '2026-01-01T00:00:00Z' },
+        ],
+      });
+
+      const rows = page.locator('#waitlist-table-wrap tbody tr');
+      await expect(rows.nth(0).locator('button')).toHaveCount(0);
+      await expect(rows.nth(1).locator('button')).toHaveCount(0);
+      await expect(rows.nth(0).locator('td').nth(4)).toHaveText('Accepted');
+      await expect(rows.nth(1).locator('td').nth(4)).toHaveText('Declined');
+    });
+
+    // Accepting mints a card (admin_accept_waitlist_request) that isn't
+    // linked back to the request row in the database — the code is only
+    // ever surfaced here, once, right after acceptance. This pins that the
+    // code actually reaches the screen, since there's no second chance to
+    // see it from this panel.
+    test('clicking Accept issues a card, shows the code, and updates the status', async ({ page }) => {
+      await mockAdminAndRender(page, {
+        waitlist: [{ id: 20, name: 'Ada Lovelace', email: 'ada@example.com', note: null, status: 'pending', created_at: '2026-01-01T00:00:00Z' }],
+        onAccept: (requestId) => Promise.resolve({ code: `CODE-${requestId}` }),
+      });
+
+      const row = page.locator('#waitlist-table-wrap tbody tr').first();
+      await row.locator('button[data-accept-id="20"]').click();
+
+      await expect(row.locator('td').nth(4)).toHaveText('Accepted');
+      await expect(row.locator('td').nth(5)).toContainText('Card issued: CODE-20');
+      await expect(row.locator('button')).toHaveCount(0);
+    });
+
+    test('clicking Decline marks the request declined with no card issued', async ({ page }) => {
+      await mockAdminAndRender(page, {
+        waitlist: [{ id: 21, name: 'No Thanks', email: 'no@example.com', note: null, status: 'pending', created_at: '2026-01-01T00:00:00Z' }],
+        onAccept: () => Promise.reject(new Error('accept should not be called from Decline')),
+      });
+
+      const row = page.locator('#waitlist-table-wrap tbody tr').first();
+      await row.locator('button[data-decline-id="21"]').click();
+
+      await expect(row.locator('td').nth(4)).toHaveText('Declined');
+      await expect(row.locator('button')).toHaveCount(0);
+      await expect(row.locator('td').nth(5)).not.toContainText('Card issued');
+    });
+
+    test('a failed Accept re-enables both buttons and shows a retry state instead of silently failing', async ({ page }) => {
+      await mockAdminAndRender(page, {
+        waitlist: [{ id: 22, name: 'Flaky', email: 'flaky@example.com', note: null, status: 'pending', created_at: '2026-01-01T00:00:00Z' }],
+        onAccept: () => Promise.reject(new Error('request not found or already handled')),
+      });
+
+      const row = page.locator('#waitlist-table-wrap tbody tr').first();
+      const acceptBtn = row.locator('button[data-accept-id="22"]');
+      await acceptBtn.click();
+
+      await expect(acceptBtn).toHaveText('Failed — retry?');
+      await expect(acceptBtn).toBeEnabled();
+      await expect(row.locator('button[data-decline-id="22"]')).toBeEnabled();
+      // Status must stay Pending — a failed accept is not a silent accept.
+      await expect(row.locator('td').nth(4)).toHaveText('Pending');
+    });
   });
 });

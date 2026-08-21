@@ -106,7 +106,7 @@ async function honRenderAdmin() {
 
     <div style="margin-bottom:48px;">
       <p class="eyebrow">WAITLIST</p>
-      <p style="margin-top:10px; font-size:14.5px; color:#2c2b28;">People who asked to be on the list from the Membership page. Issue them a card above once you've read their note.</p>
+      <p style="margin-top:10px; font-size:14.5px; color:#2c2b28;">People who asked to be on the list from the Membership page. Accept mints a card and shows the code here — copy it and send it to them yourself, no email goes out automatically.</p>
       <div id="waitlist-table-wrap" style="margin-top:16px; overflow-x:auto;">Loading&hellip;</div>
     </div>
 
@@ -500,14 +500,19 @@ async function honRenderWaitlistTable() {
   const cappedNote = requests.length === HON_WAITLIST_ROW_CAP
     ? `<p style="margin-bottom:10px; font-size:13px; color:var(--red);">Showing the ${HON_WAITLIST_ROW_CAP} most recent requests — older requests exist beyond this limit.</p>`
     : '';
+  const HON_WAITLIST_STATUS_LABEL = { pending: 'Pending', accepted: 'Accepted', declined: 'Declined' };
+  const HON_WAITLIST_STATUS_STYLE = { pending: '', accepted: '', declined: 'color:var(--grey);' };
+
   wrap.innerHTML = `
     ${cappedNote}
-    <table style="width:100%; border-collapse:collapse; min-width:640px;">
+    <table style="width:100%; border-collapse:collapse; min-width:760px;">
       <thead><tr>
         <th style="${HON_TH_STYLE}">Name</th>
         <th style="${HON_TH_STYLE}">Email</th>
         <th style="${HON_TH_STYLE}">Note</th>
         <th style="${HON_TH_STYLE}">Submitted</th>
+        <th style="${HON_TH_STYLE}">Status</th>
+        <th style="${HON_TH_STYLE}"></th>
       </tr></thead>
       <tbody>
         ${requests.map(r => `
@@ -516,11 +521,67 @@ async function honRenderWaitlistTable() {
             <td style="${HON_TD_STYLE} overflow-wrap:break-word; max-width:220px;">${honEscape(r.email)}</td>
             <td style="${HON_TD_STYLE} white-space:normal; overflow-wrap:break-word; max-width:360px;">${r.note ? honEscape(r.note) : '<span style="color:var(--grey);">—</span>'}</td>
             <td style="${HON_TD_STYLE}">${honFormatDate(r.created_at)}</td>
+            <td style="${HON_TD_STYLE} ${HON_WAITLIST_STATUS_STYLE[r.status] || ''}" class="hon-waitlist-status">${honEscape(HON_WAITLIST_STATUS_LABEL[r.status] || r.status)}</td>
+            <td style="${HON_TD_STYLE}" class="hon-waitlist-actions">
+              ${r.status === 'pending' ? `
+                <div style="display:flex; gap:8px;">
+                  <button class="btn btn-solid" data-accept-id="${r.id}" style="font-size:12px; padding:8px 12px;">Accept</button>
+                  <button class="btn" data-decline-id="${r.id}" style="font-size:12px; padding:8px 12px;">Decline</button>
+                </div>
+              ` : '<span style="color:var(--grey);">—</span>'}
+            </td>
           </tr>
         `).join('')}
       </tbody>
     </table>
   `;
+
+  // Accepting mints a card the same way the "Issue Card" button above does
+  // (admin_accept_waitlist_request wraps admin_issue_card's own logic),
+  // attributed to this admin — it's not linked back to the request row in
+  // the database, so the code is only ever shown here, once, right after
+  // acceptance. There's no automatic email; copy it and send it to the
+  // person yourself, same as every other card issued from this page.
+  wrap.querySelectorAll('button[data-accept-id]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const row = btn.closest('tr');
+      const declineBtn = row.querySelector('button[data-decline-id]');
+      btn.disabled = true;
+      if (declineBtn) declineBtn.disabled = true;
+      btn.textContent = 'Accepting…';
+      try {
+        const card = await honAdminAcceptWaitlistRequest(btn.dataset.acceptId);
+        row.querySelector('.hon-waitlist-status').textContent = 'Accepted';
+        row.querySelector('.hon-waitlist-actions').innerHTML = `Card issued: <strong>${honEscape(card.code)}</strong>`;
+      } catch (err) {
+        btn.disabled = false;
+        if (declineBtn) declineBtn.disabled = false;
+        btn.textContent = 'Failed — retry?';
+        btn.title = err.message || String(err);
+      }
+    });
+  });
+
+  wrap.querySelectorAll('button[data-decline-id]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const row = btn.closest('tr');
+      const acceptBtn = row.querySelector('button[data-accept-id]');
+      btn.disabled = true;
+      if (acceptBtn) acceptBtn.disabled = true;
+      btn.textContent = 'Declining…';
+      try {
+        await honAdminDeclineWaitlistRequest(btn.dataset.declineId);
+        row.querySelector('.hon-waitlist-status').textContent = 'Declined';
+        row.querySelector('.hon-waitlist-status').style.color = 'var(--grey)';
+        row.querySelector('.hon-waitlist-actions').innerHTML = '<span style="color:var(--grey);">—</span>';
+      } catch (err) {
+        btn.disabled = false;
+        if (acceptBtn) acceptBtn.disabled = false;
+        btn.textContent = 'Failed — retry?';
+        btn.title = err.message || String(err);
+      }
+    });
+  });
 }
 
 document.addEventListener('DOMContentLoaded', honRenderAdmin);

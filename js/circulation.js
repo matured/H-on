@@ -212,6 +212,17 @@ async function honAdminListWaitlist() {
   return data || [];
 }
 
+async function honAdminAcceptWaitlistRequest(requestId) {
+  const { data, error } = await honSupabase.rpc('admin_accept_waitlist_request', { p_request_id: requestId });
+  if (error) throw error;
+  return data;
+}
+
+async function honAdminDeclineWaitlistRequest(requestId) {
+  const { error } = await honSupabase.rpc('admin_decline_waitlist_request', { p_request_id: requestId });
+  if (error) throw error;
+}
+
 // item: same shape as a HON_CATALOG entry (id, title, subtitle, issue,
 // era, genre, call, copiesTotal, coverBg, coverFg, coverAccent,
 // coverImage, backImage, desc) — admin.html's form reads/writes that
@@ -565,6 +576,7 @@ if (typeof module !== 'undefined' && module.exports) {
     honFetchMyCards, honValidateCardCode, honRedeemCard,
     honStashPendingCardCode, honTakePendingCardCode,
     honFetchMyProfile, honAdminListProfiles, honAdminListLoans, honAdminListWaitlist,
+    honAdminAcceptWaitlistRequest, honAdminDeclineWaitlistRequest,
     honAdminForceReturn, honAdminIssueCard, honAdminSetBanned, honAdminUpsertItem,
     honUploadCoverImage,
     honFetchMyNotifications, honMarkNotificationRead,
