@@ -8,6 +8,30 @@ alter table public.waitlist_requests
   add column status text not null default 'pending'
     check (status in ('pending', 'accepted', 'declined'));
 
+-- 20260817000000's insert policy is `with check (true)` — before this
+-- column existed that was fine (nothing to forge), but an anon caller can
+-- set ANY column on an insert their policy allows, including one added
+-- later. Without this, anyone holding the (necessarily public) anon key
+-- could submit a waitlist request with status already 'accepted' or
+-- 'declined', bypassing both RPCs below and polluting the admin's queue
+-- with rows that read as already-handled. DEFAULT alone doesn't stop
+-- this — it only applies when the client omits the column, not when they
+-- explicitly set it.
+drop policy "anyone can submit a waitlist request" on public.waitlist_requests;
+
+create policy "anyone can submit a pending waitlist request"
+  on public.waitlist_requests
+  for insert
+  to anon, authenticated
+  with check (status = 'pending');
+
+-- Links a card back to the request it was issued for, so the code is
+-- recoverable by re-querying instead of only ever existing in the one
+-- response object admin_accept_waitlist_request returns. Nullable: only
+-- ever set by that RPC, not by admin_issue_card()'s generic mint.
+alter table public.library_cards
+  add column waitlist_request_id bigint references public.waitlist_requests (id);
+
 create or replace function public.admin_accept_waitlist_request(p_request_id bigint)
 returns public.library_cards
 language plpgsql
@@ -31,8 +55,8 @@ begin
     raise exception 'request not found or already handled';
   end if;
 
-  insert into public.library_cards (code, issued_by)
-  values (public.generate_card_code(), auth.uid())
+  insert into public.library_cards (code, issued_by, waitlist_request_id)
+  values (public.generate_card_code(), auth.uid(), p_request_id)
   returning * into v_card;
 
   return v_card;
@@ -72,6 +96,11 @@ $$;
 -- function has to be dropped first or the whole migration file aborts.
 drop function if exists public.admin_list_waitlist();
 
+-- card_code is left-joined from library_cards via the FK added above, so
+-- an accepted request's code survives a page reload instead of only ever
+-- existing in the single response object admin_accept_waitlist_request
+-- returns at the moment of acceptance. Null for pending/declined rows,
+-- and for any card issued before this column existed.
 create function public.admin_list_waitlist()
 returns table (
   id bigint,
@@ -79,6 +108,7 @@ returns table (
   email text,
   note text,
   status text,
+  card_code text,
   created_at timestamptz
 )
 language plpgsql
@@ -91,8 +121,9 @@ begin
   end if;
 
   return query
-    select w.id, w.name, w.email, w.note, w.status, w.created_at
+    select w.id, w.name, w.email, w.note, w.status, c.code, w.created_at
     from public.waitlist_requests w
+    left join public.library_cards c on c.waitlist_request_id = w.id
     order by (w.status = 'pending') desc, w.created_at desc
     limit 500;
 end;

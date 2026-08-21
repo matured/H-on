@@ -198,11 +198,24 @@ test.describe('Admin — Waitlist panel (honRenderWaitlistTable)', () => {
       await expect(rows.nth(1).locator('td').nth(4)).toHaveText('Declined');
     });
 
-    // Accepting mints a card (admin_accept_waitlist_request) that isn't
-    // linked back to the request row in the database — the code is only
-    // ever surfaced here, once, right after acceptance. This pins that the
-    // code actually reaches the screen, since there's no second chance to
-    // see it from this panel.
+    // admin_list_waitlist() left-joins library_cards on waitlist_request_id
+    // (added alongside these RPCs), so a card issued on a PAST visit is
+    // still recoverable on this one — this is what makes the "already
+    // handled" reload hint below actually useful instead of a dead end.
+    test('a previously-accepted request shows its card code on a fresh load, not just right after clicking Accept', async ({ page }) => {
+      await mockAdminAndRender(page, {
+        waitlist: [{ id: 13, name: 'Returning Admin View', email: 'r@example.com', note: null, status: 'accepted', card_code: 'PAST-CODE-99', created_at: '2026-01-01T00:00:00Z' }],
+      });
+
+      const row = page.locator('#waitlist-table-wrap tbody tr').first();
+      await expect(row.locator('td').nth(4)).toHaveText('Accepted');
+      await expect(row.locator('td').nth(5)).toContainText('Card issued: PAST-CODE-99');
+    });
+
+    // Accepting mints a card (admin_accept_waitlist_request), linked back
+    // to the request via waitlist_request_id so it's recoverable later
+    // too (see the fresh-load test above) — this test pins that the code
+    // actually reaches the screen at the moment of acceptance itself.
     test('clicking Accept issues a card, shows the code, and updates the status', async ({ page }) => {
       await mockAdminAndRender(page, {
         waitlist: [{ id: 20, name: 'Ada Lovelace', email: 'ada@example.com', note: null, status: 'pending', created_at: '2026-01-01T00:00:00Z' }],
@@ -234,7 +247,7 @@ test.describe('Admin — Waitlist panel (honRenderWaitlistTable)', () => {
     test('a failed Accept re-enables both buttons and shows a retry state instead of silently failing', async ({ page }) => {
       await mockAdminAndRender(page, {
         waitlist: [{ id: 22, name: 'Flaky', email: 'flaky@example.com', note: null, status: 'pending', created_at: '2026-01-01T00:00:00Z' }],
-        onAccept: () => Promise.reject(new Error('request not found or already handled')),
+        onAccept: () => Promise.reject(new Error('network error')),
       });
 
       const row = page.locator('#waitlist-table-wrap tbody tr').first();
@@ -248,7 +261,7 @@ test.describe('Admin — Waitlist panel (honRenderWaitlistTable)', () => {
       await expect(row.locator('td').nth(4)).toHaveText('Pending');
       // The underlying error must actually reach the admin (via the title
       // attribute), not just a generic "Failed" label.
-      await expect(acceptBtn).toHaveAttribute('title', 'request not found or already handled');
+      await expect(acceptBtn).toHaveAttribute('title', 'network error');
     });
 
     // Only Accept's failure path had a test before this — Decline's own
@@ -258,7 +271,7 @@ test.describe('Admin — Waitlist panel (honRenderWaitlistTable)', () => {
     test('a failed Decline re-enables both buttons and shows a retry state instead of silently failing', async ({ page }) => {
       await mockAdminAndRender(page, {
         waitlist: [{ id: 23, name: 'Also Flaky', email: 'flaky2@example.com', note: null, status: 'pending', created_at: '2026-01-01T00:00:00Z' }],
-        onDecline: () => Promise.reject(new Error('request not found or already handled')),
+        onDecline: () => Promise.reject(new Error('network error')),
       });
 
       const row = page.locator('#waitlist-table-wrap tbody tr').first();
@@ -270,7 +283,29 @@ test.describe('Admin — Waitlist panel (honRenderWaitlistTable)', () => {
       await expect(row.locator('button[data-accept-id="23"]')).toBeEnabled();
       // Status must stay Pending — a failed decline is not a silent decline.
       await expect(row.locator('td').nth(4)).toHaveText('Pending');
-      await expect(declineBtn).toHaveAttribute('title', 'request not found or already handled');
+      await expect(declineBtn).toHaveAttribute('title', 'network error');
+    });
+
+    // "request not found or already handled" specifically means the row
+    // lock rejected the call — including the case where an earlier attempt
+    // of THIS SAME click actually succeeded server-side and only the
+    // response was lost (network drop after commit). That's a materially
+    // different situation from a generic failure: a bare "retry" prompt
+    // would just fail the same way again, so it gets a message pointing at
+    // reloading instead, where admin_list_waitlist()'s card_code join
+    // (added in this same migration) would actually show the outcome.
+    test('an "already handled" failure shows a reload hint instead of a generic retry prompt', async ({ page }) => {
+      await mockAdminAndRender(page, {
+        waitlist: [{ id: 24, name: 'Maybe Handled', email: 'maybe@example.com', note: null, status: 'pending', created_at: '2026-01-01T00:00:00Z' }],
+        onAccept: () => Promise.reject(new Error('request not found or already handled')),
+      });
+
+      const row = page.locator('#waitlist-table-wrap tbody tr').first();
+      const acceptBtn = row.locator('button[data-accept-id="24"]');
+      await acceptBtn.click();
+
+      await expect(acceptBtn).toHaveText('Already handled — reload to see the outcome');
+      await expect(acceptBtn).toHaveAttribute('title', 'request not found or already handled');
     });
 
     // Proves the disable-during-request behavior actually happens while the

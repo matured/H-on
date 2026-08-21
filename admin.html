@@ -527,7 +527,7 @@ async function honRenderWaitlistTable() {
                   <button class="btn btn-solid" data-accept-id="${honEscape(String(r.id))}" style="font-size:12px; padding:8px 12px;">Accept</button>
                   <button class="btn" data-decline-id="${honEscape(String(r.id))}" style="font-size:12px; padding:8px 12px;">Decline</button>
                 </div>
-              ` : '<span style="color:var(--grey);">—</span>'}
+              ` : r.card_code ? `Card issued: <strong>${honEscape(r.card_code)}</strong>` : '<span style="color:var(--grey);">—</span>'}
             </td>
           </tr>
         `).join('')}
@@ -537,10 +537,28 @@ async function honRenderWaitlistTable() {
 
   // Accepting mints a card the same way the "Issue Card" button above does
   // (admin_accept_waitlist_request wraps admin_issue_card's own logic),
-  // attributed to this admin — it's not linked back to the request row in
-  // the database, so the code is only ever shown here, once, right after
-  // acceptance. There's no automatic email; copy it and send it to the
-  // person yourself, same as every other card issued from this page.
+  // attributed to this admin and linked back to the request via
+  // waitlist_request_id — admin_list_waitlist() surfaces it as card_code,
+  // so a code is recoverable by reloading even if the response to THIS
+  // click never made it back (network drop after the server already
+  // committed). There's still no automatic email; copy it and send it to
+  // the person yourself, same as every other card issued from this page.
+  //
+  // "request not found or already handled" specifically means the row
+  // lock rejected this call because the request was already accepted or
+  // declined — which includes the case where an earlier call of this same
+  // click actually succeeded server-side and only the response was lost.
+  // That's not a normal failure, so it gets a different message pointing
+  // at reloading instead of a bare "try again" that would just fail the
+  // same way.
+  function honWaitlistFailureText(err) {
+    const message = err.message || String(err);
+    if (message.includes('already handled')) {
+      return 'Already handled — reload to see the outcome';
+    }
+    return 'Failed — retry?';
+  }
+
   wrap.querySelectorAll('button[data-accept-id]').forEach(btn => {
     btn.addEventListener('click', async () => {
       const row = btn.closest('tr');
@@ -555,7 +573,7 @@ async function honRenderWaitlistTable() {
       } catch (err) {
         btn.disabled = false;
         if (declineBtn) declineBtn.disabled = false;
-        btn.textContent = 'Failed — retry?';
+        btn.textContent = honWaitlistFailureText(err);
         btn.title = err.message || String(err);
       }
     });
@@ -576,7 +594,7 @@ async function honRenderWaitlistTable() {
       } catch (err) {
         btn.disabled = false;
         if (acceptBtn) acceptBtn.disabled = false;
-        btn.textContent = 'Failed — retry?';
+        btn.textContent = honWaitlistFailureText(err);
         btn.title = err.message || String(err);
       }
     });
