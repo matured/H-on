@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here.
 
+## [0.0.5.0] - 2026-08-21
+
+### Fixed
+- The "click or press any key" caption on the splash page is now actually legible — it previously sat directly on the flickering tile grid with too little contrast to read comfortably, especially where it crossed a tile's glyph.
+
 ## [0.0.3.0] - 2026-08-21
 
 ### Added

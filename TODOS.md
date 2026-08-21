@@ -63,6 +63,16 @@
 
 ## Completed
 
+### Fix splash caption legibility
+
+**What:** The "click or press any key" caption sat directly on the flickering tile grid in a muted grey (#a8a397) with no backing — ~2.4:1 contrast against the tiles, under WCAG AA's 4.5:1 minimum. Gave it a solid plate reusing the page's own near-black/cream palette for ~17.9:1 contrast.
+**Why:** Requested directly, after a screenshot showed the caption hard to read.
+**Context:** index.html's `#hon-caption` rule. Checked with the `web-design-guidelines` skill (fetched, but that guideline set doesn't carry numeric contrast thresholds) and `impeccable`'s audit criteria (which do — WCAG AA 4.5:1), then computed the actual ratios directly.
+**Effort:** S
+**Priority:** P2
+**Depends on:** None
+**Completed:** v0.0.5.0 (2026-08-21)
+
 ### Enter the splash page on any keypress
 
 **What:** index.html's splash grid previously only entered on click, or on Enter/Space after tabbing to the grid first. Added a document-level keydown handler so any key enters the site without requiring focus first, matching the "press any key to continue" pattern.
