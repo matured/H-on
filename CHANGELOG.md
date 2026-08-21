@@ -7,6 +7,14 @@ All notable changes to this project are documented here.
 ### Fixed
 - The "click or press any key" caption on the splash page is now actually legible — it previously sat directly on the flickering tile grid with too little contrast to read comfortably, especially where it crossed a tile's glyph.
 
+## [0.0.4.0] - 2026-08-21
+
+### Added
+- Waitlist requests can now be accepted or declined directly from the admin panel — accepting mints a card and shows the code right there, no more switching to the separate "Issue Card" button. The code stays visible if you come back to the panel later, not just in the moment you accept.
+
+### Fixed
+- Closed a gap where a waitlist signup could arrive already marked "accepted" or "declined" without an admin ever acting on it.
+
 ## [0.0.3.0] - 2026-08-21
 
 ### Added

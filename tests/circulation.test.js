@@ -7,6 +7,7 @@ const {
   honFetchMyCards, honValidateCardCode, honRedeemCard,
   honStashPendingCardCode, honTakePendingCardCode,
   honFetchMyProfile, honAdminListProfiles, honAdminListLoans, honAdminListWaitlist,
+  honAdminAcceptWaitlistRequest, honAdminDeclineWaitlistRequest,
   honAdminForceReturn, honAdminIssueCard, honAdminSetBanned, honAdminUpsertItem,
   honFetchMyNotifications, honMarkNotificationRead,
   honFetchStatus, honFetchAllStatuses,
@@ -520,5 +521,46 @@ describe('admin wrappers', () => {
   it('honAdminListWaitlist throws on RPC error (e.g. a non-admin caller)', async () => {
     global.honSupabase = createMockSupabase({ rpcResponses: { admin_list_waitlist: { data: null, error: new Error('admin only') } } });
     await expect(honAdminListWaitlist()).rejects.toThrow('admin only');
+  });
+
+  it('honAdminAcceptWaitlistRequest calls admin_accept_waitlist_request with p_request_id and returns the minted card', async () => {
+    const card = { id: 'card-1', code: 'ABCD-1234' };
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_accept_waitlist_request: { data: card, error: null } } });
+    expect(await honAdminAcceptWaitlistRequest(9)).toEqual(card);
+    expect(global.honSupabase.rpc).toHaveBeenCalledWith('admin_accept_waitlist_request', { p_request_id: 9 });
+  });
+
+  // Covers the migration's row-lock guard from the JS side: a second
+  // accept on an already-handled request comes back as an RPC error (the
+  // RPC's own "request not found or already handled" exception), and the
+  // wrapper must propagate it rather than resolving with undefined/null,
+  // which is what admin.html's catch block relies on to show the retry state.
+  it('honAdminAcceptWaitlistRequest throws on RPC error (e.g. double-accept)', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_accept_waitlist_request: { data: null, error: new Error('request not found or already handled') } } });
+    await expect(honAdminAcceptWaitlistRequest(9)).rejects.toThrow('request not found or already handled');
+  });
+
+  // Distinct from the "already handled" case above — this is the RPC's
+  // own is_admin() gate, the same "admin only" every other admin_* RPC
+  // raises for a non-admin caller (see the honAdminIssueCard test above).
+  it('honAdminAcceptWaitlistRequest throws on RPC error (e.g. a non-admin caller)', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_accept_waitlist_request: { data: null, error: new Error('admin only') } } });
+    await expect(honAdminAcceptWaitlistRequest(9)).rejects.toThrow('admin only');
+  });
+
+  it('honAdminDeclineWaitlistRequest calls admin_decline_waitlist_request with p_request_id', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_decline_waitlist_request: { data: null, error: null } } });
+    await honAdminDeclineWaitlistRequest(9);
+    expect(global.honSupabase.rpc).toHaveBeenCalledWith('admin_decline_waitlist_request', { p_request_id: 9 });
+  });
+
+  it('honAdminDeclineWaitlistRequest throws on RPC error (e.g. double-decline)', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_decline_waitlist_request: { data: null, error: new Error('request not found or already handled') } } });
+    await expect(honAdminDeclineWaitlistRequest(9)).rejects.toThrow('request not found or already handled');
+  });
+
+  it('honAdminDeclineWaitlistRequest throws on RPC error (e.g. a non-admin caller)', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_decline_waitlist_request: { data: null, error: new Error('admin only') } } });
+    await expect(honAdminDeclineWaitlistRequest(9)).rejects.toThrow('admin only');
   });
 });
