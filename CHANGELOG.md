@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented here.
 
+## [0.0.5.1] - 2026-08-21
+
+### Fixed
+- A library card's code now runs through the same HTML-escaping helper the rest of the site uses before it's placed on the membership page, closing an Aikido-flagged `innerHTML` anti-pattern (the code is server-generated hex today, not user input, but this keeps a future card field from becoming exploitable).
+- The test workflow's checkout step no longer keeps the job's Git credentials around after checking out the code — it never needed them past that point.
+
 ## [0.0.5.0] - 2026-08-21
 
 ### Fixed
