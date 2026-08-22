@@ -342,8 +342,8 @@ function honCardRowHTML(card, index) {
     <div style="border:2px dashed var(--line-strong); padding:16px 18px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
       <div class="mono-tag" style="letter-spacing:0.1em; color:var(--grey);">CARD ${num} · UNUSED</div>
       <div style="display:flex; align-items:center; gap:10px;">
-        <span class="mono-tag" style="color:var(--ink); font-size:11px; user-select:all;">${card.code}</span>
-        <button type="button" class="btn hon-copy-code-btn" data-code="${card.code}" style="font-size:11px; padding:6px 10px;">Copy</button>
+        <span class="mono-tag" style="color:var(--ink); font-size:11px; user-select:all;">${honEscape(card.code)}</span>
+        <button type="button" class="btn hon-copy-code-btn" data-code="${honEscape(card.code)}" style="font-size:11px; padding:6px 10px;">Copy</button>
       </div>
     </div>
   `;
