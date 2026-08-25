@@ -12,6 +12,7 @@ function chainable(response) {
     is: () => chain,
     in: () => chain,
     order: () => chain,
+    limit: () => chain,
     maybeSingle: () => Promise.resolve(response),
     then: (resolve, reject) => Promise.resolve(response).then(resolve, reject),
   };

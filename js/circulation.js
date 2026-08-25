@@ -223,6 +223,37 @@ async function honAdminDeclineWaitlistRequest(requestId) {
   if (error) throw error;
 }
 
+// ---- dengonban (T17) ----
+// Public read goes straight through PostgREST (RLS already limits it to
+// non-hidden, non-expired rows) rather than an RPC — there's no
+// is_admin()-style gate to enforce here, just render-sanity capping.
+async function honFetchDengonban() {
+  const { data, error } = await honSupabase
+    .from('dengonban_messages')
+    .select('id, body, created_at')
+    .order('created_at', { ascending: false })
+    .limit(100);
+  if (error) throw error;
+  return data || [];
+}
+
+async function honPostDengonban(body) {
+  const { data, error } = await honSupabase.rpc('post_dengonban_message', { p_body: body });
+  if (error) throw error;
+  return data;
+}
+
+async function honAdminListDengonban() {
+  const { data, error } = await honSupabase.rpc('admin_list_dengonban');
+  if (error) throw error;
+  return data || [];
+}
+
+async function honAdminHideDengonban(id) {
+  const { error } = await honSupabase.rpc('admin_hide_dengonban_message', { p_id: id });
+  if (error) throw error;
+}
+
 // item: same shape as a HON_CATALOG entry (id, title, subtitle, issue,
 // era, genre, call, copiesTotal, coverBg, coverFg, coverAccent,
 // coverImage, backImage, desc) — admin.html's form reads/writes that
@@ -577,6 +608,7 @@ if (typeof module !== 'undefined' && module.exports) {
     honStashPendingCardCode, honTakePendingCardCode,
     honFetchMyProfile, honAdminListProfiles, honAdminListLoans, honAdminListWaitlist,
     honAdminAcceptWaitlistRequest, honAdminDeclineWaitlistRequest,
+    honFetchDengonban, honPostDengonban, honAdminListDengonban, honAdminHideDengonban,
     honAdminForceReturn, honAdminIssueCard, honAdminSetBanned, honAdminUpsertItem,
     honUploadCoverImage,
     honFetchMyNotifications, honMarkNotificationRead,

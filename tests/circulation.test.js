@@ -8,6 +8,7 @@ const {
   honStashPendingCardCode, honTakePendingCardCode,
   honFetchMyProfile, honAdminListProfiles, honAdminListLoans, honAdminListWaitlist,
   honAdminAcceptWaitlistRequest, honAdminDeclineWaitlistRequest,
+  honFetchDengonban, honPostDengonban, honAdminListDengonban, honAdminHideDengonban,
   honAdminForceReturn, honAdminIssueCard, honAdminSetBanned, honAdminUpsertItem,
   honFetchMyNotifications, honMarkNotificationRead,
   honFetchStatus, honFetchAllStatuses,
@@ -552,6 +553,65 @@ describe('admin wrappers', () => {
     global.honSupabase = createMockSupabase({ rpcResponses: { admin_decline_waitlist_request: { data: null, error: null } } });
     await honAdminDeclineWaitlistRequest(9);
     expect(global.honSupabase.rpc).toHaveBeenCalledWith('admin_decline_waitlist_request', { p_request_id: 9 });
+  });
+
+  it('honFetchDengonban reads dengonban_messages and returns the rows on success', async () => {
+    const rows = [{ id: 'm1', body: 'hello', created_at: '2026-01-01T00:00:00Z' }];
+    global.honSupabase = createMockSupabase({ responses: { dengonban_messages: { data: rows, error: null } } });
+    expect(await honFetchDengonban()).toEqual(rows);
+  });
+
+  it('honFetchDengonban defaults to [] instead of null', async () => {
+    global.honSupabase = createMockSupabase({ responses: { dengonban_messages: { data: null, error: null } } });
+    expect(await honFetchDengonban()).toEqual([]);
+  });
+
+  it('honFetchDengonban throws on read error', async () => {
+    global.honSupabase = createMockSupabase({ responses: { dengonban_messages: { data: null, error: new Error('network error') } } });
+    await expect(honFetchDengonban()).rejects.toThrow('network error');
+  });
+
+  it('honPostDengonban calls post_dengonban_message with p_body and returns the new row', async () => {
+    const msg = { id: 'm1', body: 'hello', created_at: '2026-01-01T00:00:00Z' };
+    global.honSupabase = createMockSupabase({ rpcResponses: { post_dengonban_message: { data: msg, error: null } } });
+    expect(await honPostDengonban('hello')).toEqual(msg);
+    expect(global.honSupabase.rpc).toHaveBeenCalledWith('post_dengonban_message', { p_body: 'hello' });
+  });
+
+  // Covers both the RPC's rate limit (5 per 10 min) and its banned-account
+  // check — both raise as plain RPC errors the wrapper must propagate,
+  // same pattern as every other rate-limited/banned-gated RPC (T14).
+  it('honPostDengonban throws on RPC error (e.g. rate limit exceeded)', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { post_dengonban_message: { data: null, error: new Error('rate limit exceeded for post_dengonban_message, try again shortly') } } });
+    await expect(honPostDengonban('hello')).rejects.toThrow('rate limit exceeded');
+  });
+
+  it('honAdminListDengonban calls admin_list_dengonban and returns the rows on success', async () => {
+    const rows = [{ id: 'm1', user_email: 'jane@example.com', body: 'hi', created_at: '2026-01-01T00:00:00Z', expires_at: '2026-01-31T00:00:00Z', hidden: false }];
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_list_dengonban: { data: rows, error: null } } });
+    expect(await honAdminListDengonban()).toEqual(rows);
+    expect(global.honSupabase.rpc).toHaveBeenCalledWith('admin_list_dengonban');
+  });
+
+  it('honAdminListDengonban defaults to [] instead of null', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_list_dengonban: { data: null, error: null } } });
+    expect(await honAdminListDengonban()).toEqual([]);
+  });
+
+  it('honAdminListDengonban throws on RPC error (e.g. a non-admin caller)', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_list_dengonban: { data: null, error: new Error('admin only') } } });
+    await expect(honAdminListDengonban()).rejects.toThrow('admin only');
+  });
+
+  it('honAdminHideDengonban calls admin_hide_dengonban_message with p_id', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_hide_dengonban_message: { data: null, error: null } } });
+    await honAdminHideDengonban('m1');
+    expect(global.honSupabase.rpc).toHaveBeenCalledWith('admin_hide_dengonban_message', { p_id: 'm1' });
+  });
+
+  it('honAdminHideDengonban throws on RPC error (e.g. a non-admin caller)', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_hide_dengonban_message: { data: null, error: new Error('admin only') } } });
+    await expect(honAdminHideDengonban('m1')).rejects.toThrow('admin only');
   });
 
   it('honAdminDeclineWaitlistRequest throws on RPC error (e.g. double-decline)', async () => {

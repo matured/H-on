@@ -7,6 +7,7 @@ const HON_NAV_LINKS = [
   { href: 'catalog.html', label: 'Archive' },
   { href: 'how-it-works.html', label: 'How It Works' },
   { href: 'membership.html', label: 'Membership' },
+  { href: 'board.html', label: 'Board' },
   { href: 'support.html', label: 'Support' },
 ];
 
