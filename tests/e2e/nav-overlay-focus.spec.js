@@ -48,9 +48,15 @@ test.describe('Fullscreen nav overlay — focus management', () => {
     });
     expect(othersAllInert).toBe(true);
 
-    // Tab past the last link (6 nav links) should wrap back inside the
-    // overlay, never escape to the page behind it.
-    for (let i = 0; i < 7; i++) await page.keyboard.press('Tab');
+    // Tab past the last link should wrap back inside the overlay, never
+    // escape to the page behind it. Derived from the actual link count
+    // (not hardcoded) since HON_NAV_LINKS changes size over time — with N
+    // tabbable links, the Nth Tab from the first link blurs to <body> for
+    // one tick (no other focusable element exists, inert or not) before
+    // the (N+1)th Tab re-enters the loop at the first link, so anything
+    // short of N+1 presses can catch that transient escape as a false trap.
+    const navLinkCount = await page.locator('.overlay-links a').count();
+    for (let i = 0; i < navLinkCount + 1; i++) await page.keyboard.press('Tab');
     const stillInsideOverlay = await page.evaluate(() => !!document.activeElement.closest('.menu-overlay'));
     expect(stillInsideOverlay).toBe(true);
 
