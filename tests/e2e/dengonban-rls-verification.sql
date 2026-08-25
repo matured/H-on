@@ -23,14 +23,26 @@ grant select, insert on t18_rls_results to authenticated, anon;
 do $$
 declare
   v_user_a uuid := (select id from auth.users limit 1);
+  v_marker_id uuid;
   v_test_token uuid := gen_random_uuid();
   v_row_count int;
+  v_rows_affected int;
   v_raised boolean;
   i int;
 begin
   -- ---------------------------------------------------------------
   -- Direct writes against dengonban_messages must still be rejected
   -- for both anon and authenticated — the RPC is the only write path.
+  --
+  -- INSERT and UPDATE/DELETE fail differently under RLS with no
+  -- matching policy: INSERT's WITH CHECK genuinely rejects the new row
+  -- and raises insufficient_privilege, but UPDATE/DELETE's USING clause
+  -- just makes existing rows invisible to the command — it silently
+  -- matches zero rows, no exception. Checking "did it raise" for
+  -- UPDATE/DELETE the same way as INSERT would misreport a real 0-row
+  -- block as a failure (confirmed by hand against this exact project
+  -- during T18: rows_affected was 0 and the row was untouched, despite
+  -- no exception) — GET DIAGNOSTICS ROW_COUNT is the correct check.
   -- ---------------------------------------------------------------
   execute 'set local role anon';
   v_raised := false;
@@ -43,6 +55,13 @@ begin
   reset role;
 
   if v_user_a is not null then
+    -- A real marker row (inserted as postgres, bypassing RLS — this is
+    -- setup, not the thing under test) so the update/delete checks have
+    -- something that actually exists to fail to touch.
+    insert into dengonban_messages (user_id, body, color, pos_x, pos_y, hidden)
+    values (v_user_a, 't18 direct write marker', '#fef3c7', 50, 50, false)
+    returning id into v_marker_id;
+
     perform set_config('request.jwt.claims', json_build_object('sub', v_user_a, 'role', 'authenticated')::text, true);
     execute 'set local role authenticated';
     v_raised := false;
@@ -53,22 +72,16 @@ begin
     end;
     insert into t18_rls_results values ('authenticated cannot directly insert into dengonban_messages', v_raised, format('insert blocked: %s', v_raised));
 
-    v_raised := false;
-    begin
-      update dengonban_messages set hidden = true where user_id = v_user_a;
-    exception
-      when insufficient_privilege then v_raised := true;
-    end;
-    insert into t18_rls_results values ('authenticated cannot directly update dengonban_messages', v_raised, format('update blocked: %s', v_raised));
+    update dengonban_messages set hidden = true where id = v_marker_id;
+    get diagnostics v_rows_affected = row_count;
+    insert into t18_rls_results values ('authenticated cannot directly update dengonban_messages', v_rows_affected = 0, format('rows affected: %s (expected 0)', v_rows_affected));
 
-    v_raised := false;
-    begin
-      delete from dengonban_messages where user_id = v_user_a;
-    exception
-      when insufficient_privilege then v_raised := true;
-    end;
-    insert into t18_rls_results values ('authenticated cannot directly delete from dengonban_messages', v_raised, format('delete blocked: %s', v_raised));
+    delete from dengonban_messages where id = v_marker_id;
+    get diagnostics v_rows_affected = row_count;
+    insert into t18_rls_results values ('authenticated cannot directly delete from dengonban_messages', v_rows_affected = 0, format('rows affected: %s (expected 0)', v_rows_affected));
     reset role;
+
+    delete from dengonban_messages where id = v_marker_id; -- cleanup as postgres, in case the blocked delete above somehow left it
   else
     insert into t18_rls_results values ('authenticated write checks', false, 'no auth.users row found — cannot test');
   end if;
@@ -76,6 +89,12 @@ begin
   -- ---------------------------------------------------------------
   -- check_anon_dengonban_rate_limit(): 3 calls succeed, the 4th raises.
   -- Runs as anon, matching how post_dengonban_message actually calls it.
+  --
+  -- The row-count verification runs AFTER `reset role` (as postgres) —
+  -- dengonban_anon_rate_limit has zero RLS policies, so a SELECT against
+  -- it as anon/authenticated sees nothing regardless of what the
+  -- security-definer function inserted, and would misreport a working
+  -- rate limiter as broken.
   -- ---------------------------------------------------------------
   execute 'set local role anon';
 
@@ -83,9 +102,11 @@ begin
     perform public.check_anon_dengonban_rate_limit(v_test_token);
   end loop;
 
+  reset role;
   select count(*) into v_row_count from dengonban_anon_rate_limit where anon_token = v_test_token;
   insert into t18_rls_results values ('3 calls under the anon rate limit all succeed', v_row_count = 3, format('rows logged: %s (expected 3)', v_row_count));
 
+  execute 'set local role anon';
   v_raised := false;
   begin
     perform public.check_anon_dengonban_rate_limit(v_test_token);
@@ -101,7 +122,7 @@ begin
 
   -- Cleanup: only this script's own test rows, by the token/marker it created.
   delete from dengonban_anon_rate_limit where anon_token = v_test_token;
-  delete from dengonban_messages where body = 't18 direct insert';
+  delete from dengonban_messages where body in ('t18 direct insert', 't18 direct write marker');
 end $$;
 
 select * from t18_rls_results order by check_name;
