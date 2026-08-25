@@ -2,16 +2,6 @@
 
 ## Features
 
-### Community message board (伝言板 / dengonban) — corkboard redesign
-
-**Status:** Code-complete, not yet live. The original board (schema, member-only post RPC, `board.html` UI) shipped in PR #14; the `admin.html` moderation panel shipped in PR #15. This redesign (2026-08-25) adds sticky-note color, free drag-to-place positioning, an optional doodle, opens posting to non-members with its own anon-safe rate limiter, and lets an admin remove a note directly from the board (reuses the existing reversible hide). Full unit + e2e coverage now exists (`tests/circulation.test.js`, `tests/e2e/board.spec.js`). **Not done yet: applying `20260825000000_dengonban_anon_rate_limit.sql` and `20260825010000_dengonban_corkboard.sql` to the live Supabase project.** Sequencing matters here — the new migration drops and recreates `post_dengonban_message` with a different signature, so applying it before this branch's `board.html`/`js/circulation.js` are live would break posting for whatever's live in the gap, and applying it after means posting is broken in the other direction until the migration lands. Apply the migration and merge this branch together, not separately.
-**What:** A shared corkboard anyone (member or not) can post short public sticky notes to — modeled on the Japanese train-station 伝言板 ("dengonban"/"rengonban") and, for this redesign, on a physical "Take What You Need" bulletin board: colorful notes scattered freely, not a linear feed.
-**Why:** Fits 本's whole anti-feed, pre-phone, physical-media premise better than a generic comments section would — it's the same "message left for a stranger to find" idea the whole site is already built around, just applied to member-to-member notes instead of magazines.
-**Context:** `js/circulation.js`'s `honFetchDengonban`/`honPostDengonban`/`honAdminListDengonban`/`honAdminHideDengonban` plus the new `HON_DENGONBAN_COLORS`/`honGetOrCreateAnonToken`; `board.html`'s `honRenderDengonbanBoardPage()` is the page's single init entrypoint (used by `board.spec.js`'s mock-then-render tests, same technique `admin-waitlist.spec.js` uses for admin.html). `tests/e2e/dengonban-rls-verification.sql` is a standalone, self-contained RLS proof (same pattern as `tests/e2e/rls-verification.sql`, kept separate since it's a distinct feature's checks) — run it against the live project after applying the migrations, before considering this done.
-**Effort:** L
-**Priority:** P3
-**Depends on:** None
-
 ### Automatic email when a waitlist request is accepted
 
 **What:** Accepting a waitlist request shows the card code in the admin panel; there's no automatic email to the person. An admin has to copy the code and send it themselves.
@@ -72,6 +62,16 @@
 **Depends on:** None
 
 ## Completed
+
+### Community message board (伝言板 / dengonban) — corkboard redesign
+
+**What:** A shared corkboard anyone (member or not) can post short public sticky notes to — modeled on the Japanese train-station 伝言板 ("dengonban"/"rengonban") and, for this redesign, on a physical "Take What You Need" bulletin board: colorful notes scattered freely, not a linear feed. Posters pick a color and drag their note anywhere on the board before posting; posting is open to non-members via its own anon-safe rate limiter (separate from the signed-in member limit); admins can remove a note directly from the board (reuses the existing reversible hide); existing notes reveal with a staggered entrance on load and the pending note lifts/settles on drag release. A doodle-drawing canvas shipped alongside the redesign and was removed shortly after — too much visual clutter for what it added. The database column and render path for a doodle are still there (harmless if empty), only the drawing input is gone.
+**Why:** Fits 本's whole anti-feed, pre-phone, physical-media premise better than a generic comments section would — it's the same "message left for a stranger to find" idea the whole site is already built around, just applied to member-to-member notes instead of magazines.
+**Context:** `js/circulation.js`'s `honFetchDengonban`/`honPostDengonban`/`honAdminListDengonban`/`honAdminHideDengonban` plus `HON_DENGONBAN_COLORS`/`honGetOrCreateAnonToken`; `board.html`'s `honRenderDengonbanBoardPage()` is the page's single init entrypoint (used by `board.spec.js`'s mock-then-render tests, same technique `admin-waitlist.spec.js` uses for admin.html). `tests/e2e/dengonban-rls-verification.sql` is a standalone, self-contained RLS proof (same pattern as `tests/e2e/rls-verification.sql`) — already run against the live project and passing. Original board + schema shipped in PR #14, the `admin.html` moderation panel in PR #15, the corkboard redesign (color/position/anon/doodle/admin-remove) in PR #19 with both migrations applied live, the entrance/drag motion in PR #20, and the doodle-canvas removal in this PR.
+**Effort:** L
+**Priority:** P3
+**Depends on:** None
+**Completed:** v0.0.6.2 (2026-08-25)
 
 ### Fix splash caption legibility
 
