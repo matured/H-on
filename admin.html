@@ -636,10 +636,12 @@ async function honRenderDengonbanTable() {
   const now = Date.now();
   wrap.innerHTML = `
     ${cappedNote}
-    <table style="width:100%; border-collapse:collapse; min-width:760px;">
+    <table style="width:100%; border-collapse:collapse; min-width:860px;">
       <thead><tr>
         <th style="${HON_TH_STYLE}">Author</th>
         <th style="${HON_TH_STYLE}">Note</th>
+        <th style="${HON_TH_STYLE}">Color</th>
+        <th style="${HON_TH_STYLE}">Doodle</th>
         <th style="${HON_TH_STYLE}">Posted</th>
         <th style="${HON_TH_STYLE}">Expires</th>
         <th style="${HON_TH_STYLE}">Status</th>
@@ -652,8 +654,10 @@ async function honRenderDengonbanTable() {
           const statusStyle = (m.hidden || expired) ? 'color:var(--grey);' : '';
           return `
           <tr>
-            <td style="${HON_TD_STYLE} overflow-wrap:break-word; max-width:200px;">${honEscape(m.user_email)}</td>
+            <td style="${HON_TD_STYLE} overflow-wrap:break-word; max-width:200px;">${honEscape(m.user_email || 'Anonymous')}</td>
             <td style="${HON_TD_STYLE} white-space:pre-wrap; overflow-wrap:break-word; max-width:360px;">${honEscape(m.body)}</td>
+            <td style="${HON_TD_STYLE}"><span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:${honEscape(m.color)}; vertical-align:middle;"></span></td>
+            <td style="${HON_TD_STYLE}">${m.doodle_present ? 'Yes' : '—'}</td>
             <td style="${HON_TD_STYLE}">${honFormatDate(m.created_at)}</td>
             <td style="${HON_TD_STYLE}">${honFormatDate(m.expires_at)}</td>
             <td style="${HON_TD_STYLE} ${statusStyle}" class="hon-dengonban-status">${status}</td>
