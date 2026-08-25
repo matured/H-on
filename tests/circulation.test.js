@@ -9,6 +9,7 @@ const {
   honFetchMyProfile, honAdminListProfiles, honAdminListLoans, honAdminListWaitlist,
   honAdminAcceptWaitlistRequest, honAdminDeclineWaitlistRequest,
   honFetchDengonban, honPostDengonban, honAdminListDengonban, honAdminHideDengonban,
+  HON_DENGONBAN_COLORS, honGetOrCreateAnonToken,
   honAdminForceReturn, honAdminIssueCard, honAdminSetBanned, honAdminUpsertItem,
   honFetchMyNotifications, honMarkNotificationRead,
   honFetchStatus, honFetchAllStatuses,
@@ -556,7 +557,7 @@ describe('admin wrappers', () => {
   });
 
   it('honFetchDengonban reads dengonban_messages and returns the rows on success', async () => {
-    const rows = [{ id: 'm1', body: 'hello', created_at: '2026-01-01T00:00:00Z' }];
+    const rows = [{ id: 'm1', body: 'hello', created_at: '2026-01-01T00:00:00Z', color: '#fef3c7', pos_x: 50, pos_y: 50, doodle: null }];
     global.honSupabase = createMockSupabase({ responses: { dengonban_messages: { data: rows, error: null } } });
     expect(await honFetchDengonban()).toEqual(rows);
   });
@@ -571,23 +572,70 @@ describe('admin wrappers', () => {
     await expect(honFetchDengonban()).rejects.toThrow('network error');
   });
 
-  it('honPostDengonban calls post_dengonban_message with p_body and returns the new row', async () => {
-    const msg = { id: 'm1', body: 'hello', created_at: '2026-01-01T00:00:00Z' };
-    global.honSupabase = createMockSupabase({ rpcResponses: { post_dengonban_message: { data: msg, error: null } } });
-    expect(await honPostDengonban('hello')).toEqual(msg);
-    expect(global.honSupabase.rpc).toHaveBeenCalledWith('post_dengonban_message', { p_body: 'hello' });
+  it('honPostDengonban calls post_dengonban_message with p_anon_token: null when signed in', async () => {
+    const msg = { id: 'm1', body: 'hello', created_at: '2026-01-01T00:00:00Z', color: '#fef3c7', pos_x: 12, pos_y: 34, doodle: null };
+    global.honSupabase = createMockSupabase({ session: { user: USER }, rpcResponses: { post_dengonban_message: { data: msg, error: null } } });
+    expect(await honPostDengonban('hello', { color: '#fef3c7', x: 12, y: 34 })).toEqual(msg);
+    expect(global.honSupabase.rpc).toHaveBeenCalledWith('post_dengonban_message', {
+      p_body: 'hello', p_color: '#fef3c7', p_pos_x: 12, p_pos_y: 34, p_doodle: null, p_anon_token: null,
+    });
   });
 
-  // Covers both the RPC's rate limit (5 per 10 min) and its banned-account
-  // check — both raise as plain RPC errors the wrapper must propagate,
-  // same pattern as every other rate-limited/banned-gated RPC (T14).
+  // Signed-out posters have no account to key a rate limit on, so the RPC
+  // takes a client-generated token instead — the wrapper is responsible
+  // for reading/creating it via honGetOrCreateAnonToken() and passing it
+  // as p_anon_token exactly when there's no session.
+  it('honPostDengonban passes an anon token as p_anon_token when signed out', async () => {
+    const msg = { id: 'm2', body: 'hi', created_at: '2026-01-01T00:00:00Z', color: '#bfdbfe', pos_x: 5, pos_y: 95, doodle: null };
+    global.honSupabase = createMockSupabase({ session: null, rpcResponses: { post_dengonban_message: { data: msg, error: null } } });
+    await honPostDengonban('hi', { color: '#bfdbfe', x: 5, y: 95 });
+    const token = honGetOrCreateAnonToken();
+    expect(global.honSupabase.rpc).toHaveBeenCalledWith('post_dengonban_message', {
+      p_body: 'hi', p_color: '#bfdbfe', p_pos_x: 5, p_pos_y: 95, p_doodle: null, p_anon_token: token,
+    });
+  });
+
+  it('honPostDengonban passes doodle strokes through as p_doodle', async () => {
+    const strokes = [[[1, 2], [3, 4]]];
+    global.honSupabase = createMockSupabase({ session: { user: USER }, rpcResponses: { post_dengonban_message: { data: {}, error: null } } });
+    await honPostDengonban('hello', { color: '#fef3c7', x: 50, y: 50, doodle: strokes });
+    expect(global.honSupabase.rpc).toHaveBeenCalledWith('post_dengonban_message', expect.objectContaining({ p_doodle: strokes }));
+  });
+
+  // Covers the RPC's rate limit (member or anon), its banned-account
+  // check, and its color/position validation — all raise as plain RPC
+  // errors the wrapper must propagate, same pattern as every other
+  // rate-limited/validated RPC (T14).
   it('honPostDengonban throws on RPC error (e.g. rate limit exceeded)', async () => {
-    global.honSupabase = createMockSupabase({ rpcResponses: { post_dengonban_message: { data: null, error: new Error('rate limit exceeded for post_dengonban_message, try again shortly') } } });
-    await expect(honPostDengonban('hello')).rejects.toThrow('rate limit exceeded');
+    global.honSupabase = createMockSupabase({ session: { user: USER }, rpcResponses: { post_dengonban_message: { data: null, error: new Error('rate limit exceeded for post_dengonban_message, try again shortly') } } });
+    await expect(honPostDengonban('hello', { color: '#fef3c7', x: 50, y: 50 })).rejects.toThrow('rate limit exceeded');
+  });
+
+  it('honPostDengonban throws on RPC error (e.g. anon rate limit exceeded)', async () => {
+    global.honSupabase = createMockSupabase({ session: null, rpcResponses: { post_dengonban_message: { data: null, error: new Error('rate limit exceeded for anonymous posting, try again shortly') } } });
+    await expect(honPostDengonban('hello', { color: '#fef3c7', x: 50, y: 50 })).rejects.toThrow('rate limit exceeded for anonymous posting');
+  });
+
+  it('honPostDengonban throws on RPC error (e.g. invalid note color)', async () => {
+    global.honSupabase = createMockSupabase({ session: { user: USER }, rpcResponses: { post_dengonban_message: { data: null, error: new Error('invalid note color') } } });
+    await expect(honPostDengonban('hello', { color: '#000000', x: 50, y: 50 })).rejects.toThrow('invalid note color');
+  });
+
+  it('honGetOrCreateAnonToken generates and persists a token on first call', () => {
+    expect(localStorage.getItem('hon_dengonban_anon_token')).toBeNull();
+    const token = honGetOrCreateAnonToken();
+    expect(token).toBeTruthy();
+    expect(localStorage.getItem('hon_dengonban_anon_token')).toBe(token);
+  });
+
+  it('honGetOrCreateAnonToken returns the same token on a later call', () => {
+    const first = honGetOrCreateAnonToken();
+    const second = honGetOrCreateAnonToken();
+    expect(second).toBe(first);
   });
 
   it('honAdminListDengonban calls admin_list_dengonban and returns the rows on success', async () => {
-    const rows = [{ id: 'm1', user_email: 'jane@example.com', body: 'hi', created_at: '2026-01-01T00:00:00Z', expires_at: '2026-01-31T00:00:00Z', hidden: false }];
+    const rows = [{ id: 'm1', user_email: 'jane@example.com', body: 'hi', created_at: '2026-01-01T00:00:00Z', expires_at: '2026-01-31T00:00:00Z', hidden: false, color: '#fef3c7', pos_x: 50, pos_y: 50, doodle_present: false }];
     global.honSupabase = createMockSupabase({ rpcResponses: { admin_list_dengonban: { data: rows, error: null } } });
     expect(await honAdminListDengonban()).toEqual(rows);
     expect(global.honSupabase.rpc).toHaveBeenCalledWith('admin_list_dengonban');

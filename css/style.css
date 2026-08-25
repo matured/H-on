@@ -1272,13 +1272,11 @@ body.item-page { position: relative; }
 }
 .lending-model p + p { margin-top: 14px; }
 
-/* ---------- Community board (Dengonban, T17) ---------- */
+/* ---------- Community board (Dengonban, T17 / corkboard redesign T18) ---------- */
 /* Inverted (--ink bg / --paper text) on purpose — the rest of the site is
    --paper-on-ink everywhere else, so flipping it here is what makes this
-   one section read as a physically distinct surface (a chalkboard bolted
-   to the wall) instead of another content section. Ruled lines instead of
-   card shadows/borders, same "flat, gridded, ruled" language as a real
-   dengonban board rather than a comments-widget look. */
+   one section read as a physically distinct surface (a corkboard bolted
+   to the wall) instead of another content section. */
 .dengonban-board {
   background: var(--ink);
   color: var(--paper);
@@ -1293,7 +1291,7 @@ body.item-page { position: relative; }
   align-items: flex-end;
   flex-wrap: wrap;
   margin-top: 24px;
-  padding-bottom: 28px;
+  padding-bottom: 20px;
   border-bottom: 1px solid rgba(250, 249, 244, 0.2);
 }
 .dengonban-compose textarea {
@@ -1324,38 +1322,90 @@ body.item-page { position: relative; }
   color: rgba(250, 249, 244, 0.5);
 }
 .dengonban-char-count.is-over { color: var(--red); }
-.dengonban-signin-note {
-  margin-top: 24px;
-  padding-bottom: 28px;
-  border-bottom: 1px solid rgba(250, 249, 244, 0.2);
-  font-size: 14px;
-  color: rgba(250, 249, 244, 0.7);
+.dengonban-hint {
+  margin-top: 6px;
+  font-size: 12px;
+  color: rgba(250, 249, 244, 0.55);
 }
-.dengonban-signin-note a { color: var(--paper); }
 
-.dengonban-grid { margin-top: 8px; }
-.dengonban-entry {
-  padding: 16px 0;
-  border-bottom: 1px solid rgba(250, 249, 244, 0.14);
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 8px 20px;
-  align-items: baseline;
+.dengonban-color-picker { display: flex; gap: 8px; }
+.dengonban-color-swatch {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  padding: 0;
+  cursor: pointer;
 }
-.dengonban-entry-body {
+.dengonban-color-swatch[aria-pressed="true"] { border-color: var(--paper); }
+
+.dengonban-doodle-canvas {
+  width: 160px;
+  height: 90px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px dashed rgba(250, 249, 244, 0.3);
+  touch-action: none; /* required so drawing isn't captured by page scroll on touch */
+  cursor: crosshair;
+}
+
+/* Free-position board area: a wide, tall surface notes are absolutely
+   positioned on (pos_x/pos_y are percentages of this box). Subtle dot-grid
+   texture stands in for cork without an image asset. */
+.dengonban-board-area {
+  position: relative;
+  min-height: 560px;
+  margin-top: 32px;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 16px 16px;
+  border: 1px solid rgba(250, 249, 244, 0.14);
+  overflow: hidden;
+}
+.dengonban-note {
+  position: absolute;
+  width: 168px;
+  min-height: 96px;
+  padding: 14px 30px 26px 14px;
+  color: #2c2b28; /* dark ink text regardless of note color */
   font-family: var(--mono);
-  font-size: 14.5px;
-  line-height: 1.6;
-  white-space: pre-wrap;
-  word-break: break-word;
+  font-size: 13px;
+  line-height: 1.45;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.35);
+  transition: transform 160ms ease;
 }
-.dengonban-entry-time {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.05em;
-  color: rgba(250, 249, 244, 0.5);
-  white-space: nowrap;
+.dengonban-note:hover { transform: translate(-50%, -50%) scale(1.05) !important; z-index: 5; }
+/* Later-posted notes are later in DOM order, so they naturally stack
+   above older ones without manual z-index bookkeeping. */
+.dengonban-note-body { white-space: pre-wrap; word-break: break-word; }
+.dengonban-note-doodle { display: block; width: 80px; height: 45px; margin-top: 6px; opacity: 0.85; }
+.dengonban-note-time {
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  font-size: 10px;
+  color: rgba(44, 43, 40, 0.55);
 }
+.dengonban-note-remove {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.15);
+  color: #2c2b28;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+}
+.dengonban-note-preview {
+  cursor: grab;
+  opacity: 0.85;
+  border: 1px dashed rgba(44, 43, 40, 0.5);
+  touch-action: none; /* required so dragging isn't captured by page scroll on touch */
+}
+.dengonban-note-preview:active { cursor: grabbing; }
+
 .dengonban-empty,
 .dengonban-error {
   font-family: var(--mono);
@@ -1365,22 +1415,52 @@ body.item-page { position: relative; }
 }
 .dengonban-error { color: #ff8a8a; }
 
-/* Deliberate, occasional action (a member choosing to post) — a brief
-   chalk-appearing entrance earns its keep here in a way it wouldn't on
-   something seen 100+/day. Transform + opacity only, short duration. */
+/* Deliberate, occasional action (someone choosing to post) — a brief
+   entrance earns its keep here in a way it wouldn't on something seen
+   100+/day. Transform + opacity only, short duration. */
 @keyframes dengonban-chalk-in {
-  from { opacity: 0; transform: translateY(-6px); }
-  to { opacity: 1; transform: none; }
+  from { opacity: 0; transform: translate(-50%, -50%) translateY(-6px); }
+  to { opacity: 1; }
 }
-.dengonban-entry.is-new { animation: dengonban-chalk-in 220ms ease-out; }
+.dengonban-note.is-new { animation: dengonban-chalk-in 220ms ease-out; }
 @media (prefers-reduced-motion: reduce) {
-  .dengonban-entry.is-new { animation: none; }
+  .dengonban-note.is-new { animation: none; }
+  .dengonban-note, .dengonban-note:hover { transition: none; }
 }
 
 @media (max-width: 720px) {
   .dengonban-compose { flex-direction: column; align-items: stretch; }
-  .dengonban-compose-side { align-items: flex-start; flex-direction: row-reverse; justify-content: space-between; width: 100%; }
-  .dengonban-entry { grid-template-columns: 1fr; }
+  .dengonban-compose-side { align-items: flex-start; flex-direction: column; width: 100%; }
+}
+
+/* Free 2D placement stops being usable well before 375px — collapse to a
+   stacked list, same posture as the splash caption's 320px WCAG-reflow
+   handling (tests/e2e/splash-enter.spec.js). board.html's own JS also
+   skips the draggable preview note below this breakpoint (matchMedia
+   check on DENGONBAN_NARROW_QUERY), so this is a matched pair, not CSS
+   alone papering over a still-active drag interaction. */
+@media (max-width: 640px) {
+  .dengonban-board-area {
+    min-height: 0;
+    background-image: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 8px 0;
+  }
+  .dengonban-note {
+    position: static;
+    width: auto;
+    transform: none !important;
+    box-shadow: none;
+    border-bottom: 1px solid rgba(250, 249, 244, 0.14);
+    padding: 12px 30px 12px 12px;
+  }
+  .dengonban-note:hover { transform: none !important; }
+  .dengonban-note-doodle { width: 60px; height: 34px; }
+  .dengonban-note-preview { display: none; }
+  .dengonban-hint { display: none; } /* dragging is disabled at this breakpoint (board.html) */
 }
 
 /* ---------- Utility ---------- */

@@ -223,22 +223,50 @@ async function honAdminDeclineWaitlistRequest(requestId) {
   if (error) throw error;
 }
 
-// ---- dengonban (T17) ----
+// ---- dengonban (T17, corkboard redesign T18) ----
+// Must match the check constraint on dengonban_messages.color and the
+// runtime check in post_dengonban_message (20260825010000_dengonban_corkboard.sql).
+const HON_DENGONBAN_COLORS = ['#fef3c7', '#fbcfe8', '#bfdbfe', '#bbf7d0', '#fed7aa', '#ddd6fe'];
+
+// Anonymous posters have no account to rate-limit against, so the post RPC
+// is throttled by this client-generated token instead (see
+// check_anon_dengonban_rate_limit, 20260825000000_dengonban_anon_rate_limit.sql).
+// Same "carry one value across calls via localStorage" shape as
+// HON_PENDING_CARD_KEY above, not standing in for any real identity.
+const HON_ANON_TOKEN_KEY = 'hon_dengonban_anon_token';
+
+function honGetOrCreateAnonToken() {
+  let token = localStorage.getItem(HON_ANON_TOKEN_KEY);
+  if (!token) {
+    token = crypto.randomUUID();
+    localStorage.setItem(HON_ANON_TOKEN_KEY, token);
+  }
+  return token;
+}
+
 // Public read goes straight through PostgREST (RLS already limits it to
 // non-hidden, non-expired rows) rather than an RPC — there's no
 // is_admin()-style gate to enforce here, just render-sanity capping.
 async function honFetchDengonban() {
   const { data, error } = await honSupabase
     .from('dengonban_messages')
-    .select('id, body, created_at')
+    .select('id, body, created_at, color, pos_x, pos_y, doodle')
     .order('created_at', { ascending: false })
     .limit(100);
   if (error) throw error;
   return data || [];
 }
 
-async function honPostDengonban(body) {
-  const { data, error } = await honSupabase.rpc('post_dengonban_message', { p_body: body });
+async function honPostDengonban(body, { color, x, y, doodle = null } = {}) {
+  const user = await honGetCurrentUser();
+  const { data, error } = await honSupabase.rpc('post_dengonban_message', {
+    p_body: body,
+    p_color: color,
+    p_pos_x: x,
+    p_pos_y: y,
+    p_doodle: doodle,
+    p_anon_token: user ? null : honGetOrCreateAnonToken(),
+  });
   if (error) throw error;
   return data;
 }
@@ -609,6 +637,7 @@ if (typeof module !== 'undefined' && module.exports) {
     honFetchMyProfile, honAdminListProfiles, honAdminListLoans, honAdminListWaitlist,
     honAdminAcceptWaitlistRequest, honAdminDeclineWaitlistRequest,
     honFetchDengonban, honPostDengonban, honAdminListDengonban, honAdminHideDengonban,
+    HON_DENGONBAN_COLORS, honGetOrCreateAnonToken,
     honAdminForceReturn, honAdminIssueCard, honAdminSetBanned, honAdminUpsertItem,
     honUploadCoverImage,
     honFetchMyNotifications, honMarkNotificationRead,
