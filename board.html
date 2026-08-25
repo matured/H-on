@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community Board · 本 (hon)</title>
+<meta name="description" content="伝言板 — a shared message board for 本 members. Short public notes left for other members to find, the way people once left them on a station chalkboard.">
+<link rel="canonical" href="https://ho-n.com/board.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="本 (hon)">
+<meta property="og:url" content="https://ho-n.com/board.html">
+<meta property="og:title" content="Community Board · 本 (hon)">
+<meta property="og:description" content="伝言板 — a shared message board for 本 members. Short public notes left for other members to find, the way people once left them on a station chalkboard.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Community Board · 本 (hon)">
+<meta name="twitter:description" content="伝言板 — a shared message board for 本 members. Short public notes left for other members to find, the way people once left them on a station chalkboard.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<main>
+
+  <section class="page-intro">
+    <div class="wrap">
+      <p class="eyebrow">伝言板 · COMMUNITY BOARD</p>
+      <h1>A note left for whoever finds it next.</h1>
+      <p class="serif-lede">
+        Modeled on the chalkboard grid at a train station where people once
+        left short notes for each other before mobile phones. Anyone can
+        read the board; members can leave a note. Notes clear themselves
+        after 30 days, the way a real board gets wiped.
+      </p>
+    </div>
+  </section>
+
+  <section class="dengonban-board">
+    <div class="wrap" style="max-width: 68ch;">
+
+      <div id="dengonban-signin-note" class="dengonban-signin-note" style="display:none;">
+        <a href="membership.html">Sign in</a> to leave a note on the board.
+      </div>
+
+      <form id="dengonban-compose" class="dengonban-compose" style="display:none;">
+        <textarea
+          id="dengonban-body"
+          maxlength="280"
+          rows="2"
+          placeholder="Leave a note for another member…"
+          required
+        ></textarea>
+        <div class="dengonban-compose-side">
+          <button type="submit" class="btn btn-invert" id="dengonban-submit">Post &rarr;</button>
+          <span class="dengonban-char-count" id="dengonban-char-count">280 left</span>
+        </div>
+      </form>
+      <p id="dengonban-status" role="status" aria-live="polite" class="dengonban-char-count" style="margin-top:10px;"></p>
+
+      <div id="dengonban-grid" class="dengonban-grid" aria-live="polite">
+        <p class="dengonban-empty">Loading the board&hellip;</p>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <p class="footer-brand-mark">本</p>
+        <p class="footer-brand-tagline">A circulating archive of Japanese print media, 1998 to 2025. Invite-only. No ads, no feed, no paywall.</p>
+      </div>
+      <div>
+        <h4>Site</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="catalog.html">The Archive</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Join</h4>
+        <ul>
+          <li><a href="membership.html">Membership</a></li>
+          <li><a href="board.html">Community Board</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <ul>
+          <li><a href="support.html">Become a Supporter</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>本 ARCHIVE · INVITE-ONLY CIRCULATING LIBRARY</span>
+      <span>EST. 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/circulation.js"></script>
+<script src="js/main.js"></script>
+<script>
+const DENGONBAN_MAX_LEN = 280;
+
+function honDengonbanRelativeTime(iso) {
+  const mins = Math.max(0, Math.floor((Date.now() - new Date(iso).getTime()) / 60000));
+  if (mins < 1) return 'just now';
+  if (mins < 60) return `${mins}m ago`;
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  return `${days}d ago`;
+}
+
+function dengonbanEntryHTML(msg, { isNew = false } = {}) {
+  return `
+    <div class="dengonban-entry${isNew ? ' is-new' : ''}">
+      <div class="dengonban-entry-body">${honEscape(msg.body)}</div>
+      <div class="dengonban-entry-time">${honDengonbanRelativeTime(msg.created_at)}</div>
+    </div>
+  `;
+}
+
+function renderDengonbanGrid(messages) {
+  const grid = document.getElementById('dengonban-grid');
+  if (!messages.length) {
+    grid.innerHTML = '<p class="dengonban-empty">The board is empty. Be the first to leave a note.</p>';
+    return;
+  }
+  grid.innerHTML = messages.map((m) => dengonbanEntryHTML(m)).join('');
+}
+
+async function refreshDengonbanBoard() {
+  const grid = document.getElementById('dengonban-grid');
+  try {
+    const messages = await honFetchDengonban();
+    renderDengonbanGrid(messages);
+  } catch (err) {
+    grid.innerHTML = `<p class="dengonban-error">Couldn’t load the board: ${honEscape(err.message || err)}</p>`;
+  }
+}
+
+function updateDengonbanCharCount() {
+  const body = document.getElementById('dengonban-body').value;
+  const remaining = DENGONBAN_MAX_LEN - body.length;
+  const el = document.getElementById('dengonban-char-count');
+  el.textContent = `${remaining} left`;
+  el.classList.toggle('is-over', remaining < 0);
+}
+
+async function refreshDengonbanComposeState() {
+  const user = await honGetCurrentUser();
+  document.getElementById('dengonban-compose').style.display = user ? '' : 'none';
+  document.getElementById('dengonban-signin-note').style.display = user ? 'none' : '';
+}
+
+document.getElementById('dengonban-body').addEventListener('input', updateDengonbanCharCount);
+
+document.getElementById('dengonban-compose').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const textarea = document.getElementById('dengonban-body');
+  const body = textarea.value.trim();
+  const statusEl = document.getElementById('dengonban-status');
+  const btn = document.getElementById('dengonban-submit');
+  if (!body) return;
+  btn.disabled = true;
+  btn.textContent = 'Posting…';
+  statusEl.textContent = '';
+  try {
+    const msg = await honPostDengonban(body);
+    textarea.value = '';
+    updateDengonbanCharCount();
+    const grid = document.getElementById('dengonban-grid');
+    const empty = grid.querySelector('.dengonban-empty');
+    if (empty) empty.remove();
+    grid.insertAdjacentHTML('afterbegin', dengonbanEntryHTML(msg, { isNew: true }));
+  } catch (err) {
+    statusEl.textContent = err.message || String(err);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Post →';
+  }
+});
+
+document.addEventListener('DOMContentLoaded', async () => {
+  updateDengonbanCharCount();
+  await refreshDengonbanComposeState();
+  await refreshDengonbanBoard();
+  honSupabase.auth.onAuthStateChange(() => { refreshDengonbanComposeState(); });
+});
+</script>
+</body>
+</html>

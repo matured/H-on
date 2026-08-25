@@ -314,6 +314,19 @@ main, footer { position: relative; z-index: 1; }
   color: var(--ink) !important;
 }
 
+/* Same button, flipped for use on an --ink-background section (e.g. the
+   Dengonban board) — .btn's default border/text color is --ink, which is
+   invisible against an --ink background. */
+.btn-invert {
+  border-color: var(--paper);
+  color: var(--paper);
+}
+.btn-invert:hover { background: var(--paper); color: var(--ink); }
+.btn-invert:disabled, .btn-invert[disabled] {
+  background: transparent !important;
+  color: var(--paper) !important;
+}
+
 /* ---------- Section rhythm ---------- */
 section { padding: clamp(48px, 8vw, 96px) 0; }
 .rule {
@@ -1258,6 +1271,117 @@ body.item-page { position: relative; }
   color: #2c2b28;
 }
 .lending-model p + p { margin-top: 14px; }
+
+/* ---------- Community board (Dengonban, T17) ---------- */
+/* Inverted (--ink bg / --paper text) on purpose — the rest of the site is
+   --paper-on-ink everywhere else, so flipping it here is what makes this
+   one section read as a physically distinct surface (a chalkboard bolted
+   to the wall) instead of another content section. Ruled lines instead of
+   card shadows/borders, same "flat, gridded, ruled" language as a real
+   dengonban board rather than a comments-widget look. */
+.dengonban-board {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 48px 0;
+}
+.dengonban-board .eyebrow { color: var(--grey-light); }
+.dengonban-board .eyebrow::before { background: var(--paper); }
+
+.dengonban-compose {
+  display: flex;
+  gap: 14px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  margin-top: 24px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid rgba(250, 249, 244, 0.2);
+}
+.dengonban-compose textarea {
+  flex: 1;
+  min-width: 240px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 12px 14px;
+  border: 1px solid rgba(250, 249, 244, 0.4);
+  background: transparent;
+  color: var(--paper);
+  resize: vertical;
+  min-height: 44px;
+}
+.dengonban-compose textarea::placeholder { color: rgba(250, 249, 244, 0.45); }
+.dengonban-compose textarea:focus { outline: none; border-color: var(--paper); }
+.dengonban-compose-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+.dengonban-char-count {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: rgba(250, 249, 244, 0.5);
+}
+.dengonban-char-count.is-over { color: var(--red); }
+.dengonban-signin-note {
+  margin-top: 24px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid rgba(250, 249, 244, 0.2);
+  font-size: 14px;
+  color: rgba(250, 249, 244, 0.7);
+}
+.dengonban-signin-note a { color: var(--paper); }
+
+.dengonban-grid { margin-top: 8px; }
+.dengonban-entry {
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(250, 249, 244, 0.14);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 20px;
+  align-items: baseline;
+}
+.dengonban-entry-body {
+  font-family: var(--mono);
+  font-size: 14.5px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.dengonban-entry-time {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: rgba(250, 249, 244, 0.5);
+  white-space: nowrap;
+}
+.dengonban-empty,
+.dengonban-error {
+  font-family: var(--mono);
+  font-size: 13.5px;
+  color: rgba(250, 249, 244, 0.55);
+  padding: 20px 0;
+}
+.dengonban-error { color: #ff8a8a; }
+
+/* Deliberate, occasional action (a member choosing to post) — a brief
+   chalk-appearing entrance earns its keep here in a way it wouldn't on
+   something seen 100+/day. Transform + opacity only, short duration. */
+@keyframes dengonban-chalk-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: none; }
+}
+.dengonban-entry.is-new { animation: dengonban-chalk-in 220ms ease-out; }
+@media (prefers-reduced-motion: reduce) {
+  .dengonban-entry.is-new { animation: none; }
+}
+
+@media (max-width: 720px) {
+  .dengonban-compose { flex-direction: column; align-items: stretch; }
+  .dengonban-compose-side { align-items: flex-start; flex-direction: row-reverse; justify-content: space-between; width: 100%; }
+  .dengonban-entry { grid-template-columns: 1fr; }
+}
 
 /* ---------- Utility ---------- */
 .tac { text-align: center; }
