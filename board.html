@@ -42,8 +42,6 @@
         ></textarea>
         <div class="dengonban-compose-side">
           <div id="dengonban-color-picker" class="dengonban-color-picker" role="radiogroup" aria-label="Note color"></div>
-          <canvas id="dengonban-doodle-canvas" class="dengonban-doodle-canvas" width="160" height="90" aria-label="Optional doodle — draw on your note"></canvas>
-          <button type="button" id="dengonban-doodle-clear" class="btn" style="font-size:11px; padding:4px 10px;">Clear doodle</button>
           <button type="submit" class="btn btn-invert" id="dengonban-submit">Post &rarr;</button>
           <span class="dengonban-char-count" id="dengonban-char-count">280 left</span>
         </div>
@@ -110,8 +108,6 @@ let honDengonbanIsAdmin = false;
 let honDengonbanSelectedColor = HON_DENGONBAN_COLORS[0];
 let honDengonbanPendingX = 50;
 let honDengonbanPendingY = 50;
-let honDengonbanStrokes = [];
-let honDengonbanCurrentStroke = null;
 let honDengonbanPreviewCleanup = null;
 
 function honDengonbanRelativeTime(iso) {
@@ -346,85 +342,6 @@ function removeDengonbanPreviewNote() {
   if (preview) preview.remove();
 }
 
-// ---- doodle capture ----
-
-function honDengonbanDoodleCtx() {
-  return document.getElementById('dengonban-doodle-canvas').getContext('2d');
-}
-
-function redrawDengonbanDoodle() {
-  const canvas = document.getElementById('dengonban-doodle-canvas');
-  const ctx = honDengonbanDoodleCtx();
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.strokeStyle = '#2c2b28';
-  ctx.lineWidth = 2;
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
-  for (const stroke of honDengonbanStrokes) {
-    if (!stroke.length) continue;
-    ctx.beginPath();
-    ctx.moveTo(stroke[0][0], stroke[0][1]);
-    for (const [x, y] of stroke.slice(1)) ctx.lineTo(x, y);
-    ctx.stroke();
-  }
-}
-
-function wireDengonbanDoodleCanvas() {
-  const canvas = document.getElementById('dengonban-doodle-canvas');
-  let drawing = false;
-
-  canvas.addEventListener('pointerdown', (e) => {
-    if (honDengonbanStrokes.length >= 6) return;
-    drawing = true;
-    canvas.setPointerCapture(e.pointerId);
-    const rect = canvas.getBoundingClientRect();
-    honDengonbanCurrentStroke = [[
-      ((e.clientX - rect.left) / rect.width) * canvas.width,
-      ((e.clientY - rect.top) / rect.height) * canvas.height,
-    ]];
-  });
-
-  canvas.addEventListener('pointermove', (e) => {
-    if (!drawing || !honDengonbanCurrentStroke) return;
-    if (honDengonbanCurrentStroke.length >= 120) return;
-    const rect = canvas.getBoundingClientRect();
-    honDengonbanCurrentStroke.push([
-      ((e.clientX - rect.left) / rect.width) * canvas.width,
-      ((e.clientY - rect.top) / rect.height) * canvas.height,
-    ]);
-    redrawDengonbanDoodle();
-    const ctx = honDengonbanDoodleCtx();
-    ctx.beginPath();
-    ctx.moveTo(honDengonbanCurrentStroke[0][0], honDengonbanCurrentStroke[0][1]);
-    for (const [x, y] of honDengonbanCurrentStroke.slice(1)) ctx.lineTo(x, y);
-    ctx.stroke();
-  });
-
-  function endStroke() {
-    if (!drawing) return;
-    drawing = false;
-    if (honDengonbanCurrentStroke && honDengonbanCurrentStroke.length > 1) {
-      honDengonbanStrokes.push(honDengonbanCurrentStroke);
-    }
-    honDengonbanCurrentStroke = null;
-  }
-  canvas.addEventListener('pointerup', endStroke);
-  canvas.addEventListener('pointercancel', endStroke);
-
-  document.getElementById('dengonban-doodle-clear').addEventListener('click', () => {
-    honDengonbanStrokes = [];
-    honDengonbanCurrentStroke = null;
-    redrawDengonbanDoodle();
-  });
-}
-
-// Wired once at parse time, not inside honRenderDengonbanBoardPage() — the
-// canvas and its Clear button are static markup that's never regenerated,
-// so wiring inside the page-render entrypoint (which e2e tests call more
-// than once after mocking hon* functions, same pattern admin.html uses)
-// would double-attach these listeners on the second call.
-wireDengonbanDoodleCanvas();
-
 // ---- compose ----
 
 document.getElementById('dengonban-body').addEventListener('input', () => {
@@ -451,12 +368,9 @@ document.getElementById('dengonban-compose').addEventListener('submit', async (e
       color: honDengonbanSelectedColor,
       x: honDengonbanIsNarrow() ? 50 : honDengonbanPendingX,
       y: honDengonbanIsNarrow() ? 50 : honDengonbanPendingY,
-      doodle: honDengonbanStrokes.length ? honDengonbanStrokes : null,
     });
     textarea.value = '';
     updateDengonbanCharCount();
-    honDengonbanStrokes = [];
-    redrawDengonbanDoodle();
     const area = document.getElementById('dengonban-board-area');
     const empty = area.querySelector('.dengonban-empty');
     if (empty) empty.remove();

@@ -1339,15 +1339,6 @@ body.item-page { position: relative; }
 }
 .dengonban-color-swatch[aria-pressed="true"] { border-color: var(--paper); }
 
-.dengonban-doodle-canvas {
-  width: 160px;
-  height: 90px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px dashed rgba(250, 249, 244, 0.3);
-  touch-action: none; /* required so drawing isn't captured by page scroll on touch */
-  cursor: crosshair;
-}
-
 /* Free-position board area: a wide, tall surface notes are absolutely
    positioned on (pos_x/pos_y are percentages of this box). Subtle dot-grid
    texture stands in for cork without an image asset. */
