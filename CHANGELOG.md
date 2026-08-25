@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here.
 
+## [0.0.5.2] - 2026-08-24
+
+### Fixed
+- The Community Board page's intro copy was a leftover design-rationale blurb ("Modeled on the chalkboard grid...") instead of actual page copy. Replaced with "Community Board".
+
 ## [0.0.5.1] - 2026-08-21
 
 ### Fixed
