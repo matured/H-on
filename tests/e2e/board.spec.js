@@ -150,23 +150,22 @@ test.describe('Community Board — corkboard redesign', () => {
     expect(Math.abs(opts.x - movedLeft)).toBeLessThan(0.5);
   });
 
-  test('drawing a short stroke on the doodle canvas posts non-empty stroke data', async ({ page }) => {
+  // The compose-form doodle canvas was removed after shipping (too much
+  // visual clutter for what it added) — posting must never send doodle
+  // data again. dengonbanDoodleSVG() and the DB column/RPC param stay
+  // (existing/legacy rows can still have one and should still render
+  // correctly), only the capture UI is gone.
+  test('the doodle canvas is gone from compose, and posting sends no doodle data', async ({ page }) => {
     await mockBoardAndRender(page, { messages: [] });
 
-    const canvas = page.locator('#dengonban-doodle-canvas');
-    const box = await canvas.boundingBox();
-    await page.mouse.move(box.x + 10, box.y + 10);
-    await page.mouse.down();
-    await page.mouse.move(box.x + 60, box.y + 40, { steps: 5 });
-    await page.mouse.up();
+    await expect(page.locator('#dengonban-doodle-canvas')).toHaveCount(0);
+    await expect(page.locator('#dengonban-doodle-clear')).toHaveCount(0);
 
-    await page.fill('#dengonban-body', 'doodle test');
+    await page.fill('#dengonban-body', 'no doodle here');
     await page.click('#dengonban-submit');
 
     const opts = await page.evaluate(() => window.__lastPostOpts);
-    expect(Array.isArray(opts.doodle)).toBe(true);
-    expect(opts.doodle.length).toBeGreaterThan(0);
-    expect(opts.doodle[0].length).toBeGreaterThan(1);
+    expect(opts.doodle).toBeUndefined();
   });
 
   test('an admin sees a remove button on every note', async ({ page }) => {
@@ -199,6 +198,13 @@ test.describe('Community Board — corkboard redesign', () => {
     const target = page.locator('.dengonban-note', { hasText: 'to remove' });
     const removeBtn = target.locator('button[data-remove-id]');
 
+    // The pending-note preview is randomly positioned and, being the last
+    // DOM child, always stacks above other notes — with enough bad luck it
+    // lands on top of this note's remove button and blocks the click. It's
+    // irrelevant to what this test checks, so remove it rather than pin
+    // its position.
+    await page.evaluate(() => document.getElementById('dengonban-preview-note')?.remove());
+
     await removeBtn.click();
     await expect(removeBtn).toBeDisabled();
     await expect(target).toBeVisible(); // still present mid-flight
@@ -218,6 +224,9 @@ test.describe('Community Board — corkboard redesign', () => {
 
     const target = page.locator('.dengonban-note', { hasText: 'stubborn note' });
     const removeBtn = target.locator('button[data-remove-id]');
+
+    // See the note above the analogous line in the previous test.
+    await page.evaluate(() => document.getElementById('dengonban-preview-note')?.remove());
 
     await removeBtn.click();
     await expect(removeBtn).toBeEnabled();

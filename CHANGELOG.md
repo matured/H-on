@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here.
 
+## [0.0.6.2] - 2026-08-25
+
+### Removed
+- The doodle-drawing canvas is gone from the compose form — too much visual clutter for what it added. Posting no longer sends doodle data. Existing/legacy notes with a doodle would still render correctly if any existed (none do), since the rendering path and the database column are untouched — only the drawing input was removed.
+
 ## [0.0.6.1] - 2026-08-25
 
 ### Added
