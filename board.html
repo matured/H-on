@@ -4,16 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Community Board · 本 (hon)</title>
-<meta name="description" content="伝言板 — a shared message board for 本 members. Short public notes left for other members to find, the way people once left them on a station chalkboard.">
+<meta name="description" content="伝言板 — a corkboard of sticky notes anyone can read, and anyone can leave one on.">
 <link rel="canonical" href="https://ho-n.com/board.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="本 (hon)">
 <meta property="og:url" content="https://ho-n.com/board.html">
 <meta property="og:title" content="Community Board · 本 (hon)">
-<meta property="og:description" content="伝言板 — a shared message board for 本 members. Short public notes left for other members to find, the way people once left them on a station chalkboard.">
+<meta property="og:description" content="伝言板 — a corkboard of sticky notes anyone can read, and anyone can leave one on.">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Community Board · 本 (hon)">
-<meta name="twitter:description" content="伝言板 — a shared message board for 本 members. Short public notes left for other members to find, the way people once left them on a station chalkboard.">
+<meta name="twitter:description" content="伝言板 — a corkboard of sticky notes anyone can read, and anyone can leave one on.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -25,36 +25,38 @@
     <div class="wrap">
       <p class="eyebrow">伝言板 · COMMUNITY BOARD</p>
       <h1>A note left for whoever finds it next.</h1>
-      <p class="serif-lede">Community Board</p>
+      <p class="serif-lede">Ask for a feature, ask a question, or just say thanks. Anyone can read the board, and anyone can leave a note.</p>
     </div>
   </section>
 
   <section class="dengonban-board">
     <div class="wrap" style="max-width: 68ch;">
 
-      <div id="dengonban-signin-note" class="dengonban-signin-note" style="display:none;">
-        <a href="membership.html">Sign in</a> to leave a note on the board.
-      </div>
-
-      <form id="dengonban-compose" class="dengonban-compose" style="display:none;">
+      <form id="dengonban-compose" class="dengonban-compose">
         <textarea
           id="dengonban-body"
           maxlength="280"
           rows="2"
-          placeholder="Leave a note for another member…"
+          placeholder="Leave a note for whoever finds it…"
           required
         ></textarea>
         <div class="dengonban-compose-side">
+          <div id="dengonban-color-picker" class="dengonban-color-picker" role="radiogroup" aria-label="Note color"></div>
+          <canvas id="dengonban-doodle-canvas" class="dengonban-doodle-canvas" width="160" height="90" aria-label="Optional doodle — draw on your note"></canvas>
+          <button type="button" id="dengonban-doodle-clear" class="btn" style="font-size:11px; padding:4px 10px;">Clear doodle</button>
           <button type="submit" class="btn btn-invert" id="dengonban-submit">Post &rarr;</button>
           <span class="dengonban-char-count" id="dengonban-char-count">280 left</span>
         </div>
       </form>
       <p id="dengonban-status" role="status" aria-live="polite" class="dengonban-char-count" style="margin-top:10px;"></p>
+      <p class="dengonban-hint">Drag your note anywhere on the board below before posting.</p>
 
-      <div id="dengonban-grid" class="dengonban-grid" aria-live="polite">
+    </div>
+
+    <div class="wrap">
+      <div id="dengonban-board-area" class="dengonban-board-area" aria-live="polite">
         <p class="dengonban-empty">Loading the board&hellip;</p>
       </div>
-
     </div>
   </section>
 
@@ -102,6 +104,15 @@
 <script src="js/main.js"></script>
 <script>
 const DENGONBAN_MAX_LEN = 280;
+const DENGONBAN_NARROW_QUERY = '(max-width: 640px)';
+
+let honDengonbanIsAdmin = false;
+let honDengonbanSelectedColor = HON_DENGONBAN_COLORS[0];
+let honDengonbanPendingX = 50;
+let honDengonbanPendingY = 50;
+let honDengonbanStrokes = [];
+let honDengonbanCurrentStroke = null;
+let honDengonbanPreviewCleanup = null;
 
 function honDengonbanRelativeTime(iso) {
   const mins = Math.max(0, Math.floor((Date.now() - new Date(iso).getTime()) / 60000));
@@ -113,31 +124,92 @@ function honDengonbanRelativeTime(iso) {
   return `${days}d ago`;
 }
 
-function dengonbanEntryHTML(msg, { isNew = false } = {}) {
+// Deterministic -8..+8deg tilt from the note's id — every reload shows the
+// same rotation for the same note without a DB column or write path for it.
+function honDengonbanRotationFor(id) {
+  let h = 0;
+  for (const c of String(id)) h = (h * 31 + c.charCodeAt(0)) % 17;
+  return h - 8;
+}
+
+// Points are numerically coerced and range-filtered (not honEscape'd) —
+// this is an allowlisted-numeric context, not free text. The server-side
+// validate_dengonban_doodle() is the real boundary; this is defense in
+// depth against a malformed/tampered row reaching innerHTML.
+function dengonbanDoodleSVG(strokes) {
+  const polylines = (strokes || []).map((stroke) => {
+    const pts = (stroke || [])
+      .map((p) => [Number(p[0]), Number(p[1])])
+      .filter(([x, y]) => Number.isFinite(x) && Number.isFinite(y) && x >= 0 && x <= 160 && y >= 0 && y <= 90)
+      .map(([x, y]) => `${x},${y}`)
+      .join(' ');
+    return pts ? `<polyline points="${pts}" fill="none" stroke="#2c2b28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>` : '';
+  }).join('');
+  return `<svg viewBox="0 0 160 90" class="dengonban-note-doodle" aria-hidden="true">${polylines}</svg>`;
+}
+
+function dengonbanNoteHTML(msg, { isNew = false } = {}) {
+  const rot = honDengonbanRotationFor(msg.id);
   return `
-    <div class="dengonban-entry${isNew ? ' is-new' : ''}">
-      <div class="dengonban-entry-body">${honEscape(msg.body)}</div>
-      <div class="dengonban-entry-time">${honDengonbanRelativeTime(msg.created_at)}</div>
+    <div class="dengonban-note${isNew ? ' is-new' : ''}"
+         style="left:${msg.pos_x}%; top:${msg.pos_y}%; background:${honEscape(msg.color)}; transform: translate(-50%,-50%) rotate(${rot}deg);">
+      <div class="dengonban-note-body">${honEscape(msg.body)}</div>
+      ${msg.doodle ? dengonbanDoodleSVG(msg.doodle) : ''}
+      <div class="dengonban-note-time">${honDengonbanRelativeTime(msg.created_at)}</div>
+      ${honDengonbanIsAdmin ? `<button type="button" class="dengonban-note-remove" data-remove-id="${honEscape(msg.id)}" aria-label="Remove note" title="Remove note">&times;</button>` : ''}
     </div>
   `;
 }
 
-function renderDengonbanGrid(messages) {
-  const grid = document.getElementById('dengonban-grid');
+function wireDengonbanRemoveButtons(scope) {
+  scope.querySelectorAll('button[data-remove-id]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const note = btn.closest('.dengonban-note');
+      btn.disabled = true;
+      btn.textContent = '…';
+      try {
+        await honAdminHideDengonban(btn.dataset.removeId);
+        note.remove();
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = '×';
+        btn.title = err.message || String(err);
+      }
+    });
+  });
+}
+
+function renderDengonbanBoard(messages) {
+  const area = document.getElementById('dengonban-board-area');
   if (!messages.length) {
-    grid.innerHTML = '<p class="dengonban-empty">The board is empty. Be the first to leave a note.</p>';
+    area.innerHTML = '<p class="dengonban-empty">The board is empty. Be the first to leave a note.</p>';
     return;
   }
-  grid.innerHTML = messages.map((m) => dengonbanEntryHTML(m)).join('');
+  area.innerHTML = messages.map((m) => dengonbanNoteHTML(m)).join('');
+  wireDengonbanRemoveButtons(area);
 }
 
 async function refreshDengonbanBoard() {
-  const grid = document.getElementById('dengonban-grid');
+  const area = document.getElementById('dengonban-board-area');
   try {
     const messages = await honFetchDengonban();
-    renderDengonbanGrid(messages);
+    renderDengonbanBoard(messages);
   } catch (err) {
-    grid.innerHTML = `<p class="dengonban-error">Couldn’t load the board: ${honEscape(err.message || err)}</p>`;
+    area.innerHTML = `<p class="dengonban-error">Couldn’t load the board: ${honEscape(err.message || err)}</p>`;
+  }
+}
+
+async function refreshDengonbanAdminState() {
+  const user = await honGetCurrentUser();
+  if (!user) {
+    honDengonbanIsAdmin = false;
+    return;
+  }
+  try {
+    const profile = await honFetchMyProfile();
+    honDengonbanIsAdmin = Boolean(profile && profile.is_admin);
+  } catch {
+    honDengonbanIsAdmin = false;
   }
 }
 
@@ -149,13 +221,193 @@ function updateDengonbanCharCount() {
   el.classList.toggle('is-over', remaining < 0);
 }
 
-async function refreshDengonbanComposeState() {
-  const user = await honGetCurrentUser();
-  document.getElementById('dengonban-compose').style.display = user ? '' : 'none';
-  document.getElementById('dengonban-signin-note').style.display = user ? 'none' : '';
+// ---- color picker ----
+
+function renderDengonbanColorPicker() {
+  const picker = document.getElementById('dengonban-color-picker');
+  picker.innerHTML = HON_DENGONBAN_COLORS.map((hex) => `
+    <button type="button" class="dengonban-color-swatch" data-color="${honEscape(hex)}"
+      style="background:${honEscape(hex)};" aria-pressed="${hex === honDengonbanSelectedColor}"
+      aria-label="Note color ${honEscape(hex)}"></button>
+  `).join('');
+  picker.querySelectorAll('button[data-color]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      honDengonbanSelectedColor = btn.dataset.color;
+      picker.querySelectorAll('button[data-color]').forEach((b) => {
+        b.setAttribute('aria-pressed', String(b.dataset.color === honDengonbanSelectedColor));
+      });
+      const preview = document.getElementById('dengonban-preview-note');
+      if (preview) preview.style.background = honDengonbanSelectedColor;
+    });
+  });
 }
 
-document.getElementById('dengonban-body').addEventListener('input', updateDengonbanCharCount);
+// ---- free placement (drag the pending note before posting) ----
+
+function honDengonbanIsNarrow() {
+  return window.matchMedia(DENGONBAN_NARROW_QUERY).matches;
+}
+
+function renderDengonbanPreviewNote() {
+  const area = document.getElementById('dengonban-board-area');
+  if (honDengonbanIsNarrow() || document.getElementById('dengonban-preview-note')) return;
+
+  honDengonbanPendingX = 6 + Math.random() * 88;
+  honDengonbanPendingY = 6 + Math.random() * 88;
+
+  const preview = document.createElement('div');
+  preview.id = 'dengonban-preview-note';
+  preview.className = 'dengonban-note dengonban-note-preview';
+  preview.style.left = `${honDengonbanPendingX}%`;
+  preview.style.top = `${honDengonbanPendingY}%`;
+  // Matches the centering transform every real note gets inline
+  // (dengonbanNoteHTML) — without this, .dengonban-note:hover's
+  // translate(-50%,-50%) only takes effect the instant the pointer first
+  // enters the preview, snapping it by half its own size right as a drag
+  // is starting.
+  preview.style.transform = 'translate(-50%, -50%)';
+  preview.style.background = honDengonbanSelectedColor;
+  preview.innerHTML = '<div class="dengonban-note-body" id="dengonban-preview-body">Your note…</div>';
+  area.appendChild(preview);
+
+  // Listeners for move/up live on `document`, not `preview` itself — a
+  // fast drag moves the pointer off this small (168x96) element well
+  // before the user means to stop dragging, and only document-level
+  // listeners keep tracking it once that happens. (setPointerCapture on
+  // the element looks like it should cover this without a document
+  // listener, but doesn't reliably re-route events once the pointer is
+  // outside the element's own bounds in every environment this runs in —
+  // the document-level fallback is the actually-robust version.)
+  let dragging = false;
+  function onMove(e) {
+    if (!dragging) return;
+    const rect = area.getBoundingClientRect();
+    const x = Math.min(100, Math.max(0, ((e.clientX - rect.left) / rect.width) * 100));
+    const y = Math.min(100, Math.max(0, ((e.clientY - rect.top) / rect.height) * 100));
+    honDengonbanPendingX = x;
+    honDengonbanPendingY = y;
+    preview.style.left = `${x}%`;
+    preview.style.top = `${y}%`;
+  }
+  function onUp() { dragging = false; }
+
+  preview.addEventListener('pointerdown', (e) => {
+    dragging = true;
+    e.preventDefault();
+  });
+  document.addEventListener('pointermove', onMove);
+  document.addEventListener('pointerup', onUp);
+  document.addEventListener('pointercancel', onUp);
+
+  // A new preview note is created after every successful post — without
+  // tearing down the previous one's document-level listeners, they'd pile
+  // up across a session instead of being scoped to the one preview note
+  // that's actually in the DOM.
+  honDengonbanPreviewCleanup = () => {
+    document.removeEventListener('pointermove', onMove);
+    document.removeEventListener('pointerup', onUp);
+    document.removeEventListener('pointercancel', onUp);
+  };
+}
+
+function removeDengonbanPreviewNote() {
+  if (honDengonbanPreviewCleanup) {
+    honDengonbanPreviewCleanup();
+    honDengonbanPreviewCleanup = null;
+  }
+  const preview = document.getElementById('dengonban-preview-note');
+  if (preview) preview.remove();
+}
+
+// ---- doodle capture ----
+
+function honDengonbanDoodleCtx() {
+  return document.getElementById('dengonban-doodle-canvas').getContext('2d');
+}
+
+function redrawDengonbanDoodle() {
+  const canvas = document.getElementById('dengonban-doodle-canvas');
+  const ctx = honDengonbanDoodleCtx();
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = '#2c2b28';
+  ctx.lineWidth = 2;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  for (const stroke of honDengonbanStrokes) {
+    if (!stroke.length) continue;
+    ctx.beginPath();
+    ctx.moveTo(stroke[0][0], stroke[0][1]);
+    for (const [x, y] of stroke.slice(1)) ctx.lineTo(x, y);
+    ctx.stroke();
+  }
+}
+
+function wireDengonbanDoodleCanvas() {
+  const canvas = document.getElementById('dengonban-doodle-canvas');
+  let drawing = false;
+
+  canvas.addEventListener('pointerdown', (e) => {
+    if (honDengonbanStrokes.length >= 6) return;
+    drawing = true;
+    canvas.setPointerCapture(e.pointerId);
+    const rect = canvas.getBoundingClientRect();
+    honDengonbanCurrentStroke = [[
+      ((e.clientX - rect.left) / rect.width) * canvas.width,
+      ((e.clientY - rect.top) / rect.height) * canvas.height,
+    ]];
+  });
+
+  canvas.addEventListener('pointermove', (e) => {
+    if (!drawing || !honDengonbanCurrentStroke) return;
+    if (honDengonbanCurrentStroke.length >= 120) return;
+    const rect = canvas.getBoundingClientRect();
+    honDengonbanCurrentStroke.push([
+      ((e.clientX - rect.left) / rect.width) * canvas.width,
+      ((e.clientY - rect.top) / rect.height) * canvas.height,
+    ]);
+    redrawDengonbanDoodle();
+    const ctx = honDengonbanDoodleCtx();
+    ctx.beginPath();
+    ctx.moveTo(honDengonbanCurrentStroke[0][0], honDengonbanCurrentStroke[0][1]);
+    for (const [x, y] of honDengonbanCurrentStroke.slice(1)) ctx.lineTo(x, y);
+    ctx.stroke();
+  });
+
+  function endStroke() {
+    if (!drawing) return;
+    drawing = false;
+    if (honDengonbanCurrentStroke && honDengonbanCurrentStroke.length > 1) {
+      honDengonbanStrokes.push(honDengonbanCurrentStroke);
+    }
+    honDengonbanCurrentStroke = null;
+  }
+  canvas.addEventListener('pointerup', endStroke);
+  canvas.addEventListener('pointercancel', endStroke);
+
+  document.getElementById('dengonban-doodle-clear').addEventListener('click', () => {
+    honDengonbanStrokes = [];
+    honDengonbanCurrentStroke = null;
+    redrawDengonbanDoodle();
+  });
+}
+
+// Wired once at parse time, not inside honRenderDengonbanBoardPage() — the
+// canvas and its Clear button are static markup that's never regenerated,
+// so wiring inside the page-render entrypoint (which e2e tests call more
+// than once after mocking hon* functions, same pattern admin.html uses)
+// would double-attach these listeners on the second call.
+wireDengonbanDoodleCanvas();
+
+// ---- compose ----
+
+document.getElementById('dengonban-body').addEventListener('input', () => {
+  updateDengonbanCharCount();
+  const previewBody = document.getElementById('dengonban-preview-body');
+  if (previewBody) {
+    const text = document.getElementById('dengonban-body').value;
+    previewBody.textContent = text || 'Your note…';
+  }
+});
 
 document.getElementById('dengonban-compose').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -168,13 +420,23 @@ document.getElementById('dengonban-compose').addEventListener('submit', async (e
   btn.textContent = 'Posting…';
   statusEl.textContent = '';
   try {
-    const msg = await honPostDengonban(body);
+    const msg = await honPostDengonban(body, {
+      color: honDengonbanSelectedColor,
+      x: honDengonbanIsNarrow() ? 50 : honDengonbanPendingX,
+      y: honDengonbanIsNarrow() ? 50 : honDengonbanPendingY,
+      doodle: honDengonbanStrokes.length ? honDengonbanStrokes : null,
+    });
     textarea.value = '';
     updateDengonbanCharCount();
-    const grid = document.getElementById('dengonban-grid');
-    const empty = grid.querySelector('.dengonban-empty');
+    honDengonbanStrokes = [];
+    redrawDengonbanDoodle();
+    const area = document.getElementById('dengonban-board-area');
+    const empty = area.querySelector('.dengonban-empty');
     if (empty) empty.remove();
-    grid.insertAdjacentHTML('afterbegin', dengonbanEntryHTML(msg, { isNew: true }));
+    removeDengonbanPreviewNote();
+    area.insertAdjacentHTML('afterbegin', dengonbanNoteHTML(msg, { isNew: true }));
+    wireDengonbanRemoveButtons(area);
+    renderDengonbanPreviewNote();
   } catch (err) {
     statusEl.textContent = err.message || String(err);
   } finally {
@@ -183,12 +445,16 @@ document.getElementById('dengonban-compose').addEventListener('submit', async (e
   }
 });
 
-document.addEventListener('DOMContentLoaded', async () => {
+async function honRenderDengonbanBoardPage() {
   updateDengonbanCharCount();
-  await refreshDengonbanComposeState();
+  renderDengonbanColorPicker();
+  await refreshDengonbanAdminState();
   await refreshDengonbanBoard();
-  honSupabase.auth.onAuthStateChange(() => { refreshDengonbanComposeState(); });
-});
+  renderDengonbanPreviewNote();
+  honSupabase.auth.onAuthStateChange(() => { refreshDengonbanAdminState(); });
+}
+
+document.addEventListener('DOMContentLoaded', honRenderDengonbanBoardPage);
 </script>
 </body>
 </html>

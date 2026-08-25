@@ -2,6 +2,13 @@
 
 All notable changes to this project are documented here.
 
+## [0.0.6.0] - 2026-08-25
+
+### Added
+- The Community Board is now a real corkboard: pick a sticky-note color, drag your note anywhere on the board before posting, and optionally draw a small doodle on it.
+- Anyone can leave a note now, not just signed-in members — anonymous posting is rate-limited by its own mechanism (3 posts per 10 minutes per browser), separate from the signed-in member limit.
+- Admins can remove a note directly from the board itself (a small × on each note), not just from the separate admin panel — reuses the existing reversible hide, so removed notes stay recoverable from admin.html.
+
 ## [0.0.5.2] - 2026-08-24
 
 ### Fixed
