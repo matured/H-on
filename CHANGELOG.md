@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented here.
 
+## [0.0.6.1] - 2026-08-25
+
+### Added
+- The board's existing notes now reveal with a staggered entrance on load instead of appearing all at once — reuses the same fade a freshly-posted note already got.
+- Dragging the pending note before posting now lifts slightly while held and settles with a small bounce when released, instead of just stopping dead.
+
 ## [0.0.6.0] - 2026-08-25
 
 ### Added
