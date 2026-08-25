@@ -148,11 +148,12 @@ function dengonbanDoodleSVG(strokes) {
   return `<svg viewBox="0 0 160 90" class="dengonban-note-doodle" aria-hidden="true">${polylines}</svg>`;
 }
 
-function dengonbanNoteHTML(msg, { isNew = false } = {}) {
+function dengonbanNoteHTML(msg, { isNew = false, delayMs = 0 } = {}) {
   const rot = honDengonbanRotationFor(msg.id);
+  const delayStyle = isNew && delayMs ? ` animation-delay: ${delayMs}ms;` : '';
   return `
     <div class="dengonban-note${isNew ? ' is-new' : ''}"
-         style="left:${msg.pos_x}%; top:${msg.pos_y}%; background:${honEscape(msg.color)}; transform: translate(-50%,-50%) rotate(${rot}deg);">
+         style="left:${msg.pos_x}%; top:${msg.pos_y}%; background:${honEscape(msg.color)}; transform: translate(-50%,-50%) rotate(${rot}deg);${delayStyle}">
       <div class="dengonban-note-body">${honEscape(msg.body)}</div>
       ${msg.doodle ? dengonbanDoodleSVG(msg.doodle) : ''}
       <div class="dengonban-note-time">${honDengonbanRelativeTime(msg.created_at)}</div>
@@ -185,7 +186,13 @@ function renderDengonbanBoard(messages) {
     area.innerHTML = '<p class="dengonban-empty">The board is empty. Be the first to leave a note.</p>';
     return;
   }
-  area.innerHTML = messages.map((m) => dengonbanNoteHTML(m)).join('');
+  // Reuses the same entrance a freshly-posted note gets (dengonban-chalk-in)
+  // rather than a separate keyframe — the only difference on load is a
+  // per-note stagger, capped at 400ms of total delay so a large board
+  // doesn't drag the reveal out. renderDengonbanBoard only ever runs once,
+  // at page load (refreshDengonbanBoard's single call site), so every call
+  // here legitimately is an initial reveal, not a re-render to guard against.
+  area.innerHTML = messages.map((m, i) => dengonbanNoteHTML(m, { isNew: true, delayMs: Math.min(i * 40, 400) })).join('');
   wireDengonbanRemoveButtons(area);
 }
 
@@ -248,6 +255,10 @@ function honDengonbanIsNarrow() {
   return window.matchMedia(DENGONBAN_NARROW_QUERY).matches;
 }
 
+function honDengonbanPrefersReducedMotion() {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
 function renderDengonbanPreviewNote() {
   const area = document.getElementById('dengonban-board-area');
   if (honDengonbanIsNarrow() || document.getElementById('dengonban-preview-note')) return;
@@ -286,14 +297,30 @@ function renderDengonbanPreviewNote() {
     const y = Math.min(100, Math.max(0, ((e.clientY - rect.top) / rect.height) * 100));
     honDengonbanPendingX = x;
     honDengonbanPendingY = y;
+    // Position tracks the pointer raw, every frame — no transition here,
+    // intentionally. Only the lift (pointerdown) and settle (pointerup)
+    // below ever ease; smoothing the live follow would just add lag.
     preview.style.left = `${x}%`;
     preview.style.top = `${y}%`;
   }
-  function onUp() { dragging = false; }
+  function onUp() {
+    if (!dragging) return;
+    dragging = false;
+    if (!honDengonbanPrefersReducedMotion()) {
+      // The overshoot curve dips slightly past scale(1) before landing
+      // exactly on it — that's the "settle," not a separate keyframe stop.
+      preview.style.transition = 'transform 180ms cubic-bezier(.34, 1.56, .64, 1)';
+      preview.style.transform = 'translate(-50%, -50%) scale(1)';
+    }
+  }
 
   preview.addEventListener('pointerdown', (e) => {
     dragging = true;
     e.preventDefault();
+    if (!honDengonbanPrefersReducedMotion()) {
+      preview.style.transition = 'transform 100ms ease-out';
+      preview.style.transform = 'translate(-50%, -50%) scale(1.05)';
+    }
   });
   document.addEventListener('pointermove', onMove);
   document.addEventListener('pointerup', onUp);
