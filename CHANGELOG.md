@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here.
 
+## [0.0.7.1] - 2026-08-26
+
+### Fixed
+- The Dengonban board panel on the admin page was broken ("Couldn't load the board: structure of query does not match function result type") — `auth.users.email` is `character varying(255)`, not `text`, and `admin_list_dengonban()` was missing the explicit cast every other admin RPC that reads it already has. Bug predates this week's corkboard redesign; nothing had actually exercised this specific function as a real admin until now.
+
 ## [0.0.7.0] - 2026-08-26
 
 ### Added
