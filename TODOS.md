@@ -63,6 +63,16 @@
 
 ## Completed
 
+### Self-hosted page-view analytics
+
+**What:** A "Traffic" panel in admin.html: pageviews + unique visitors per day (last 30 days), top external referrers, and top pages. Chosen over a third-party service (Google Analytics, Plausible, etc.) to avoid a new account, cookies, or handing visitor data to another company — fits how the rest of the site is built.
+**Why:** Requested directly — wanted to know where visitors come from and how many arrive per day.
+**Context:** New migration `20260826000000_page_view_analytics.sql` (`page_views` table, zero RLS policies, same posture as `rate_limit_log`/`dengonban_anon_rate_limit` — reachable only through `log_page_view()` and the `admin_pageview_*` read RPCs). `js/circulation.js`'s `honGetOrCreateVisitorId()` (a client-side localStorage token, deliberately separate from the dengonban anon token) and `honLogPageView()`; wired into every page via `js/main.js`'s `DOMContentLoaded` handler except `admin.html` itself. `index.html` (the dependency-free splash page) logs its own view with an inline `fetch()` instead of loading the full SDK. Both the shared wrapper and the inline snippet check `navigator.webdriver` and skip logging entirely when true — without that, the project's own Playwright e2e suite would silently write real rows into production analytics on every CI run (confirmed live: applied the migration, ran the full 65-test e2e suite, `page_views` stayed at 0 rows). Only external referrers are ever sent (same-origin navigation is `null`), and only the hostname, not the full referring URL. Migration applied and end-to-end verified against the live project before merging (both the guard and the RPC/read-path logic, since browser-automation tools can't exercise the "genuine visitor" path themselves).
+**Effort:** M
+**Priority:** P3
+**Depends on:** None
+**Completed:** v0.0.7.0 (2026-08-26)
+
 ### Community message board (伝言板 / dengonban) — corkboard redesign
 
 **What:** A shared corkboard anyone (member or not) can post short public sticky notes to — modeled on the Japanese train-station 伝言板 ("dengonban"/"rengonban") and, for this redesign, on a physical "Take What You Need" bulletin board: colorful notes scattered freely, not a linear feed. Posters pick a color and drag their note anywhere on the board before posting; posting is open to non-members via its own anon-safe rate limiter (separate from the signed-in member limit); admins can remove a note directly from the board (reuses the existing reversible hide); existing notes reveal with a staggered entrance on load and the pending note lifts/settles on drag release. A doodle-drawing canvas shipped alongside the redesign and was removed shortly after — too much visual clutter for what it added. The database column and render path for a doodle are still there (harmless if empty), only the drawing input is gone.
