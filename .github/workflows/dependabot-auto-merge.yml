@@ -1,0 +1,31 @@
+name: Dependabot auto-merge
+
+# Enables auto-merge on Dependabot's own PRs for minor/patch bumps only —
+# major version bumps (which can carry breaking changes) still open a PR
+# but are left for manual review. This sets auto-merge, it doesn't bypass
+# CI: main's branch protection requires the `test` check to pass before
+# any merge, Dependabot's included, so this only ever merges what already
+# went green.
+on: pull_request
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  dependabot:
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]'
+    steps:
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Enable auto-merge for minor/patch updates
+        if: steps.metadata.outputs.update-type != 'version-update:semver-major'
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

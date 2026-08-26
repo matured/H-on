@@ -1,0 +1,22 @@
+version: 2
+updates:
+  # devDependencies (@playwright/test, jsdom, vitest) — dev-only test
+  # tooling, never shipped to the live site (see package.json's own
+  # description). Weekly is plenty for a repo this size.
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+
+  # Pinned action versions in .github/workflows (actions/checkout,
+  # oven-sh/setup-bun).
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
