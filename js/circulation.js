@@ -223,6 +223,80 @@ async function honAdminDeclineWaitlistRequest(requestId) {
   if (error) throw error;
 }
 
+// ---- page-view analytics (T19) ----
+// Same "carry one opaque value across page loads via localStorage" shape
+// as HON_PENDING_CARD_KEY / HON_ANON_TOKEN_KEY above — a deliberately
+// SEPARATE token from the dengonban anon rate-limit one, so a visitor's
+// browsing history can't be correlated with their dengonban posting
+// identity through a shared id.
+const HON_VISITOR_ID_KEY = 'hon_visitor_id';
+
+function honGetOrCreateVisitorId() {
+  let id = localStorage.getItem(HON_VISITOR_ID_KEY);
+  if (!id) {
+    id = crypto.randomUUID();
+    localStorage.setItem(HON_VISITOR_ID_KEY, id);
+  }
+  return id;
+}
+
+// Only ever sends an EXTERNAL referrer — same-origin navigation (clicking
+// between pages on this site) isn't a traffic *source*, and including it
+// would drown out real external referrers in admin_pageview_top_referrers.
+// Only the hostname is sent, not the full referring URL, so a visitor's
+// search query or the referring page's own path never reaches this table.
+function honExternalReferrerHostname() {
+  if (!document.referrer) return null;
+  try {
+    const url = new URL(document.referrer);
+    return url.hostname === location.hostname ? null : url.hostname;
+  } catch {
+    return null;
+  }
+}
+
+// Fire-and-forget by design: a failed pageview log should never surface
+// to the visitor or block anything else on the page from working.
+//
+// navigator.webdriver is true for WebDriver/CDP-driven browsers (Playwright,
+// Selenium, Puppeteer) — skipping it here is what keeps this project's own
+// e2e suite from writing real rows into production analytics on every CI
+// run. It's the standard, browser-provided signal for this, not a fragile
+// heuristic — the one known tradeoff is that a small number of genuinely
+// privacy-hardened real visitors also report webdriver=true as anti-
+// fingerprinting camouflage, so this slightly undercounts rather than
+// overcounts, which is the safer direction to be wrong in for this feature.
+async function honLogPageView(path) {
+  if (navigator.webdriver) return;
+  try {
+    await honSupabase.rpc('log_page_view', {
+      p_path: path,
+      p_referrer: honExternalReferrerHostname(),
+      p_visitor_id: honGetOrCreateVisitorId(),
+    });
+  } catch (err) {
+    console.error('honLogPageView failed:', err);
+  }
+}
+
+async function honAdminPageviewDaily(days = 30) {
+  const { data, error } = await honSupabase.rpc('admin_pageview_daily', { p_days: days });
+  if (error) throw error;
+  return data || [];
+}
+
+async function honAdminPageviewTopReferrers(days = 30, limit = 20) {
+  const { data, error } = await honSupabase.rpc('admin_pageview_top_referrers', { p_days: days, p_limit: limit });
+  if (error) throw error;
+  return data || [];
+}
+
+async function honAdminPageviewTopPaths(days = 30, limit = 20) {
+  const { data, error } = await honSupabase.rpc('admin_pageview_top_paths', { p_days: days, p_limit: limit });
+  if (error) throw error;
+  return data || [];
+}
+
 // ---- dengonban (T17, corkboard redesign T18) ----
 // Must match the check constraint on dengonban_messages.color and the
 // runtime check in post_dengonban_message (20260825010000_dengonban_corkboard.sql).
@@ -636,6 +710,8 @@ if (typeof module !== 'undefined' && module.exports) {
     honStashPendingCardCode, honTakePendingCardCode,
     honFetchMyProfile, honAdminListProfiles, honAdminListLoans, honAdminListWaitlist,
     honAdminAcceptWaitlistRequest, honAdminDeclineWaitlistRequest,
+    honGetOrCreateVisitorId, honLogPageView,
+    honAdminPageviewDaily, honAdminPageviewTopReferrers, honAdminPageviewTopPaths,
     honFetchDengonban, honPostDengonban, honAdminListDengonban, honAdminHideDengonban,
     HON_DENGONBAN_COLORS, honGetOrCreateAnonToken,
     honAdminForceReturn, honAdminIssueCard, honAdminSetBanned, honAdminUpsertItem,

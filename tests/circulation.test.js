@@ -8,6 +8,8 @@ const {
   honStashPendingCardCode, honTakePendingCardCode,
   honFetchMyProfile, honAdminListProfiles, honAdminListLoans, honAdminListWaitlist,
   honAdminAcceptWaitlistRequest, honAdminDeclineWaitlistRequest,
+  honGetOrCreateVisitorId, honLogPageView,
+  honAdminPageviewDaily, honAdminPageviewTopReferrers, honAdminPageviewTopPaths,
   honFetchDengonban, honPostDengonban, honAdminListDengonban, honAdminHideDengonban,
   HON_DENGONBAN_COLORS, honGetOrCreateAnonToken,
   honAdminForceReturn, honAdminIssueCard, honAdminSetBanned, honAdminUpsertItem,
@@ -670,5 +672,142 @@ describe('admin wrappers', () => {
   it('honAdminDeclineWaitlistRequest throws on RPC error (e.g. a non-admin caller)', async () => {
     global.honSupabase = createMockSupabase({ rpcResponses: { admin_decline_waitlist_request: { data: null, error: new Error('admin only') } } });
     await expect(honAdminDeclineWaitlistRequest(9)).rejects.toThrow('admin only');
+  });
+});
+
+describe('page-view analytics (T19)', () => {
+  it('honGetOrCreateVisitorId generates and persists a token on first call', () => {
+    expect(localStorage.getItem('hon_visitor_id')).toBeNull();
+    const id = honGetOrCreateVisitorId();
+    expect(id).toBeTruthy();
+    expect(localStorage.getItem('hon_visitor_id')).toBe(id);
+  });
+
+  it('honGetOrCreateVisitorId returns the same token on a later call', () => {
+    const first = honGetOrCreateVisitorId();
+    const second = honGetOrCreateVisitorId();
+    expect(second).toBe(first);
+  });
+
+  it('honGetOrCreateVisitorId is a different token from the dengonban anon token', () => {
+    // Deliberately separate identities (see the comment above
+    // HON_VISITOR_ID_KEY in js/circulation.js) — a shared token would let
+    // a visitor's browsing be correlated with their dengonban posting.
+    const visitorId = honGetOrCreateVisitorId();
+    const dengonbanToken = honGetOrCreateAnonToken();
+    expect(visitorId).not.toBe(dengonbanToken);
+  });
+
+  it('honLogPageView calls log_page_view with the path and a visitor id, and never throws on RPC failure', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { log_page_view: { data: null, error: new Error('db down') } } });
+    await expect(honLogPageView('/board.html')).resolves.toBeUndefined();
+    expect(global.honSupabase.rpc).toHaveBeenCalledWith('log_page_view', expect.objectContaining({
+      p_path: '/board.html',
+      p_visitor_id: honGetOrCreateVisitorId(),
+    }));
+  });
+
+  // navigator.webdriver is true for WebDriver/CDP-driven browsers — this
+  // is what keeps the project's own Playwright e2e suite (and any other
+  // automation) from writing real rows into production analytics. jsdom
+  // doesn't define navigator.webdriver at all (unlike a real automated
+  // Chromium, which sets it), so there's no existing descriptor to
+  // restore afterward — the property just needs deleting, not resetting,
+  // or it leaks `true` into every test that runs after this one.
+  it('honLogPageView does nothing when navigator.webdriver is true', async () => {
+    Object.defineProperty(navigator, 'webdriver', { value: true, configurable: true });
+    global.honSupabase = createMockSupabase({ rpcResponses: { log_page_view: { data: null, error: null } } });
+    try {
+      await honLogPageView('/board.html');
+      expect(global.honSupabase.rpc).not.toHaveBeenCalled();
+    } finally {
+      delete navigator.webdriver;
+    }
+  });
+
+  // document.referrer is a getter on Document.prototype, not an own
+  // property of the document instance — Object.getOwnPropertyDescriptor
+  // on the instance itself returns undefined, which Object.defineProperty
+  // then rejects as a descriptor. Source and restore it via the prototype.
+  const originalReferrerDescriptor = Object.getOwnPropertyDescriptor(Document.prototype, 'referrer');
+
+  function stubReferrer(value) {
+    Object.defineProperty(document, 'referrer', { value, configurable: true });
+  }
+  function restoreReferrer() {
+    Object.defineProperty(Document.prototype, 'referrer', originalReferrerDescriptor);
+  }
+
+  it('honLogPageView sends a same-origin referrer as null, not the internal URL', async () => {
+    stubReferrer(`${location.origin}/catalog.html`);
+    global.honSupabase = createMockSupabase({ rpcResponses: { log_page_view: { data: null, error: null } } });
+    try {
+      await honLogPageView('/board.html');
+      expect(global.honSupabase.rpc).toHaveBeenCalledWith('log_page_view', expect.objectContaining({ p_referrer: null }));
+    } finally {
+      restoreReferrer();
+    }
+  });
+
+  it('honLogPageView sends an external referrer as just its hostname', async () => {
+    stubReferrer('https://www.google.com/search?q=hon+circulating+archive');
+    global.honSupabase = createMockSupabase({ rpcResponses: { log_page_view: { data: null, error: null } } });
+    try {
+      await honLogPageView('/board.html');
+      expect(global.honSupabase.rpc).toHaveBeenCalledWith('log_page_view', expect.objectContaining({ p_referrer: 'www.google.com' }));
+    } finally {
+      restoreReferrer();
+    }
+  });
+
+  it('honAdminPageviewDaily calls admin_pageview_daily and returns the rows on success', async () => {
+    const rows = [{ day: '2026-08-25', pageviews: 12, unique_visitors: 5 }];
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_pageview_daily: { data: rows, error: null } } });
+    expect(await honAdminPageviewDaily(30)).toEqual(rows);
+    expect(global.honSupabase.rpc).toHaveBeenCalledWith('admin_pageview_daily', { p_days: 30 });
+  });
+
+  it('honAdminPageviewDaily defaults to [] instead of null', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_pageview_daily: { data: null, error: null } } });
+    expect(await honAdminPageviewDaily()).toEqual([]);
+  });
+
+  it('honAdminPageviewDaily throws on RPC error (e.g. a non-admin caller)', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_pageview_daily: { data: null, error: new Error('admin only') } } });
+    await expect(honAdminPageviewDaily()).rejects.toThrow('admin only');
+  });
+
+  it('honAdminPageviewTopReferrers calls admin_pageview_top_referrers and returns the rows on success', async () => {
+    const rows = [{ referrer: 'www.google.com', views: 9 }];
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_pageview_top_referrers: { data: rows, error: null } } });
+    expect(await honAdminPageviewTopReferrers(30, 10)).toEqual(rows);
+    expect(global.honSupabase.rpc).toHaveBeenCalledWith('admin_pageview_top_referrers', { p_days: 30, p_limit: 10 });
+  });
+
+  it('honAdminPageviewTopReferrers defaults to [] instead of null', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_pageview_top_referrers: { data: null, error: null } } });
+    expect(await honAdminPageviewTopReferrers()).toEqual([]);
+  });
+
+  it('honAdminPageviewTopReferrers throws on RPC error (e.g. a non-admin caller)', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_pageview_top_referrers: { data: null, error: new Error('admin only') } } });
+    await expect(honAdminPageviewTopReferrers()).rejects.toThrow('admin only');
+  });
+
+  it('honAdminPageviewTopPaths calls admin_pageview_top_paths and returns the rows on success', async () => {
+    const rows = [{ path: '/board.html', views: 14 }];
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_pageview_top_paths: { data: rows, error: null } } });
+    expect(await honAdminPageviewTopPaths(30, 10)).toEqual(rows);
+    expect(global.honSupabase.rpc).toHaveBeenCalledWith('admin_pageview_top_paths', { p_days: 30, p_limit: 10 });
+  });
+
+  it('honAdminPageviewTopPaths defaults to [] instead of null', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_pageview_top_paths: { data: null, error: null } } });
+    expect(await honAdminPageviewTopPaths()).toEqual([]);
+  });
+
+  it('honAdminPageviewTopPaths throws on RPC error (e.g. a non-admin caller)', async () => {
+    global.honSupabase = createMockSupabase({ rpcResponses: { admin_pageview_top_paths: { data: null, error: new Error('admin only') } } });
+    await expect(honAdminPageviewTopPaths()).rejects.toThrow('admin only');
   });
 });

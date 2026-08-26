@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here.
 
+## [0.0.7.0] - 2026-08-26
+
+### Added
+- Self-hosted page-view analytics: daily view/visitor counts, top referrers, and top pages, in a new Traffic panel on the admin page. No third-party service, no cookies — a visitor is an anonymous browser-local id, not a real identity, and only external referrers (never internal site navigation) are tracked as a traffic source. admin.html itself isn't counted, and automated/CI traffic never gets logged.
+
 ## [0.0.6.2] - 2026-08-25
 
 ### Removed

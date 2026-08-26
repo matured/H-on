@@ -120,6 +120,12 @@ async function honRenderAdmin() {
       <div id="dengonban-table-wrap" style="margin-top:16px; overflow-x:auto;">Loading&hellip;</div>
     </div>
 
+    <div style="margin-bottom:48px;">
+      <p class="eyebrow">TRAFFIC</p>
+      <p style="margin-top:10px; font-size:14.5px; color:#2c2b28;">Self-hosted page-view counts, last 30 days. No cookies, no third-party service — a visitor is an anonymous browser-local id, not a real identity. admin.html itself isn't counted.</p>
+      <div id="traffic-panel-wrap" style="margin-top:16px;">Loading&hellip;</div>
+    </div>
+
     <div>
       <p class="eyebrow">CATALOG</p>
       <h2 style="font-size: clamp(20px, 2.6vw, 24px); margin-top:12px;">Add or edit a title.</h2>
@@ -196,6 +202,7 @@ async function honRenderAdmin() {
   await honRenderMembersTable();
   await honRenderWaitlistTable();
   await honRenderDengonbanTable();
+  await honRenderTrafficPanel();
   await honRenderCatalogSection();
 }
 
@@ -688,6 +695,95 @@ async function honRenderDengonbanTable() {
       }
     });
   });
+}
+
+// admin_pageview_daily returns a bare `date` (e.g. "2026-08-25"), not a
+// timestamp — honFormatDate isn't safe here since new Date("2026-08-25")
+// parses as UTC midnight, which toLocaleDateString then renders in the
+// viewer's *local* timezone, shifting the displayed day backward for
+// anyone west of UTC. Appending a local-midnight time component avoids
+// that reinterpretation.
+function honTrafficFormatDay(dateStr) {
+  const d = new Date(`${dateStr}T00:00:00`);
+  return d.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }).toUpperCase();
+}
+
+// T19. Three independent RPCs, fetched in parallel — one failing (e.g. no
+// admin session yet mid-load) shouldn't block the other two panels from
+// rendering, same "each panel catches its own error" posture as every
+// other honRender*Table function in this file.
+async function honRenderTrafficPanel() {
+  const wrap = document.getElementById('traffic-panel-wrap');
+
+  const [dailyResult, referrersResult, pathsResult] = await Promise.allSettled([
+    honAdminPageviewDaily(30),
+    honAdminPageviewTopReferrers(30, 10),
+    honAdminPageviewTopPaths(30, 10),
+  ]);
+
+  const dailySection = dailyResult.status === 'fulfilled'
+    ? honTrafficDailyHTML(dailyResult.value)
+    : `<p style="color:var(--red); font-size:14px;">Couldn’t load daily counts: ${honEscape(dailyResult.reason?.message || dailyResult.reason)}</p>`;
+
+  const referrersSection = referrersResult.status === 'fulfilled'
+    ? honTrafficListHTML('Top referrers (external)', referrersResult.value, 'referrer', 'No external referrers in this window.')
+    : `<p style="color:var(--red); font-size:14px;">Couldn’t load top referrers: ${honEscape(referrersResult.reason?.message || referrersResult.reason)}</p>`;
+
+  const pathsSection = pathsResult.status === 'fulfilled'
+    ? honTrafficListHTML('Top pages', pathsResult.value, 'path', 'No page views yet.')
+    : `<p style="color:var(--red); font-size:14px;">Couldn’t load top pages: ${honEscape(pathsResult.reason?.message || pathsResult.reason)}</p>`;
+
+  wrap.innerHTML = `
+    <div style="margin-bottom:24px; overflow-x:auto;">${dailySection}</div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:24px;">
+      <div>${referrersSection}</div>
+      <div>${pathsSection}</div>
+    </div>
+  `;
+}
+
+function honTrafficDailyHTML(rows) {
+  if (!rows.length) return `<p style="font-size:14px; color:var(--grey);">No page views in the last 30 days.</p>`;
+  const totalViews = rows.reduce((sum, r) => sum + Number(r.pageviews), 0);
+  const totalVisitors = rows.reduce((sum, r) => sum + Number(r.unique_visitors), 0);
+  return `
+    <p style="font-size:13px; color:var(--grey); margin-bottom:8px;">${totalViews} view${totalViews === 1 ? '' : 's'} · ~${totalVisitors} visitor-day${totalVisitors === 1 ? '' : 's'} across ${rows.length} day${rows.length === 1 ? '' : 's'} (a repeat visitor on different days counts once per day, not once overall)</p>
+    <table style="width:100%; border-collapse:collapse; min-width:420px;">
+      <thead><tr>
+        <th style="${HON_TH_STYLE}">Day</th>
+        <th style="${HON_TH_STYLE}">Pageviews</th>
+        <th style="${HON_TH_STYLE}">Unique visitors</th>
+      </tr></thead>
+      <tbody>
+        ${rows.map(r => `
+          <tr>
+            <td style="${HON_TD_STYLE}">${honTrafficFormatDay(r.day)}</td>
+            <td style="${HON_TD_STYLE}">${honEscape(String(r.pageviews))}</td>
+            <td style="${HON_TD_STYLE}">${honEscape(String(r.unique_visitors))}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+function honTrafficListHTML(title, rows, keyField, emptyText) {
+  if (!rows.length) {
+    return `<p class="eyebrow" style="font-size:11px;">${honEscape(title)}</p><p style="margin-top:8px; font-size:13.5px; color:var(--grey);">${emptyText}</p>`;
+  }
+  return `
+    <p class="eyebrow" style="font-size:11px;">${honEscape(title)}</p>
+    <table style="width:100%; border-collapse:collapse; margin-top:8px;">
+      <tbody>
+        ${rows.map(r => `
+          <tr>
+            <td style="${HON_TD_STYLE} font-family:var(--mono); font-size:13px;">${honEscape(r[keyField])}</td>
+            <td style="${HON_TD_STYLE} text-align:right; width:60px;">${honEscape(String(r.views))}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
 }
 
 document.addEventListener('DOMContentLoaded', honRenderAdmin);
