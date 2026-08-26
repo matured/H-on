@@ -198,9 +198,21 @@ async function honShowNotifications() {
   });
 }
 
+// Page-view analytics (T19). Excludes admin.html deliberately — that's
+// the admin using their own tool, not a visitor. index.html (the splash
+// page) doesn't load this file at all, so it logs its own view with a
+// small inline fetch() instead (see index.html) rather than pulling in
+// the full Supabase SDK + circulation.js just for one RPC call.
+function honTrackPageView() {
+  if (typeof honLogPageView !== 'function') return;
+  if (honCurrentPage() === 'admin.html') return;
+  honLogPageView(location.pathname);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   honInjectCornerMark();
   honInjectNav();
   honInjectSkipLink();
   honShowNotifications();
+  honTrackPageView();
 });

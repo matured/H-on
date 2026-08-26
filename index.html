@@ -201,6 +201,42 @@ body.hon-leaving #splash-grid {
 
   if (!prefersReducedMotion) flicker();
   setTimeout(() => caption.classList.add('show'), 900);
+
+  // Page-view analytics (T19), fire-and-forget. This page deliberately
+  // loads no external scripts (fast, minimal first paint), so rather than
+  // pulling in the Supabase SDK + circulation.js + main.js just for one
+  // RPC call, it hits the REST endpoint directly with fetch(). Same
+  // localStorage key, referrer/hostname logic, and navigator.webdriver
+  // skip (keeps the e2e suite from writing real rows into production
+  // analytics — see the comment above honLogPageView in js/circulation.js
+  // for the full reasoning) as honLogPageView / honGetOrCreateVisitorId
+  // there — kept in sync by hand since this page can't share that code,
+  // but this is the one other place it needs to exist.
+  if (!navigator.webdriver) {
+    try {
+      let visitorId = localStorage.getItem('hon_visitor_id');
+      if (!visitorId) {
+        visitorId = crypto.randomUUID();
+        localStorage.setItem('hon_visitor_id', visitorId);
+      }
+      let referrer = null;
+      if (document.referrer) {
+        try {
+          const refUrl = new URL(document.referrer);
+          referrer = refUrl.hostname === location.hostname ? null : refUrl.hostname;
+        } catch {}
+      }
+      fetch('https://utlkzpabshnekjnpsuky.supabase.co/rest/v1/rpc/log_page_view', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          apikey: 'sb_publishable_iPFQ81hDr8T29RL5Gkc3cA_nR7lU_Ka',
+          Authorization: 'Bearer sb_publishable_iPFQ81hDr8T29RL5Gkc3cA_nR7lU_Ka',
+        },
+        body: JSON.stringify({ p_path: location.pathname, p_referrer: referrer, p_visitor_id: visitorId }),
+      }).catch(() => {});
+    } catch {}
+  }
 })();
 </script>
 
