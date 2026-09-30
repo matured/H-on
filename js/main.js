@@ -200,19 +200,56 @@ async function honShowNotifications() {
 
 // Page-view analytics (T19). Excludes admin.html deliberately — that's
 // the admin using their own tool, not a visitor. index.html (the splash
-// page) doesn't load this file at all, so it logs its own view with a
-// small inline fetch() instead (see index.html) rather than pulling in
-// the full Supabase SDK + circulation.js just for one RPC call.
+// page) doesn't load this file (no shared nav/chrome to inject there), so
+// it calls honLogPageView() directly from its own inline script instead.
 function honTrackPageView() {
   if (typeof honLogPageView !== 'function') return;
   if (honCurrentPage() === 'admin.html') return;
   honLogPageView(location.pathname);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+// Site-wide "coming soon" gate (T20). Skipped for e2e runs the same way
+// page-view tracking is (navigator.webdriver — see honTrackPageView above
+// and honLogPageView in circulation.js) so the rest of the test suite keeps
+// exercising real page content instead of the lock screen. This is a
+// marketing gate, not a security boundary — the actual data stays behind
+// Supabase's own auth/RLS regardless of what this shows.
+async function honIsLockScreenAdmin() {
+  if (typeof honFetchMyProfile !== 'function') return true;
+  try {
+    const profile = await honFetchMyProfile();
+    return !!profile?.is_admin;
+  } catch {
+    return false;
+  }
+}
+
+// The one shared entrypoint every page's DOMContentLoaded runs — pulled out
+// under its own name (mirroring honRenderAdmin/honRenderDengonbanBoardPage)
+// so a test can call it directly after mocking honFetchMyProfile, instead of
+// only ever seeing whatever the automatic listener below decided on load.
+async function honRunMainInit({ skipLockCheck = false } = {}) {
+  honTrackPageView();
+
+  if (!skipLockCheck && typeof honRenderLockScreen === 'function') {
+    const isAdmin = await honIsLockScreenAdmin();
+    if (!isAdmin) {
+      honRenderLockScreen();
+      return;
+    }
+  }
+
   honInjectCornerMark();
   honInjectNav();
   honInjectSkipLink();
   honShowNotifications();
-  honTrackPageView();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // e2e runs skip the lock/admin check (navigator.webdriver — same gate as
+  // honTrackPageView/honLogPageView) so the rest of the test suite keeps
+  // exercising real page content instead of the lock screen. Tests that
+  // need to exercise the lock screen itself call honRunMainInit() directly
+  // after mocking honFetchMyProfile — see tests/e2e/lock-screen.spec.js.
+  honRunMainInit({ skipLockCheck: navigator.webdriver });
 });
