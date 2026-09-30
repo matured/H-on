@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here.
 
+## [0.0.8.0] - 2026-10-01
+
+### Added
+- A site-wide "coming soon" lock screen announcing the November 30, 2026 launch, shown to every visitor except the signed-in admin. Includes a waitlist signup (same `waitlist_requests` table as the existing membership page) and a "Site team? Sign in" link so the admin can always bootstrap a session, even from a fresh browser.
+
 ## [0.0.7.1] - 2026-08-26
 
 ### Fixed

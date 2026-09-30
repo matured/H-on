@@ -1454,6 +1454,130 @@ body.item-page { position: relative; }
   .dengonban-hint { display: none; } /* dragging is disabled at this breakpoint (board.html) */
 }
 
+/* ---------- Coming-soon lock screen (T20) ---------- */
+body.hon-locked { overflow: hidden; }
+
+#hon-lock-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 48px var(--gutter);
+}
+
+.hon-lock-inner {
+  max-width: 46ch;
+  text-align: center;
+}
+
+.hon-lock-mark {
+  font-family: var(--display);
+  font-size: 15px;
+  font-weight: 900;
+  color: var(--grey-light);
+  margin: 0 0 18px;
+}
+
+.hon-lock-eyebrow {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin: 0 0 14px;
+}
+
+.hon-lock-headline {
+  font-size: clamp(30px, 5vw, 46px);
+  margin: 0 0 18px;
+}
+
+.hon-lock-sub {
+  font-family: var(--serif);
+  font-size: 16px;
+  color: #2c2b28;
+  margin: 0 0 30px;
+}
+
+.hon-lock-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.hon-lock-form input {
+  font-family: var(--mono);
+  font-size: 14px;
+  padding: 12px 14px;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  flex: 1 1 180px;
+  min-width: 0;
+}
+.hon-lock-form input:disabled { opacity: 0.5; }
+.hon-lock-form .btn { flex: 0 0 auto; }
+
+.hon-lock-status {
+  margin: 16px 0 0;
+  font-family: var(--mono);
+  font-size: 13px;
+  min-height: 1.2em;
+}
+
+.hon-lock-team-toggle {
+  display: block;
+  margin: 40px auto 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--grey-light);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+.hon-lock-team-toggle:hover,
+.hon-lock-team-toggle:focus-visible { color: var(--grey); }
+
+/* :not([hidden]) — plain `.hon-lock-signin-form { display: flex }` would
+   beat the UA stylesheet's `[hidden] { display: none }` (author rules win
+   over UA rules at equal specificity), silently defeating the `hidden`
+   attribute honLockWireSignIn() toggles to show/hide this form. */
+.hon-lock-signin-form:not([hidden]) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 14px;
+}
+.hon-lock-signin-form input {
+  font-family: var(--mono);
+  font-size: 13px;
+  padding: 10px 12px;
+  border: 1px solid var(--line-strong);
+  background: var(--paper);
+  flex: 1 1 160px;
+  min-width: 0;
+}
+
+@media (max-width: 480px) {
+  /* flex-direction: column turns the main axis vertical, so the inputs'
+     flex: 1 1 180px/160px (unchanged below) would size their HEIGHT off
+     that basis instead of their width, growing them to fill the column —
+     reset flex-basis to auto here so height stays intrinsic. */
+  .hon-lock-form,
+  .hon-lock-signin-form { flex-direction: column; align-items: stretch; }
+  .hon-lock-form input,
+  .hon-lock-signin-form input,
+  .hon-lock-form .btn,
+  .hon-lock-signin-form .btn { flex: 0 0 auto; }
+}
+
 /* ---------- Utility ---------- */
 .tac { text-align: center; }
 .mono { font-family: var(--mono); }

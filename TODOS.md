@@ -63,6 +63,16 @@
 
 ## Completed
 
+### Site-wide "coming soon" lock screen
+
+**What:** Every page shows a full-screen "Launching November 30, 2026" lock screen with a waitlist signup, instead of real content, until the admin signs in. The admin (checked via the existing `profiles.is_admin` flag) bypasses it and sees the site normally everywhere, including `index.html`'s splash. A "Site team? Sign in" link inside the lock screen lets the admin request a magic link from a fresh/cleared browser with no real site unlocked yet — it redirects to `membership.html`, which re-checks admin status on load and unlocks automatically.
+**Why:** Requested directly, ahead of the public launch.
+**Context:** New `js/lock-screen.js` (`honRenderLockScreen()` — the lock overlay + waitlist form + sign-in toggle, reusing the same direct `honSupabase.from('waitlist_requests').insert()` call membership.html's own waitlist form uses) loaded on every page between `circulation.js` and `main.js`. `js/main.js`'s new `honRunMainInit({ skipLockCheck })` is the single init entrypoint every page's `DOMContentLoaded` now runs through — it checks `profiles.is_admin` before injecting any nav chrome and shows the lock screen instead if the visitor isn't the admin. `index.html` (no shared chrome to justify loading `main.js`) repeats the same check inline as `honRunIndexInit()`, and now also loads the Supabase SDK + `circulation.js` + `lock-screen.js` for it — which let its previously-duplicated inline analytics `fetch()` be replaced with a plain `honLogPageView()` call. Both entrypoints skip the check entirely under `navigator.webdriver` (same gate as page-view tracking) so the existing 73-test e2e suite keeps exercising real page content unmodified; a dedicated `tests/e2e/lock-screen.spec.js` forces the real check path to cover the lock screen itself. This is a marketing gate, not a security boundary — Supabase's own auth/RLS is what actually protects data, unchanged by this.
+**Effort:** M
+**Priority:** P1
+**Depends on:** None
+**Completed:** v0.0.8.0 (2026-10-01)
+
 ### Self-hosted page-view analytics
 
 **What:** A "Traffic" panel in admin.html: pageviews + unique visitors per day (last 30 days), top external referrers, and top pages. Chosen over a third-party service (Google Analytics, Plausible, etc.) to avoid a new account, cookies, or handing visitor data to another company — fits how the rest of the site is built.
