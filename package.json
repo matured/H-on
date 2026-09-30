@@ -9,7 +9,7 @@
     "test:e2e": "PLAYWRIGHT_HTML_OPEN=never playwright test"
   },
   "devDependencies": {
-    "@playwright/test": "^1.62.1",
+    "@playwright/test": "^1.63.0",
     "jsdom": "^25.0.0",
     "vitest": "^2.1.0"
   },
